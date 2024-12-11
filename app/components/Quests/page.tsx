@@ -23,7 +23,7 @@ export default function BindingPage() {
     };
 
     return (
-        <div className="mt-[105px] mb-[50px]">
+        <div className="mt-[80px] mb-[50px]">
             <div className="flex flex-col sm:flex-row sm:justify-between items-center gap-3">
                 <div>
                     <div className="text-[34px] text-center sm:text-left font-bold bg-gradient-to-r from-[#05F292] to-[#214177] text-transparent bg-clip-text">
@@ -50,7 +50,7 @@ export default function BindingPage() {
                             alt={item.alt}
                             width={75}
                             height={75}
-                            className="w-[75px] h-[75px] transform hover:rotate-3 transition-transform duration-300"
+                            className="w-[75px] h-[75px] transform hover:rotate-3 transition-transform duration-300 mr-[5px]"
                         />
                         <div className="flex flex-col items-center justify-center">
                             <div className="font-bold text-white text-[20px] leading-[30px] text-center">

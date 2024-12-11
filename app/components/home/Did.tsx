@@ -3,7 +3,7 @@
 import { paytoneOne } from '@/app/ui/fonts';
 import Image from 'next/image';
 
-export default function Task() {
+export default function Did() {
     return (
         <div className="relative">
             {/* Background container with image and opacity */}
@@ -18,33 +18,13 @@ export default function Task() {
                     <div
                         className={`${paytoneOne.className} text-white text-[40px] sm:text-[40px] md:text-[45px] lg:text-[60px] xl:text-[80px] leading-tight mt-[30px] text-center sm:text-left`}
                     >
-                        Task To Earn
-                        <span className="text-[#05F292] animate-pulse"> $Memo </span>
-                        <span>AirDrop</span>
+                        <span className="text-[#05F292] animate-pulse"> Data </span>
+                        <span>DID</span>
                     </div>
                     <div className="text-white text-[14px] sm:text-[16px] md:text-[18px] lg:text-[20px] xl:text-[23px] leading-7 mt-[15px] text-center sm:text-left">
-                        Claim your SBT, which unlocks future airdrop rewards.
+                        Your all-in-one, privacy-preserving self-sovereign identity. Own, manage, and monetize your data!
                     </div>
-                    <div className="flex flex-col md:flex-row items-center gap-3 mt-[30px]">
-                        {['Complete Tasks', 'Earn SBT', 'Receive Airdrop'].map((text, index) => (
-                            <div key={index} className="flex items-center">
-                                <div
-                                    className="bg-gradient-to-b from-[#092318] to-[#23895E] rounded-full px-[22px] py-[10px] text-center w-[80%] md:w-auto transform hover:scale-105 transition-transform duration-300 ease-in-out cursor-pointer mr-[10px]"
-                                >
-                                    {text}
-                                </div>
-                                {index !== 2 && (
-                                    <Image
-                                        src="/arrow.png"
-                                        width={40}
-                                        height={1}
-                                        alt="arrow"
-                                        className="h-[7px] hidden md:block animate-bounce"
-                                    />
-                                )}
-                            </div>
-                        ))}
-                    </div>
+                    <div className='text-white text-[12px] sm:text-[14px] mt-[15px] text-center sm:text-left'>Note: Users need to log in to MEMO and successfully mint DID before they can participate in earning points</div>
 
                 </div>
 
@@ -73,7 +53,7 @@ export default function Task() {
                     />
                 </div>
             </div>
-
+            <div className='rounded-full px-[20px] py-[10px]'></div>
         </div>
     );
 }

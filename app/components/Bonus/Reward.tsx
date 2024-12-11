@@ -15,7 +15,7 @@ export default function Reward() {
                 Redeem Past Reward
             </h1>
             <div className="w-full rounded-[10px] bg-gradient-to-br from-[#064E33] to-[#214177] mt-[25px] px-[25px] py-[30px]">
-                <div className="flex items-center justify-between gap-5 group">
+                <div className="flex flex-col md:flex-row items-center justify-between gap-5 group">
                     {/* Left Section */}
                     <div className="flex items-center gap-7 cursor-pointer">
                         <Image

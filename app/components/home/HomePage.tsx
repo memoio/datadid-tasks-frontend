@@ -3,7 +3,8 @@
 import { useContext } from "react";
 import { FlagContext } from "@/app/lib/context/FlagContext";
 import CarvWallet from "./CarvWallet";
-import Task from "./Task";
+import Home from "./Home";
+import Did from "./Did";
 import Activity from "./Activity";
 import { useAuth } from '@/app/lib/context/AuthContext';
 
@@ -23,7 +24,8 @@ export default function HomePage() {
                         ) : (
                         <div></div>
                     )}
-                        <Task />
+                        <Home />
+                        <Did />
                     </>
             )}
         </div>

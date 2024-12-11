@@ -1,6 +1,7 @@
 import Navbar from "./components/Navbar/navbar";
 import HomePage from "@/app/components/home/HomePage";
-import Binding from "@/app/components/binding/page"
+import Daily from "./components/Daily/daily";
+import Quest from "@/app/components/Quests/page"
 import CyclePage from "./components/Cycle/CyclePage";
 import Bonus from "./components/Bonus/Bonus";
 import LeaderboardPage from "./components/leaderboard/leaderboard";
@@ -15,7 +16,8 @@ export default function Home() {
           <Navbar />    
           <HomePage />
           <div>
-            <Binding />
+            <Daily />
+            <Quest />
             <CyclePage />
             <Bonus />                  
             <LeaderboardPage />
