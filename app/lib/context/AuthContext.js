@@ -33,8 +33,8 @@ export const AuthContextProvider = ({ children }) => {
 
           if (response.data.result === 1) {
             setUserInfo({
-              uid: "22980883",
-              token: "825c4b5289376b91864bbf67fe5694f9",
+              uid: response.data.data.uid,
+              token: response.data.data.token,
             });
           } else {
             console.error("Failed to bind wallet:", response.data);
