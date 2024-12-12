@@ -5,22 +5,35 @@ import Image from 'next/image';
 import { useAccount, useSignMessage } from 'wagmi';
 import { useConnectModal } from '@rainbow-me/rainbowkit';
 import React, { useState } from 'react';
+import axios from 'axios';
 
 export default function CreateDID() {
     const { isConnected, address } = useAccount();
     const currentAddress = isConnected ? address.slice(0, 6) + '...' + address.slice(-4) : '0x0000...0000'
 
-    const { signMessage, data, isPending, isError, isSuccess } = useSignMessage()
-    const message = "hello world"
+    // const { signMessage, data, isPending, isError, isSuccess } = useSignMessage()
+    // const message = "hello world"
     const { openConnectModal } = useConnectModal();
-    const url = 'http://119.147.213.61:38082/did'
-    const [did, setDID] = useState<string | null>(null);
+    // const url = 'http://119.147.213.61:38082/did'
+    // const [did, setDID] = useState<string | null>(null);
 
-    const getSigMsg = async (address) => {
-        
-    }
 
-    const createDID = async (sig: string) => {
+
+    const createDID = async () => {
+        //     console.log("create")
+        //     try {
+        //         const response = await axios.get(url + `/createsigmsg`, {
+        //             params: {
+        //                 address,  // 通过 params 将 address 传递给后端
+        //             },
+        //         })
+
+        //         const data = response.data
+        //         console.log(data)
+        //     } catch (err) {
+        //         console.error('Error creating DID:', err);
+        //     }
+
         // const response = await fetch(url, {
         //     method: "POST",
         //     headers: {
@@ -38,20 +51,20 @@ export default function CreateDID() {
         // .catch(err => {
         //     console.error(err)
         // })
-        try {
-            const response = await fetch(url, {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json;charset=utf-8',
-                },
-                body: JSON.stringify({ address, sig }),
-            });
+        // try {
+        //     const response = await fetch(url, {
+        //         method: "POST",
+        //         headers: {
+        //             'Content-Type': 'application/json;charset=utf-8',
+        //         },
+        //         body: JSON.stringify({ address, sig }),
+        //     });
 
-            const data = await response.json();
-            console.log(data.did);
-        } catch (err) {
-            console.error('Error creating DID:', err);
-        }
+        //     const data = await response.json();
+        //     console.log(data.did);
+        // } catch (err) {
+        //     console.error('Error creating DID:', err);
+        // }
     }
 
     return (
@@ -73,16 +86,14 @@ export default function CreateDID() {
                 <div className='w-full py-[9px] text-center text-[16px] rounded-full font-bold bg-[#05F292]  mt-[10px]'>
                     {isConnected ? (
                         <div>
-                            <button onClick={() => signMessage({ message })} disabled={isPending}>
-                            Create DID
+                            <button onClick={() => createDID()} >
+                                Create DID
                             </button>
-                            {isSuccess && <div>Signature: {data}</div>}
-                            {isError && <div>Error signing message</div>}
                         </div>
                     ) : (
                         <div>
                             <button onClick={openConnectModal}>
-                            Create DID
+                                Create DID
                             </button>
                         </div>
                     )}

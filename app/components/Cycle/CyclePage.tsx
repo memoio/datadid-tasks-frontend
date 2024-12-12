@@ -49,25 +49,28 @@ export default function CyclePage() {
                 };
 
                 bindWallet();
+            } else {
+                const getUserPoints = async () => {
+                    if (!userInfo) { }
+                    try {
+                        const response = await axios.get('https://airdrop.7nc.top/api/user/info', {
+                            headers: {
+                                'accept': '*/*',
+                                'uid': userInfo.uid, // 根据实际情况传入 uid
+                                'token': userInfo.token, // 根据实际情况传入 token
+                            },
+
+                        });
+                        setPoints(response.data.data.points)
+                        console.log(response.data.data.points);
+                    } catch (error) {
+                        console.error(error);
+                    }
+
+                };
+                getUserPoints();
             }
-            const getUserPoints = async () => {
-                try {
-                    const response = await axios.get('https://airdrop.7nc.top/api/user/info', {
-                        headers: {
-                            'accept': '*/*',
-                            'uid': userInfo.uid, // 根据实际情况传入 uid
-                            'token': userInfo.token, // 根据实际情况传入 token
-                        },
-
-                    });
-                    setPoints(response.data.data.points)
-                    console.log(response.data.data.points);
-                } catch (error) {
-                    console.error(error);
-                }
-
-            };
-            getUserPoints();
+            
         }
     }, [address, isConnected, setUserInfo, userInfo]);
 
