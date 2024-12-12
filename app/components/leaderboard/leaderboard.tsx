@@ -5,16 +5,16 @@ import Image from 'next/image';
 import { useState } from 'react';
 
 const elements = [
-    { id: 1, address: "0x3a2...0813", score: 6, soul: "+50,000 SOUL", isCrown: true },
-    { id: 2, address: "0x3a2...0813", score: 6, soul: "+50,000 SOUL", isCrown: true },
-    { id: 3, address: "0x3a2...0813", score: 6, soul: "+50,000 SOUL", isCrown: true },
-    { id: 4, address: "0x3a2...0813", score: 6, soul: "+50,000 SOUL", isCrown: false },
-    { id: 5, address: "0x3a2...0813", score: 6, soul: "+50,000 SOUL", isCrown: false },
-    { id: 6, address: "0x3a2...0813", score: 6, soul: "+50,000 SOUL", isCrown: false },
-    { id: 7, address: "0x3a2...0813", score: 6, soul: "+50,000 SOUL", isCrown: false },
-    { id: 8, address: "0x3a2...0813", score: 6, soul: "+50,000 SOUL", isCrown: false },
-    { id: 9, address: "0x3a2...0813", score: 6, soul: "+50,000 SOUL", isCrown: false },
-    { id: 10, address: "0x3a2...0813", score: 6, soul: "+50,000 SOUL", isCrown: false },
+    { id: 1, address: "0x3a2...0813", score: 6, soul: "+50,000", isCrown: true },
+    { id: 2, address: "0x3a2...0813", score: 6, soul: "+50,000", isCrown: true },
+    { id: 3, address: "0x3a2...0813", score: 6, soul: "+50,000", isCrown: true },
+    { id: 4, address: "0x3a2...0813", score: 6, soul: "+50,000", isCrown: false },
+    { id: 5, address: "0x3a2...0813", score: 6, soul: "+50,000", isCrown: false },
+    { id: 6, address: "0x3a2...0813", score: 6, soul: "+50,000", isCrown: false },
+    { id: 7, address: "0x3a2...0813", score: 6, soul: "+50,000", isCrown: false },
+    { id: 8, address: "0x3a2...0813", score: 6, soul: "+50,000", isCrown: false },
+    { id: 9, address: "0x3a2...0813", score: 6, soul: "+50,000", isCrown: false },
+    { id: 10, address: "0x3a2...0813", score: 6, soul: "+50,000", isCrown: false },
 ];
 
 interface PopupData {
@@ -59,7 +59,7 @@ export default function LeaderboardPage() {
         },
         {
             title: { full: "Leaderboard Reward", short: "Reward" },
-            value: "100 SOUL",
+            value: "100",
         },
     ];
 

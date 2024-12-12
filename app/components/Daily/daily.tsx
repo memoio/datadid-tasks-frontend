@@ -2,25 +2,48 @@
 import { useState } from 'react';
 import Image from 'next/image';
 
+import { useUser } from "../../lib/context/AuthContext"
+import axios from 'axios';
+
 interface Item {
-  src: string;
-  alt: string;
-  reward: string;
-  title: string;
+    src: string;
+    alt: string;
+    reward: string;
+    title: string;
 }
 
 const items: Item[] = [
-    { src: "/x.png", alt: "SBT1", reward: "+50 Points", title: "Check In" },
-    { src: "/tg.png", alt: "SBT2", reward: "+50 Points", title: "Share to chat group" },
-    { src: "/discord.png", alt: "SBT3", reward: "+50 Points", title: "Share to friends" },
-    { src: "/retweet.png", alt: "SBT4", reward: "+50 Points", title: "Share to Twitter" },
+    { src: "/x.png", alt: "SBT1", reward: "+20 Points", title: "Check In" },
+    { src: "/tg.png", alt: "SBT2", reward: "+20 Points", title: "Share to chat group" },
+    { src: "/discord.png", alt: "SBT3", reward: "+20 Points", title: "Share to friends" },
+    { src: "/retweet.png", alt: "SBT4", reward: "+20 Points", title: "Share to Twitter" },
 ];
 
 export default function Daily() {
     const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+    const { userInfo } = useUser();
 
-    const handleClick = (index: number) => {
-        setSelectedIndex(index);
+    const handleClick = async (index: number) => {
+        try {
+            const actionId = 70 + index;
+            console.log(actionId);
+            const respond = await axios.post("https://airdrop.7nc.top/api/record/add", {
+                "action": actionId
+            }, {
+                headers: {
+                    "accept": "application/hal+json",
+                    "Content-Type": "application/json",
+                    "uid": userInfo.uid,
+                    "token": userInfo.token
+                }
+            });
+
+            if (respond.status === 200) {
+                setSelectedIndex(index);
+            }
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     return (
@@ -43,11 +66,10 @@ export default function Daily() {
                     <div
                         key={index}
                         onClick={() => handleClick(index)}
-                        className={`w-full sm:w-[48%] md:w-[30%] xl:w-[20%] transform transition-transform duration-300 ${
-                            selectedIndex === index
-                                ? 'bg-gradient-to-r from-[#214177] to-[#064E33] scale-105 shadow-lg'
-                                : 'bg-[#0663412B] hover:scale-105'
-                        } p-6 rounded-[15px] cursor-pointer`}
+                        className={`w-full sm:w-[48%] md:w-[30%] xl:w-[20%] transform transition-transform duration-300 ${selectedIndex === index
+                            ? 'bg-gradient-to-r from-[#214177] to-[#064E33] scale-105 shadow-lg'
+                            : 'bg-[#0663412B] hover:scale-105'
+                            } p-6 rounded-[15px] cursor-pointer`}
                     >
                         {/* Item Image */}
                         <div className="flex justify-center">
@@ -65,9 +87,8 @@ export default function Daily() {
                             <h2 className="font-bold text-white text-[20px] sm:text-[22px] mb-2">{item.title}</h2>
                             <p className="font-bold text-white text-[18px] sm:text-[20px]">{item.reward}</p>
                             <div
-                                className={`${
-                                    selectedIndex === index ? 'bg-gray-500' : 'bg-[#05F292]'
-                                } flex justify-center items-center rounded-full px-4 py-2 mt-5 shadow-md transform hover:scale-110 transition-transform duration-300`}
+                                className={`${selectedIndex === index ? 'bg-gray-500' : 'bg-[#05F292]'
+                                    } flex justify-center items-center rounded-full px-4 py-2 mt-5 shadow-md transform hover:scale-110 transition-transform duration-300`}
                             >
                                 <span className="font-bold text-[14px] sm:text-[16px] text-white">
                                     {selectedIndex === index ? 'Claimed' : 'Claim'}

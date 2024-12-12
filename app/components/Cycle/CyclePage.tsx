@@ -7,6 +7,7 @@ import { useUser } from "../../lib/context/AuthContext"
 import axios from 'axios';
 import { useAccount } from "wagmi";
 
+
 export default function CyclePage() {
     const [activeIndex, setActiveIndex] = useState<number | null>(null);
     const [points, setPoints] = useState("")
@@ -83,8 +84,27 @@ export default function CyclePage() {
         { id: 10, imgSrc: "/Cycle10.png", participants: 800, desc: "The d.id is building protocols for proof of humanity and achievement network, connecting every human. Own your ID and achievement through  blockchain-powered protocol network, and be ready for the next societal breakthrough." },
     ];
 
-    const handleClick = (index: number) => {
-        setActiveIndex(index);
+    const handleClick = async (index: number) => {
+        try {
+            const actionId = 1012 + 10 * index;
+            console.log(actionId);
+            const respond = await axios.post("https://airdrop.7nc.top/api/record/add", {
+                "action": actionId
+            }, {
+                headers: {
+                    "accept": "application/hal+json",
+                    "Content-Type": "application/json",
+                    "uid": userInfo.uid,
+                    "token": userInfo.token
+                }
+            });
+
+            if (respond.status === 200) {
+                setActiveIndex(index);
+            }
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     return (
@@ -123,7 +143,7 @@ export default function CyclePage() {
                 {[
                     { label: 'Total Projects Completed', value: '1' },
                     { label: 'Total Tasks Accomplished', value: '4' },
-                    { label: 'Total SBT Earned', value: points },
+                    { label: 'Total Points Earned', value: points },
                 ].map((stat, i) => (
                     <div key={i}>
                         <div className="text-center">

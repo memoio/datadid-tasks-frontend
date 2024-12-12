@@ -2,24 +2,47 @@
 import { useState } from 'react';
 import Image from 'next/image';
 
+import { useUser } from "../../lib/context/AuthContext"
+import axios from 'axios';
+
 interface Item {
-  src: string;
-  alt: string;
-  reward: string;
+    src: string;
+    alt: string;
+    reward: string;
 }
 
 const items: Item[] = [
-    { src: "/x.png", alt: "SBT1", reward: "+500 Points" },
-    { src: "/tg.png", alt: "SBT2", reward: "+300 Points" },
-    { src: "/discord.png", alt: "SBT3", reward: "+100 Points" },
-    { src: "/retweet.png", alt: "SBT4", reward: "+400 Points" },
+    { src: "/x.png", alt: "SBT1", reward: "+50 Points" },
+    { src: "/tg.png", alt: "SBT2", reward: "+50 Points" },
+    { src: "/discord.png", alt: "SBT3", reward: "+50 Points" },
+    { src: "/retweet.png", alt: "SBT4", reward: "+50 Points" },
 ];
 
 export default function BindingPage() {
     const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+    const { userInfo } = useUser();
 
-    const handleClick = (index: number) => {
-        setSelectedIndex(index);
+    const handleClick = async (index: number) => {
+        try {
+            const actionId = 50 + index;
+            console.log(actionId);
+            const respond = await axios.post("https://airdrop.7nc.top/api/record/add", {
+                "action": actionId
+            }, {
+                headers: {
+                    "accept": "application/hal+json",
+                    "Content-Type": "application/json",
+                    "uid": userInfo.uid,
+                    "token": userInfo.token
+                }
+            });
+
+            if (respond.status === 200) {
+                setSelectedIndex(index);
+            }
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     return (
@@ -39,11 +62,10 @@ export default function BindingPage() {
                     <div
                         key={index}
                         onClick={() => handleClick(index)}
-                        className={`w-full sm:w-[40%] lg:w-[30%] xl:w-[20%] transform transition-transform duration-300 ${
-                            selectedIndex === index
-                                ? 'bg-gradient-to-r from-[#214177] to-[#064E33] scale-105 shadow-lg'
-                                : 'bg-[#0663412B] hover:scale-105'
-                        } pt-[35px] pb-[25px] px-[10px] flex items-center justify-around rounded-[10px] cursor-pointer`}
+                        className={`w-full sm:w-[40%] lg:w-[30%] xl:w-[20%] transform transition-transform duration-300 ${selectedIndex === index
+                            ? 'bg-gradient-to-r from-[#214177] to-[#064E33] scale-105 shadow-lg'
+                            : 'bg-[#0663412B] hover:scale-105'
+                            } pt-[35px] pb-[25px] px-[10px] flex items-center justify-around rounded-[10px] cursor-pointer`}
                     >
                         <Image
                             src={item.src}
@@ -57,9 +79,8 @@ export default function BindingPage() {
                                 {item.reward}
                             </div>
                             <div
-                                className={`${
-                                    selectedIndex === index ? 'bg-gray-500' : 'bg-[#05F292]'
-                                } flex justify-center items-center rounded-full px-[10px] py-[5px] mt-[5px] shadow-md transform hover:scale-110 transition-transform duration-300`}
+                                className={`${selectedIndex === index ? 'bg-gray-500' : 'bg-[#05F292]'
+                                    } flex justify-center items-center rounded-full px-[10px] py-[5px] mt-[5px] shadow-md transform hover:scale-110 transition-transform duration-300`}
                             >
                                 <p className="font-bold text-[16px] text-white">
                                     {selectedIndex === index ? 'Claimed' : 'Claim'}
