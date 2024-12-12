@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';// Import the useAuth hook
 import { useAuth } from '@/app/lib/context/AuthContext';
+import { ConnectButton } from '@rainbow-me/rainbowkit';
 
 // Reusable styles for NavItems and Buttons
 const commonStyles = `
@@ -144,14 +145,7 @@ export default function Navbar() {
             <NavItem>Airdrop</NavItem>
           </div>
           <div className="flex gap-1">
-            <Dbutton>Check In</Dbutton>
-            {isLoggedIn ? ( // Conditional rendering based on the login state
-              <>
-                <Gbutton onClick={handleLogout}>0xb189...1Bb10</Gbutton> {/* Log out button */}
-              </>
-            ) : (
-              <Gbutton onClick={handleLogin}>Log In</Gbutton> // Log in button
-            )}
+            <ConnectButton />
           </div>
         </div>
       </div>

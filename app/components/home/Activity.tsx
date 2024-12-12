@@ -7,13 +7,13 @@ export default function Mint() {
         sbt1: false,
         sbt2: false,
         sbt3: false,
-      });
-    
-      const handleClick = (id: string) => {
-        setClicked((prev) => ({ ...prev, [id]: true }));
-      };
+    });
 
-    return(
+    const handleClick = (id: string) => {
+        setClicked((prev) => ({ ...prev, [id]: true }));
+    };
+
+    return (
         <div style={{
             backgroundImage: 'url(/activity_bg.png)',
             backgroundSize: 'cover',
@@ -28,14 +28,14 @@ export default function Mint() {
                     <div className='px-[18px] py-[22px] flex items-center border-[1px] border-white r   ounded-[8px] mt-[25px]'>
                         <Image src="/Harmony.png" alt="Harmony" width={131} height={131} className='mr-[30px]' />
                         <div>
-                        <div className="flex justify-between">
-                            <div className={`${paytoneOne.className} text-white text-[24px]`}>Harmony</div>
-                            <div
-                                className="bg-[#62EDB5] text-black font-bold text-[14px] rounded-full text-center px-[10px] py-[8px]"
-                            >
-                                +1000 SBT
+                            <div className="flex justify-between">
+                                <div className={`${paytoneOne.className} text-white text-[24px]`}>Harmony</div>
+                                <div
+                                    className="bg-[#62EDB5] text-black font-bold text-[14px] rounded-full text-center px-[10px] py-[8px]"
+                                >
+                                    +1000 SBT
+                                </div>
                             </div>
-                        </div>
 
                             <div className='flex mt-[10px]'>
                                 <Image src="/globe.png" alt="globe" width={36} height={36} className='mr-[20px]' />
@@ -59,7 +59,7 @@ export default function Mint() {
                                     height={28}
                                     className="w-[28px] h-[28px]"
                                 />
-                                ) : (
+                            ) : (
                                 <div
                                     className="bg-[#62EDB5] text-black text-[14px] font-bold leading-[32.6px] px-[19px] py-[5px] rounded-full"
                                     id="sbt1"
@@ -78,7 +78,7 @@ export default function Mint() {
                                     height={28}
                                     className="w-[28px] h-[28px]"
                                 />
-                                ) : (
+                            ) : (
                                 <div
                                     className="bg-[#62EDB5] text-black text-[14px] font-bold leading-[32.6px] px-[19px] py-[5px] rounded-full"
                                     id="sbt2"
@@ -97,7 +97,7 @@ export default function Mint() {
                                     height={28}
                                     className="w-[28px] h-[28px]"
                                 />
-                                ) : (
+                            ) : (
                                 <div
                                     className="bg-[#62EDB5] text-black text-[14px] font-bold leading-[32.6px] px-[19px] py-[5px] rounded-full"
                                     id="sbt3"
@@ -110,6 +110,6 @@ export default function Mint() {
                 </div>
             </div>
         </div>
-        
+
     )
 }

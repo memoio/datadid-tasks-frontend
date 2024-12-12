@@ -2,8 +2,13 @@
 
 import Image from 'next/image';
 import { paytoneOne } from '@/app/ui/fonts';
+import { useAccount } from 'wagmi';
+import { useConnectModal, useAccountModal } from '@rainbow-me/rainbowkit';
 
 export default function Refer() {
+    const { address } = useAccount();
+    const { openConnectModal } = useConnectModal();
+    const { openAccountModal } = useAccountModal();
     return (
         <div className="mt-[90px] px-4 animate-fade-in">
             {/* Heading */}
@@ -74,7 +79,17 @@ export default function Refer() {
                     <div
                         className="bg-[#05F292] text-dark text-[14px] sm:text-[16px] md:text-[18px] font-bold px-6 py-3 text-center rounded-md cursor-pointer hover:bg-[#04D582] transition-colors duration-300"
                     >
-                        Connect Wallet
+                        {address ? (
+                            <div>
+                                <button onClick={openAccountModal} type="button">
+                                    <span>Address: {address}</span>
+                                </button>
+                            </div>
+                        ) : (
+                            <button onClick={openConnectModal} type="button">
+                                Connect Wallet
+                            </button>
+                        )}
                     </div>
                 </div>
             </div>
