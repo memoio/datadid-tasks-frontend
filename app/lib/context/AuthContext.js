@@ -4,7 +4,7 @@ import { useAccount } from "wagmi";
 import axios from "axios";
 
 // Create the context
-const AuthContext = createContext();
+const UserContext = createContext();
 
 // Create the provider component
 export const AuthContextProvider = ({ children }) => {
@@ -49,19 +49,12 @@ export const AuthContextProvider = ({ children }) => {
   }, [isConnected, address]);
   console.log(userInfo);
   return (
-    <AuthContext.Provider value={{ userInfo, setUserInfo }}>
+    <UserContext.Provider value={{ userInfo, setUserInfo }}>
       {children}
-    </AuthContext.Provider>
+    </UserContext.Provider>
   );
 };
 
-export const useAuth = () => {
-  const context = useContext(AuthContext);
-
-  // Throw an error if the hook is used outside the provider
-  if (!context) {
-    throw new Error("useAuth must be used within an AuthContextProvider");
-  }
-
-  return context;
+export const useUser = () => {
+  return useContext(UserContext);
 };
