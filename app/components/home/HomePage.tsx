@@ -4,6 +4,7 @@ import { useContext } from "react";
 import { FlagContext } from "@/app/lib/context/FlagContext";
 import Home from "./Home";
 import Did from "./Did";
+import CreateDID from "./CreateDID";
 import Activity from "./Activity";
 
 
@@ -17,6 +18,7 @@ export default function HomePage() {
                     <>
                         <Home />
                         <Did />
+                        <CreateDID />
                     </>
             )}
         </div>
