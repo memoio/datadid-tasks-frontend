@@ -23,15 +23,15 @@ export default function RootLayout({ children }: RootLayoutProps) {
       <head />
       <body>
         {/* Wrap your app in the AuthContextProvider to provide context globally */}
-    <WagmiProvider config={config}>
-      <QueryClientProvider client={queryClient}>
-            <RainbowKitProvider>
+        <WagmiProvider config={config}>
+          <QueryClientProvider client={queryClient}>
+            <RainbowKitProvider locale="en-US">
               <AuthContextProvider>
                 {children}
               </AuthContextProvider>
-        </RainbowKitProvider>
-      </QueryClientProvider>
-    </WagmiProvider>
+            </RainbowKitProvider>
+          </QueryClientProvider>
+        </WagmiProvider>
       </body>
     </html>
   );

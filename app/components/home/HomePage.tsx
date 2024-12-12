@@ -14,6 +14,7 @@ export default function HomePage() {
     return (
         <div className="w-full relative">
             {flag === 'activity' && <Activity />}
+
                 {flag === 'task' && (
                     <>
                         <Home />

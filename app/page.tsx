@@ -8,6 +8,7 @@ import LeaderboardPage from "./components/leaderboard/leaderboard";
 import RatePage from "./components/Rate/RatePage";
 import { FlagProvider } from "@/app/lib/context/FlagContext";
 
+
 export default function Home() {
   return (
     <div>

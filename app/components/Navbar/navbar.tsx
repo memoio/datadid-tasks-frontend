@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import styled from 'styled-components';// Import the useAuth hook
-import { useAuth } from '@/app/lib/context/AuthContext';
+
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 
 // Reusable styles for NavItems and Buttons
@@ -72,16 +72,6 @@ const ButtonBase = styled.div`
   }
 `;
 
-const Gbutton = styled(ButtonBase)`
-  background-color: #05F292;
-  color: dark;
-  font-weight: 700;
-  border-radius: 50px;
-  width: auto;
-  margin-left: 5px;
-  width: 100%;
-  text-align: center;
-`;
 
 const Dbutton = styled(ButtonBase)`
   background-color: #000000;
@@ -94,19 +84,10 @@ const Dbutton = styled(ButtonBase)`
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const { isLoggedIn, login, logout } = useAuth(); // Use the useAuth hook to get the login state
+
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
 
-  const handleLogin = () => {
-    login(); // Set the login state to true in context
-    console.log("User logged in!"); // You can also show some feedback here
-  };
-
-  const handleLogout = () => {
-    logout(); // Set the login state to false in context
-    console.log("User logged out!");
-  };
 
   return (
     <div className="w-full">
@@ -152,18 +133,13 @@ export default function Navbar() {
 
       {/* Nav Items for Small Screens */}
       <div
-        className={`${
-          menuOpen ? 'block' : 'hidden'
-        } flex flex-col items-start gap-2 sm:hidden mt-2`}
+        className={`${menuOpen ? 'block' : 'hidden'
+          } flex flex-col items-start gap-2 sm:hidden mt-2`}
       >
         <NavItem>Docs</NavItem>
         <NavItem>Airdrop</NavItem>
         <Dbutton>Check In</Dbutton>
-        {isLoggedIn ? (
-          <Gbutton onClick={handleLogout}>0xb189...1Bb10</Gbutton>
-        ) : (
-          <Gbutton onClick={handleLogin}>Log In</Gbutton>
-        )}
+        <ConnectButton />
       </div>
     </div>
   );
