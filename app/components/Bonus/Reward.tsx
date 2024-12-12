@@ -39,6 +39,7 @@ export default function Reward() {
                     {/* Right Section */}
                     <div
                         className="bg-[#05F292] rounded-[10px] text-[18px] font-bold text-center px-[25px] py-[20px] cursor-pointer hover:bg-[#04D582] hover:scale-105 transition-transform duration-300"
+                        style={{ pointerEvents: 'none', opacity: '0.5' }}
                     >
                         Verify
                     </div>

@@ -12,10 +12,10 @@ interface Item {
 }
 
 const items: Item[] = [
-    { src: "/x.png", alt: "SBT1", reward: "+500 Points" },
-    { src: "/tg.png", alt: "SBT2", reward: "+300 Points" },
-    { src: "/discord.png", alt: "SBT3", reward: "+100 Points" },
-    { src: "/retweet.png", alt: "SBT4", reward: "+400 Points" },
+    { src: "/x.png", alt: "SBT1", reward: "+50 Points" },
+    { src: "/tg.png", alt: "SBT2", reward: "+50 Points" },
+    { src: "/discord.png", alt: "SBT3", reward: "+50 Points" },
+    { src: "/retweet.png", alt: "SBT4", reward: "+50 Points" },
 ];
 
 export default function BindingPage() {
