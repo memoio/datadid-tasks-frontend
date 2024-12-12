@@ -8,15 +8,16 @@ export default function CyclePage() {
     const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
     const cards = [
-        { id: 1, imgSrc: "/Cycle1.png", participants: 800 },
-        { id: 2, imgSrc: "/Cycle2.png", participants: 800 },
-        { id: 3, imgSrc: "/Cycle3.png", participants: 800 },
-        { id: 4, imgSrc: "/Cycle4.png", participants: 800 },
-        { id: 5, imgSrc: "/Cycle5.png", participants: 800 },
-        { id: 6, imgSrc: "/Cycle6.png", participants: 800 },
-        { id: 7, imgSrc: "/Cycle7.png", participants: 800 },
-        { id: 8, imgSrc: "/Cycle8.png", participants: 800 },
-        { id: 9, imgSrc: "/Cycle9.png", participants: 800 },
+        { id: 1, imgSrc: "/Cycle1.png", participants: 800 , desc:"Metis is a permissionless Layer 2 network powering the next generation of decentralized applications."},
+        { id: 2, imgSrc: "/Cycle2.png", participants: 800 , desc:"Arkreen Network is a Web3-based infrastructure for globally distributed renewable energy resources that enables the connection and monetization of carbon reduction applications."},
+        { id: 3, imgSrc: "/Cycle3.png", participants: 800 , desc:"zCloak Network leads the Web3 revolution, focusing on trust and privacy in the AI age. Their solutions, using technologies like Zero-Knowledge Proof and Decentralized Identity, protect personal data and secure transactions. "},
+        { id: 4, imgSrc: "/Cycle4.png", participants: 800 , desc:"Adot is a decentralized AI Internet search network. It not only provides users with a more convenient and intelligent Web3 content search experience, but also helps developers quickly build their own personalized search functions."},
+        { id: 5, imgSrc: "/Cycle5.png", participants: 800 , desc:"Infinitar is a Web3 MOBA game that supports multiple arena modes, including 421 levels of individual ranked, 3v3, and 5v5 battles to satisfy different players' preferences."},
+        { id: 6, imgSrc: "/Cycle6.png", participants: 800 , desc:"Odyssey is an open-source, decentralized meta-universe stack where each user owns their own meta-universe, can modify it to their liking, and can implement their own business model, completely independent of the platform itself."},
+        { id: 7, imgSrc: "/Cycle7.png", participants: 800 , desc:"Ultiland focuses on real-world asset (RWA) issuance and lending protocols, addressing market pain points in RWA and digital art."},
+        { id: 8, imgSrc: "/Cycle8.png", participants: 800 , desc:"Do Network is a decentralized network with ultra-high performance.It has achieved a scalable DPOS consensus agreement through a number of technological innovations."},
+        { id: 9, imgSrc: "/Cycle9.png", participants: 800 , desc:"FLock.io is a revolutionary end-to-end AI co-creation platform that redefines the process of training, fine-tuning, and inference of AI models by integrating decentralized machine learning technologies in the chain."},
+        { id: 10, imgSrc: "/Cycle10.png", participants: 800 , desc:"The d.id is building protocols for proof of humanity and achievement network, connecting every human. Own your ID and achievement through  blockchain-powered protocol network, and be ready for the next societal breakthrough."},
     ];
 
     const handleClick = (index: number) => {
@@ -84,7 +85,8 @@ export default function CyclePage() {
                         onClick={() => handleClick(index)}
                     >
                         <div className="text-white text-[17.5px] leading-[28.5px] mb-4">
-                            Moso is an online shopping assistant that enables users to earn cashback in their preferred cryptocurrency.
+                            {/*Moso is an online shopping assistant that enables users to earn cashback in their preferred cryptocurrency.*/}
+                            {card.desc}
                         </div>
                         <div className="flex justify-between items-center">
                             <div>
