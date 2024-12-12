@@ -4,8 +4,12 @@ import { useState } from 'react';
 import { paytoneOne } from '@/app/ui/fonts';
 import Image from 'next/image';
 
+import { useUser } from "../../lib/context/AuthContext"
+import axios from 'axios';
+
 export default function CyclePage() {
     const [activeIndex, setActiveIndex] = useState<number | null>(null);
+    const { userInfo } = useUser();
 
     const cards = [
         { id: 1, imgSrc: "/Cycle1.png", participants: 800 , desc:"Metis is a permissionless Layer 2 network powering the next generation of decentralized applications."},
@@ -20,8 +24,27 @@ export default function CyclePage() {
         { id: 10, imgSrc: "/Cycle10.png", participants: 800 , desc:"The d.id is building protocols for proof of humanity and achievement network, connecting every human. Own your ID and achievement through  blockchain-powered protocol network, and be ready for the next societal breakthrough."},
     ];
 
-    const handleClick = (index: number) => {
-        setActiveIndex(index);
+    const handleClick = async (index: number) => {
+        try {
+            const actionId = 1012 + 10 * index;
+            console.log(actionId);
+            const respond = await axios.post("https://airdrop.7nc.top/api/record/add", {
+                "action": actionId
+            }, {
+                headers: {
+                    "accept": "application/hal+json",
+                    "Content-Type": "application/json",
+                    "uid": userInfo.uid,
+                    "token": userInfo.token
+                }
+            });
+
+            if (respond.status === 200) {
+                setActiveIndex(index);
+            }
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     return (
@@ -38,19 +61,19 @@ export default function CyclePage() {
                     This Cycle Ends In:
                 </p>
                 <div className="flex justify-center items-center gap-3 mt-4 animate-fade-in-delay">
-                {['Days', 'Hours', 'Minutes', 'Seconds'].map((unit, i) => (
-                    <div key={i} className="flex items-center">
-                        <div className="flex flex-col items-center mr-[10px]">
-                            <div className="w-[80px] h-[80px] bg-[#1E4874] rounded-sm flex justify-center items-center text-[28px] font-bold text-white">
-                                00
+                    {['Days', 'Hours', 'Minutes', 'Seconds'].map((unit, i) => (
+                        <div key={i} className="flex items-center">
+                            <div className="flex flex-col items-center mr-[10px]">
+                                <div className="w-[80px] h-[80px] bg-[#1E4874] rounded-sm flex justify-center items-center text-[28px] font-bold text-white">
+                                    00
+                                </div>
+                                <p className="text-[#05F292] text-[18px] mt-2">{unit}</p>
                             </div>
-                            <p className="text-[#05F292] text-[18px] mt-2">{unit}</p>
+                            {i !== 3 && (
+                                <div className="text-[#FFC917] text-[20px]">:</div>
+                            )}
                         </div>
-                        {i !== 3 && (
-                            <div className="text-[#FFC917] text-[20px]">:</div>
-                        )}
-                    </div>
-                ))}
+                    ))}
 
                 </div>
             </div>
@@ -68,7 +91,7 @@ export default function CyclePage() {
                             <p className="text-[#05F292] text-[28px] font-bold mt-2">{stat.value}</p>
                         </div>
                     </div>
-                    
+
                 ))}
             </div>
 
@@ -77,11 +100,10 @@ export default function CyclePage() {
                 {cards.map((card, index) => (
                     <div
                         key={card.id}
-                        className={`w-full sm:w-[46%] lg:w-[30%] p-4 rounded-[10px] transform transition-transform duration-300 ${
-                            activeIndex === index
-                                ? 'bg-gradient-to-br from-[#1E4874] to-[#0EB476] border-b-[5px] border-[#05F292] scale-105'
-                                : 'bg-[#0663412B] hover:scale-105'
-                        } cursor-pointer`}
+                        className={`w-full sm:w-[46%] lg:w-[30%] p-4 rounded-[10px] transform transition-transform duration-300 ${activeIndex === index
+                            ? 'bg-gradient-to-br from-[#1E4874] to-[#0EB476] border-b-[5px] border-[#05F292] scale-105'
+                            : 'bg-[#0663412B] hover:scale-105'
+                            } cursor-pointer`}
                         onClick={() => handleClick(index)}
                     >
                         <div className="text-white text-[17.5px] leading-[28.5px] mb-4">
@@ -94,11 +116,10 @@ export default function CyclePage() {
                                     {card.participants} Participants
                                 </p>
                                 <div
-                                    className={`flex justify-center items-center gap-2 mt-3 py-2 px-4 rounded-full text-[17.5px] font-bold ${
-                                        activeIndex === index
-                                            ? 'bg-gradient-to-b from-[#05F292] to-[#038C54]'
-                                            : 'bg-[#05F292] hover:bg-gradient-to-b hover:from-[#05F292] hover:to-[#038C54]'
-                                    } transition-colors duration-300`}
+                                    className={`flex justify-center items-center gap-2 mt-3 py-2 px-4 rounded-full text-[17.5px] font-bold ${activeIndex === index
+                                        ? 'bg-gradient-to-b from-[#05F292] to-[#038C54]'
+                                        : 'bg-[#05F292] hover:bg-gradient-to-b hover:from-[#05F292] hover:to-[#038C54]'
+                                        } transition-colors duration-300`}
                                 >
                                     <p>{activeIndex === index ? 'JOINED' : 'JOIN'}</p>
                                     <Image
@@ -106,9 +127,8 @@ export default function CyclePage() {
                                         alt="check"
                                         width={18}
                                         height={18}
-                                        className={`${
-                                            activeIndex === index ? 'block' : 'hidden'
-                                        }`}
+                                        className={`${activeIndex === index ? 'block' : 'hidden'
+                                            }`}
                                     />
                                 </div>
                             </div>
