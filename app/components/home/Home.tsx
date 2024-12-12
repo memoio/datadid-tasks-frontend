@@ -17,7 +17,7 @@ export default function Home() {
 
         {/* Subtitle */}
         <div className="text-white text-[14px] sm:text-[16px] md:text-[18px] lg:text-[20px] xl:text-[23px] leading-7 mt-[15px] text-center sm:text-left">
-            Claim your SBT, which unlocks future airdrop rewards.
+            Claim your Points, which unlocks future airdrop rewards.
         </div>
 
         {/* Action Buttons */}

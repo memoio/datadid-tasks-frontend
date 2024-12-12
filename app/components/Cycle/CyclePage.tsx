@@ -83,7 +83,7 @@ export default function CyclePage() {
                 {[
                     { label: 'Total Projects Completed', value: '1' },
                     { label: 'Total Tasks Accomplished', value: '4' },
-                    { label: 'Total SBT Earned', value: '400' },
+                    { label: 'Total Points Earned', value: '400' },
                 ].map((stat, i) => (
                     <div key={i}>
                         <div className="text-center">

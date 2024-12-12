@@ -42,7 +42,9 @@ export default function Earn() {
 
                     {/* Right Section */}
                     <div
-                        className="bg-[#05F292] rounded-[10px] text-[18px] font-bold text-center px-[25px] py-[20px] mt-[20px] md:mt-[0px] cursor-pointer hover:bg-[#04D582] hover:scale-105 transition-all duration-300">
+                        className="bg-[#05F292] rounded-[10px] text-[18px] font-bold text-center px-[25px] py-[20px] mt-[20px] md:mt-[0px] cursor-pointer hover:bg-[#04D582] hover:scale-105 transition-all duration-300" 
+                        style={{ pointerEvents: 'none', opacity: '0.5' }}
+                    >
                         Start To Earn
                     </div>
                 </div>
