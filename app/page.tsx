@@ -7,14 +7,14 @@ import Bonus from "./components/Bonus/Bonus";
 import LeaderboardPage from "./components/leaderboard/leaderboard";
 import RatePage from "./components/Rate/RatePage";
 import { FlagProvider } from "@/app/lib/context/FlagContext";
-import Sign from "./components/home/Mint";
+// import Sign from "./components/home/Mint";
 
 export default function Home() {
   return (
     <div>
       <main className="bg-[#051610] px-[20px] sm:px-[40px] md:px-[60px] lg:px-[80px] xl:px-[102px] py-[20px] sm:py-[25px] md:py-[30px] lg:py-[35px] xl:py-[40px]">
         <FlagProvider>
-          <Sign />
+          {/* <Sign /> */}
           <Navbar />
           <HomePage />
           <div>
