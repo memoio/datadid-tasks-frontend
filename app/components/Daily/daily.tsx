@@ -2,7 +2,8 @@
 import { useState } from 'react';
 import Image from 'next/image';
 
-import { useUser } from "../../lib/context/AuthContext"
+import { useUser } from "../../lib/context/AuthContext";
+import { useDailyAction } from "../../lib/context/FlagContext";
 import axios from 'axios';
 
 interface Item {
@@ -20,7 +21,8 @@ const items: Item[] = [
 ];
 
 export default function Daily() {
-    const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+    const [disabledIndices, setDisabledIndices] = useState(new Set());
+    const { dailyAction } = useDailyAction();
     const { userInfo } = useUser();
 
     const handleClick = async (index: number) => {
@@ -39,7 +41,7 @@ export default function Daily() {
             });
 
             if (respond.status === 200) {
-                setSelectedIndex(index);
+                setDisabledIndices((prev) => new Set(prev).add(index));
             }
         } catch (error) {
             console.log(error);
@@ -66,7 +68,7 @@ export default function Daily() {
                     <div
                         key={index}
                         onClick={() => handleClick(index)}
-                        className={`w-full sm:w-[48%] md:w-[30%] xl:w-[20%] transform transition-transform duration-300 ${selectedIndex === index
+                        className={`w-full sm:w-[48%] md:w-[30%] xl:w-[20%] transform transition-transform duration-300 ${disabledIndices.has(index) || dailyAction.has(index)
                             ? 'bg-gradient-to-r from-[#214177] to-[#064E33] scale-105 shadow-lg'
                             : 'bg-[#0663412B] hover:scale-105'
                             } p-6 rounded-[15px] cursor-pointer`}
@@ -87,11 +89,11 @@ export default function Daily() {
                             <h2 className="font-bold text-white text-[20px] sm:text-[22px] mb-2">{item.title}</h2>
                             <p className="font-bold text-white text-[18px] sm:text-[20px]">{item.reward}</p>
                             <div
-                                className={`${selectedIndex === index ? 'bg-gray-500' : 'bg-[#05F292]'
+                                className={`${disabledIndices.has(index) || dailyAction.has(index) ? 'bg-gray-500' : 'bg-[#05F292]'
                                     } flex justify-center items-center rounded-full px-4 py-2 mt-5 shadow-md transform hover:scale-110 transition-transform duration-300`}
                             >
                                 <span className="font-bold text-[14px] sm:text-[16px] text-white">
-                                    {selectedIndex === index ? 'Claimed' : 'Claim'}
+                                    {disabledIndices.has(index) || dailyAction.has(index) ? 'Claimed' : 'Claim'}
                                 </span>
                             </div>
                         </div>
