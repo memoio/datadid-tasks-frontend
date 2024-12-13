@@ -10,6 +10,7 @@ const UserContext = createContext();
 export const AuthContextProvider = ({ children }) => {
   const { isConnected, address } = useAccount();
   const [userInfo, setUserInfo] = useState(null);
+  // const [didInfo, setDidInfo] = useState(null);
 
   useEffect(() => {
     if (isConnected && address) {

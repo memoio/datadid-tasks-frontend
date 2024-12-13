@@ -9,62 +9,46 @@ import axios from 'axios';
 
 export default function CreateDID() {
     const { isConnected, address } = useAccount();
-    const currentAddress = isConnected ? address.slice(0, 6) + '...' + address.slice(-4) : '0x0000...0000'
-
-    // const { signMessage, data, isPending, isError, isSuccess } = useSignMessage()
-    // const message = "hello world"
+    const currentAddress = isConnected && address ? address.slice(0, 6) + '...' + address.slice(-4) : '0x0000...0000'
+    const { signMessageAsync } = useSignMessage()
     const { openConnectModal } = useConnectModal();
-    // const url = 'http://119.147.213.61:38082/did'
-    // const [did, setDID] = useState<string | null>(null);
-
-
+    const url = 'http://119.147.213.61:38082/did'
+    const [did, setDID] = useState<string | null>(null);
+    const [message, setMsg] = useState("");
 
     const createDID = async () => {
-        //     console.log("create")
-        //     try {
-        //         const response = await axios.get(url + `/createsigmsg`, {
-        //             params: {
-        //                 address,  // 通过 params 将 address 传递给后端
-        //             },
-        //         })
+        console.log("create")
+        try {
+            const response = await axios.get(url + `/createsigmsg`, {
+                params: {
+                    address,  // 通过 params 将 address 传递给后端
+                },
+            })
 
-        //         const data = response.data
-        //         console.log(data)
-        //     } catch (err) {
-        //         console.error('Error creating DID:', err);
-        //     }
+            if (response.status === 200) {
+                setMsg(response.data.msg)
 
-        // const response = await fetch(url, {
-        //     method: "POST",
-        //     headers: {
-        //         'Content-Type': 'application/json;charset=utf-8'
-        //     },
-        //     body: JSON.stringify({address, sig}),
-        // })
-        // .then(response => {
-        //     const data = response.json()
-        //     return data.did
-        // })
-        // .then(e => {
-        //     console.log(e)
-        // })
-        // .catch(err => {
-        //     console.error(err)
-        // })
-        // try {
-        //     const response = await fetch(url, {
-        //         method: "POST",
-        //         headers: {
-        //             'Content-Type': 'application/json;charset=utf-8',
-        //         },
-        //         body: JSON.stringify({ address, sig }),
-        //     });
+                console.log("message: ", message)
+                const sig = await signMessageAsync({ message });
+                console.log("sig:", sig)
 
-        //     const data = await response.json();
-        //     console.log(data.did);
-        // } catch (err) {
-        //     console.error('Error creating DID:', err);
-        // }
+                const response1 = await axios.post(url + `/create`, {
+                    address,
+                    sig,
+                });
+
+                if (response1.status === 200) {
+                    setDID(response1.data.did)
+                    alert('Success: DID retrieved successfully.');
+                } else {
+                    alert(`Error: ${response1.status} - ${response1.statusText}`);
+                }
+            }
+        } catch (err) {
+            console.error('Error creating DID:', err);
+        }
+
+
     }
 
     return (
@@ -73,6 +57,10 @@ export default function CreateDID() {
                 <div className={`${paytoneOne.className} text-white text-[20px] leading-[30px]`}>Data DID</div>
                 <div className='rounded-[10px] mt-[25px] px-[5px]'>
                     <Image src="/NFT_bg.png" alt="alt" width={483} height={366} />
+                </div>
+                <div className='flex justify-between mt-[16px]'>
+                    <div className='text-[16px] text-white leading-[30px]' >DID </div>
+                    <div className='text-[16px] text-white leading-[30px]' >{did}</div>
                 </div>
                 <div className='flex justify-between mt-[16px]'>
                     <div className='text-[16px] text-white leading-[30px]'>Create For</div>
