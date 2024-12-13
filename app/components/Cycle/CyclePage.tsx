@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import React, {useState, useEffect } from 'react';
 import { paytoneOne } from '@/app/ui/fonts';
 import Image from 'next/image';
 import { useUser } from "../../lib/context/AuthContext"
@@ -87,6 +87,7 @@ export default function CyclePage() {
         { id: 10, imgSrc: "/Cycle10.png", participants: 800, desc: "The d.id is building protocols for proof of humanity and achievement network, connecting every human. Own your ID and achievement through  blockchain-powered protocol network, and be ready for the next societal breakthrough." },
     ];
 
+    // for join
     const handleClick = async (index: number) => {
         try {
             const actionId = 1012 + 10 * index;
@@ -108,6 +109,7 @@ export default function CyclePage() {
         } catch (error) {
             console.log(error);
         }
+
     };
 
     return (
@@ -167,7 +169,7 @@ export default function CyclePage() {
                             ? 'bg-gradient-to-br from-[#1E4874] to-[#0EB476] border-b-[5px] border-[#05F292] scale-105'
                             : 'bg-[#0663412B] hover:scale-105'
                             } cursor-pointer`}
-                        onClick={() => handleClick(index)}
+                        // onClick={() => handleClick(index)}
                     >
                         <div className="text-white text-[17.5px] leading-[28.5px] mb-4">
                             {/*Moso is an online shopping assistant that enables users to earn cashback in their preferred cryptocurrency.*/}
@@ -183,6 +185,7 @@ export default function CyclePage() {
                                         ? 'bg-gradient-to-b from-[#05F292] to-[#038C54]'
                                         : 'bg-[#05F292] hover:bg-gradient-to-b hover:from-[#05F292] hover:to-[#038C54]'
                                         } transition-colors duration-300`}
+                                        onClick={() => handleClick(index)}
                                 >
                                     <p>{activeIndex === index ? 'JOINED' : 'JOIN'}</p>
                                     <Image
@@ -193,14 +196,14 @@ export default function CyclePage() {
                                         className={`${activeIndex === index ? 'block' : 'hidden'
                                             }`}
                                     />
-                                </div>
+                                </div>  
                             </div>
                             <Image
                                 src={card.imgSrc}
-                                width={50}
-                                height={50}
+                                width={100}
+                                height={100}
                                 alt="Cycle"
-                                className="w-[50px] h-[50px] transition-transform duration-300 hover:rotate-6"
+                                className="w-[100px] h-[100px] transition-transform duration-300 hover:rotate-6"
                             />
                         </div>
                     </div>
