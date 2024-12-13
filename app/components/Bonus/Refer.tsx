@@ -4,11 +4,73 @@ import Image from 'next/image';
 import { paytoneOne } from '@/app/ui/fonts';
 import { useAccount } from 'wagmi';
 import { useConnectModal, useAccountModal } from '@rainbow-me/rainbowkit';
+import { useUser } from "../../lib/context/AuthContext";
+import axios from 'axios';
+import { useState, useEffect } from 'react';
 
 export default function Refer() {
-    const { address } = useAccount();
+    const { isConnected, address } = useAccount();
     const { openConnectModal } = useConnectModal();
     const { openAccountModal } = useAccountModal();
+
+    const [inviteCode, setInviteCode] = useState("")
+    const { userInfo, setUserInfo } = useUser();
+
+    useEffect(() => {
+        if (isConnected) {
+            const getUserInviteCode = async () => {
+                if (!userInfo) {
+                    const bindWallet = async () => {
+                        try {
+                            const response = await axios.post(
+                                "https://airdrop.7nc.top/api/user/wallet/bind",
+                                {
+                                    walletAddress: address,
+                                },
+                                {
+                                    headers: {
+                                        accept: "application/hal+json",
+                                        uid: "11735283",
+                                        token: "37595d3a6e43876682b37cdcf941938e",
+                                        "Content-Type": "application/json",
+                                    },
+                                }
+                            );
+
+                            if (response.data.result === 1) {
+                                setUserInfo({
+                                    uid: response.data.data.uid,
+                                    token: response.data.data.token,
+                                });
+                            } else {
+                                console.error("Failed to bind wallet:", response.data);
+                            }
+                        } catch (error) {
+                            console.error("Error binding wallet:", error);
+                        }
+                    };
+                    bindWallet();
+                }
+                try {
+                    const response = await axios.get('https://airdrop.7nc.top/api/user/info', {
+                        headers: {
+                            'accept': '*/*',
+                            'uid': userInfo.uid,
+                            'token': userInfo.token,
+                        },
+                    });
+                    setInviteCode(response.data.data.inviteCode);
+                    console.log(response.data.data.inviteCode);
+                } catch (error) {
+                    console.error(error);
+                }
+            };
+            getUserInviteCode();
+        } else {
+            setInviteCode('******');
+        }
+    }, [address, isConnected, setUserInfo, userInfo]);
+
     return (
         <div className="mt-[90px] px-4 animate-fade-in">
             {/* Heading */}
@@ -71,10 +133,10 @@ export default function Refer() {
                     <div
                         className="rounded-[10px] bg-[#096A62] px-4 py-3 sm:px-[40px] sm:py-[25px] text-white text-center cursor-pointer hover:bg-[#05F292] transition-colors duration-300 text-[14px] sm:text-[16px] md:text-[18px]"
                     >
-                        133Pue10Vdyi16a
+                        {inviteCode}
                     </div>
                     <div className="text-[12px] sm:text-[14px] text-white text-center cursor-pointer hover:underline break-all">
-                        https://memolabs/?referralCode=133Pue1OVdyi16a
+                        https://memolabs/?referralCode={inviteCode}
                     </div>
                     <div
                         className="bg-[#05F292] text-dark text-[14px] sm:text-[16px] md:text-[18px] font-bold px-6 py-3 text-center rounded-md cursor-pointer hover:bg-[#04D582] transition-colors duration-300"
