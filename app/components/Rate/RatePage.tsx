@@ -15,7 +15,7 @@ export default function RatePage() {
 
             {/* Subtitle */}
             <div className="mx-[10%] w-[70%] text-center text-[14px] sm:text-[16px] md:text-[19px] leading-[24px] sm:leading-[28px] md:leading-[36px] text-white mt-4">
-                Accumulate as much SBT to redeem $memo upon memofoundation
+                Accumulate as much Points to redeem $memo upon memofoundation
             </div>
 
             {/* Rate Box */}
