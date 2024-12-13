@@ -15,6 +15,38 @@ export default function CyclePage() {
     const { userInfo, setUserInfo } = useUser();
     const { isConnected, address } = useAccount();
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const targetDate = new Date(new Date().setHours(15, 0, 0, 0) + 60 * 24 * 60 * 60 * 1000).getTime();
+
+    const [countdown, setCountdown] = useState<{ days: number; hours: number; minutes: number; seconds: number }>({
+        days: 0,
+        hours: 0,
+        minutes: 0,
+        seconds: 0,
+    })
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            // const now = new Date();
+            // const distance = targetDate - now.getTime();
+            const distance = 60 * 24 * 60 * 60 * 1000
+
+            if (distance < 0) {
+                clearInterval(interval);
+                setCountdown({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+            } else {
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                setCountdown({ days, hours, minutes, seconds });
+            }
+        }, 1000);
+
+        return () => clearInterval(interval);
+    }, [targetDate]);
+
     useEffect(() => {
         if (isConnected && address) {
             if (!userInfo) {
@@ -70,7 +102,7 @@ export default function CyclePage() {
                 };
                 getUserPoints();
             }
-            
+
         }
     }, [address, isConnected, setUserInfo, userInfo]);
 
@@ -128,7 +160,7 @@ export default function CyclePage() {
                         <div key={i} className="flex items-center">
                             <div className="flex flex-col items-center mr-[10px]">
                                 <div className="w-[80px] h-[80px] bg-[#1E4874] rounded-sm flex justify-center items-center text-[28px] font-bold text-white">
-                                    00
+                                    {countdown[unit.toLowerCase()]}
                                 </div>
                                 <p className="text-[#05F292] text-[18px] mt-2">{unit}</p>
                             </div>

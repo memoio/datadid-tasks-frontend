@@ -4,6 +4,8 @@ import Image from 'next/image';
 
 import { useUser } from "../../lib/context/AuthContext"
 import axios from 'axios';
+import { useConnectModal } from '@rainbow-me/rainbowkit';
+import { useAccount } from 'wagmi';
 
 interface Item {
     src: string;
@@ -22,6 +24,9 @@ const items: Item[] = [
 export default function Daily() {
     const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
     const { userInfo } = useUser();
+    const { isConnected } = useAccount();
+    const { openConnectModal } = useConnectModal();
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const handleClick = async (index: number) => {
         try {
