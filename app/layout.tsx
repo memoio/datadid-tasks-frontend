@@ -10,6 +10,7 @@ import { RainbowKitProvider } from '@rainbow-me/rainbowkit';
 import { config } from './wagmi';
 import { AuthContextProvider } from "./lib/context/AuthContext";
 import { DIDContextProvider } from "./lib/context/DIDContext";
+import { DailyActionProvider } from "./lib/context/FlagContext";
 
 const queryClient = new QueryClient();
 
@@ -29,9 +30,11 @@ export default function RootLayout({ children }: RootLayoutProps) {
           <QueryClientProvider client={queryClient}>
             <RainbowKitProvider locale="en-US">
               <AuthContextProvider>
-                <DIDContextProvider>
-                  {children}
-                </DIDContextProvider>
+                <DailyActionProvider>
+                  <DIDContextProvider>
+                    {children}
+                  </DIDContextProvider>
+                </DailyActionProvider>
               </AuthContextProvider>
             </RainbowKitProvider>
           </QueryClientProvider>
