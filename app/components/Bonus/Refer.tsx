@@ -52,15 +52,18 @@ export default function Refer() {
                     bindWallet();
                 }
                 try {
-                    const response = await axios.get('https://airdrop.7nc.top/api/user/info', {
-                        headers: {
-                            'accept': '*/*',
-                            'uid': userInfo.uid,
-                            'token': userInfo.token,
-                        },
-                    });
-                    setInviteCode(response.data.data.inviteCode);
-                    console.log(response.data.data.inviteCode);
+                    if (userInfo) {
+                        const response = await axios.get('https://airdrop.7nc.top/api/user/info', {
+                            headers: {
+                                'accept': '*/*',
+                                'uid': userInfo.uid,
+                                'token': userInfo.token,
+                            },
+                        });
+                        setInviteCode(response.data.data.inviteCode);
+                        console.log(response.data.data.inviteCode);
+                    }
+
                 } catch (error) {
                     console.error(error);
                 }
