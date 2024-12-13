@@ -72,7 +72,7 @@ export default function CreateDID() {
             <div className="border-[3px] rounded-[11px] border-white px-[38px] py-[26px] bg-gradient-to-r from-[#064E33] to-[#214177]">
                 <div className={`${paytoneOne.className} text-white text-[20px] leading-[30px]`}>Data DID</div>
                 <div className='rounded-[10px] mt-[25px] px-[5px]'>
-                    <Image src="/NFT_bg.png" alt="alt" width={483} height={233} />
+                    <Image src="/NFT_bg.png" alt="alt" width={483} height={366} />
                 </div>
                 <div className='flex justify-between mt-[16px]'>
                     <div className='text-[16px] text-white leading-[30px]'>Create For</div>
