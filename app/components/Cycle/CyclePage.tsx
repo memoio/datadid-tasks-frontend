@@ -1,6 +1,6 @@
 'use client';
 
-import React, {useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { paytoneOne } from '@/app/ui/fonts';
 import Image from 'next/image';
 import { useUser } from "../../lib/context/AuthContext"
@@ -201,7 +201,7 @@ export default function CyclePage() {
                             ? 'bg-gradient-to-br from-[#1E4874] to-[#0EB476] border-b-[5px] border-[#05F292] scale-105'
                             : 'bg-[#0663412B] hover:scale-105'
                             } cursor-pointer`}
-                        // onClick={() => handleClick(index)}
+                    // onClick={() => handleClick(index)}
                     >
                         <div className="text-white text-[17.5px] leading-[28.5px] mb-4">
                             {/*Moso is an online shopping assistant that enables users to earn cashback in their preferred cryptocurrency.*/}
@@ -217,7 +217,7 @@ export default function CyclePage() {
                                         ? 'bg-gradient-to-b from-[#05F292] to-[#038C54]'
                                         : 'bg-[#05F292] hover:bg-gradient-to-b hover:from-[#05F292] hover:to-[#038C54]'
                                         } transition-colors duration-300`}
-                                        onClick={() => handleClick(index)}
+                                    onClick={() => handleClick(index)}
                                 >
                                     <p>{activeIndex === index ? 'JOINED' : 'JOIN'}</p>
                                     <Image
@@ -228,7 +228,7 @@ export default function CyclePage() {
                                         className={`${activeIndex === index ? 'block' : 'hidden'
                                             }`}
                                     />
-                                </div>  
+                                </div>
                             </div>
                             <Image
                                 src={card.imgSrc}

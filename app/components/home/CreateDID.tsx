@@ -4,24 +4,34 @@ import { paytoneOne } from '@/app/ui/fonts';
 import Image from 'next/image';
 import { useAccount, useSignMessage } from 'wagmi';
 import { useConnectModal } from '@rainbow-me/rainbowkit';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useDIDInfo } from '@/app/lib/context/DIDContext';
 
 export default function CreateDID() {
     const { isConnected, address } = useAccount();
     const currentAddress = isConnected && address ? address.slice(0, 6) + '...' + address.slice(-4) : '0x0000...0000'
     const { signMessageAsync } = useSignMessage()
-    const { openConnectModal } = useConnectModal();
+    // const { openConnectModal } = useConnectModal();
     const url = 'http://119.147.213.61:38082/did'
     const [did, setDID] = useState<string | null>(null);
     const [message, setMsg] = useState("");
+    const { didInfo, setDIDInfo } = useDIDInfo();
+
+    useEffect(() => {
+        if (setDIDInfo) {
+            console.log("did ss:", didInfo)
+        }
+
+    }, [didInfo, setDIDInfo])
 
     const createDID = async () => {
         console.log("create")
+
         try {
             const response = await axios.get(url + `/createsigmsg`, {
                 params: {
-                    address,  // 通过 params 将 address 传递给后端
+                    address,
                 },
             })
 
@@ -72,15 +82,14 @@ export default function CreateDID() {
                 </div>
                 {/*  Create DID button */}
                 <div className='w-full py-[9px] text-center text-[16px] rounded-full font-bold bg-[#05F292]  mt-[10px]'>
-                    {isConnected ? (
+                    {didInfo ? (
                         <div>
-                            <button onClick={() => createDID()} >
-                                Create DID
-                            </button>
+                            DID: {didInfo.did}
+                            Number: {didInfo.number}
                         </div>
                     ) : (
                         <div>
-                            <button onClick={openConnectModal}>
+                            <button onClick={() => createDID()} >
                                 Create DID
                             </button>
                         </div>
