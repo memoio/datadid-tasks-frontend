@@ -22,7 +22,7 @@ export default function Home() {
 
         {/* Action Buttons */}
         <div className="flex flex-col md:flex-row items-center gap-3 mt-[30px]">
-            {['Complete Tasks', 'Earn SBT', 'Receive Airdrop'].map((text, index) => (
+            {['Complete Tasks', 'Earn Points', 'Receive Airdrop'].map((text, index) => (
                 <div key={index} className="flex items-center w-full sm:w-auto">
                     <div
                         className="bg-gradient-to-b from-[#092318] to-[#23895E] rounded-full px-[22px] py-[10px] text-center w-full sm:w-auto transform hover:scale-105 transition-transform duration-300 ease-in-out cursor-pointer mr-[10px] text-[12px]"
