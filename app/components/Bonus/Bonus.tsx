@@ -1,8 +1,8 @@
 'use client'
 
 import Refer from "./Refer";
-import Earn from "./Earn"
 import Reward from "./Reward";
+import Earn from "./Earn";
 
 export default function Bonus() {
     return (

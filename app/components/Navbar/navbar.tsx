@@ -1,8 +1,8 @@
 'use client';
 import { useState } from 'react';
 import styled from 'styled-components';// Import the useAuth hook
-
-import { ConnectButton } from '@rainbow-me/rainbowkit';
+import { useAuth } from '@/app/lib/context/AuthContext';
+import { useWallet } from '@/app/lib/context/WalletContext';
 
 // Reusable styles for NavItems and Buttons
 const commonStyles = `
@@ -72,22 +72,24 @@ const ButtonBase = styled.div`
   }
 `;
 
-
-const Dbutton = styled(ButtonBase)`
-  background-color: #000000;
-  color: #05F292;
+const Gbutton = styled(ButtonBase)`
+  background-color: #05F292;
+  color: dark;
   font-weight: 700;
-  border: 1px solid #05F292;
-  padding: 9px 17px;
+  border-radius: 50px;
+  width: auto;
+  margin-left: 5px;
+  width: 100%;
   text-align: center;
 `;
 
 export default function Navbar() {
-  const [menuOpen, setMenuOpen] = useState(false);
-
+  const [ menuOpen, setMenuOpen ] = useState(false);
+  const { isConnected } = useAuth();
+  const { showWallet } = useWallet();
+  const { toggleWallet } = useWallet();
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
-
 
   return (
     <div className="w-full">
@@ -125,21 +127,32 @@ export default function Navbar() {
             <NavItem>DOCS</NavItem>
             <NavItem>Airdrop</NavItem>
           </div>
-          <div className="flex gap-1">
-            <ConnectButton />
+          <div className="flex gap-1 ml-[20px]">
+            <div></div>
+            {isConnected ? ( // Conditional rendering based on the login state
+              <>
+                <Gbutton onClick={showWallet}>0xb189...1Bb10</Gbutton> {/* Log out button */}
+              </>
+            ) : (
+              <Gbutton onClick={toggleWallet}>Connect Wallet</Gbutton> // Log in button
+            )}
           </div>
         </div>
       </div>
 
       {/* Nav Items for Small Screens */}
       <div
-        className={`${menuOpen ? 'block' : 'hidden'
-          } flex flex-col items-start gap-2 sm:hidden mt-2`}
+        className={`${
+          menuOpen ? 'block' : 'hidden'
+        } flex flex-col items-start gap-2 sm:hidden mt-2`}
       >
         <NavItem>Docs</NavItem>
         <NavItem>Airdrop</NavItem>
-        <Dbutton>Check In</Dbutton>
-        <ConnectButton />
+        {isConnected ? (
+          <Gbutton onClick={showWallet}>0xb189...1Bb10</Gbutton>
+        ) : (
+          <Gbutton onClick={toggleWallet}>Connect Wallet</Gbutton>
+        )}
       </div>
     </div>
   );

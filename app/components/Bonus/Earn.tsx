@@ -12,7 +12,7 @@ export default function Earn() {
                 Play to Earn
             </h1>
             <div className="text-[20px] text-white mt-[20px]">
-                Experience the mini-games in TG and get more SBT! Comming soon..
+                Experience the mini-games in TG and get more SBT!
             </div>
 
             {/* Content Section */}
@@ -42,9 +42,7 @@ export default function Earn() {
 
                     {/* Right Section */}
                     <div
-                        className="bg-[#05F292] rounded-[10px] text-[18px] font-bold text-center px-[25px] py-[20px] mt-[20px] md:mt-[0px] cursor-pointer hover:bg-[#04D582] hover:scale-105 transition-all duration-300" 
-                        style={{ pointerEvents: 'none', opacity: '0.5' }}
-                    >
+                        className="bg-[#05F292] rounded-[10px] text-[18px] font-bold text-center px-[25px] py-[20px] mt-[20px] md:mt-[0px] cursor-pointer hover:bg-[#04D582] hover:scale-105 transition-all duration-300">
                         Start To Earn
                     </div>
                 </div>

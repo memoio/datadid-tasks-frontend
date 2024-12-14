@@ -15,7 +15,7 @@ export default function RatePage() {
 
             {/* Subtitle */}
             <div className="mx-[10%] w-[70%] text-center text-[14px] sm:text-[16px] md:text-[19px] leading-[24px] sm:leading-[28px] md:leading-[36px] text-white mt-4">
-                Accumulate as much Points to redeem $memo upon memofoundation
+                Accumulate as much SBT to redeem $memo upon memofoundation
             </div>
 
             {/* Rate Box */}
@@ -23,7 +23,7 @@ export default function RatePage() {
                 {/* Left Section */}
                 <div className="w-full sm:w-[50%] flex justify-around items-center gap-10 fade-in">
                     <div className="text-[14px] sm:text-[16px] md:text-[19px] leading-[15px] sm:leading-[18px] md:leading-[24px] text-white">
-                        1 SBT
+                        1 points
                     </div>
                     <div className="flex flex-col items-center animate-bounce">
                         <Image src="/Arrow_right.png" alt="right" width={28} height={10} />
@@ -32,7 +32,7 @@ export default function RatePage() {
                     <div className="flex items-center">
                         <Image src="/none.png" alt="none" width={18} height={18} className="sm:w-[22px] sm:h-[22px] mr-2" />
                         <div className="text-white text-[14px] sm:text-[16px] md:text-[19px] leading-[15px] sm:leading-[18px] md:leading-[24px]">
-                            MEMO
+                            $memo
                         </div>
                     </div>
                 </div>

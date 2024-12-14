@@ -1,13 +1,21 @@
 'use client';
 
 import { paytoneOne } from '@/app/ui/fonts';
-import axios from 'axios';
 import Image from 'next/image';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
-import { useUser } from "../../lib/context/AuthContext"
-import { it } from 'node:test';
-import { idchain } from 'viem/chains';
+const elements = [
+    { id: 1, address: "0x3a2...0813", score: 6, soul: "+50,000 SOUL", isCrown: true },
+    { id: 2, address: "0x3a2...0813", score: 6, soul: "+50,000 SOUL", isCrown: true },
+    { id: 3, address: "0x3a2...0813", score: 6, soul: "+50,000 SOUL", isCrown: true },
+    { id: 4, address: "0x3a2...0813", score: 6, soul: "+50,000 SOUL", isCrown: false },
+    { id: 5, address: "0x3a2...0813", score: 6, soul: "+50,000 SOUL", isCrown: false },
+    { id: 6, address: "0x3a2...0813", score: 6, soul: "+50,000 SOUL", isCrown: false },
+    { id: 7, address: "0x3a2...0813", score: 6, soul: "+50,000 SOUL", isCrown: false },
+    { id: 8, address: "0x3a2...0813", score: 6, soul: "+50,000 SOUL", isCrown: false },
+    { id: 9, address: "0x3a2...0813", score: 6, soul: "+50,000 SOUL", isCrown: false },
+    { id: 10, address: "0x3a2...0813", score: 6, soul: "+50,000 SOUL", isCrown: false },
+];
 
 interface PopupData {
     invitee: string;
@@ -15,58 +23,10 @@ interface PopupData {
     points: number;
 }
 
-const elements1 = [
-    { id: 1, address: "0x3a2...0813", score: 6, soul: "+50,000", isCrown: true },
-    { id: 2, address: "0x3a2...0813", score: 6, soul: "+50,000", isCrown: true },
-    { id: 3, address: "0x3a2...0813", score: 6, soul: "+50,000", isCrown: true },
-    { id: 4, address: "0x3a2...0813", score: 6, soul: "+50,000", isCrown: false },
-    { id: 5, address: "0x3a2...0813", score: 6, soul: "+50,000", isCrown: false },
-    { id: 6, address: "0x3a2...0813", score: 6, soul: "+50,000", isCrown: false },
-    { id: 7, address: "0x3a2...0813", score: 6, soul: "+50,000", isCrown: false },
-    { id: 8, address: "0x3a2...0813", score: 6, soul: "+50,000", isCrown: false },
-    { id: 9, address: "0x3a2...0813", score: 6, soul: "+50,000", isCrown: false },
-    { id: 10, address: "0x3a2...0813", score: 6, soul: "+50,000", isCrown: false },
-];
-
-
 export default function LeaderboardPage() {
     const [isWeekly, setIsWeekly] = useState(true);
     const [showPopup, setShowPopup] = useState(false);
     const [popupData, setPopupData] = useState<PopupData[]>([]);
-    const [elements, setElements] = useState([])
-    const { userInfo } = useUser();
-
-    useEffect(() => {
-        if (userInfo) {
-            const getRank = async () => {
-
-                try {
-                    const response = await axios.get("https://airdrop.7nc.top/api/invite/rank",
-                        {
-                            headers: {
-                                'accept': '*/*',
-                                uid: userInfo.uid,
-                                token: userInfo.token,
-                            },
-                        }
-                    )
-                    const ranklist = response.data.data.slice(0, 5).map((item, index) => ({
-                        id: index + 1,
-                        address: item.uid,
-                        score: 6,
-                        soul: item.points,
-                        isCrown: index < 3
-                    }))
-                    setElements(ranklist)
-                    console.log(response.data)
-                } catch (error) {
-                    console.error(error);
-                }
-            }
-
-            getRank()
-        }
-    })
 
     const handlePopup = () => {
         // Mock invitation details
@@ -99,7 +59,7 @@ export default function LeaderboardPage() {
         },
         {
             title: { full: "Leaderboard Reward", short: "Reward" },
-            value: "100",
+            value: "100 SOUL",
         },
     ];
 
@@ -119,21 +79,23 @@ export default function LeaderboardPage() {
             <div className="flex space-x-6 justify-center mt-[10px]">
                 <div
                     onClick={() => setIsWeekly(true)}
-                    className={`cursor-pointer transition-all ${isWeekly ? 'text-[#05F292]' : 'text-[#FFFFFF80]'
-                        } font-bold text-[18px] sm:text-[25px] leading-[25px] sm:leading-[30px] hover:scale-105`}
+                    className={`cursor-pointer transition-all ${
+                        isWeekly ? 'text-[#05F292]' : 'text-[#FFFFFF80]'
+                    } font-bold text-[18px] sm:text-[25px] leading-[25px] sm:leading-[30px] hover:scale-105`}
                 >
                     Weekly
                 </div>
                 <div
                     onClick={() => setIsWeekly(false)}
-                    className={`cursor-pointer transition-all ${!isWeekly ? 'text-[#05F292]' : 'text-[#FFFFFF80]'
-                        } font-bold text-[18px] sm:text-[25px] leading-[25px] sm:leading-[30px] hover:scale-105`}
+                    className={`cursor-pointer transition-all ${
+                        !isWeekly ? 'text-[#05F292]' : 'text-[#FFFFFF80]'
+                    } font-bold text-[18px] sm:text-[25px] leading-[25px] sm:leading-[30px] hover:scale-105`}
                 >
                     All Time
                 </div>
             </div>
 
-            {/* Stats Section */}
+            {/* Stats Section */} 
             <div className="w-full mt-[20px] sm:mt-[33px] py-[30px] sm:py-[61px] px-[10px] sm:px-[20px] border-x-[3px] border-[#05F292] rounded-[10px] bg-[#05F2920D] flex flex-col items-center shadow-md glow-effect">
                 <div className="grid grid-cols-1 sm:grid-cols-4 gap-6 w-full fade-in">
                     {inviteDatas.map((item, index) => (
@@ -158,38 +120,38 @@ export default function LeaderboardPage() {
             {/* Popup */}
             {showPopup && (
                 <div
-                    className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-[#196144] bg-opacity-50 z-50"
-                    onClick={closePopup} // This will trigger the `closePopup` function when clicking outside the popup
+                className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-[#196144] bg-opacity-50 z-50"
+                onClick={closePopup} // This will trigger the `closePopup` function when clicking outside the popup
+              >
+                <div
+                  className="bg-[#01180E] p-6 rounded-lg shadow-lg w-[90%] sm:w-[50%] border-x-[3px] border-[#05F292]"
+                  onClick={(e) => e.stopPropagation()} // Prevents closing when clicking inside the popup
                 >
-                    <div
-                        className="bg-[#01180E] p-6 rounded-lg shadow-lg w-[90%] sm:w-[50%] border-x-[3px] border-[#05F292]"
-                        onClick={(e) => e.stopPropagation()} // Prevents closing when clicking inside the popup
-                    >
-                        <h2 className="text-xl font-bold mb-4 text-white text-[24px]">Invitation Details</h2>
-                        <ul>
-                            <li className="mb-3 border-b pb-3 last:border-none last:mb-0">
-                                <div className="flex justify-between w-full">
-                                    <div className="w-[40%] text-center text-[20px] font-bold text-white">Invitee</div>
-                                    <div className="w-[40%] text-center text-[20px] font-bold text-white">Time</div>
-                                    <div className="w-[20%] text-center text-[20px] font-bold text-white">Points</div>
-                                </div>
-                            </li>
-                            {popupData.map((data, i) => (
-                                <li
-                                    key={i}
-                                    className="mb-3 border-b pb-3 last:border-none last:mb-0"
-                                >
-                                    <div className="flex justify-between w-full">
-                                        <div className="w-[40%] text-center text-white">{data.invitee}</div>
-                                        <div className="w-[40%] text-center text-white">{data.time}</div>
-                                        <div className="w-[20%] text-center text-white">{data.points}</div>
-                                    </div>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
+                  <h2 className={`${paytoneOne.className} text-transparent bg-clip-text bg-gradient-to-b from-[#214177] to-[#05F292] text-[20px] md:text-[30px] font-bold animate-fade-in`}>Invitation Details</h2>
+                  <ul>
+                    <li className="mb-3 border-b pb-3 last:border-none last:mb-0">
+                      <div className="flex justify-between w-full">
+                        <div className="w-[40%] text-center text-[20px] font-bold text-white">Invitee</div>
+                        <div className="w-[40%] text-center text-[20px] font-bold text-white">Time</div>
+                        <div className="w-[20%] text-center text-[20px] font-bold text-white">Points</div>
+                      </div>
+                    </li>
+                    {popupData.map((data, i) => (
+                      <li
+                        key={i}
+                        className="mb-3 border-b pb-3 last:border-none last:mb-0"
+                      >
+                        <div className="flex justify-between w-full">
+                          <div className="w-[40%] text-center text-white">{data.invitee}</div>
+                          <div className="w-[40%] text-center text-white">{data.time}</div>
+                          <div className="w-[20%] text-center text-white">{data.points}</div>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-
+              </div>
+              
             )}
 
 
