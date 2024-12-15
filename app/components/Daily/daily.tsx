@@ -2,55 +2,27 @@
 import { useState } from 'react';
 import Image from 'next/image';
 
-import { useUser } from "../../lib/context/AuthContext";
-import { useDailyAction } from "../../lib/context/FlagContext";
-import axios from 'axios';
-// import { useConnectModal } from '@rainbow-me/rainbowkit';
-// import { useAccount } from 'wagmi';
-
 interface Item {
-    src: string;
-    alt: string;
-    reward: string;
-    title: string;
+  src: string;
+  alt: string;
+  reward: string;
+  title: string;
 }
 
 const items: Item[] = [
-    { src: "/x.png", alt: "SBT1", reward: "+20 Points", title: "Check In" },
-    { src: "/tg.png", alt: "SBT2", reward: "+20 Points", title: "Share to chat group" },
-    { src: "/discord.png", alt: "SBT3", reward: "+20 Points", title: "Share to friends" },
-    { src: "/retweet.png", alt: "SBT4", reward: "+20 Points", title: "Share to Twitter" },
+    { src: "/x.png", alt: "SBT1", reward: "+50 Points", title: "Check In" },
+    { src: "/tg.png", alt: "SBT2", reward: "+50 Points", title: "Share to chat group" },
+    { src: "/discord.png", alt: "SBT3", reward: "+50 Points", title: "Share to friends" },
+    { src: "/retweet.png", alt: "SBT4", reward: "+50 Points", title: "Share to Twitter" },
 ];
 
 export default function Daily() {
-    const [disabledIndices, setDisabledIndices] = useState(new Set());
-    const { dailyAction } = useDailyAction();
-    const { userInfo } = useUser();
-    // const { isConnected } = useAccount();
-    // const { openConnectModal } = useConnectModal();
-    // const [isModalOpen, setIsModalOpen] = useState(false);
+    const [claimedIndices, setClaimedIndices] = useState<boolean[]>(Array(items.length).fill(false));
 
-    const handleClick = async (index: number) => {
-        try {
-            const actionId = 70 + index;
-            console.log(actionId);
-            const respond = await axios.post("https://airdrop.7nc.top/api/record/add", {
-                "action": actionId
-            }, {
-                headers: {
-                    "accept": "application/hal+json",
-                    "Content-Type": "application/json",
-                    "uid": userInfo.uid,
-                    "token": userInfo.token
-                }
-            });
-
-            if (respond.status === 200) {
-                setDisabledIndices((prev) => new Set(prev).add(index));
-            }
-        } catch (error) {
-            console.log(error);
-        }
+    const handleClaim = (index: number) => {
+        const updatedClaims = [...claimedIndices];
+        updatedClaims[index] = true; // Mark the clicked button as claimed
+        setClaimedIndices(updatedClaims);
     };
 
     return (
@@ -72,11 +44,11 @@ export default function Daily() {
                 {items.map((item: Item, index: number) => (
                     <div
                         key={index}
-                        onClick={() => handleClick(index)}
-                        className={`w-full sm:w-[48%] md:w-[30%] xl:w-[20%] transform transition-transform duration-300 ${disabledIndices.has(index) || dailyAction.has(index)
-                            ? 'bg-gradient-to-r from-[#214177] to-[#064E33] scale-105 shadow-lg'
-                            : 'bg-[#0663412B] hover:scale-105'
-                            } p-6 rounded-[15px] cursor-pointer`}
+                        className={`w-full sm:w-[48%] md:w-[30%] xl:w-[20%] transform transition-transform duration-300 ${
+                            claimedIndices[index]
+                                ? 'bg-gradient-to-r from-[#214177] to-[#064E33] scale-105 shadow-lg'
+                                : 'bg-[#0663412B] hover:scale-105'
+                        } p-6 rounded-[15px] cursor-pointer relative pb-[80px]`} // Added relative for the container
                     >
                         {/* Item Image */}
                         <div className="flex justify-center">
@@ -93,14 +65,18 @@ export default function Daily() {
                         <div className="text-center">
                             <h2 className="font-bold text-white text-[20px] sm:text-[22px] mb-2">{item.title}</h2>
                             <p className="font-bold text-white text-[18px] sm:text-[20px]">{item.reward}</p>
-                            <div
-                                className={`${disabledIndices.has(index) || dailyAction.has(index) ? 'bg-gray-500' : 'bg-[#05F292]'
-                                    } flex justify-center items-center rounded-full px-4 py-2 mt-5 shadow-md transform hover:scale-110 transition-transform duration-300`}
-                            >
-                                <span className="font-bold text-[14px] sm:text-[16px] text-white">
-                                    {disabledIndices.has(index) || dailyAction.has(index) ? 'Claimed' : 'Claim'}
-                                </span>
-                            </div>
+                        </div>
+
+                        {/* Claim Button */}
+                        <div
+                            onClick={() => handleClaim(index)}
+                            className={`${
+                                claimedIndices[index] ? 'bg-[#038C54]' : 'bg-[#05F292]'
+                            } w-[80%] flex justify-center items-center rounded-full px-4 py-2 shadow-md transform hover:scale-110 transition-transform duration-300 absolute bottom-[0px] left-[50%] translate-x-[-50%] translate-y-[-50%] cursor-pointer`}
+                        >
+                            <span className="font-bold text-[14px] sm:text-[16px] text-white">
+                                {claimedIndices[index] ? 'Gone' : 'Go'}
+                            </span>
                         </div>
                     </div>
                 ))}
