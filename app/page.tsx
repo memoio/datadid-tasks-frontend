@@ -12,10 +12,13 @@ import RatePage from "./components/Rate/RatePage";
 import { FlagProvider } from "@/app/lib/context/FlagContext";
 import { useDIDInfo } from "@/app/lib/context/DIDContext";
 import { useWallet } from "@/app/lib/context/WalletContext";
+import Activity from "./components/Cycle/Activity";
+import { useActivity } from "./lib/context/ActivityContext";
 
 export default function Home() {
   const { isOpenDid } = useDIDInfo();
   const { isInvited } = useWallet();
+  const { joinedCards } = useActivity();
   return (
     <div>
       <main className="bg-[#051610] px-[20px] sm:px-[40px] md:px-[60px] lg:px-[80px] xl:px-[102px] py-[20px] sm:py-[25px] md:py-[30px] lg:py-[35px] xl:py-[40px]">
@@ -26,6 +29,8 @@ export default function Home() {
               <Invite />
             ) : (isOpenDid ? (
               <DID />
+            ) : joinedCards.length !== 0 ? ( // Use length to check if no joined cards exist
+              <Activity />
             ) : (
               <div>
                 <HomePage />
