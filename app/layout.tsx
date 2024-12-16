@@ -10,6 +10,7 @@ import { RainbowKitProvider } from '@rainbow-me/rainbowkit';
 import { config } from './wagmi';
 import { AuthContextProvider } from "./lib/context/AuthContext";
 import { DailyActionProvider } from "./lib/context/FlagContext";
+import { WalletContextProvider } from "./lib/context/WalletContext";
 
 const queryClient = new QueryClient();
 
@@ -30,7 +31,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
             <RainbowKitProvider locale="en-US">
               <AuthContextProvider>
                 <DailyActionProvider>
-                  {children}
+                  <WalletContextProvider>
+                    {children}
+                  </WalletContextProvider>
                 </DailyActionProvider>
               </AuthContextProvider>
             </RainbowKitProvider>
