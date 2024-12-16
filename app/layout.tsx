@@ -12,6 +12,7 @@ import { AuthContextProvider } from "@/app/lib/context/AuthContext";
 import { DIDContextProvider } from "@/app/lib/context/DIDContext";
 import { WalletContextProvider } from "./lib/context/WalletContext";
 import { DailyActionProvider } from "@/app/lib/context/FlagContext";
+import { ActivityContextProvider } from "./lib/context/ActivityContext";
 
 const queryClient = new QueryClient();
 
@@ -34,7 +35,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
                 <DailyActionProvider>
                   <DIDContextProvider>
                     <WalletContextProvider>
-                      {children}
+                      <ActivityContextProvider>
+                        {children}
+                      </ActivityContextProvider>
                     </WalletContextProvider>
                   </DIDContextProvider>
                 </DailyActionProvider>
