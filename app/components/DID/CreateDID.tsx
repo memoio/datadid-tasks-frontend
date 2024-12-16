@@ -9,15 +9,14 @@ export default function CreateDID() {
     const { setIsCreatingDid } = useDIDInfo();
     const { isConnected, address } = useAccount();
 
+    
+
     const currentAddress = isConnected && address ? address.slice(0, 6) + '...' + address.slice(-4) : '0x0000...0000'
     const { signMessageAsync } = useSignMessage()
     const url = 'http://119.147.213.61:38082/did'
-    const [message, setMsg] = useState("");
 
     const handleCreateDid = async () => {
-        setIsCreatingDid(); // Update the state to show DidCreating
         console.log("create")
-
         try {
             const response = await axios.get(url + `/createsigmsg`, {
                 params: {
@@ -26,7 +25,7 @@ export default function CreateDID() {
             })
 
             if (response.status === 200) {
-                setMsg(response.data.msg)
+                const message = response.data.msg
 
                 console.log("message: ", message)
                 const sig = await signMessageAsync({ message });
@@ -38,7 +37,7 @@ export default function CreateDID() {
                 });
 
                 if (response1.status === 200) {
-                    alert('Success: DID retrieved successfully.');
+                    setIsCreatingDid();
                 } else {
                     alert(`Error: ${response1.status} - ${response1.statusText}`);
                 }

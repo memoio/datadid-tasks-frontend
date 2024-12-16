@@ -8,8 +8,7 @@ import {
   useState,
   ReactNode,
 } from "react";
-import { useAccount } from "wagmi";
-import axios from "axios";
+
 
 interface DIDContextType {
   isOpenDid: boolean;
@@ -22,10 +21,11 @@ interface DIDContextType {
     did: string;
     number: number;
   };
-  setDIDInfo: (didInfo: {
+  setDIDInfoExist: (didInfo: {
     did: string;
     number: number;
   }) => void;
+  isDIDInfoExist: boolean;
 }
 
 // Create the context
@@ -37,7 +37,7 @@ interface DIDContextProviderProps {
 
 // Create the provider component
 export const DIDContextProvider = ({ children }: DIDContextProviderProps) => {
-  const { isConnected, address } = useAccount();
+
   const [isOpenDid, setIsOpenDid] = useState(false);
   const [isCreatingDidState, setIsCreatingDidState] = useState(false);
   const [isCreatedState, setIsCreatedState] = useState(false);
@@ -45,6 +45,7 @@ export const DIDContextProvider = ({ children }: DIDContextProviderProps) => {
     did: "",
     number: 0,
   });
+  const [isDIDInfoExist, setIsDIDInfoExist] = useState(false);
 
   const setToggleDid = () => {
     setIsOpenDid((prev) => !prev);
@@ -58,36 +59,17 @@ export const DIDContextProvider = ({ children }: DIDContextProviderProps) => {
     setIsCreatedState(true);
   };
 
-  // Get DID Info
-  useEffect(() => {
-    if (isConnected && address) {
-      const getDIDInfo = async () => {
-        try {
-          const response = await axios.get(
-            "http://119.147.213.61:38082/did/info",
-            {
-              params: {
-                address,
-              },
-            }
-          );
+  const setDIDInfoExist = ({ did, number }: { did: string; number: number }) => {
+    setDIDInfo({
+      did: did,
+      number: number,
+    })
+    setIsDIDInfoExist(true)
+  }
 
-          if (response.status === 200) {
-            console.log("didinfo:", response.data);
-            setDIDInfo({
-              did: response.data.did,
-              number: response.data.number,
-            });
-          }
-        } catch (error) {
-          console.error("Error binding wallet:", error);
-        }
-      };
 
-      getDIDInfo();
-      console.log("didinfo did", didInfo);
-    }
-  }, [setIsCreatedDid]);
+
+
 
   return (
     <DIDContext.Provider
@@ -99,7 +81,8 @@ export const DIDContextProvider = ({ children }: DIDContextProviderProps) => {
         isCreatedState,
         setIsCreatedDid,
         didInfo,
-        setDIDInfo,
+        setDIDInfoExist,
+        isDIDInfoExist,
       }}
     >
       {children}
