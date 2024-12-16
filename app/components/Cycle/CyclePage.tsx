@@ -250,13 +250,17 @@ export default function CyclePage() {
                         onClick={() => handleClick(index)}
                         style={{ pointerEvents: disabledIndices.has(index) || cycleAction.has(index) ? 'none' : 'auto' }}
                     >
-                        <div className="text-white text-[17.5px] leading-[28.5px] mb-4">
+                        <div className="text-white text-[17.5px] leading-[28.5px] mb-4"
+                        style = {{ height:'250px'}}
+                        >
                             {/*Moso is an online shopping assistant that enables users to earn cashback in their preferred cryptocurrency.*/}
                             {card.desc}
                         </div>
                         <div className="flex justify-between items-center">
                             <div>
-                                <p className="text-white text-[20px] font-bold">
+                                <p className="text-white text-[20px] font-bold"
+                                style = {{ position:'absolute', bottom: 70}}
+                                >
                                     {card.participants} Participants
                                 </p>
                                 <div
@@ -264,7 +268,8 @@ export default function CyclePage() {
                                         ? 'bg-gradient-to-b from-[#05F292] to-[#038C54]'
                                         : 'bg-[#05F292] hover:bg-gradient-to-b hover:from-[#05F292] hover:to-[#038C54]'
                                         } transition-colors duration-300`}
-                                    onClick={() => handleClick(index)}
+                                        onClick={() => handleClick(index)}
+                                        style={{ position: 'absolute', bottom: 0, width: '20%', padding: '10px' }}
                                 >
                                     <p>{disabledIndices.has(index) || cycleAction.has(index) ? 'JOINED' : 'JOIN'}</p>
                                     <Image
@@ -282,6 +287,7 @@ export default function CyclePage() {
                                 height={100}
                                 alt="Cycle"
                                 className="w-[100px] h-[100px] transition-transform duration-300 hover:rotate-6"
+                                style={{ position: 'absolute',right:0, bottom: 0, width: '20%', padding: '10px' }}
                             />
                         </div>
                     </div>
