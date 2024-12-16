@@ -20,7 +20,15 @@ export default function LeaderboardPage() {
     const [isWeekly, setIsWeekly] = useState(true);
     const [showPopup, setShowPopup] = useState(false);
     const [popupData, setPopupData] = useState<PopupData[]>([]);
-    const [elements, setElements] = useState([])
+    interface ElementData {
+        id: number;
+        address: string;
+        score: number;
+        soul: number;
+        isCrown: boolean;
+    }
+
+    const [elements, setElements] = useState<ElementData[]>([])
     const { userInfo } = useUser();
 
     useEffect(() => {
@@ -37,7 +45,7 @@ export default function LeaderboardPage() {
                             },
                         }
                     )
-                    const ranklist = response.data.data.slice(0, 5).map((item, index) => ({
+                    const ranklist = response.data.data.slice(0, 10).map((item: { uid: any; points: any; }, index: number) => ({
                         id: index + 1,
                         address: item.uid,
                         score: 6,

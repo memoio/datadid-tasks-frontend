@@ -8,9 +8,9 @@ import { WagmiProvider } from 'wagmi';
 import { RainbowKitProvider } from '@rainbow-me/rainbowkit';
 
 import { config } from './wagmi';
-import { AuthContextProvider } from "./lib/context/AuthContext";
-import { DIDContextProvider } from "./lib/context/DIDContext";
-import { DailyActionProvider } from "./lib/context/FlagContext";
+import { AuthContextProvider } from "@/app/lib/context/AuthContext";
+import { DIDContextProvider } from "@/app/lib/context/DIDContext";
+import { DailyActionProvider } from "@/app/lib/context/FlagContext";
 
 const queryClient = new QueryClient();
 

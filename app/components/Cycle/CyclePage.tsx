@@ -4,8 +4,8 @@ import React, { useState, useEffect } from 'react';
 import { paytoneOne } from '@/app/ui/fonts';
 import Image from 'next/image';
 
-import { useUser } from "../../lib/context/AuthContext";
-import { useCycleAction } from "../../lib/context/FlagContext";
+import { useUser } from "@/app/lib/context/AuthContext";
+import { useCycleAction } from "@/app/lib/context/FlagContext";
 import axios from 'axios';
 import { useAccount } from "wagmi";
 
@@ -162,11 +162,11 @@ export default function CyclePage() {
                     This Cycle Ends In:
                 </p>
                 <div className="flex justify-center items-center gap-3 mt-4 animate-fade-in-delay">
-                    {['Days', 'Hours', 'Minutes', 'Seconds'].map((unit, i) => (
+                    {(['Days', 'Hours', 'Minutes', 'Seconds'] as const).map((unit, i) => (
                         <div key={i} className="flex items-center">
                             <div className="flex flex-col items-center mr-[10px]">
                                 <div className="w-[80px] h-[80px] bg-[#1E4874] rounded-sm flex justify-center items-center text-[28px] font-bold text-white">
-                                    {countdown[unit.toLowerCase()]}
+                                    {countdown[unit.toLowerCase() as keyof typeof countdown]}
                                 </div>
                                 <p className="text-[#05F292] text-[18px] mt-2">{unit}</p>
                             </div>
@@ -251,7 +251,7 @@ export default function CyclePage() {
                         style={{ pointerEvents: disabledIndices.has(index) || cycleAction.has(index) ? 'none' : 'auto' }}
                     >
                         <div className="text-white text-[17.5px] leading-[28.5px] mb-4"
-                        style = {{ height:'250px'}}
+                            style={{ height: '250px' }}
                         >
                             {/*Moso is an online shopping assistant that enables users to earn cashback in their preferred cryptocurrency.*/}
                             {card.desc}
@@ -259,7 +259,7 @@ export default function CyclePage() {
                         <div className="flex justify-between items-center">
                             <div>
                                 <p className="text-white text-[20px] font-bold"
-                                style = {{ position:'absolute', bottom: 70}}
+                                    style={{ position: 'absolute', bottom: 70 }}
                                 >
                                     {card.participants} Participants
                                 </p>
@@ -268,8 +268,8 @@ export default function CyclePage() {
                                         ? 'bg-gradient-to-b from-[#05F292] to-[#038C54]'
                                         : 'bg-[#05F292] hover:bg-gradient-to-b hover:from-[#05F292] hover:to-[#038C54]'
                                         } transition-colors duration-300`}
-                                        onClick={() => handleClick(index)}
-                                        style={{ position: 'absolute', bottom: 0, width: '20%', padding: '10px' }}
+                                    onClick={() => handleClick(index)}
+                                    style={{ position: 'absolute', bottom: 0, width: '20%', padding: '10px' }}
                                 >
                                     <p>{disabledIndices.has(index) || cycleAction.has(index) ? 'JOINED' : 'JOIN'}</p>
                                     <Image
@@ -287,7 +287,7 @@ export default function CyclePage() {
                                 height={100}
                                 alt="Cycle"
                                 className="w-[100px] h-[100px] transition-transform duration-300 hover:rotate-6"
-                                style={{ position: 'absolute',right:0, bottom: 0, width: '20%', padding: '10px' }}
+                                style={{ position: 'absolute', right: 0, bottom: 0, width: '20%', padding: '10px' }}
                             />
                         </div>
                     </div>
