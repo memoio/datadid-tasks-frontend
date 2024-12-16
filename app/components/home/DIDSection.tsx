@@ -2,8 +2,17 @@
 
 import { paytoneOne } from '@/app/ui/fonts';
 import Image from 'next/image';
+import { useDIDInfo } from "@/app/lib/context/DIDContext";
 
-export default function Did() {
+export default function DidSection() {
+    const { isOpenDid, setToggleDid } = useDIDInfo();
+
+    const openDid = () => {
+        console.log("opendid", isOpenDid)
+        setToggleDid(); // Toggle the DID state
+        console.log("opendid", isOpenDid)
+    };
+
     return (
         <div className="relative">
             {/* Background container with image and opacity */}
@@ -18,14 +27,24 @@ export default function Did() {
                     <div
                         className={`${paytoneOne.className} text-white text-[40px] sm:text-[40px] md:text-[45px] lg:text-[60px] xl:text-[80px] leading-tight mt-[30px] text-center sm:text-left`}
                     >
-                        <span className="text-[#05F292] animate-pulse"> Data </span>
-                        <span>DID</span>
+                        <span className="text-[#05F292] animate-pulse">Data</span> <span>DID</span>
                     </div>
                     <div className="text-white text-[14px] sm:text-[16px] md:text-[18px] lg:text-[20px] xl:text-[23px] leading-7 mt-[15px] text-center sm:text-left">
                         Your all-in-one, privacy-preserving self-sovereign identity. Own, manage, and monetize your data!
                     </div>
-                    <div className='text-white text-[12px] sm:text-[14px] mt-[15px] text-center sm:text-left'>Note: Users need to log in to MEMO and successfully mint DID before they can participate in earning points</div>
-
+                    <div className="text-white text-[12px] sm:text-[14px] mt-[15px] text-center sm:text-left">
+                        Note: Users need to log in to MEMO and successfully mint DID before they can participate in earning points.
+                    </div>
+                    <div className="text-center flex justify-center sm:justify-start">
+                        <div
+                            onClick={openDid}
+                            className="w-[150px] bg-[#05F292] flex justify-center items-center rounded-full px-4 py-2 mt-5 shadow-md transform hover:scale-110 transition-transform duration-300 cursor-pointer"
+                        >
+                            <span className="font-bold text-[14px] sm:text-[16px] text-white">
+                                Create DID
+                            </span>
+                        </div>
+                    </div>
                 </div>
 
                 {/* Right Section (Images) */}
@@ -53,7 +72,7 @@ export default function Did() {
                     />
                 </div>
             </div>
-            <div className='rounded-full px-[20px] py-[10px]'></div>
+            <div className="rounded-full px-[20px] py-[10px]"></div>
         </div>
     );
 }
