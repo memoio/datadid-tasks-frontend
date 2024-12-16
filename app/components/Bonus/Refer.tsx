@@ -3,15 +3,15 @@
 import Image from 'next/image';
 import { paytoneOne } from '@/app/ui/fonts';
 import { useAccount } from 'wagmi';
-import { useConnectModal, useAccountModal } from '@rainbow-me/rainbowkit';
 import { useUser } from "../../lib/context/AuthContext";
 import axios from 'axios';
 import { useState, useEffect } from 'react';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleCheck } from "@fortawesome/free-solid-svg-icons";
 
 export default function Refer() {
     const { isConnected, address } = useAccount();
-    const { openConnectModal } = useConnectModal();
-    const { openAccountModal } = useAccountModal();
+
 
     const [inviteCode, setInviteCode] = useState("")
     const { userInfo, setUserInfo } = useUser();
@@ -74,6 +74,21 @@ export default function Refer() {
         }
     }, [address, isConnected, setUserInfo, userInfo]);
 
+    const [showPopup, setShowPopup] = useState<string | null>(null); // State to manage popup visibility with a message
+
+    const copyToClipboard = (id: string) => {
+        const element = document.getElementById(id);
+        if (element) {
+            const textToCopy = element.textContent || '';
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                setShowPopup(`Copied: ${textToCopy}`);
+                setTimeout(() => setShowPopup(null), 2000); // Hide popup after 2 seconds
+            }).catch(() => {
+                alert('Failed to copy.');
+            });
+        }
+    };
+
     return (
         <div className="mt-[90px] px-4 animate-fade-in">
             {/* Heading */}
@@ -134,30 +149,40 @@ export default function Refer() {
                 {/* Right Section */}
                 <div className="bg-[#0A5C67] rounded-[10px] p-4 flex flex-col gap-4 items-center">
                     <div
-                        className="rounded-[10px] bg-[#096A62] px-4 py-3 sm:px-[40px] sm:py-[25px] text-white text-center cursor-pointer hover:bg-[#05F292] transition-colors duration-300 text-[14px] sm:text-[16px] md:text-[18px]"
+                        className="flex justify-between items-center gap-[30px] rounded-[10px] bg-[#096A62] px-4 py-3 sm:px-[20px] sm:py-[25px] text-white text-center transition-colors duration-300 text-[14px] sm:text-[16px] md:text-[18px]"
                     >
-                        {inviteCode}
+                        <div id="icon_txt">{inviteCode}</div>
+                        <Image
+                            src="/copy_symbol.png"
+                            width={18}
+                            height={18}
+                            className="w-[18px] h-[18px] cursor-pointer"
+                            id="icon"
+                            alt="copy symbol"
+                            onClick={() => copyToClipboard('icon_txt')}
+                        />
                     </div>
-                    <div className="text-[12px] sm:text-[14px] text-white text-center cursor-pointer hover:underline break-all">
+                    <div className="text-[12px] sm:text-[14px] text-white text-center cursor-pointer hover:underline break-all"
+                        id="link">
                         https://memolabs/?referralCode={inviteCode}
                     </div>
                     <div
-                        className="bg-[#05F292] text-dark text-[14px] sm:text-[16px] md:text-[18px] font-bold px-6 py-3 text-center rounded-md cursor-pointer hover:bg-[#04D582] transition-colors duration-300"
+                        className="bg-[#05F292] text-dark text-[14px] sm:text-[16px] md:text-[18px] font-bold px-6 py-3 text-center rounded-full cursor-pointer hover:bg-[#04D582] transition-colors duration-300"
+                        onClick={() => copyToClipboard('link')}
+                        id="copy_link"
                     >
-                        {address ? (
-                            <div>
-                                <button onClick={openAccountModal} type="button">
-                                    <span>Address: {address}</span>
-                                </button>
-                            </div>
-                        ) : (
-                            <button onClick={openConnectModal} type="button">
-                                Connect Wallet
-                            </button>
-                        )}
+                        Copy Referral Link
                     </div>
                 </div>
             </div>
+
+            {/* Popup Box */}
+            {showPopup && (
+                <div className="fixed bottom-4 right-4 bg-[#04D582] text-white text-[14px] sm:text-[16px] md:text-[18px] px-6 py-4 rounded-md shadow-lg flex items-center gap-3 animate-slide-in-up z-[50]">
+                    <FontAwesomeIcon icon={faCircleCheck} style={{ color: "white" }} />
+                    <p>{showPopup}</p>
+                </div>
+            )}
         </div>
     );
 }

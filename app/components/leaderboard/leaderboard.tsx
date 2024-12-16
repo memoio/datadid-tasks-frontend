@@ -6,8 +6,7 @@ import Image from 'next/image';
 import { useState, useEffect } from 'react';
 
 import { useUser } from "../../lib/context/AuthContext"
-import { it } from 'node:test';
-import { idchain } from 'viem/chains';
+
 
 interface PopupData {
     invitee: string;
@@ -15,25 +14,21 @@ interface PopupData {
     points: number;
 }
 
-const elements1 = [
-    { id: 1, address: "0x3a2...0813", score: 6, soul: "+50,000", isCrown: true },
-    { id: 2, address: "0x3a2...0813", score: 6, soul: "+50,000", isCrown: true },
-    { id: 3, address: "0x3a2...0813", score: 6, soul: "+50,000", isCrown: true },
-    { id: 4, address: "0x3a2...0813", score: 6, soul: "+50,000", isCrown: false },
-    { id: 5, address: "0x3a2...0813", score: 6, soul: "+50,000", isCrown: false },
-    { id: 6, address: "0x3a2...0813", score: 6, soul: "+50,000", isCrown: false },
-    { id: 7, address: "0x3a2...0813", score: 6, soul: "+50,000", isCrown: false },
-    { id: 8, address: "0x3a2...0813", score: 6, soul: "+50,000", isCrown: false },
-    { id: 9, address: "0x3a2...0813", score: 6, soul: "+50,000", isCrown: false },
-    { id: 10, address: "0x3a2...0813", score: 6, soul: "+50,000", isCrown: false },
-];
 
 
 export default function LeaderboardPage() {
     const [isWeekly, setIsWeekly] = useState(true);
     const [showPopup, setShowPopup] = useState(false);
     const [popupData, setPopupData] = useState<PopupData[]>([]);
-    const [elements, setElements] = useState([])
+    interface ElementData {
+        id: number;
+        address: string;
+        score: number;
+        soul: number;
+        isCrown: boolean;
+    }
+
+    const [elements, setElements] = useState<ElementData[]>([])
     const { userInfo } = useUser();
 
     useEffect(() => {
@@ -50,7 +45,7 @@ export default function LeaderboardPage() {
                             },
                         }
                     )
-                    const ranklist = response.data.data.slice(0, 5).map((item, index) => ({
+                    const ranklist = response.data.data.slice(0, 10).map((item: { uid: any; points: any; }, index: number) => ({
                         id: index + 1,
                         address: item.uid,
                         score: 6,
@@ -66,7 +61,7 @@ export default function LeaderboardPage() {
 
             getRank()
         }
-    })
+    }, [userInfo])
 
     const handlePopup = () => {
         // Mock invitation details
