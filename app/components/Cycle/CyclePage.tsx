@@ -182,8 +182,8 @@ export default function CyclePage() {
             {/* Stats Section */}
             <div className="flex flex-col sm:flex-row justify-around items-center mt-[65px] gap-8 px-6 animate-fade-in bg-[#05F2920D] border-x-[3px] border-[#05F292] rounded-[10px] py-[20px]">
                 {[
-                    { label: 'Total Projects Completed', value: '1' },
-                    { label: 'Total Tasks Accomplished', value: '4' },
+                    { label: 'Total Projects Completed', value: '0' },
+                    { label: 'Total Tasks Accomplished', value: '0' },
                     { label: 'Total Points Earned', value: points },
                 ].map((stat, i) => (
                     <div key={i}>
