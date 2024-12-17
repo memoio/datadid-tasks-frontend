@@ -11,7 +11,6 @@ export default function DidCreating() {
         const timer = setTimeout(() => {
             setIsCreatedDid();
         }, 3000);
-        console.log("SSSS")
 
         // Cleanup the timeout on component unmount
         return () => clearTimeout(timer);

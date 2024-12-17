@@ -47,7 +47,7 @@ export default function LeaderboardPage() {
                     )
                     const ranklist = response.data.data.slice(0, 10).map((item: { walletAddress: any; points: any; }, index: number) => ({
                         id: index + 1,
-                        address: item.walletAddress,
+                        address: (item.walletAddress).slice(0, 6) + "..." + (item.walletAddress || "").slice(-4),
                         score: index + 10,
                         soul: item.points,
                         isCrown: index < 3
@@ -88,7 +88,7 @@ export default function LeaderboardPage() {
             value: "0x49e65cd..4c",
         },
         {
-            title: { full: "Friends Invited This Week", short: "Friends" },
+            title: { full: "Friends Invited", short: "Friends" },
             value: "2K+",
             onClick: handlePopup, // Add onClick to this item
         },
@@ -200,7 +200,7 @@ export default function LeaderboardPage() {
                     </div>
                     <div className="text-white text-[16px] sm:text-[20px] font-bold leading-[24px] sm:leading-[30px] w-[20%]">
                         <span className="block md:hidden">Friends</span>
-                        <span className="hidden md:block">Friends Invited This Week</span>
+                        <span className="hidden md:block">Friends Invited</span>
                     </div>
                     <div className="text-white text-[16px] sm:text-[20px] font-bold leading-[24px] sm:leading-[30px] w-[30%]">
                         <span className="block md:hidden">Reward</span>
