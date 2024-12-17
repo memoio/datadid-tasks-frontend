@@ -57,7 +57,7 @@ export default function BindingPage() {
                         MEMO Community Quests
                     </div>
                     <div className="text-[14px] md:text-[24px] text-white bg-gradient-to-r from-[#FFFFFF] to-[#999999] text-transparent bg-clip-text">
-                        The More Accounts You Bind, The More SBT You Get Daily
+                        The More Accounts You Bind, The More Points You Get Daily
                     </div>
                 </div>
             </div>

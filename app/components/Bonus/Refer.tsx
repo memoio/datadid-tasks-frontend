@@ -140,7 +140,7 @@ export default function Refer() {
                                 GET Points When Users Sign Up
                             </div>
                             <div className="text-[14px] sm:text-[18px] text-white text-center sm:text-left">
-                                When your friend signs up on the app, you will receive Grass points.
+                                When your friend signs up on the app, you will receive points.
                             </div>
                         </div>
                     </div>
