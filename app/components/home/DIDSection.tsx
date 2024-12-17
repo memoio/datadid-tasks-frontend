@@ -20,7 +20,7 @@ export default function DidSection() {
         const getDIDInfo = async () => {
             try {
                 const response = await axios.get(
-                    "http://119.147.213.61:38082/did/info",
+                    "https://didapi.memolabs.org/did/info",
                     {
                         params: {
                             address,
@@ -39,7 +39,7 @@ export default function DidSection() {
                 if (response.status === 506) {
                     console.log("ddd")
                 }
-            } catch (error) {
+            } catch (error: any) {
                 if (error.response && error.response.status === 506) {
 
                 }

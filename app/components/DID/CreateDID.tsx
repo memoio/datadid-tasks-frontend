@@ -19,7 +19,7 @@ export default function CreateDID() {
     const currentAddress = isConnected && address ? address.slice(0, 6) + '...' + address.slice(-4) : '0x0000...0000'
     const { signMessageAsync } = useSignMessage()
 
-    const url = 'http://119.147.213.61:38082/did'
+    const url = 'https://didapi.memolabs.org/did'
 
     const handleCreateDid = async () => {
         if (isConnected) {
