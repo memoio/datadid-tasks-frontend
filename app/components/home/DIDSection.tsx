@@ -5,51 +5,96 @@ import Image from 'next/image';
 import { useDIDInfo } from "@/app/lib/context/DIDContext";
 import axios from 'axios';
 import { useAccount } from "wagmi";
-
+import { useConnectModal } from '@rainbow-me/rainbowkit';
+import { useEffect } from 'react';
 
 export default function DidSection() {
     const { setToggleDid } = useDIDInfo();
-    const { address } = useAccount();
-    const { didInfo, setDIDInfoExist, setIsCreatedDid, isDIDInfoExist, } = useDIDInfo();
+    const { address, isConnected } = useAccount();
+    const { didInfo, setDID, isDIDInfoState, isDIDExistState, setIsDIDExist } = useDIDInfo();
+    const { openConnectModal } = useConnectModal();
 
     const openDid = () => {
+        if (!isConnected) {
+            openConnectModal?.();
+            return;
+        }
         setToggleDid(); // Toggle the DID state
     };
 
-    if (!isDIDInfoExist) {
-        const getDIDInfo = async () => {
-            try {
-                const response = await axios.get(
-                    "https://didapi.memolabs.org/did/info",
-                    {
-                        params: {
-                            address,
-                        },
+    useEffect(() => {
+        if (!isDIDExistState) {
+            const getDIDExist = async () => {
+                try {
+                    const response = await axios.get(
+                        "https://didapi.memolabs.org/did/exist",
+                        {
+                            params: {
+                                address,
+                            },
+                        }
+                    );
+
+                    if (response.status === 200) {
+                        if (response.data.exist === 1) {
+                            console.log("did eixst:", response.data);
+                            setIsDIDExist();
+                        }
                     }
-                );
 
-                if (response.status === 200) {
-                    console.log("didinfo:", response.data);
-                    setDIDInfoExist({
-                        did: response.data.did,
-                        number: response.data.number,
-                    });
+                    if (response.status === 506) {
+                        console.log("ddd")
+                    }
+                } catch (error: any) {
+                    if (error.response && error.response.status === 506) {
+
+                    }
+
+                    return
                 }
+            };
 
-                if (response.status === 506) {
-                    console.log("ddd")
+            getDIDExist();
+        }
+    }, [isConnected])
+
+    useEffect(() => {
+        console.log("didstate", isDIDExistState)
+        if (isDIDExistState && !isDIDInfoState) {
+            const getDIDInfo = async () => {
+                try {
+                    const response = await axios.get(
+                        "https://didapi.memolabs.org/did/info",
+                        {
+                            params: {
+                                address,
+                            },
+                        }
+                    );
+
+                    if (response.status === 200) {
+                        console.log("didinfo:", response.data);
+                        setDID({
+                            did: response.data.did,
+                            number: response.data.number.toString().padStart(6, '0'),
+                        })
+                    }
+
+                    if (response.status === 506) {
+                        console.log("ddd")
+                    }
+                } catch (error: any) {
+                    if (error.response && error.response.status === 506) {
+
+                    }
+
+                    return
                 }
-            } catch (error: any) {
-                if (error.response && error.response.status === 506) {
+            };
 
-                }
-
-                return
-            }
-        };
-
-        getDIDInfo();
-    }
+            getDIDInfo();
+        }
+    }, [setIsDIDExist])
 
     return (
         <div className="relative">
@@ -74,7 +119,7 @@ export default function DidSection() {
                         Note: Users need to log in to MEMO and successfully create DID before they can participate in earning points.
                     </div>
                     <div className="text-center flex justify-center sm:justify-start">
-                        {isDIDInfoExist ? (
+                        {isDIDInfoState && isConnected ? (
                             <div className="rounded-[10px] mt-[25px] px-[5px]">
                                 <div className="text-[15px] text-white mt-[16px] text-left animate-fade-in">
                                     number:  {didInfo.number}
