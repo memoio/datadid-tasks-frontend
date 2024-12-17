@@ -1,5 +1,6 @@
 "use client";
 
+import { tree } from "next/dist/build/templates/app-page";
 import {
   useEffect,
   createContext,
@@ -18,13 +19,15 @@ interface DIDContextType {
   setIsCreatedDid: () => void;
   didInfo: {
     did: string;
-    number: number;
+    number: string;
   };
-  setDIDInfoExist: (didInfo: {
+  setDID: (didInfo: {
     did: string;
-    number: number;
+    number: string;
   }) => void;
-  isDIDInfoExist: boolean;
+  isDIDExistState: boolean;
+  setIsDIDExist: () => void;
+  isDIDInfoState: boolean;
 }
 
 // Create the context
@@ -42,10 +45,10 @@ export const DIDContextProvider = ({ children }: DIDContextProviderProps) => {
   const [isCreatedState, setIsCreatedState] = useState(false);
   const [didInfo, setDIDInfo] = useState({
     did: "",
-    number: 0,
+    number: "000000",
   });
-  const [isDIDInfoExist, setIsDIDInfoExist] = useState(false);
-
+  const [isDIDExistState, setIsDIDExistState] = useState(false);
+  const [isDIDInfoState, setIsDIDInfoState] = useState(false);
   const setToggleDid = () => {
     setIsOpenDid((prev) => !prev);
   };
@@ -58,13 +61,18 @@ export const DIDContextProvider = ({ children }: DIDContextProviderProps) => {
     setIsCreatedState(true);
   };
 
-  const setDIDInfoExist = ({ did, number }: { did: string; number: number }) => {
+  const setDID = ({ did, number }: { did: string; number: string }) => {
     setDIDInfo({
       did: did,
       number: number,
     })
-    setIsDIDInfoExist(true)
+    setIsDIDInfoState(true)
   }
+
+  const setIsDIDExist = () => {
+    setIsDIDExistState(true)
+  }
+
 
 
 
@@ -80,8 +88,10 @@ export const DIDContextProvider = ({ children }: DIDContextProviderProps) => {
         isCreatedState,
         setIsCreatedDid,
         didInfo,
-        setDIDInfoExist,
-        isDIDInfoExist,
+        setDID,
+        isDIDExistState,
+        setIsDIDExist,
+        isDIDInfoState
       }}
     >
       {children}

@@ -164,7 +164,7 @@ export default function Refer() {
                     </div>
                     <div className="text-[12px] sm:text-[14px] text-white text-center cursor-pointer hover:underline break-all"
                         id="link">
-                        https://memolabs/?referralCode={inviteCode}
+                        https://airdrop.memolabs.org/?referralCode={inviteCode}
                     </div>
                     <div
                         className="bg-[#05F292] text-dark text-[14px] sm:text-[16px] md:text-[18px] font-bold px-6 py-3 text-center rounded-full cursor-pointer hover:bg-[#04D582] transition-colors duration-300"

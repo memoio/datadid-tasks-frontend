@@ -56,7 +56,7 @@ export default function HomePage() {
 
             bindWallet();
         }
-    }, [isConnected, address, setUserInfo]);
+    }, [isConnected]);
 
     return (
         <div className="w-full relative">
