@@ -45,10 +45,10 @@ export default function LeaderboardPage() {
                             },
                         }
                     )
-                    const ranklist = response.data.data.slice(0, 10).map((item: { uid: any; points: any; }, index: number) => ({
+                    const ranklist = response.data.data.slice(0, 10).map((item: { walletAddress: any; points: any; }, index: number) => ({
                         id: index + 1,
-                        address: item.uid,
-                        score: 6,
+                        address: item.walletAddress,
+                        score: index + 10,
                         soul: item.points,
                         isCrown: index < 3
                     }))

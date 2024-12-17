@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { useDIDInfo } from "@/app/lib/context/DIDContext";
 import axios from 'axios';
 import { useAccount } from "wagmi";
-import { useEffect } from 'react';
+
 
 export default function DidSection() {
     const { setToggleDid } = useDIDInfo();
@@ -16,7 +16,7 @@ export default function DidSection() {
         setToggleDid(); // Toggle the DID state
     };
 
-    useEffect(() => {
+    if (!isDIDInfoExist) {
         const getDIDInfo = async () => {
             try {
                 const response = await axios.get(
@@ -49,8 +49,7 @@ export default function DidSection() {
         };
 
         getDIDInfo();
-        console.log("didinfo did", didInfo);
-    }, [isDIDInfoExist])
+    }
 
     return (
         <div className="relative">

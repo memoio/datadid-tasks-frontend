@@ -2,49 +2,62 @@ import { paytoneOne } from '@/app/ui/fonts';
 import Image from 'next/image';
 import { useDIDInfo } from "@/app/lib/context/DIDContext";
 import axios from 'axios';
-import { useAccount, useSignMessage } from 'wagmi';
+import { useAccount, useSignMessage, useChains } from 'wagmi';
 import React, { useState, useEffect } from 'react';
+import { useConnectModal } from '@rainbow-me/rainbowkit';
 
 export default function CreateDID() {
     const { setIsCreatingDid } = useDIDInfo();
-    const { isConnected, address } = useAccount();
+    const { isConnected, address, chain } = useAccount();
+    const { openConnectModal } = useConnectModal();
+    const { } = useChains();
+    // const [network, setNetwork] = useState('none');
 
-    
+
+
 
     const currentAddress = isConnected && address ? address.slice(0, 6) + '...' + address.slice(-4) : '0x0000...0000'
     const { signMessageAsync } = useSignMessage()
+
     const url = 'http://119.147.213.61:38082/did'
 
     const handleCreateDid = async () => {
-        console.log("create")
-        try {
-            const response = await axios.get(url + `/createsigmsg`, {
-                params: {
-                    address,
-                },
-            })
+        if (isConnected) {
+            console.log("create")
+            try {
+                const response = await axios.get(url + `/createsigmsg`, {
+                    params: {
+                        address,
+                    },
+                })
 
-            if (response.status === 200) {
-                const message = response.data.msg
+                if (response.status === 200) {
+                    const message = response.data.msg
 
-                console.log("message: ", message)
-                const sig = await signMessageAsync({ message });
-                console.log("sig:", sig)
+                    console.log("message: ", message)
+                    const sig = await signMessageAsync({ message });
+                    console.log("sig:", sig)
 
-                const response1 = await axios.post(url + `/create`, {
-                    address,
-                    sig,
-                });
+                    const response1 = await axios.post(url + `/create`, {
+                        address,
+                        sig,
+                    });
 
-                if (response1.status === 200) {
-                    setIsCreatingDid();
-                } else {
-                    alert(`Error: ${response1.status} - ${response1.statusText}`);
+                    if (response1.status === 200) {
+                        setIsCreatingDid();
+                    } else {
+                        alert(`Error: ${response1.status} - ${response1.statusText}`);
+                    }
                 }
+            } catch (err) {
+                console.error('Error creating DID:', err);
             }
-        } catch (err) {
-            console.error('Error creating DID:', err);
+        } else {
+            if (openConnectModal) {
+                openConnectModal();
+            }
         }
+
     };
 
     return (
@@ -66,19 +79,19 @@ export default function CreateDID() {
                 </div>
                 <div className="flex justify-between mt-[16px] animate-fade-in-delay">
                     <div className="text-[16px] text-white leading-[30px]">Network</div>
-                    <div className="text-[16px] text-white leading-[30px]">Polygon</div>
+                    <div className="text-[16px] text-white leading-[30px]">{chain ? (chain.name) : ("none")}</div>
                 </div>
                 <div className="flex justify-between mt-[16px] animate-fade-in-delay">
                     <div className="text-[16px] text-white leading-[30px]">Mint To</div>
-                    <div className="text-[16px] text-white leading-[30px]">0xb189...nh79</div>
+                    <div className="text-[16px] text-white leading-[30px]">{address}</div>
                 </div>
                 <div className="flex justify-between mt-[16px] animate-fade-in-delay">
                     <div className="text-[16px] text-white leading-[30px]">Play With</div>
-                    <div className="text-[16px] text-white leading-[30px]">0.00 MEMO</div>
+                    <div className="text-[16px] text-white leading-[30px]">1.00 MEMO</div>
                 </div>
                 <div className="flex justify-between mt-[16px] animate-fade-in-delay">
                     <div className="text-[16px] text-white leading-[30px]">Total</div>
-                    <div className="text-[16px] text-white leading-[30px]">0.00 MEMO + GAS FEE</div>
+                    <div className="text-[16px] text-white leading-[30px]">1.00 MEMO + GAS FEE</div>
                 </div>
                 <div
                     onClick={handleCreateDid}
