@@ -71,7 +71,7 @@ export default function DidSection() {
                         Your all-in-one, privacy-preserving self-sovereign identity. Own, manage, and monetize your data!
                     </div>
                     <div className="text-white text-[12px] sm:text-[14px] mt-[15px] text-center sm:text-left">
-                        Note: Users need to log in to MEMO and successfully mint DID before they can participate in earning points.
+                        Note: Users need to log in to MEMO and successfully create DID before they can participate in earning points.
                     </div>
                     <div className="text-center flex justify-center sm:justify-start">
                         {isDIDInfoExist ? (

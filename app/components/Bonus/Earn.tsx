@@ -12,7 +12,7 @@ export default function Earn() {
                 Play to Earn
             </h1>
             <div className="text-[20px] text-white mt-[20px]">
-                Experience the mini-games in TG and get more SBT! Comming soon..
+                Experience the mini-games in TG and get more SBT! Comming soon...
             </div>
 
             {/* Content Section */}
@@ -35,7 +35,7 @@ export default function Earn() {
                                 Click to earn SBT!
                             </div>
                             <div className="text-[15px] text-white group-hover:opacity-75 transition-opacity duration-300">
-                                @MsmoGame hot
+                                @MemoGame hot
                             </div>
                         </div>
                     </div>

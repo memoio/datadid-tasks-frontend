@@ -125,7 +125,7 @@ export default function Navbar() {
             <a href="https://memolabs.gitbook.io/memo-docs" target="_blank" rel="noopener noreferrer">
               <NavItem>DOCS</NavItem>
             </a>
-            {/* <NavItem>Airdrop</NavItem> */}
+            {/* <NavItem>TotalPoints</NavItem> */}
           </div>
           <div className="flex gap-1">
             <ConnectButton />
