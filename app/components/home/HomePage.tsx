@@ -1,18 +1,20 @@
 'use client';
 
-import { useContext, useEffect } from "react";
-import { FlagContext } from "@/app/lib/context/FlagContext";
+import { useEffect } from "react";
+// import { FlagContext } from "@/app/lib/context/FlagContext";
 import Home from "./Home";
 import DidSection from "./DIDSection";
-import Activity from "./Activity";
+// import Activity from "./Activity";
 import { useAccount } from "wagmi";
 import axios from "axios";
 import { useUser } from "../../lib/context/AuthContext"
+import { useWallet } from "../../lib/context/WalletContext";
 
 export default function HomePage() {
-    const { flag } = useContext(FlagContext);
+    // const { flag } = useContext(FlagContext);
     const { isConnected, address } = useAccount();
     const { setUserInfo } = useUser();
+    const { invite } = useWallet();
 
     useEffect(() => {
         if (isConnected && address) {
@@ -39,6 +41,11 @@ export default function HomePage() {
                             uid: response.data.data.uid,
                             token: response.data.data.token,
                         });
+
+                        if (response.data.data.lastLoginTime == 0) {
+                            invite();
+                        }
+
                     } else {
                         console.error("Failed to bind wallet:", response.data);
                     }
