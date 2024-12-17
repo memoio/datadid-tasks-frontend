@@ -120,13 +120,12 @@ export default function DidSection() {
                     </div>
                     <div className="text-center flex justify-center sm:justify-start">
                         {isDIDInfoState && isConnected ? (
-                            <div className="rounded-[10px] mt-[25px] px-[5px]">
+                            <div className="rounded-[10px] mt-[25px] px-[5px] border-[1px] border-solid border-[#05F292] bg-[#121212] shadow-md shadow-[#05F292]">
                                 <div className="text-[15px] text-white mt-[16px] text-left animate-fade-in">
-                                    number:  {didInfo.number}
-                                </div><div
-                                    className="text-[13px] leading-[30px] text-white mt-[5px] text-left animate-fade-in"
-                                >
-                                    did:  {didInfo.did}
+                                    <span className="text-[#05F292]">No.</span> <span className='text-right'>{didInfo.number}</span>
+                                </div>
+                                <div className="text-[15px] leading-[30px] text-white mt-[5px] text-left animate-fade-in">
+                                    <span className="text-[#05F292]">DID</span> : <span>{didInfo.did}</span>
                                 </div>
                             </div>
                         ) : (
@@ -169,6 +168,6 @@ export default function DidSection() {
                 </div>
             </div>
             <div className="rounded-full px-[20px] py-[10px]"></div>
-        </div>
+        </div >
     );
 }
