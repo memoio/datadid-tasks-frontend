@@ -3,15 +3,53 @@
 import { paytoneOne } from '@/app/ui/fonts';
 import Image from 'next/image';
 import { useDIDInfo } from "@/app/lib/context/DIDContext";
+import axios from 'axios';
+import { useAccount } from "wagmi";
+
 
 export default function DidSection() {
-    const { isOpenDid, setToggleDid } = useDIDInfo();
+    const { setToggleDid } = useDIDInfo();
+    const { address } = useAccount();
+    const { didInfo, setDIDInfoExist, setIsCreatedDid, isDIDInfoExist, } = useDIDInfo();
 
     const openDid = () => {
-        console.log("opendid", isOpenDid)
         setToggleDid(); // Toggle the DID state
-        console.log("opendid", isOpenDid)
     };
+
+    if (!isDIDInfoExist) {
+        const getDIDInfo = async () => {
+            try {
+                const response = await axios.get(
+                    "http://119.147.213.61:38082/did/info",
+                    {
+                        params: {
+                            address,
+                        },
+                    }
+                );
+
+                if (response.status === 200) {
+                    console.log("didinfo:", response.data);
+                    setDIDInfoExist({
+                        did: response.data.did,
+                        number: response.data.number,
+                    });
+                }
+
+                if (response.status === 506) {
+                    console.log("ddd")
+                }
+            } catch (error) {
+                if (error.response && error.response.status === 506) {
+
+                }
+
+                return
+            }
+        };
+
+        getDIDInfo();
+    }
 
     return (
         <div className="relative">
@@ -36,14 +74,27 @@ export default function DidSection() {
                         Note: Users need to log in to MEMO and successfully mint DID before they can participate in earning points.
                     </div>
                     <div className="text-center flex justify-center sm:justify-start">
-                        <div
-                            onClick={openDid}
-                            className="w-[150px] bg-[#05F292] flex justify-center items-center rounded-full px-4 py-2 mt-5 shadow-md transform hover:scale-110 transition-transform duration-300 cursor-pointer"
-                        >
-                            <span className="font-bold text-[14px] sm:text-[16px] text-white">
-                                Create DID
-                            </span>
-                        </div>
+                        {isDIDInfoExist ? (
+                            <div className="rounded-[10px] mt-[25px] px-[5px]">
+                                <div className="text-[15px] text-white mt-[16px] text-left animate-fade-in">
+                                    number:  {didInfo.number}
+                                </div><div
+                                    className="text-[13px] leading-[30px] text-white mt-[5px] text-left animate-fade-in"
+                                >
+                                    did:  {didInfo.did}
+                                </div>
+                            </div>
+                        ) : (
+                            <div
+                                onClick={openDid}
+                                className="w-[150px] bg-[#05F292] flex justify-center items-center rounded-full px-4 py-2 mt-5 shadow-md transform hover:scale-110 transition-transform duration-300 cursor-pointer"
+                            >
+                                <span className="font-bold text-[14px] sm:text-[16px] text-white">
+                                    Create DID
+                                </span>
+                            </div>
+                        )}
+
                     </div>
                 </div>
 
