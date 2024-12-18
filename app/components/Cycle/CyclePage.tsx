@@ -8,7 +8,7 @@ import { useAction } from "@/app/lib/context/ActionContext";
 import axios from 'axios';
 import { useAccount } from "wagmi";
 
-const cards = [
+export const cards = [
     { id: 1, imgSrc: "/Cycle1.png", participants: 800, name: "Metis", text: "Metis is a permissionless Layer 2 network powering the next generation of decentralized applications." },
     { id: 2, imgSrc: "/Cycle2.png", participants: 800, name: "Arkreen", text: "Arkreen Network is a Web3-based infrastructure for globally distributed renewable energy resources that enables the connection and monetization of carbon reduction applications." },
     { id: 3, imgSrc: "/Cycle3.png", participants: 800, name: "zCloak Network", text: "zCloak Network leads the Web3 revolution, focusing on trust and privacy in the AI age. Their solutions, using technologies like Zero-Knowledge Proof and Decentralized Identity, protect personal data and secure transactions. " },

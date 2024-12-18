@@ -22,12 +22,12 @@ export default function Activity() {
         { id: "sbt3", label: "Visit The Website", reward: 50, url: "https://ens.domains/" },
     ];
 
-    const handleTaskClick = async (task: { id: string; label: string; reward: number }, index: number) => {
+    const handleTaskClick = async (task: { id: string; label: string; reward: number }, taskId: number) => {
         // const data = TaskData{}
-        if (joinId !== -1 && !cycleAction.some((t) => t.projectId === joinId && t.taskId === index)) {
+        if (joinId !== -1 && !cycleAction.some((t) => t.projectId === joinId && t.taskId === taskId)) {
             try {
-                const actionId = 1011 + 10 * joinId + index;
-                console.log(actionId, joinId, index);
+                const actionId = 1011 + 10 * joinId + taskId;
+                console.log(actionId, joinId, taskId);
                 const respond = await axios.post("https://airdrop.7nc.top/api/record/add", {
                     "action": actionId
                 }, {
@@ -40,7 +40,7 @@ export default function Activity() {
                 });
 
                 if (respond.status === 200) {
-                    setCycle(joinId, index);
+                    setCycle(joinId, taskId);
                     setPopupData(task);
                 }
             } catch (error) {
@@ -49,9 +49,10 @@ export default function Activity() {
         }
     };
 
-    const navigateToLink = (index: number) => {
+    const navigateToLink = (projectId: number, taskId: number) => {
         // router.push(tasks[index].url);
-        window.open(tasks[index].url, '_blank');
+        console.log(projectId);
+        window.open(tasks[taskId].url, '_blank');
     };
 
     const closePopup = () => setPopupData(null);
@@ -120,7 +121,7 @@ export default function Activity() {
                                     onClick={(e) => {
                                         e.preventDefault();
                                         handleTaskClick(task, index);
-                                        navigateToLink(index); // 假设你有一个路径来处理任务点击
+                                        navigateToLink(joinId, index);
                                     }}
                                 >
                                     +{task.reward}
