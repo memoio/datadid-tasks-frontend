@@ -1,5 +1,5 @@
 // import { useWallet } from '@/app/lib/context/WalletContext';
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from 'axios';
 import { useWallet } from "../../lib/context/WalletContext";
 import { useUser } from "../../lib/context/AuthContext";

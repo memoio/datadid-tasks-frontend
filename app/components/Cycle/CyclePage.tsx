@@ -8,16 +8,17 @@ import { useAction } from "@/app/lib/context/ActionContext";
 import axios from 'axios';
 import { useAccount } from "wagmi";
 
-export const cards = [
-    { id: 1, imgSrc: "/Cycle1.png", participants: 100, name: "Moso1", text: "Moso1 is an online shopping assistant that enables users to earn cashback in their preferred cryptocurrency." },
-    { id: 2, imgSrc: "/Cycle2.png", participants: 200, name: "Moso2", text: "Moso2 is an online shopping assistant that enables users to earn cashback in their preferred cryptocurrency." },
-    { id: 3, imgSrc: "/Cycle3.png", participants: 300, name: "Moso3", text: "Moso3 is an online shopping assistant that enables users to earn cashback in their preferred cryptocurrency." },
-    { id: 4, imgSrc: "/Cycle4.png", participants: 400, name: "Moso4", text: "Moso4 is an online shopping assistant that enables users to earn cashback in their preferred cryptocurrency." },
-    { id: 5, imgSrc: "/Cycle5.png", participants: 500, name: "Moso5", text: "Moso5 is an online shopping assistant that enables users to earn cashback in their preferred cryptocurrency." },
-    { id: 6, imgSrc: "/Cycle6.png", participants: 600, name: "Moso6", text: "Moso6 is an online shopping assistant that enables users to earn cashback in their preferred cryptocurrency." },
-    { id: 7, imgSrc: "/Cycle7.png", participants: 700, name: "Moso7", text: "Moso7 is an online shopping assistant that enables users to earn cashback in their preferred cryptocurrency." },
-    { id: 8, imgSrc: "/Cycle8.png", participants: 800, name: "Moso8", text: "Moso8 is an online shopping assistant that enables users to earn cashback in their preferred cryptocurrency." },
-    { id: 9, imgSrc: "/Cycle9.png", participants: 900, name: "Moso9", text: "Moso9 is an online shopping assistant that enables users to earn cashback in their preferred cryptocurrency." },
+const cards = [
+    { id: 1, imgSrc: "/Cycle1.png", participants: 800, name: "Metis", text: "Metis is a permissionless Layer 2 network powering the next generation of decentralized applications." },
+    { id: 2, imgSrc: "/Cycle2.png", participants: 800, name: "Arkreen", text: "Arkreen Network is a Web3-based infrastructure for globally distributed renewable energy resources that enables the connection and monetization of carbon reduction applications." },
+    { id: 3, imgSrc: "/Cycle3.png", participants: 800, name: "zCloak Network", text: "zCloak Network leads the Web3 revolution, focusing on trust and privacy in the AI age. Their solutions, using technologies like Zero-Knowledge Proof and Decentralized Identity, protect personal data and secure transactions. " },
+    { id: 4, imgSrc: "/Cycle4.png", participants: 800, name: "Adot", text: "Adot is a decentralized AI Internet search network. It not only provides users with a more convenient and intelligent Web3 content search experience, but also helps developers quickly build their own personalized search functions." },
+    { id: 5, imgSrc: "/Cycle5.png", participants: 800, name: "Infinitar", text: "Infinitar is a Web3 MOBA game that supports multiple arena modes, including 421 levels of individual ranked, 3v3, and 5v5 battles to satisfy different players' preferences." },
+    { id: 6, imgSrc: "/Cycle6.png", participants: 800, name: "Odyssey", text: "Odyssey is an open-source, decentralized meta-universe stack where each user owns their own meta-universe, can modify it to their liking, and can implement their own business model, completely independent of the platform itself." },
+    { id: 7, imgSrc: "/Cycle7.png", participants: 800, name: "Ultiland", text: "Ultiland focuses on real-world asset (RWA) issuance and lending protocols, addressing market pain points in RWA and digital art." },
+    { id: 8, imgSrc: "/Cycle8.png", participants: 800, name: "Do Network", text: "Do Network is a decentralized network with ultra-high performance.It has achieved a scalable DPOS consensus agreement through a number of technological innovations." },
+    { id: 9, imgSrc: "/Cycle9.png", participants: 800, name: "FLock.io", text: "FLock.io is a revolutionary end-to-end AI co-creation platform that redefines the process of training, fine-tuning, and inference of AI models by integrating decentralized machine learning technologies in the chain." },
+    { id: 10, imgSrc: "/Cycle10.png", participants: 800, name: "d.id", text: "The d.id is building protocols for proof of humanity and achievement network, connecting every human. Own your ID and achievement through  blockchain-powered protocol network, and be ready for the next societal breakthrough." },
 ];
 
 export default function CyclePage() {
