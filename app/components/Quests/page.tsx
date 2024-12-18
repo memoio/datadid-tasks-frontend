@@ -4,6 +4,10 @@ import Image from 'next/image';
 import { useUser } from "../../lib/context/AuthContext";
 import { useAction } from "../../lib/context/ActionContext";
 import axios from 'axios';
+import { useDIDInfo } from "@/app/lib/context/DIDContext";
+import { useConnectModal } from '@rainbow-me/rainbowkit';
+import { useAccount } from 'wagmi';
+
 
 interface Item {
     src: string;
@@ -21,27 +25,43 @@ const items: Item[] = [
 export default function BindingPage() {
     const { questAction, setQuest } = useAction();
     const { userInfo } = useUser();
+    const { isConnected } = useAccount();
+    const { openConnectModal } = useConnectModal();
+    const { isDIDExistState } = useDIDInfo();
 
     const handleClick = async (index: number) => {
         try {
-            const actionId = 50 + index;
-            console.log(actionId);
-            const respond = await axios.post("https://airdrop.7nc.top/api/record/add", {
-                "action": actionId
-            }, {
-                headers: {
-                    "accept": "application/hal+json",
-                    "Content-Type": "application/json",
-                    "uid": userInfo.uid,
-                    "token": userInfo.token
-                }
-            });
+            if (isConnected) {
+                if (isDIDExistState) {
+                    const actionId = 50 + index;
+                    console.log(actionId);
+                    const respond = await axios.post("https://airdrop.7nc.top/api/record/add", {
+                        "action": actionId
+                    }, {
+                        headers: {
+                            "accept": "application/hal+json",
+                            "Content-Type": "application/json",
+                            "uid": userInfo.uid,
+                            "token": userInfo.token
+                        }
+                    });
 
-            if (respond.status === 200) {
-                setQuest(index);
+                    if (respond.status === 200) {
+                        setQuest(index);
+                    }
+
+                } else {
+                    alert("Please create did first!")
+                }
+            } else {
+                if (openConnectModal) {
+                    openConnectModal();
+                }
             }
+
         } catch (error) {
-            console.error(error);
+            console.log(error);
+            return
         }
     };
 

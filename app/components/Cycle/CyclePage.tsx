@@ -7,6 +7,8 @@ import { useUser } from "@/app/lib/context/AuthContext";
 import { useAction } from "@/app/lib/context/ActionContext";
 import axios from 'axios';
 import { useAccount } from "wagmi";
+import { useDIDInfo } from '@/app/lib/context/DIDContext';
+import { useConnectModal } from '@rainbow-me/rainbowkit';
 
 export const cards = [
     { id: 1, imgSrc: "/Cycle1.png", participants: 800, name: "Metis", text: "Metis is a permissionless Layer 2 network powering the next generation of decentralized applications." },
@@ -27,6 +29,8 @@ export default function CyclePage() {
 
     const { userInfo, setUserInfo } = useUser();
     const { isConnected, address } = useAccount();
+    const { isDIDExistState } = useDIDInfo();
+    const { openConnectModal } = useConnectModal();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const targetDate = new Date(new Date().setHours(15, 0, 0, 0) + 60 * 24 * 60 * 60 * 1000).getTime();
@@ -107,7 +111,7 @@ export default function CyclePage() {
                 bindWallet();
             } else {
                 const getUserPoints = async () => {
-                    if (!userInfo) { }
+
                     try {
                         const response = await axios.get('https://airdrop.7nc.top/api/user/info', {
                             headers: {
@@ -211,7 +215,7 @@ export default function CyclePage() {
                             <div>
                                 <p className="text-white text-[20px] font-bold">{card.participants} Participants</p>
                                 <div
-                                    onClick={() => joinProject(index)}
+                                    onClick={() => (isConnected ? isDIDExistState && joinProject ? joinProject(index) : alert("Please create did first!") : openConnectModal ? openConnectModal() : alert("Can not connect to chain"))}
                                     className={`mt-3 py-2 px-4 rounded-full text-[17.5px] font-bold transition-colors duration-300  cursor-pointer ${buttonClasses} `}
                                 >
                                     {isJoined ? (

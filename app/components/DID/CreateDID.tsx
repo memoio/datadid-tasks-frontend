@@ -1,8 +1,9 @@
 import { paytoneOne } from '@/app/ui/fonts';
 import Image from 'next/image';
 import { useDIDInfo } from "@/app/lib/context/DIDContext";
+import { useUser } from '@/app/lib/context/AuthContext';
 import axios from 'axios';
-import { useAccount, useSignMessage, useChains } from 'wagmi';
+import { useAccount, useSignMessage } from 'wagmi';
 import React, { useState, useEffect } from 'react';
 import { useConnectModal } from '@rainbow-me/rainbowkit';
 
@@ -10,7 +11,8 @@ export default function CreateDID() {
     const { setIsCreatingDid } = useDIDInfo();
     const { isConnected, address, chain } = useAccount();
     const { openConnectModal } = useConnectModal();
-    const { } = useChains();
+    const { userInfo } = useUser();
+
 
     // const currentAddress = isConnected && address ? address.slice(0, 6) + '...' + address.slice(-4) : '0x0000...0000'
     const { signMessageAsync } = useSignMessage()
@@ -41,6 +43,24 @@ export default function CreateDID() {
 
                     if (response1.status === 200) {
                         setIsCreatingDid();
+
+                        const actionId = 1;
+                        console.log(actionId);
+                        const respond = await axios.post("https://airdrop.7nc.top/api/record/add", {
+                            "action": actionId
+                        }, {
+                            headers: {
+                                "accept": "application/hal+json",
+                                "Content-Type": "application/json",
+                                "uid": userInfo.uid,
+                                "token": userInfo.token
+                            }
+                        });
+
+                        if (respond.status === 200) {
+
+                        }
+
                     } else {
                         alert(`Error: ${response1.status} - ${response1.statusText}`);
                     }
