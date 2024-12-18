@@ -1,5 +1,5 @@
 // import { useWallet } from '@/app/lib/context/WalletContext';
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from 'axios';
 import { useWallet } from "../../lib/context/WalletContext";
 import { useUser } from "../../lib/context/AuthContext";
@@ -22,58 +22,62 @@ export default function Invite() {
 
 
     const handleChange = (index: number, value: string) => {
-        if (/^\d?$/.test(value)) {
-            const newValues = [...values];
-            newValues[index] = value; // Update only the specific index
-            setValues(newValues);
+        // if (/^\d?$/.test(value)) {
+        const newValues = [...values];
+        newValues[index] = value; // Update only the specific index
+        setValues(newValues);
 
-            // Automatically focus the next input if a number is entered
-            if (value && index < values.length - 1) {
-                document.getElementById(`input-${index + 1}`)?.focus();
-            }
-
-            // // Check if the entered code matches "021025"
-            // if (newValues.join("") === "021025") {
-            //     setSuccess(true);
-            // }
+        // Automatically focus the next input if a number is entered
+        if (value && index < values.length - 1) {
+            document.getElementById(`input-${index + 1}`)?.focus();
         }
+
+        // // Check if the entered code matches "021025"
+        // if (newValues.join("") === "021025") {
+        //     setSuccess(true);
+        // }
+        // }
     };
 
-    const handlePaste = async (e: React.ClipboardEvent<HTMLDivElement>) => {
+    const handlePaste = (e: React.ClipboardEvent<HTMLDivElement>) => {
         const pasteData = e.clipboardData.getData("text").slice(0, 6); // Get only first 6 characters
-        if (/^\d+$/.test(pasteData)) {
-            const newValues = pasteData.split("").slice(0, 6); // Split pasted numbers
-            setValues(newValues);
+        // if (/^\d+$/.test(pasteData)) {
+        const newValues = pasteData.split("").slice(0, 6); // Split pasted numbers
+        setValues(newValues);
 
-            // Automatically focus the last filled input
-            const lastFilledIndex = newValues.length - 1;
-            if (lastFilledIndex < values.length) {
-                document.getElementById(`input-${lastFilledIndex}`)?.focus();
-            }
-
-            // Check if the pasted code matches "021025"
-            try {
-                const inviteCode = newValues.join("");
-                const respond = await axios.post("https://airdrop.7nc.top/api/invite/bind", {
-                    "inviteCode": inviteCode
-                }, {
-                    headers: {
-                        "accept": "application/hal+json",
-                        "Content-Type": "application/json",
-                        "uid": userInfo.uid,
-                        "token": userInfo.token
-                    }
-                });
-                if (respond.status == 200) {
-                    if (respond.data.result == 1) {
-                        console.log(respond.data.data);
-                    }
-                }
-            } catch (error) {
-                console.error(error);
-            }
+        // Automatically focus the last filled input
+        const lastFilledIndex = newValues.length - 1;
+        if (lastFilledIndex < values.length) {
+            document.getElementById(`input-${lastFilledIndex}`)?.focus();
         }
+
+        // Check if the pasted code matches "021025"
+        // }
     };
+
+    const handleClick = async () => {
+        try {
+            const inviteCode = values.join("");
+            const respond = await axios.post("https://airdrop.7nc.top/api/invite/bind", {
+                "inviteCode": inviteCode
+            }, {
+                headers: {
+                    "accept": "application/hal+json",
+                    "Content-Type": "application/json",
+                    "uid": userInfo.uid,
+                    "token": userInfo.token
+                }
+            });
+            if (respond.status == 200) {
+                if (respond.data.result == 1) {
+                    setSuccess(true);
+                    console.log(respond.data.data);
+                }
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
 
     console.log(isInvited);
 
@@ -104,7 +108,12 @@ export default function Invite() {
                 ))}
             </div>
             <div className="bg-[#05F292] flex justify-center items-center rounded-full px-4 py-2 mt-5 shadow-md transform hover:scale-110 transition-transform duration-300 w-[50%] mx-[25%]">
-                <span className="font-bold text-[14px] sm:text-[16px] text-white cursor-pointer">
+                <span className="font-bold text-[14px] sm:text-[16px] text-white cursor-pointer"
+                    onClick={(e) => {
+                        e.preventDefault();
+                        handleClick();
+                    }}
+                >
                     Enter invite code
                 </span>
             </div>
