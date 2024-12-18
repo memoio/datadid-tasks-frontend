@@ -3,25 +3,34 @@
 import React, { useState, useEffect } from 'react';
 import { paytoneOne } from '@/app/ui/fonts';
 import Image from 'next/image';
-import { useActivity } from '@/app/lib/context/ActivityContext';
-
 import { useUser } from "@/app/lib/context/AuthContext";
-import { useCycleAction } from "@/app/lib/context/FlagContext";
+import { useAction } from "@/app/lib/context/ActionContext";
 import axios from 'axios';
 import { useAccount } from "wagmi";
+import { useDIDInfo } from '@/app/lib/context/DIDContext';
+import { useConnectModal } from '@rainbow-me/rainbowkit';
 
+export const cards = [
+    { id: 1, imgSrc: "/Cycle1.png", participants: 800, name: "Metis", text: "Metis is a permissionless Layer 2 network powering the next generation of decentralized applications." },
+    { id: 2, imgSrc: "/Cycle2.png", participants: 800, name: "Arkreen", text: "Arkreen Network is a Web3-based infrastructure for globally distributed renewable energy resources that enables the connection and monetization of carbon reduction applications." },
+    { id: 3, imgSrc: "/Cycle3.png", participants: 800, name: "zCloak Network", text: "zCloak Network leads the Web3 revolution, focusing on trust and privacy in the AI age. Their solutions, using technologies like Zero-Knowledge Proof and Decentralized Identity, protect personal data and secure transactions. " },
+    { id: 4, imgSrc: "/Cycle4.png", participants: 800, name: "Adot", text: "Adot is a decentralized AI Internet search network. It not only provides users with a more convenient and intelligent Web3 content search experience, but also helps developers quickly build their own personalized search functions." },
+    { id: 5, imgSrc: "/Cycle5.png", participants: 800, name: "Infinitar", text: "Infinitar is a Web3 MOBA game that supports multiple arena modes, including 421 levels of individual ranked, 3v3, and 5v5 battles to satisfy different players' preferences." },
+    { id: 6, imgSrc: "/Cycle6.png", participants: 800, name: "Odyssey", text: "Odyssey is an open-source, decentralized meta-universe stack where each user owns their own meta-universe, can modify it to their liking, and can implement their own business model, completely independent of the platform itself." },
+    { id: 7, imgSrc: "/Cycle7.png", participants: 800, name: "Ultiland", text: "Ultiland focuses on real-world asset (RWA) issuance and lending protocols, addressing market pain points in RWA and digital art." },
+    { id: 8, imgSrc: "/Cycle8.png", participants: 800, name: "Do Network", text: "Do Network is a decentralized network with ultra-high performance.It has achieved a scalable DPOS consensus agreement through a number of technological innovations." },
+    { id: 9, imgSrc: "/Cycle9.png", participants: 800, name: "FLock.io", text: "FLock.io is a revolutionary end-to-end AI co-creation platform that redefines the process of training, fine-tuning, and inference of AI models by integrating decentralized machine learning technologies in the chain." },
+    { id: 10, imgSrc: "/Cycle10.png", participants: 800, name: "d.id", text: "The d.id is building protocols for proof of humanity and achievement network, connecting every human. Own your ID and achievement through  blockchain-powered protocol network, and be ready for the next societal breakthrough." },
+];
 
 export default function CyclePage() {
-    const { completedTasks, joinCard } = useActivity();
-    let isJoined = false;
-
-    // const [activeIndex, setActiveIndex] = useState<number | null>(null);
-    const [disabledIndices, setDisabledIndices] = useState(new Set());
-    const { cycleAction } = useCycleAction();
+    const { joinProject, cycleAction } = useAction();
     const [points, setPoints] = useState("")
 
     const { userInfo, setUserInfo } = useUser();
     const { isConnected, address } = useAccount();
+    const { isDIDExistState } = useDIDInfo();
+    const { openConnectModal } = useConnectModal();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const targetDate = new Date(new Date().setHours(15, 0, 0, 0) + 60 * 24 * 60 * 60 * 1000).getTime();
@@ -31,6 +40,17 @@ export default function CyclePage() {
         hours: 0,
         minutes: 0,
         seconds: 0,
+    })
+
+    let isJoined = false;
+
+    const projects = new Array<number>(cards.length).fill(0);
+    let completed = 0;
+    cycleAction.map((t) => {
+        projects[t.projectId] = projects[t.projectId] + 1;
+        if (projects[t.projectId] === 3) {
+            completed = completed + 1;
+        }
     })
 
     useEffect(() => {
@@ -91,7 +111,7 @@ export default function CyclePage() {
                 bindWallet();
             } else {
                 const getUserPoints = async () => {
-                    if (!userInfo) { }
+
                     try {
                         const response = await axios.get('https://airdrop.7nc.top/api/user/info', {
                             headers: {
@@ -113,44 +133,6 @@ export default function CyclePage() {
 
         }
     }, [address, isConnected, setUserInfo, userInfo]);
-
-    const cards = [
-        { id: 1, imgSrc: "/Cycle1.png", participants: 800, name: "Metis", text: "Metis is a permissionless Layer 2 network powering the next generation of decentralized applications." },
-        { id: 2, imgSrc: "/Cycle2.png", participants: 800, name: "Arkreen", text: "Arkreen Network is a Web3-based infrastructure for globally distributed renewable energy resources that enables the connection and monetization of carbon reduction applications." },
-        { id: 3, imgSrc: "/Cycle3.png", participants: 800, name: "zCloak Network", text: "zCloak Network leads the Web3 revolution, focusing on trust and privacy in the AI age. Their solutions, using technologies like Zero-Knowledge Proof and Decentralized Identity, protect personal data and secure transactions. " },
-        { id: 4, imgSrc: "/Cycle4.png", participants: 800, name: "Adot", text: "Adot is a decentralized AI Internet search network. It not only provides users with a more convenient and intelligent Web3 content search experience, but also helps developers quickly build their own personalized search functions." },
-        { id: 5, imgSrc: "/Cycle5.png", participants: 800, name: "Infinitar", text: "Infinitar is a Web3 MOBA game that supports multiple arena modes, including 421 levels of individual ranked, 3v3, and 5v5 battles to satisfy different players' preferences." },
-        { id: 6, imgSrc: "/Cycle6.png", participants: 800, name: "Odyssey", text: "Odyssey is an open-source, decentralized meta-universe stack where each user owns their own meta-universe, can modify it to their liking, and can implement their own business model, completely independent of the platform itself." },
-        { id: 7, imgSrc: "/Cycle7.png", participants: 800, name: "Ultiland", text: "Ultiland focuses on real-world asset (RWA) issuance and lending protocols, addressing market pain points in RWA and digital art." },
-        { id: 8, imgSrc: "/Cycle8.png", participants: 800, name: "Do Network", text: "Do Network is a decentralized network with ultra-high performance.It has achieved a scalable DPOS consensus agreement through a number of technological innovations." },
-        { id: 9, imgSrc: "/Cycle9.png", participants: 800, name: "FLock.io", text: "FLock.io is a revolutionary end-to-end AI co-creation platform that redefines the process of training, fine-tuning, and inference of AI models by integrating decentralized machine learning technologies in the chain." },
-        { id: 10, imgSrc: "/Cycle10.png", participants: 800, name: "d.id", text: "The d.id is building protocols for proof of humanity and achievement network, connecting every human. Own your ID and achievement through  blockchain-powered protocol network, and be ready for the next societal breakthrough." },
-    ];
-
-    // for join
-    const handleClick = async (index: number) => {
-        try {
-            const actionId = 1012 + 10 * index;
-            console.log(actionId);
-            const respond = await axios.post("https://airdrop.7nc.top/api/record/add", {
-                "action": actionId
-            }, {
-                headers: {
-                    "accept": "application/hal+json",
-                    "Content-Type": "application/json",
-                    "uid": userInfo.uid,
-                    "token": userInfo.token
-                }
-            });
-
-            if (respond.status === 200) {
-                setDisabledIndices((prev) => new Set(prev).add(index));
-            }
-        } catch (error) {
-            console.log(error);
-        }
-
-    };
 
     return (
         <div className="mt-[55px]">
@@ -186,8 +168,8 @@ export default function CyclePage() {
             {/* Stats Section */}
             <div className="flex flex-col sm:flex-row justify-around items-center mt-[65px] gap-8 px-6 animate-fade-in bg-[#05F2920D] border-x-[3px] border-[#05F292] rounded-[10px] py-[20px]">
                 {[
-                    { label: 'Total Projects Completed', value: '0' },
-                    { label: 'Total Tasks Accomplished', value: '0' },
+                    { label: 'Total Projects Completed', value: completed },
+                    { label: 'Total Tasks Accomplished', value: cycleAction.length },
                     { label: 'Total Points Earned', value: points },
                 ].map((stat, i) => (
                     <div key={i}>
@@ -201,12 +183,12 @@ export default function CyclePage() {
             </div>
 
             {/* Cards Section */}
-            <div className="mt-[56px] flex justify-around flex-wrap gap-8">
+            <div className="mt-[56px] flex justify-around flex-wrap gap-8 animate-fade-in">
                 {cards.map((card, index) => {
                     isJoined = false;
                     let count = 0;
-                    completedTasks.map((completedTask) => {
-                        if (completedTask.cardId == card.id) {
+                    cycleAction.forEach((task) => {
+                        if (task.projectId == index) {
                             isJoined = true;
                             count = count + 1;
                         }
@@ -233,7 +215,7 @@ export default function CyclePage() {
                             <div>
                                 <p className="text-white text-[20px] font-bold">{card.participants} Participants</p>
                                 <div
-                                    onClick={() => joinCard(card)}
+                                    onClick={() => (isConnected ? isDIDExistState && joinProject ? joinProject(index) : alert("Please create did first!") : openConnectModal ? openConnectModal() : alert("Can not connect to chain"))}
                                     className={`mt-3 py-2 px-4 rounded-full text-[17.5px] font-bold transition-colors duration-300  cursor-pointer ${buttonClasses} `}
                                 >
                                     {isJoined ? (
@@ -245,7 +227,6 @@ export default function CyclePage() {
                                         <div className="text-center text-white text-[22px]">Join</div>
                                     )}
                                 </div>
-                                );
                             </div>
                         </div>
                     );
