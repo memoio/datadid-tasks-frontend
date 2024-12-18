@@ -11,12 +11,8 @@ export default function CreateDID() {
     const { isConnected, address, chain } = useAccount();
     const { openConnectModal } = useConnectModal();
     const { } = useChains();
-    // const [network, setNetwork] = useState('none');
 
-
-
-
-    const currentAddress = isConnected && address ? address.slice(0, 6) + '...' + address.slice(-4) : '0x0000...0000'
+    // const currentAddress = isConnected && address ? address.slice(0, 6) + '...' + address.slice(-4) : '0x0000...0000'
     const { signMessageAsync } = useSignMessage()
 
     const url = 'https://didapi.memolabs.org/did'
@@ -49,8 +45,9 @@ export default function CreateDID() {
                         alert(`Error: ${response1.status} - ${response1.statusText}`);
                     }
                 }
-            } catch (err) {
-                console.error('Error creating DID:', err);
+            } catch (err: any) {
+                alert(`Error: ${err.status} - ${err.statusText}`);
+                return
             }
         } else {
             if (openConnectModal) {
@@ -61,8 +58,8 @@ export default function CreateDID() {
     };
 
     return (
-        <div className="mt-[40px] flex justify-center bg-dark animate-fade-in">
-            <div className="border-[3px] rounded-[11px] px-[38px] py-[26px] bg-gradient-to-r from-[#064E33] to-[#214177] shadow-lg transform hover:scale-105 transition-transform duration-300">
+        <div className="mt-[40px] flex justify-center bg-dark animate-fade-in w-full">
+            <div className="border-[3px] rounded-[11px] px-4 py-2 bg-gradient-to-r from-[#064E33] to-[#214177] shadow-lg transform hover:scale-105 transition-transform duration-300">
                 <div
                     className={`${paytoneOne.className} text-white text-[20px] leading-[30px] animate-slide-down`}
                 >
