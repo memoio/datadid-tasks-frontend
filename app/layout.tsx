@@ -11,7 +11,7 @@ import { config } from './wagmi';
 import { AuthContextProvider } from "@/app/lib/context/AuthContext";
 import { DIDContextProvider } from "@/app/lib/context/DIDContext";
 import { WalletContextProvider } from "./lib/context/WalletContext";
-import { DailyActionProvider } from "@/app/lib/context/FlagContext";
+import { ActionProvider } from "@/app/lib/context/ActionContext";
 
 const queryClient = new QueryClient();
 
@@ -31,13 +31,13 @@ export default function RootLayout({ children }: RootLayoutProps) {
           <QueryClientProvider client={queryClient}>
             <RainbowKitProvider locale="en-US">
               <AuthContextProvider>
-                <DailyActionProvider>
+                <ActionProvider>
                   <DIDContextProvider>
                     <WalletContextProvider>
                       {children}
                     </WalletContextProvider>
                   </DIDContextProvider>
-                </DailyActionProvider>
+                </ActionProvider>
               </AuthContextProvider>
             </RainbowKitProvider>
           </QueryClientProvider>

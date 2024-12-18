@@ -1,9 +1,8 @@
 'use client';
-import { useState } from 'react';
 import Image from 'next/image';
 
 import { useUser } from "../../lib/context/AuthContext";
-import { useQuestAction } from "../../lib/context/FlagContext";
+import { useAction } from "../../lib/context/ActionContext";
 import axios from 'axios';
 
 interface Item {
@@ -20,8 +19,7 @@ const items: Item[] = [
 ];
 
 export default function BindingPage() {
-    const { questAction } = useQuestAction();
-    const [disabledIndices, setDisabledIndices] = useState(new Set());
+    const { questAction, setQuest } = useAction();
     const { userInfo } = useUser();
 
     const handleClick = async (index: number) => {
@@ -40,12 +38,10 @@ export default function BindingPage() {
             });
 
             if (respond.status === 200) {
-                // setSelectedIndex(index);
-                setDisabledIndices((prev) => new Set(prev).add(index));
-                console.log("hello")
+                setQuest(index);
             }
         } catch (error) {
-            console.log(error);
+            console.error(error);
         }
     };
 
@@ -96,11 +92,11 @@ export default function BindingPage() {
                     <div
                         key={index}
                         onClick={() => handleClick(index)}
-                        className={`w-full sm:w-[40%] lg:w-[30%] xl:w-[20%] transform transition-transform duration-300 ${questAction.has(index) || disabledIndices.has(index)
+                        className={`w-full sm:w-[40%] lg:w-[30%] xl:w-[20%] transform transition-transform duration-300 ${questAction.has(index)
                             ? 'bg-gradient-to-r from-[#214177] to-[#064E33] scale-105 shadow-lg'
                             : 'bg-[#0663412B] hover:scale-105'
                             } pt-[35px] pb-[25px] px-[10px] flex items-center justify-around rounded-[10px] cursor-pointer`}
-                        style={{ pointerEvents: questAction.has(index) || disabledIndices.has(index) ? 'none' : 'auto' }}
+                        style={{ pointerEvents: questAction.has(index) ? 'none' : 'auto' }}
                     >
                         <Image
                             src={item.src}
@@ -114,15 +110,15 @@ export default function BindingPage() {
                                 {item.reward}
                             </div>
                             <div
-                                className={`${questAction.has(index) || disabledIndices.has(index) ? 'bg-gray-500' : 'bg-[#05F292]'} flex justify-center items-center rounded-full px-[10px] py-[5px] mt-[5px] shadow-md transform hover:scale-110 transition-transform duration-300`}
+                                className={`${questAction.has(index) ? 'bg-gray-500' : 'bg-[#05F292]'} flex justify-center items-center rounded-full px-[10px] py-[5px] mt-[5px] shadow-md transform hover:scale-110 transition-transform duration-300`}
                                 onClick={(e) => {
                                     e.stopPropagation(); // 阻止事件冒泡，避免触发外层div的onClick
                                     handleClick(index);
                                 }}
-                                style={{ pointerEvents: questAction.has(index) || disabledIndices.has(index) ? 'none' : 'auto' }}
+                                style={{ pointerEvents: questAction.has(index) ? 'none' : 'auto' }}
                             >
-                                <p className={`font-bold text-[16px] text-white ${questAction.has(index) || disabledIndices.has(index) ? 'cursor-not-allowed' : ''}`}>
-                                    {questAction.has(index) || disabledIndices.has(index) ? 'Claimed' : 'Claim'}
+                                <p className={`font-bold text-[16px] text-white ${questAction.has(index) ? 'cursor-not-allowed' : ''}`}>
+                                    {questAction.has(index) ? 'Claimed' : 'Claim'}
                                 </p>
                             </div>
                         </div>

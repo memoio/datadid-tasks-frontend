@@ -72,7 +72,7 @@ export const DIDContextProvider = ({ children }: DIDContextProviderProps) => {
           );
 
           if (response.status === 200) {
-            console.log("didinfo:", response.data);
+            // console.log("didinfo:", response.data);
             setDIDInfo({
               did: response.data.did,
               number: response.data.number,
@@ -84,7 +84,6 @@ export const DIDContextProvider = ({ children }: DIDContextProviderProps) => {
       };
 
       getDIDInfo();
-      console.log("didinfo did", didInfo);
     }
   }, [setIsCreatedDid]);
 

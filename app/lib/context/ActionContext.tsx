@@ -1,37 +1,63 @@
 'use client';
 
-import { useEffect, createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 import { useAccount } from "wagmi";
 import axios from 'axios';
-// import { useUser } from "./AuthContext";
 
-export const FlagContext = createContext();
-
-export function FlagProvider({ children }) {
-    const [flag, setFlag] = useState("task"); // Default flag value
-
-    return (
-        <FlagContext.Provider value={{ flag, setFlag }}>
-            {children}
-        </FlagContext.Provider>
-    );
+interface TaskData {
+    projectId: number;
+    taskId: number;
 }
 
-export const DailyActionContext = createContext();
-export const QuestActionContext = createContext();
-export const CycleActionContext = createContext();
+interface ActionContextType {
+    dailyAction: Set<number>;
+    questAction: Set<number>;
+    cycleAction: TaskData[];
+    joinId: number;
+    setDaily: (index: number) => void;
+    setQuest: (index: number) => void;
+    setCycle: (projectId: number, taskId: number) => void;
+    joinProject: (index: number) => void;
+    leaveProject: () => void;
+    clear: () => void;
+}
 
-export const DailyActionProvider = ({ children }) => {
-    const [dailyAction, setDailyAction] = useState(new Set());
-    const [questAction, setQuestAction] = useState(new Set());
-    const [cycleAction, setCycleAction] = useState(new Set());
+export const ActionContext = createContext<ActionContextType | null>(null);
+
+interface ActionContextProviderProps {
+    children: ReactNode;
+}
+
+export const ActionProvider = ({ children }: ActionContextProviderProps) => {
+    const [dailyAction, setDailyAction] = useState(new Set<number>());
+    const [questAction, setQuestAction] = useState(new Set<number>());
+    const [cycleAction, setCycleAction] = useState<TaskData[]>([]);
+    const [joinId, setJoinId] = useState(-1);
     const { isConnected, address } = useAccount();
+    const setDaily = (index: number) => setDailyAction((prev) => new Set(prev).add(index));
+    const setQuest = (index: number) => setQuestAction((prev) => new Set(prev).add(index));
+    const setCycle = (projectId: number, taskId: number) => {
+        if (!cycleAction.some((t) => t.projectId === projectId && t.taskId === taskId)) {
+            setCycleAction((prev) => [...prev, { projectId, taskId }]);
+        }
+    };
+
+    const joinProject = (index: number) => setJoinId(index);
+    const leaveProject = () => setJoinId(-1);
+
+    const clear = () => {
+        setDailyAction(new Set());
+        setQuestAction(new Set());
+        setCycleAction([]);
+        setJoinId(-1);
+    }
 
     useEffect(() => {
         if (isConnected && address) {
             // 调用绑定钱包接口
             const HandleDailyAction = async () => {
                 try {
+                    clear();
                     const response = await axios.post(
                         "https://airdrop.7nc.top/api/user/wallet/bind",
                         {
@@ -57,15 +83,18 @@ export const DailyActionProvider = ({ children }) => {
                             });
 
                         if (oneTimeRespond.status === 200) {
-                            oneTimeRespond.data.data.forEach(element => {
+                            // eslint-disable-next-line
+                            oneTimeRespond.data.data.some((element: any) => {
                                 const action = element.action;
                                 // console.log(action);
                                 if (action >= 50 && action <= 53) {
                                     console.log(action - 50);
                                     setQuestAction((prev) => new Set(prev).add(action - 50));
-                                } else {
-                                    console.log((action - 1012) / 10);
-                                    setCycleAction((prev) => new Set(prev).add((action - 1012) / 10))
+                                } else if (action >= 1011) {
+                                    const projectId = Math.floor((action - 1011) / 10);
+                                    const taskId = (action - 1011) % 10;
+                                    console.log(projectId, taskId);
+                                    setCycle(projectId, taskId);
                                 }
                             });
                         }
@@ -80,7 +109,8 @@ export const DailyActionProvider = ({ children }) => {
                         );
 
                         if (dailyRespond.status === 200) {
-                            dailyRespond.data.data.forEach(element => {
+                            // eslint-disable-next-line
+                            dailyRespond.data.data.forEach((element: any) => {
                                 const action = element.action - 70;
                                 console.log(action);
                                 const preDayTime = Date.now() - 86400000;
@@ -105,24 +135,29 @@ export const DailyActionProvider = ({ children }) => {
     console.log("cycle: ", cycleAction);
 
     return (
-        <DailyActionContext.Provider value={{ dailyAction, setDailyAction }}>
-            <QuestActionContext.Provider value={{ questAction, setQuestAction }}>
-                <CycleActionContext.Provider value={{ cycleAction, setCycleAction }}>
-                    {children}
-                </CycleActionContext.Provider>
-            </QuestActionContext.Provider>
-        </DailyActionContext.Provider>
+        <ActionContext.Provider value={{
+            dailyAction,
+            questAction,
+            cycleAction,
+            joinId,
+            setDaily,
+            setQuest,
+            setCycle,
+            joinProject,
+            leaveProject,
+            clear
+        }}>
+            {children}
+        </ActionContext.Provider>
     );
 }
 
-export const useDailyAction = () => {
-    return useContext(DailyActionContext);
+export const useAction = () => {
+    const context = useContext(ActionContext);
+
+    if (!context) {
+        throw new Error('useWallet must be used within a WalletContextProvider');
+    }
+
+    return context;
 };
-
-export const useQuestAction = () => {
-    return useContext(QuestActionContext);
-}
-
-export const useCycleAction = () => {
-    return useContext(CycleActionContext);
-}
