@@ -73,11 +73,6 @@ export const DIDContextProvider = ({ children }: DIDContextProviderProps) => {
     setIsDIDExistState(true)
   }
 
-
-
-
-
-
   return (
     <DIDContext.Provider
       value={{

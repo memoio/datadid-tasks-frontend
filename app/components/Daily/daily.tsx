@@ -5,8 +5,9 @@ import Image from 'next/image';
 import { useUser } from "../../lib/context/AuthContext";
 import { useDailyAction } from "../../lib/context/FlagContext";
 import axios from 'axios';
-// import { useConnectModal } from '@rainbow-me/rainbowkit';
-// import { useAccount } from 'wagmi';
+import { useDIDInfo } from "@/app/lib/context/DIDContext";
+import { useConnectModal } from '@rainbow-me/rainbowkit';
+import { useAccount } from 'wagmi';
 
 interface Item {
     src: string;
@@ -26,28 +27,41 @@ export default function Daily() {
     const [disabledIndices, setDisabledIndices] = useState(new Set());
     const { dailyAction } = useDailyAction();
     const { userInfo } = useUser();
-    // const { isConnected } = useAccount();
-    // const { openConnectModal } = useConnectModal();
+    const { isConnected } = useAccount();
+    const { openConnectModal } = useConnectModal();
+    const { isDIDExistState } = useDIDInfo();
     // const [isModalOpen, setIsModalOpen] = useState(false);
 
     const handleClick = async (index: number) => {
         try {
-            const actionId = 70 + index;
-            console.log(actionId);
-            const respond = await axios.post("https://airdrop.7nc.top/api/record/add", {
-                "action": actionId
-            }, {
-                headers: {
-                    "accept": "application/hal+json",
-                    "Content-Type": "application/json",
-                    "uid": userInfo.uid,
-                    "token": userInfo.token
-                }
-            });
+            if (isConnected) {
+                if (isDIDExistState) {
+                    const actionId = 70 + index;
+                    console.log(actionId);
+                    const respond = await axios.post("https://airdrop.7nc.top/api/record/add", {
+                        "action": actionId
+                    }, {
+                        headers: {
+                            "accept": "application/hal+json",
+                            "Content-Type": "application/json",
+                            "uid": userInfo.uid,
+                            "token": userInfo.token
+                        }
+                    });
 
-            if (respond.status === 200) {
-                setDisabledIndices((prev) => new Set(prev).add(index));
+                    if (respond.status === 200) {
+                        setDisabledIndices((prev) => new Set(prev).add(index));
+                    }
+                } else {
+                    alert("Please create did first!")
+                }
+
+            } else {
+                if (openConnectModal) {
+                    openConnectModal();
+                }
             }
+
         } catch (error) {
             console.log(error);
         }
