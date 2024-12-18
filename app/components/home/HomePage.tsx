@@ -7,8 +7,8 @@ import DidSection from "./DIDSection";
 // import Activity from "./Activity";
 import { useAccount } from "wagmi";
 import axios from "axios";
-import { useUser } from "../../lib/context/AuthContext"
-import { useWallet } from "../../lib/context/WalletContext";
+import { useUser } from "@/app/lib/context/AuthContext"
+import { useWallet } from "@/app/lib/context/WalletContext";
 
 export default function HomePage() {
     // const { flag } = useContext(FlagContext);
@@ -48,15 +48,17 @@ export default function HomePage() {
 
                     } else {
                         console.error("Failed to bind wallet:", response.data);
+                        return;
                     }
                 } catch (error) {
                     console.error("Error binding wallet:", error);
+                    return;
                 }
             };
 
             bindWallet();
         }
-    }, [isConnected, address, setUserInfo]);
+    }, [isConnected]);
 
     return (
         <div className="w-full relative">

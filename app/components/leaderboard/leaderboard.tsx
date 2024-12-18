@@ -5,7 +5,7 @@ import axios from 'axios';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
 
-import { useUser } from "../../lib/context/AuthContext"
+import { useUser } from "@/app/lib/context/AuthContext"
 
 
 interface PopupData {
@@ -36,7 +36,7 @@ export default function LeaderboardPage() {
             const getRank = async () => {
 
                 try {
-                    const response = await axios.get("https://airdrop.7nc.top/api/invite/rank",
+                    const response = await axios.get("https://airdrop.7nc.top/api/points/rank",
                         {
                             headers: {
                                 'accept': '*/*',
@@ -45,17 +45,20 @@ export default function LeaderboardPage() {
                             },
                         }
                     )
-                    const ranklist = response.data.data.slice(0, 10).map((item: { uid: any; points: any; }, index: number) => ({
+                    const ranklist = response.data.data.slice(0, 10).map((item: {
+                        walletAddress: any; inviteCount: any; points: any;
+                    }, index: number) => ({
                         id: index + 1,
-                        address: item.uid,
-                        score: 6,
+                        address: (item.walletAddress ? item.walletAddress < 8 ? item.walletAddress : `${item.walletAddress.substring(0, 4)}...${item.walletAddress.substring(item.walletAddress.length - 4)}` : ''),
+                        score: (item.inviteCount ? item.inviteCount : 0),
                         soul: item.points,
                         isCrown: index < 3
                     }))
                     setElements(ranklist)
                     console.log(response.data)
                 } catch (error) {
-                    console.error(error);
+                    alert(`Error: ${error}`);
+                    return
                 }
             }
 
@@ -88,7 +91,7 @@ export default function LeaderboardPage() {
             value: "0x49e65cd..4c",
         },
         {
-            title: { full: "Friends Invited This Week", short: "Friends" },
+            title: { full: "Friends Invited", short: "Friends" },
             value: "2K+",
             onClick: handlePopup, // Add onClick to this item
         },
@@ -200,7 +203,7 @@ export default function LeaderboardPage() {
                     </div>
                     <div className="text-white text-[16px] sm:text-[20px] font-bold leading-[24px] sm:leading-[30px] w-[20%]">
                         <span className="block md:hidden">Friends</span>
-                        <span className="hidden md:block">Friends Invited This Week</span>
+                        <span className="hidden md:block">Friends Invited</span>
                     </div>
                     <div className="text-white text-[16px] sm:text-[20px] font-bold leading-[24px] sm:leading-[30px] w-[30%]">
                         <span className="block md:hidden">Reward</span>

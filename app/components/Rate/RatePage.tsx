@@ -23,7 +23,7 @@ export default function RatePage() {
                 {/* Left Section */}
                 <div className="w-full sm:w-[50%] flex justify-around items-center gap-10 fade-in">
                     <div className="text-[14px] sm:text-[16px] md:text-[19px] leading-[15px] sm:leading-[18px] md:leading-[24px] text-white">
-                        1 SBT
+                        1 Points
                     </div>
                     <div className="flex flex-col items-center animate-bounce">
                         <Image src="/Arrow_right.png" alt="right" width={28} height={10} />
@@ -39,7 +39,7 @@ export default function RatePage() {
 
                 {/* Right Section */}
                 <div className="text-[14px] sm:text-[16px] md:text-[19px] leading-[24px] sm:leading-[28px] md:leading-[36px] text-center px-[10px] py-[5px] text-[#0EB476] rounded-full hover:scale-105 transition-transform">
-                    Coming Soon
+                    Coming Soon...
                 </div>
             </div>
         </div>

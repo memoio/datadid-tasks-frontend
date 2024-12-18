@@ -93,8 +93,8 @@ export default function Navbar() {
     <div className="w-full">
       <div className="flex justify-between items-center sm:pb-[25px] sm:border-[#616161] sm:border-b-[1px] sm:font-bold">
         {/* Logo */}
-        <div className="text-white text-[18px] md:text-[24px] lg:text-[28px]">
-          MEMO Protocol
+        <div className="flex w-full mt-[50px] xl:mt-[0px] px-[20px] md:px-[0px] relative z-10">
+          <img src="/logo.png" alt="Logo" className="w-[200px] md:w-[300px]" />
         </div>
 
         {/* Hamburger Button */}
@@ -122,8 +122,10 @@ export default function Navbar() {
         {/* Nav Items for Larger Screens */}
         <div className="hidden sm:flex justify-between items-center gap-12">
           <div className="flex">
-            <NavItem>DOCS</NavItem>
-            <NavItem>Airdrop</NavItem>
+            <a href="https://memolabs.gitbook.io/memo-docs" target="_blank" rel="noopener noreferrer">
+              <NavItem>DOCS</NavItem>
+            </a>
+            {/* <NavItem>TotalPoints</NavItem> */}
           </div>
           <div className="flex gap-1">
             <ConnectButton />

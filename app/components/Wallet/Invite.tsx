@@ -1,14 +1,25 @@
 // import { useWallet } from '@/app/lib/context/WalletContext';
-import { useState } from "react";
+import { use, useEffect, useState } from "react";
 import axios from 'axios';
 import { useWallet } from "../../lib/context/WalletContext";
 import { useUser } from "../../lib/context/AuthContext";
+import { useSearchParams } from 'next/navigation';
 
 export default function Invite() {
     const { isInvited, closeInvite } = useWallet();
     const { userInfo } = useUser();
     const [values, setValues] = useState(Array(6).fill("")); // Separate state for each input
     const [success, setSuccess] = useState(false); // State for success popup
+    const searchParams = useSearchParams()
+
+    const referralCode = searchParams.get('referralCode')?.toString() || '';
+    useEffect(() => {
+        if (referralCode.length === 6) {
+            console.log("referralCode", referralCode);
+            setValues(referralCode.split(''));
+        }
+    }, [referralCode])
+
 
     const handleChange = (index: number, value: string) => {
         // if (/^\d?$/.test(value)) {

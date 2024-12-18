@@ -3,15 +3,98 @@
 import { paytoneOne } from '@/app/ui/fonts';
 import Image from 'next/image';
 import { useDIDInfo } from "@/app/lib/context/DIDContext";
+import axios from 'axios';
+import { useAccount } from "wagmi";
+import { useConnectModal } from '@rainbow-me/rainbowkit';
+import { useEffect } from 'react';
 
 export default function DidSection() {
-    const { isOpenDid, setToggleDid } = useDIDInfo();
+    const { setToggleDid } = useDIDInfo();
+    const { address, isConnected } = useAccount();
+    const { didInfo, setDID, isDIDInfoState, isDIDExistState, setIsDIDExist } = useDIDInfo();
+    const { openConnectModal } = useConnectModal();
 
     const openDid = () => {
-        console.log("opendid", isOpenDid)
+        if (!isConnected) {
+            openConnectModal?.();
+            return;
+        }
         setToggleDid(); // Toggle the DID state
-        console.log("opendid", isOpenDid)
     };
+
+    useEffect(() => {
+        if (!isDIDExistState) {
+            const getDIDExist = async () => {
+                try {
+                    const response = await axios.get(
+                        "https://didapi.memolabs.org/did/exist",
+                        {
+                            params: {
+                                address,
+                            },
+                        }
+                    );
+
+                    if (response.status === 200) {
+                        if (response.data.exist === 1) {
+                            console.log("did eixst:", response.data);
+                            setIsDIDExist();
+                        }
+                    }
+
+                    if (response.status === 506) {
+                        console.log("ddd")
+                    }
+                } catch (error: any) {
+                    if (error.response && error.response.status === 506) {
+
+                    }
+
+                    return
+                }
+            };
+
+            getDIDExist();
+        }
+    }, [isConnected])
+
+    useEffect(() => {
+        console.log("didstate", isDIDExistState)
+        if (isDIDExistState && !isDIDInfoState) {
+            const getDIDInfo = async () => {
+                try {
+                    const response = await axios.get(
+                        "https://didapi.memolabs.org/did/info",
+                        {
+                            params: {
+                                address,
+                            },
+                        }
+                    );
+
+                    if (response.status === 200) {
+                        console.log("didinfo:", response.data);
+                        setDID({
+                            did: response.data.did,
+                            number: response.data.number.toString().padStart(6, '0'),
+                        })
+                    }
+
+                    if (response.status === 506) {
+                        console.log("ddd")
+                    }
+                } catch (error: any) {
+                    if (error.response && error.response.status === 506) {
+
+                    }
+
+                    return
+                }
+            };
+
+            getDIDInfo();
+        }
+    }, [setIsDIDExist])
 
     return (
         <div className="relative">
@@ -33,17 +116,29 @@ export default function DidSection() {
                         Your all-in-one, privacy-preserving self-sovereign identity. Own, manage, and monetize your data!
                     </div>
                     <div className="text-white text-[12px] sm:text-[14px] mt-[15px] text-center sm:text-left">
-                        Note: Users need to log in to MEMO and successfully mint DID before they can participate in earning points.
+                        Note: Users need to log in to MEMO and successfully create DID before they can participate in earning points.
                     </div>
                     <div className="text-center flex justify-center sm:justify-start">
-                        <div
-                            onClick={openDid}
-                            className="w-[150px] bg-[#05F292] flex justify-center items-center rounded-full px-4 py-2 mt-5 shadow-md transform hover:scale-110 transition-transform duration-300 cursor-pointer"
-                        >
-                            <span className="font-bold text-[14px] sm:text-[16px] text-white">
-                                Create DID
-                            </span>
-                        </div>
+                        {isDIDInfoState && isConnected ? (
+                            <div className="rounded-[10px] mt-[25px] px-[5px] border-[1px] border-solid border-[#05F292] bg-[#121212] shadow-md shadow-[#05F292]">
+                                <div className="text-[15px] text-white mt-[16px] text-left animate-fade-in">
+                                    <span className="text-[#05F292]">No.</span> <span className='text-right'>{didInfo.number}</span>
+                                </div>
+                                <div className="text-[15px] leading-[30px] text-white mt-[5px] text-left animate-fade-in">
+                                    <span className="text-[#05F292]">DID</span> : <span>{didInfo.did}</span>
+                                </div>
+                            </div>
+                        ) : (
+                            <div
+                                onClick={openDid}
+                                className="w-[150px] bg-[#05F292] flex justify-center items-center rounded-full px-4 py-2 mt-5 shadow-md transform hover:scale-110 transition-transform duration-300 cursor-pointer"
+                            >
+                                <span className="font-bold text-[14px] sm:text-[16px] text-white">
+                                    Create DID
+                                </span>
+                            </div>
+                        )}
+
                     </div>
                 </div>
 
@@ -73,6 +168,6 @@ export default function DidSection() {
                 </div>
             </div>
             <div className="rounded-full px-[20px] py-[10px]"></div>
-        </div>
+        </div >
     );
 }

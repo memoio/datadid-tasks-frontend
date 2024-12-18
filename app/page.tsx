@@ -5,7 +5,7 @@ import Daily from "./components/Daily/daily";
 import DID from "./components/DID/DID";
 import Quest from "@/app/components/Quests/page"
 import CyclePage from "./components/Cycle/CyclePage";
-import Active from "./components/Cycle/Active";
+import Activity from "./components/Cycle/Activity";
 import Invite from "./components/Wallet/Invite";
 import Bonus from "./components/Bonus/Bonus";
 import LeaderboardPage from "./components/leaderboard/leaderboard";
@@ -29,7 +29,7 @@ export default function Home() {
             <Invite />
           ) : (isOpenDid ? (
             <DID />
-          ) : (joinId !== -1 ? (<Active />)
+          ) : (joinId !== -1 ? (<Activity />)
             : (
               <div>
                 <HomePage />

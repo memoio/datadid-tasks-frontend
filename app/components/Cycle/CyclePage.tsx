@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from 'react';
 import { paytoneOne } from '@/app/ui/fonts';
 import Image from 'next/image';
-
 import { useUser } from "@/app/lib/context/AuthContext";
 import { useAction } from "@/app/lib/context/ActionContext";
 import axios from 'axios';
