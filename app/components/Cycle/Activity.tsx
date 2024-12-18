@@ -17,9 +17,9 @@ export default function Activity() {
     const { userInfo } = useUser();
 
     const tasks = [
-        { id: "sbt1", label: "Follow Harmony On Twitter", reward: 50, url: "https://x.com/ensdomains" },
+        { id: "sbt1", label: "Follow Twitter", reward: 50, url: "https://x.com/ensdomains" },
         { id: "sbt2", label: "Join Telegram", reward: 50, url: "https://t.me/ensdomainsofficial" },
-        { id: "sbt3", label: "Visit The Website", reward: 50, url: "https://ens.domains/" },
+        { id: "sbt3", label: "Visit Website", reward: 50, url: "https://ens.domains/" },
     ];
 
     const handleTaskClick = async (task: { id: string; label: string; reward: number }, taskId: number) => {
@@ -141,7 +141,7 @@ export default function Activity() {
                             className="bg-gradient-to-b from-[#214177] to-[#064E33] text-white rounded-lg shadow-lg p-6 w-[70%] sm:w-[300px]"
                         >
                             <h3 className="text-lg font-bold text-center">{popupData.label}</h3>
-                            <p className="text-base mt-4 text-center">+{popupData.reward} points</p>
+                            <p className="text-base mt-4 text-center">+{popupData.reward} Points</p>
                             <button
                                 onClick={closePopup}
                                 className="bg-[#05F292] text-black text-sm sm:text-base font-bold px-6 py-2 mt-4 rounded-full w-full hover:bg-[#04C27C] transition-colors"
