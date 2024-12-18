@@ -5,7 +5,7 @@ import axios from 'axios';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
 
-import { useUser } from "../../lib/context/AuthContext"
+import { useUser } from "@/app/lib/context/AuthContext"
 
 
 interface PopupData {
@@ -36,7 +36,7 @@ export default function LeaderboardPage() {
             const getRank = async () => {
 
                 try {
-                    const response = await axios.get("https://airdrop.7nc.top/api/invite/rank",
+                    const response = await axios.get("https://airdrop.7nc.top/api/points/rank",
                         {
                             headers: {
                                 'accept': '*/*',
@@ -45,17 +45,20 @@ export default function LeaderboardPage() {
                             },
                         }
                     )
-                    const ranklist = response.data.data.slice(0, 10).map((item: { walletAddress: any; points: any; }, index: number) => ({
+                    const ranklist = response.data.data.slice(0, 10).map((item: {
+                        walletAddress: any; inviteCount: any; points: any;
+                    }, index: number) => ({
                         id: index + 1,
-                        address: (item.walletAddress).slice(0, 6) + "..." + (item.walletAddress || "").slice(-4),
-                        score: index + 10,
+                        address: (item.walletAddress ? item.walletAddress < 8 ? item.walletAddress : `${item.walletAddress.substring(0, 4)}...${item.walletAddress.substring(item.walletAddress.length - 4)}` : ''),
+                        score: (item.inviteCount ? item.inviteCount : 0),
                         soul: item.points,
                         isCrown: index < 3
                     }))
                     setElements(ranklist)
                     console.log(response.data)
                 } catch (error) {
-                    console.error(error);
+                    alert(`Error: ${error}`);
+                    return
                 }
             }
 
