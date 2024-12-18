@@ -13,13 +13,14 @@ interface Item {
     alt: string;
     reward: string;
     title: string;
+    url: string;
 }
 
 const items: Item[] = [
-    { src: "/x.png", alt: "SBT1", reward: "+20 Points", title: "Check In" },
-    { src: "/tg.png", alt: "SBT2", reward: "+20 Points", title: "Share to chat group" },
-    { src: "/discord.png", alt: "SBT3", reward: "+20 Points", title: "Share to friends" },
-    { src: "/retweet.png", alt: "SBT4", reward: "+20 Points", title: "Share to Twitter" },
+    { src: "/x.png", alt: "SBT1", reward: "+20 Points", title: "Check In", url: 'https://x.com/MemoLabsOrg' },
+    { src: "/tg.png", alt: "SBT2", reward: "+20 Points", title: "Share to chat group", url: 'https://t.me/memolabsio' },
+    { src: "/discord.png", alt: "SBT3", reward: "+20 Points", title: "Share to friends", url: 'https://discord.com/invite/YG4Ydv2E7X' },
+    { src: "/retweet.png", alt: "SBT4", reward: "+20 Points", title: "Share to Twitter", url: 'https://x.com/MemoLabsOrg/status/1862453981072826816' },
 ];
 
 export default function Daily() {
@@ -30,7 +31,8 @@ export default function Daily() {
     const { isDIDExistState } = useDIDInfo();
     // const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const handleClick = async (index: number) => {
+    const handleClick = async (index: number, url: string) => {
+        window.open(url, '_blank');
         try {
             if (isConnected) {
                 if (isDIDExistState) {
@@ -84,7 +86,7 @@ export default function Daily() {
                 {items.map((item: Item, index: number) => (
                     <div
                         key={index}
-                        onClick={() => handleClick(index)}
+                        onClick={() => handleClick(index, item.url)}
                         className={`w-full sm:w-[48%] md:w-[30%] xl:w-[20%] transform transition-transform duration-300 ${dailyAction.has(index)
                             ? 'bg-gradient-to-r from-[#214177] to-[#064E33] scale-105 shadow-lg'
                             : 'bg-[#0663412B] hover:scale-105'

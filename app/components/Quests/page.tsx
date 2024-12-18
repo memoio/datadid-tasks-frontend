@@ -13,13 +13,14 @@ interface Item {
     src: string;
     alt: string;
     reward: string;
+    url: string;
 }
 
 const items: Item[] = [
-    { src: "/x.png", alt: "SBT1", reward: "+50 Points" },
-    { src: "/tg.png", alt: "SBT2", reward: "+50 Points" },
-    { src: "/discord.png", alt: "SBT3", reward: "+50 Points" },
-    { src: "/retweet.png", alt: "SBT4", reward: "+50 Points" },
+    { src: "/x.png", alt: "SBT1", reward: "+50 Points", url: 'https://x.com/MemoLabsOrg' },
+    { src: "/tg.png", alt: "SBT2", reward: "+50 Points", url: 'https://t.me/memolabsio' },
+    { src: "/discord.png", alt: "SBT3", reward: "+50 Points", url: 'https://discord.com/invite/YG4Ydv2E7X' },
+    { src: "/retweet.png", alt: "SBT4", reward: "+50 Points", url: 'https://x.com/MemoLabsOrg/status/1862453981072826816' },
 ];
 
 export default function BindingPage() {
@@ -29,7 +30,8 @@ export default function BindingPage() {
     const { openConnectModal } = useConnectModal();
     const { isDIDExistState } = useDIDInfo();
 
-    const handleClick = async (index: number) => {
+    const handleClick = async (index: number, url: string) => {
+        window.open(url, '_blank');
         try {
             if (isConnected) {
                 if (isDIDExistState) {
@@ -111,7 +113,7 @@ export default function BindingPage() {
 
                     <div
                         key={index}
-                        onClick={() => handleClick(index)}
+                        onClick={() => handleClick(index, item.url)}
                         className={`w-full sm:w-[40%] lg:w-[30%] xl:w-[20%] transform transition-transform duration-300 ${questAction.has(index)
                             ? 'bg-gradient-to-r from-[#214177] to-[#064E33] scale-105 shadow-lg'
                             : 'bg-[#0663412B] hover:scale-105'
@@ -133,7 +135,7 @@ export default function BindingPage() {
                                 className={`${questAction.has(index) ? 'bg-gray-500' : 'bg-[#05F292]'} flex justify-center items-center rounded-full px-[10px] py-[5px] mt-[5px] shadow-md transform hover:scale-110 transition-transform duration-300`}
                                 onClick={(e) => {
                                     e.stopPropagation(); // 阻止事件冒泡，避免触发外层div的onClick
-                                    handleClick(index);
+                                    handleClick(index, item.url);
                                 }}
                                 style={{ pointerEvents: questAction.has(index) ? 'none' : 'auto' }}
                             >
