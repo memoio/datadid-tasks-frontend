@@ -32,9 +32,9 @@ export default function LeaderboardPage() {
     const { userInfo } = useUser();
 
     useEffect(() => {
+        console.log("weekly")
         if (userInfo) {
             const getRank = async () => {
-
                 try {
                     const response = await axios.get("https://airdrop.7nc.top/api/points/rank",
                         {
@@ -43,7 +43,10 @@ export default function LeaderboardPage() {
                                 uid: userInfo.uid,
                                 token: userInfo.token,
                             },
-                        }
+                            params: {
+                                type: isWeekly ? 1 : 0,
+                            }
+                        },
                     )
                     const ranklist = response.data.data.slice(0, 10).map((item: {
                         walletAddress: any; inviteCount: any; points: any;
@@ -64,7 +67,7 @@ export default function LeaderboardPage() {
 
             getRank()
         }
-    }, [userInfo])
+    }, [userInfo, isWeekly])
 
     const handlePopup = () => {
         // Mock invitation details
