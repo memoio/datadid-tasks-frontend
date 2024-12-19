@@ -10,7 +10,7 @@ export default function DidCreating() {
         // Set a timeout to call setIsCreatedDid after 3 seconds
         const timer = setTimeout(() => {
             setIsCreatedDid();
-            setIsDIDExist();
+            setIsDIDExist(true);
         }, 3000);
 
         // Cleanup the timeout on component unmount

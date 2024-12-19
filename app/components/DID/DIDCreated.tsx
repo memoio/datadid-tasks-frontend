@@ -29,12 +29,12 @@ export default function DIDCreated() {
                     />
                 </div>
                 <div className="text-[15px] text-white mt-[16px] text-left animate-fade-in">
-                    {didInfo.number}
+                    {/* {didInfo.number} */}
                 </div>
                 <div
                     className="text-[13px] leading-[30px] text-white mt-[5px] text-left animate-fade-in"
                 >
-                    {didInfo.did}
+                    {/* {didInfo.did} */}
                 </div>
                 <div
                     onClick={closeDid}
