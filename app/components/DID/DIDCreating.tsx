@@ -4,12 +4,13 @@ import { faClock } from "@fortawesome/free-solid-svg-icons";
 import { useDIDInfo } from "@/app/lib/context/DIDContext";
 
 export default function DidCreating() {
-    const { setIsCreatedDid } = useDIDInfo(); // Assuming setIsCreatedDid exists in DidContext
+    const { setIsCreatedDid, setIsDIDExist } = useDIDInfo(); // Assuming setIsCreatedDid exists in DidContext
 
     useEffect(() => {
         // Set a timeout to call setIsCreatedDid after 3 seconds
         const timer = setTimeout(() => {
             setIsCreatedDid();
+            setIsDIDExist();
         }, 3000);
 
         // Cleanup the timeout on component unmount
