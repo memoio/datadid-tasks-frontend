@@ -17,9 +17,22 @@ export default function Activity() {
     const { userInfo } = useUser();
 
     const tasks = [
-        { id: "sbt1", label: "Follow Twitter", reward: 50, url: "https://x.com/ensdomains" },
-        { id: "sbt2", label: "Join Telegram", reward: 50, url: "https://t.me/ensdomainsofficial" },
-        { id: "sbt3", label: "Visit Website", reward: 50, url: "https://ens.domains/" },
+        { id: "task1", label: "Follow Twitter", reward: 50 },
+        { id: "task2", label: "Join Telegram", reward: 50 },
+        { id: "task3", label: "Visit Website", reward: 50 },
+    ];
+
+    const urls = [
+        { id: 1, links: [{url: "https://x.com/MetisL2"},{url: "https://t.me/MetisL"},{url: "https://www.metis.io/"},] },
+        { id: 2, links: [{url: "https://x.com/arkreen_network"},{url: "https://t.me/arkreen_network"},{url: "https://www.arkreen.com/"},] },
+        { id: 3, links: [{url: "https://x.com/zCloakNetwork"},{url: "https://discord.com/invite/wcKt6MDRJz"},{url: "https://zcloak.network/"},] },
+        { id: 4, links: [{url: "https://x.com/Adot_web3"},{url: "https://t.me/AdotWeb3_Official"},{url: "https://www.a.xyz/"},] },
+        { id: 5, links: [{url: "https://x.com/Infinitar_MOBA"},{url: "https://t.me/infinitar_MOBA"},{url: "https://www.infinitar.com/#/"},] },
+        { id: 6, links: [{url: "https://x.com/Odyssey_ODS"},{url: "https://t.me/odyssey_global"},{url: "https://odysseyglobal.io/#/"},] },
+        { id: 7, links: [{url: "https://x.com/ULTILAND"},{url: "https://t.me/ULTILAND_RWA"},{url: "https://www.ultiland.io/"},] },
+        { id: 8, links: [{url: "https://x.com/Donetwork_club"},{url: "https://t.me/DoNetworkclub"},{url: "https://www.donetwork.io/#/pc/Index"},] },
+        { id: 9, links: [{url: "https://x.com/flock_io"},{url: "https://t.me/flock_io_community"},{url: "https://www.flock.io/"},] },
+        { id: 10, links: [{url: "https://x.com/DIDbased"},{url: "https://discord.com/invite/did"},{url: "https://d.id/"},] },
     ];
 
     const handleTaskClick = async (task: { id: string; label: string; reward: number }, taskId: number) => {
@@ -52,7 +65,7 @@ export default function Activity() {
     const navigateToLink = (projectId: number, taskId: number) => {
         // router.push(tasks[index].url);
         console.log(projectId);
-        window.open(tasks[taskId].url, '_blank');
+        window.open(urls[projectId].links[taskId].url, '_blank');
     };
 
     const closePopup = () => setPopupData(null);
@@ -92,9 +105,9 @@ export default function Activity() {
                         />
                         <div className="text-center sm:text-left">
                             <div className="flex justify-center sm:justify-start gap-4 mb-2">
-                                {["/globe.png", "/telegram.png", "/twitter.png"].map((src, i) => (
+                                {/* {["/globe.png", "/telegram.png", "/twitter.png"].map((src, i) => (
                                     <Image key={i} src={src} alt="icon" width={32} height={32} className='cursor-pointer' />
-                                ))}
+                                ))} */}
                             </div>
                             <div className="text-white text-sm sm:text-base">{cards[joinId].text}</div>
                         </div>
