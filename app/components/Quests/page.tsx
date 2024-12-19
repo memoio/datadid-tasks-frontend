@@ -16,11 +16,14 @@ interface Item {
     url: string;
 }
 
+const tweetText = "Come and participate in MEMO's points airdrop event!";
+const tweetUrl = 'https://x.com/MemoLabsOrg/status/1862453981072826816';
+
 const items: Item[] = [
     { src: "/x.png", alt: "SBT1", reward: "+50 Points", url: 'https://x.com/MemoLabsOrg' },
     { src: "/tg.png", alt: "SBT2", reward: "+50 Points", url: 'https://t.me/memolabsio' },
     { src: "/discord.png", alt: "SBT3", reward: "+50 Points", url: 'https://discord.com/invite/YG4Ydv2E7X' },
-    { src: "/retweet.png", alt: "SBT4", reward: "+50 Points", url: 'https://x.com/MemoLabsOrg/status/1862453981072826816' },
+    { src: "/retweet.png", alt: "SBT4", reward: "+50 Points", url: 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(tweetText) + '&url=' + encodeURIComponent(tweetUrl) },
 ];
 
 export default function BindingPage() {
@@ -31,10 +34,10 @@ export default function BindingPage() {
     const { isDIDExistState } = useDIDInfo();
 
     const handleClick = async (index: number, url: string) => {
-        window.open(url, '_blank');
         try {
             if (isConnected) {
                 if (isDIDExistState) {
+                    window.open(url, '_blank');
                     const actionId = 50 + index;
                     console.log(actionId);
                     const respond = await axios.post("https://airdrop.7nc.top/api/record/add", {
