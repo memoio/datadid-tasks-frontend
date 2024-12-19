@@ -8,7 +8,7 @@ import React, { useState, useEffect } from 'react';
 import { useConnectModal } from '@rainbow-me/rainbowkit';
 
 export default function CreateDID() {
-    const { setIsCreatingDid } = useDIDInfo();
+    const { setIsCreatingDid, setToggleDid } = useDIDInfo();
     const { isConnected, address, chain } = useAccount();
     const { openConnectModal } = useConnectModal();
     const { userInfo } = useUser();
@@ -80,11 +80,23 @@ export default function CreateDID() {
     return (
         <div className="mt-[40px] flex justify-center bg-dark animate-fade-in w-full">
             <div className="border-[3px] rounded-[11px] px-4 py-2 bg-gradient-to-r from-[#064E33] to-[#214177] shadow-lg transform hover:scale-105 transition-transform duration-300">
-                <div
-                    className={`${paytoneOne.className} text-white text-[20px] leading-[30px] animate-slide-down`}
-                >
-                    Data DID
+                <div className='flex justify-between items-center'>
+                    <div
+                        className={`${paytoneOne.className} text-white text-[20px] leading-[30px] animate-slide-down`}
+                    >
+                        Data DID
+                    </div>
+                    <Image
+                        src="/Close.png"
+                        alt="Close"
+                        width={24}
+                        height={24}
+                        className="cursor-pointer hover:scale-110 transition-transform"
+                        onClick={() => setToggleDid()}
+                    />
                 </div>
+
+
                 <div className="rounded-[10px] mt-[25px] px-[5px]">
                     <Image
                         src="/NFT_bg.png"

@@ -79,7 +79,9 @@ export default function DidSection() {
                     if (response.status === 200) {
                         if (response.data.exist === 1) {
                             console.log("did eixst:", response.data);
-                            setIsDIDExist();
+                            setIsDIDExist(true);
+                        } else {
+                            setIsDIDExist(false)
                         }
                     }
 
@@ -101,7 +103,7 @@ export default function DidSection() {
 
     useEffect(() => {
         console.log("didstate", isDIDExistState)
-        if (isDIDExistState && !isDIDInfoState) {
+        if (isConnected && isDIDExistState && !isDIDInfoState) {
             const getDIDInfo = async () => {
                 try {
                     const response = await axios.get(
@@ -135,7 +137,7 @@ export default function DidSection() {
 
             getDIDInfo();
         }
-    }, [setIsDIDExist])
+    }, [setIsDIDExist, isConnected])
 
     const closePopup = () => setShowPopup(false);
 
@@ -162,7 +164,7 @@ export default function DidSection() {
                         Note: Users need to log in to MEMO and successfully create DID before they can participate in earning points.
                     </div>
                     <div className="text-center flex justify-center sm:justify-start">
-                        {isDIDInfoState && isConnected ? (
+                        {isDIDExistState && isDIDInfoState && isConnected ? (
                             <div className="rounded-[10px] mt-[25px] px-[5px] border-[1px] border-solid border-[#05F292] bg-[#121212] shadow-md shadow-[#05F292]">
                                 <div className="text-[15px] text-white mt-[16px] text-left animate-fade-in">
                                     <span className="text-[#05F292]">No.</span> <span className='text-right'>{didInfo.number}</span>

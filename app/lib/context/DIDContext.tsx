@@ -25,7 +25,7 @@ interface DIDContextType {
     number: string;
   }) => void;
   isDIDExistState: boolean;
-  setIsDIDExist: () => void;
+  setIsDIDExist: (arg0: boolean) => void;
   isDIDInfoState: boolean;
 }
 
@@ -68,8 +68,8 @@ export const DIDContextProvider = ({ children }: DIDContextProviderProps) => {
     setIsDIDInfoState(true)
   }
 
-  const setIsDIDExist = () => {
-    setIsDIDExistState(true)
+  const setIsDIDExist = (flag: boolean) => {
+    setIsDIDExistState(flag)
   }
 
   return (
