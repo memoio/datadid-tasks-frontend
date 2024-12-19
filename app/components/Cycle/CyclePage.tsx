@@ -20,7 +20,7 @@ export const cards = [
     { id: 7, imgSrc: "/Cycle7.png", participants: 800, name: "Ultiland", text: "Ultiland focuses on real-world asset (RWA) issuance and lending protocols, addressing market pain points in RWA and digital art." },
     { id: 8, imgSrc: "/Cycle8.png", participants: 800, name: "Do Network", text: "Do Network is a decentralized network with ultra-high performance.It has achieved a scalable DPOS consensus agreement through a number of technological innovations." },
     { id: 9, imgSrc: "/Cycle9.png", participants: 800, name: "FLock.io", text: "FLock.io is a revolutionary end-to-end AI co-creation platform that redefines the process of training, fine-tuning, and inference of AI models by integrating decentralized machine learning technologies in the chain." },
-    { id: 10, imgSrc: "/Cycle10.png", participants: 800, name: "d.id", text: "The d.id is building protocols for proof of humanity and achievement network, connecting every human. Own your ID and achievement through  blockchain-powered protocol network, and be ready for the next societal breakthrough." },
+    { id: 10, imgSrc: "/Cycle10.png", participants: 800, name: ".bit", text: "The d.id is building protocols for proof of humanity and achievement network, connecting every human. Own your ID and achievement through  blockchain-powered protocol network, and be ready for the next societal breakthrough." },
 ];
 
 export default function CyclePage() {
