@@ -105,6 +105,7 @@ export default function CyclePage() {
                         }
                     } catch (error) {
                         console.error("Error binding wallet:", error);
+                        return
                     }
                 };
 
