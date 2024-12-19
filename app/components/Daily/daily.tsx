@@ -32,18 +32,19 @@ export default function Daily() {
     // const [isModalOpen, setIsModalOpen] = useState(false);
 
     const handleClick = async (index: number) => {
-        const currentUrl = window.location.href;
-        const tweetText = "Join MEMO's Airdrop! " + currentUrl;
-        const urls = [
-            { url: "https://x.com/MemoLabsOrg" },
-            { url: 'https://t.me/share/url?url=' + encodeURIComponent(currentUrl) },
-            { url: 'https://discord.com/invite/YG4Ydv2E7X' },
-            { url: 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(tweetText) },
-        ];
-        window.open(urls[index].url, '_blank');
         try {
             if (isConnected) {
                 if (isDIDExistState) {
+                    const currentUrl = window.location.href;
+                    const tweetText = "Join MEMO's Airdrop! " + currentUrl;
+                    const urls = [
+                        { url: "https://x.com/MemoLabsOrg" },
+                        { url: 'https://t.me/share/url?url=' + encodeURIComponent(currentUrl) },
+                        { url: 'https://discord.com/invite/YG4Ydv2E7X' },
+                        { url: 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(tweetText) },
+                    ];
+                    window.open(urls[index].url, '_blank');
+
                     const actionId = 70 + index;
                     console.log(actionId);
                     const respond = await axios.post("https://airdrop.7nc.top/api/record/add", {
