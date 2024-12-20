@@ -101,10 +101,11 @@ export default function CyclePage() {
                                 token: response.data.data.token,
                             });
                         } else {
-                            console.error("Failed to bind wallet:", response.data);
+                            alert(`Failed to bind wallet: ${JSON.stringify(response.data)}`);
+                            return
                         }
                     } catch (error) {
-                        console.error("Error binding wallet:", error);
+                        alert(`Error binding wallet: ${error}`);
                         return
                     }
                 };
@@ -125,7 +126,8 @@ export default function CyclePage() {
                         setPoints(response.data.data.points)
                         console.log(response.data.data.points);
                     } catch (error) {
-                        console.error(error);
+                        alert(error);
+                        return
                     }
 
                 };

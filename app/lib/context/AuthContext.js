@@ -38,10 +38,10 @@ export const AuthContextProvider = ({ children }) => {
               token: response.data.data.token,
             });
           } else {
-            console.error("Failed to bind wallet:", response.data);
+            alert("Failed to bind wallet:", response.data);
           }
         } catch (error) {
-          console.error("Error binding wallet:", error);
+          alert("Error binding wallet:", error);
         }
       };
 

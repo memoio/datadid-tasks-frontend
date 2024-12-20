@@ -43,10 +43,10 @@ export default function Refer() {
                                     token: response.data.data.token,
                                 });
                             } else {
-                                console.error("Failed to bind wallet:", response.data);
+                                alert(`Failed to bind wallet: ${JSON.stringify(response.data)}`);
                             }
                         } catch (error) {
-                            console.error("Error binding wallet:", error);
+                            alert(`Error binding wallet: ${error}`);
                         }
                     };
                     bindWallet();
@@ -65,7 +65,7 @@ export default function Refer() {
                     }
 
                 } catch (error) {
-                    console.error(error);
+                    alert(error);
                 }
             };
             getUserInviteCode();
