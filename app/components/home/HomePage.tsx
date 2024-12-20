@@ -51,7 +51,7 @@ export default function HomePage() {
                         return;
                     }
                 } catch (error) {
-                    alert("Error binding wallet:", error);
+                    alert(`Error binding wallet: ${error}`);
                     return;
                 }
             };
