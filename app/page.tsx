@@ -21,7 +21,7 @@ export default function Home() {
   const { joinId } = useAction();
   return (
     <div>
-      <main className="bg-[#051610] px-[20px] sm:px-[40px] md:px-[60px] lg:px-[80px] xl:px-[102px] py-[20px] sm:py-[25px] md:py-[30px] lg:py-[35px] xl:py-[40px]">
+      <main className="bg-[#051610] px-[20px] sm:px-[40px] md:px-[60px] lg:px-[80px] xl:px-[102px] py-[20px] sm:py-[25px] md:py-[30px] lg:py-[35px] xl:px-[40px] min-h-[100vh]">
         {/* <FlagProvider> */}
         <Navbar />
         {
