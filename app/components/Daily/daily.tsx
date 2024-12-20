@@ -72,7 +72,8 @@ export default function Daily() {
             }
 
         } catch (error) {
-            console.error(error);
+            alert(error);
+            return
         }
     };
 

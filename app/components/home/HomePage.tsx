@@ -47,11 +47,11 @@ export default function HomePage() {
                         }
 
                     } else {
-                        console.error("Failed to bind wallet:", response.data);
+                        alert(`Failed to bind wallet: ${JSON.stringify(response.data)}`);
                         return;
                     }
                 } catch (error) {
-                    console.error("Error binding wallet:", error);
+                    alert("Error binding wallet:", error);
                     return;
                 }
             };
