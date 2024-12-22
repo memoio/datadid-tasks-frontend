@@ -17,7 +17,7 @@ interface PopupData {
 export default function DidSection() {
     const { setToggleDid } = useDIDInfo();
     const { address, isConnected } = useAccount();
-    const { didInfo, setDID, isDIDInfoState, isDIDExistState, setIsDIDExist } = useDIDInfo();
+    const { didInfo, setDID, isDIDInfoState, isDIDExistState, setIsDIDExist, setDIDInfoExist } = useDIDInfo();
     const { openConnectModal } = useConnectModal();
     const [popupData, setPopupData] = useState<PopupData[]>([]);
     const [showPopup, setShowPopup] = useState(false);
@@ -64,41 +64,42 @@ export default function DidSection() {
     };
 
     useEffect(() => {
-        if (!isDIDExistState) {
-            const getDIDExist = async () => {
-                try {
-                    const response = await axios.get(
-                        "https://didapi.memolabs.org/did/exist",
-                        {
-                            params: {
-                                address,
-                            },
-                        }
-                    );
 
-                    if (response.status === 200) {
-                        if (response.data.exist === 1) {
-                            console.log("did eixst:", response.data);
-                            setIsDIDExist(true);
-                        } else {
-                            setIsDIDExist(false)
-                        }
+        const getDIDExist = async () => {
+            try {
+                const response = await axios.get(
+                    "https://didapi.memolabs.org/did/exist",
+                    {
+                        params: {
+                            address,
+                        },
                     }
+                );
 
-                    if (response.status === 506) {
-                        console.log("ddd")
+                if (response.status === 200) {
+                    if (response.data.exist === 1) {
+                        console.log("did eixst:", response.data);
+                        setIsDIDExist(true);
+                    } else {
+                        setIsDIDExist(false)
+                        setDIDInfoExist(false)
                     }
-                } catch (error: any) {
-                    if (error.response && error.response.status === 506) {
-
-                    }
-
-                    return
                 }
-            };
 
-            getDIDExist();
-        }
+                if (response.status === 506) {
+                    console.log("ddd")
+                }
+            } catch (error: any) {
+                if (error.response && error.response.status === 506) {
+
+                }
+
+                return
+            }
+        };
+
+        getDIDExist();
+
     }, [isConnected])
 
     useEffect(() => {
@@ -121,6 +122,7 @@ export default function DidSection() {
                             did: response.data.did,
                             number: response.data.number.toString().padStart(6, '0'),
                         })
+                        setDIDInfoExist(true)
                     }
 
                     if (response.status === 506) {
@@ -138,6 +140,7 @@ export default function DidSection() {
             getDIDInfo();
         }
     }, [setIsDIDExist, isConnected])
+
 
     const closePopup = () => setShowPopup(false);
 
