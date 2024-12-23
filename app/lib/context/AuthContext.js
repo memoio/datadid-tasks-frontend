@@ -2,6 +2,7 @@
 import { useEffect, createContext, useContext, useState } from "react";
 import { useAccount } from "wagmi";
 import axios from "axios";
+import { API_URL } from "@/app/components/config/config";
 
 // Create the context
 const UserContext = createContext();
@@ -18,7 +19,7 @@ export const AuthContextProvider = ({ children }) => {
       const bindWallet = async () => {
         try {
           const response = await axios.post(
-            "https://airdrop.7nc.top/api/user/wallet/bind",
+            API_URL.AIRDROP_USER_WALLET_BIND,
             {
               walletAddress: address,
             },

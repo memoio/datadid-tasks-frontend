@@ -8,6 +8,7 @@ import { useDIDInfo } from "@/app/lib/context/DIDContext";
 import { useConnectModal } from '@rainbow-me/rainbowkit';
 import { useAccount } from 'wagmi';
 import React from 'react';
+import { API_URL } from '../config/config';
 
 interface Item {
     src: string;
@@ -47,7 +48,7 @@ export default function Daily() {
 
                     const actionId = 70 + index;
                     console.log(actionId);
-                    const respond = await axios.post("https://airdrop.7nc.top/api/record/add", {
+                    const respond = await axios.post(API_URL.AIRDROP_RECORD_ADD, {
                         "action": actionId
                     }, {
                         headers: {

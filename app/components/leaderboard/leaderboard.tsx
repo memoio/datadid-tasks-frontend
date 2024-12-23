@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { useState, useEffect } from 'react';
 
 import { useUser } from "@/app/lib/context/AuthContext"
+import { API_URL } from '../config/config';
 
 
 
@@ -32,7 +33,7 @@ export default function LeaderboardPage() {
         if (userInfo) {
             const getRank = async () => {
                 try {
-                    const response = await axios.get("https://airdrop.7nc.top/api/points/rank",
+                    const response = await axios.get(API_URL.AIRDROP_POINTS_RANK,
                         {
                             headers: {
                                 'accept': '*/*',
@@ -67,7 +68,7 @@ export default function LeaderboardPage() {
 
 
 
-  
+
 
 
 
@@ -80,7 +81,7 @@ export default function LeaderboardPage() {
                 Leaderboard
             </div>
             <div className="w-full sm:w-[60%] text-[16px] sm:text-[20px] text-center leading-[28px] sm:leading-[38px] text-white mt-[20px] sm:mt-[33px]">
-                The top 100 inviters Weekly and top 500 inviters All-time will be shown on the leaderboards.
+                The top 10 inviters Weekly and top 10 inviters All-time will be shown on the leaderboards.
             </div>
 
             {/* Tabs */}

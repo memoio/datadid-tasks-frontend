@@ -6,6 +6,7 @@ import axios from 'axios';
 import { useAccount, useSignMessage } from 'wagmi';
 import React, { useState, useEffect } from 'react';
 import { useConnectModal } from '@rainbow-me/rainbowkit';
+import { API_URL } from '../config/config';
 
 export default function CreateDID() {
     const { setIsCreatingDid, setToggleDid } = useDIDInfo();
@@ -23,7 +24,7 @@ export default function CreateDID() {
         if (isConnected) {
             console.log("create")
             try {
-                const response = await axios.get(url + `/createsigmsg`, {
+                const response = await axios.get(API_URL.DID_CREATE_MSG, {
                     params: {
                         address,
                     },
@@ -36,7 +37,7 @@ export default function CreateDID() {
                     const sig = await signMessageAsync({ message });
                     console.log("sig:", sig)
 
-                    const response1 = await axios.post(url + `/create`, {
+                    const response1 = await axios.post(API_URL.DID_CREATE, {
                         address,
                         sig,
                     });
@@ -46,7 +47,7 @@ export default function CreateDID() {
 
                         const actionId = 1;
                         console.log(actionId);
-                        const respond = await axios.post("https://airdrop.7nc.top/api/record/add", {
+                        const respond = await axios.post(API_URL.AIRDROP_RECORD_ADD, {
                             "action": actionId
                         }, {
                             headers: {

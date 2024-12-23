@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useWallet } from "../../lib/context/WalletContext";
 import { useUser } from "../../lib/context/AuthContext";
 import { useSearchParams } from 'next/navigation';
+import { API_URL } from "../config/config";
 
 export default function Invite() {
     const { isInvited, closeInvite } = useWallet();
@@ -58,7 +59,7 @@ export default function Invite() {
     const handleClick = async () => {
         try {
             const inviteCode = values.join("");
-            const respond = await axios.post("https://airdrop.7nc.top/api/invite/bind", {
+            const respond = await axios.post(API_URL.AIRDROP_INVITE_BIND, {
                 "inviteCode": inviteCode
             }, {
                 headers: {
