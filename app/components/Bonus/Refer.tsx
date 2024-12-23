@@ -8,6 +8,7 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleCheck } from "@fortawesome/free-solid-svg-icons";
+import { API_URL } from '../config/config';
 
 export default function Refer() {
     const { isConnected, address } = useAccount();
@@ -23,7 +24,7 @@ export default function Refer() {
                     const bindWallet = async () => {
                         try {
                             const response = await axios.post(
-                                "https://airdrop.7nc.top/api/user/wallet/bind",
+                                API_URL.AIRDROP_USER_WALLET_BIND,
                                 {
                                     walletAddress: address,
                                 },
@@ -53,7 +54,7 @@ export default function Refer() {
                 }
                 try {
                     if (userInfo) {
-                        const response = await axios.get('https://airdrop.7nc.top/api/user/info', {
+                        const response = await axios.get(API_URL.AIRDROP_USER_INFO, {
                             headers: {
                                 'accept': '*/*',
                                 'uid': userInfo.uid,

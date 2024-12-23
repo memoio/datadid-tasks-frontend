@@ -9,6 +9,7 @@ import { useAccount } from "wagmi";
 import axios from "axios";
 import { useUser } from "@/app/lib/context/AuthContext"
 import { useWallet } from "@/app/lib/context/WalletContext";
+import { API_URL } from "../config/config";
 
 export default function HomePage() {
     // const { flag } = useContext(FlagContext);
@@ -22,7 +23,7 @@ export default function HomePage() {
             const bindWallet = async () => {
                 try {
                     const response = await axios.post(
-                        "https://airdrop.7nc.top/api/user/wallet/bind",
+                        API_URL.AIRDROP_USER_WALLET_BIND,
                         {
                             walletAddress: address,
                         },

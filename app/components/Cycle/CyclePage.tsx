@@ -9,6 +9,7 @@ import axios from 'axios';
 import { useAccount } from "wagmi";
 import { useDIDInfo } from '@/app/lib/context/DIDContext';
 import { useConnectModal } from '@rainbow-me/rainbowkit';
+import { API_URL } from '../config/config';
 
 export const cards = [
     { id: 1, imgSrc: "/Cycle1.png", participants: 800, name: "Metis", text: "Metis is a permissionless Layer 2 network powering the next generation of decentralized applications." },
@@ -81,7 +82,7 @@ export default function CyclePage() {
                 const bindWallet = async () => {
                     try {
                         const response = await axios.post(
-                            "https://airdrop.7nc.top/api/user/wallet/bind",
+                            API_URL.AIRDROP_USER_WALLET_BIND,
                             {
                                 walletAddress: address,
                             },
@@ -115,7 +116,7 @@ export default function CyclePage() {
                 const getUserPoints = async () => {
 
                     try {
-                        const response = await axios.get('https://airdrop.7nc.top/api/user/info', {
+                        const response = await axios.get(API_URL.AIRDROP_USER_INFO, {
                             headers: {
                                 'accept': '*/*',
                                 'uid': userInfo.uid, // 根据实际情况传入 uid

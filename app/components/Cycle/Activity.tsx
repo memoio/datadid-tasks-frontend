@@ -6,9 +6,9 @@ import React, { useState } from "react";
 import Image from 'next/image';
 import axios from 'axios';
 import { useUser } from "@/app/lib/context/AuthContext";
-import { useAction } from '../../lib/context/ActionContext';
+import { useAction } from '@/app/lib/context/ActionContext';
 import { cards } from "./CyclePage";
-
+import { API_URL } from '../config/config';
 export default function Activity() {
     const [popupData, setPopupData] = useState<{ label: string; reward: number } | null>(null);
 
@@ -41,7 +41,7 @@ export default function Activity() {
             try {
                 const actionId = 1011 + 10 * joinId + taskId;
                 console.log(actionId, joinId, taskId);
-                const respond = await axios.post("https://airdrop.7nc.top/api/record/add", {
+                const respond = await axios.post(API_URL.AIRDROP_RECORD_ADD, {
                     "action": actionId
                 }, {
                     headers: {

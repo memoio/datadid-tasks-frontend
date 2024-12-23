@@ -3,6 +3,7 @@
 import { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 import { useAccount } from "wagmi";
 import axios from 'axios';
+import { API_URL } from '@/app/components/config/config';
 
 interface TaskData {
     projectId: number;
@@ -59,7 +60,7 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
                 try {
                     clear();
                     const response = await axios.post(
-                        "https://airdrop.7nc.top/api/user/wallet/bind",
+                        API_URL.AIRDROP_USER_WALLET_BIND,
                         {
                             walletAddress: address,
                         },
@@ -74,53 +75,67 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
                     );
 
                     if (response.data.result === 1) {
-                        const oneTimeRespond = await axios.get("https://airdrop.7nc.top/api/record/list?page=1&size=20&type=1",
+                        const oneTimeRespond = await axios.get(API_URL.AIRDROP_RECORD_LIST,
                             {
                                 headers: {
                                     "uid": response.data.data.uid,
                                     "token": response.data.data.token,
+                                },
+                                params: {
+                                    "page": 1,
+                                    "size": 20,
+                                    "type": 1
                                 }
                             });
 
                         if (oneTimeRespond.status === 200) {
                             // eslint-disable-next-line
-                            oneTimeRespond.data.data.some((element: any) => {
-                                const action = element.action;
-                                // console.log(action);
-                                if (action >= 50 && action <= 53) {
-                                    console.log(action - 50);
-                                    setQuestAction((prev) => new Set(prev).add(action - 50));
-                                } else if (action >= 1011) {
-                                    const projectId = Math.floor((action - 1011) / 10);
-                                    const taskId = (action - 1011) % 10;
-                                    console.log(projectId, taskId);
-                                    setCycle(projectId, taskId);
-                                }
-                            });
+                            if (oneTimeRespond.data.data.length > 0) {
+                                oneTimeRespond.data.data.some((element: any) => {
+                                    const action = element.action;
+                                    // console.log(action);
+                                    if (action >= 50 && action <= 53) {
+                                        console.log(action - 50);
+                                        setQuestAction((prev) => new Set(prev).add(action - 50));
+                                    } else if (action >= 1011) {
+                                        const projectId = Math.floor((action - 1011) / 10);
+                                        const taskId = (action - 1011) % 10;
+                                        console.log(projectId, taskId);
+                                        setCycle(projectId, taskId);
+                                    }
+                                });
+                            }
                         }
 
-                        const dailyRespond = await axios.get("https://airdrop.7nc.top/api/record/list?page=1&size=20&type=2",
+                        const dailyRespond = await axios.get(API_URL.AIRDROP_RECORD_LIST,
                             {
                                 headers: {
                                     "uid": response.data.data.uid,
                                     "token": response.data.data.token,
+                                },
+                                params: {
+                                    "page": 1,
+                                    "size": 20,
+                                    "type": 2
                                 }
                             }
                         );
 
                         if (dailyRespond.status === 200) {
                             // eslint-disable-next-line
-                            dailyRespond.data.data.forEach((element: any) => {
-                                const action = element.action - 70;
-                                console.log(action);
-                                const preDayTime = Date.now() - 86400000;
-                                if (element.time > preDayTime) {
-                                    setDailyAction((prev) => new Set(prev).add(action));
-                                }
-                            });
+                            if (dailyRespond.data.data.length > 0) {
+                                dailyRespond.data.data.forEach((element: any) => {
+                                    const action = element.action - 70;
+                                    console.log(action);
+                                    const preDayTime = Date.now() - 86400000;
+                                    if (element.time > preDayTime) {
+                                        setDailyAction((prev) => new Set(prev).add(action));
+                                    }
+                                });
+                            }
                         }
                     } else {
-                        alert(`Failed to bind wallet: ${JSON.stringify(response.data)}`);
+                        alert(`Failed to get record list: ${JSON.stringify(response.data)}`);
                         return
                     }
                 } catch (error) {
