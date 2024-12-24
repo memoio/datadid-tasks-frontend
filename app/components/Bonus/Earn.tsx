@@ -17,9 +17,9 @@ export default function Earn() {
 
             {/* Content Section */}
             <div className="w-full rounded-[10px] bg-gradient-to-br from-[#064E33] to-[#214177] mt-[25px] px-[25px] py-[30px] animate-card-load">
-                <div className="flex flex-col md:flex-row items-center justify-between">
+                <div className="flex flex-col md:flex-row items-center justify-between gap-1">
                     {/* Left Section */}
-                    <div className="flex items-center gap-7 group cursor-pointer">
+                    <div className="flex flex-col sm:flex-row items-center gap-7 group cursor-pointer">
                         <Image
                             src="/Earn.png"
                             alt="Earn"
@@ -28,13 +28,14 @@ export default function Earn() {
                             className="group-hover:scale-105 group-hover:rotate-[3deg] transition-transform duration-300"
                         />
                         <div className='mr-[10px]'>
-                            <div className="text-[23px] text-white font-bold group-hover:scale-105 transition-transform duration-300">
+                            <div className="text-[23px] text-white font-bold group-hover:scale-105 transition-transform duration-300
+                             text-center sm:text-left">
                                 ${"MEMOGAME is Telegram's smartest AI algorithm protocol!"}
                             </div>
-                            <div className="text-[20px] text-white">
-                                Click to earn SBT!
+                            <div className="text-[20px] text-white text-center sm:text-left">
+                                Click to earn points!
                             </div>
-                            <div className="text-[15px] text-white group-hover:opacity-75 transition-opacity duration-300">
+                            <div className="text-[15px] text-white group-hover:opacity-75 transition-opacity duration-300 text-center sm:text-left">
                                 @MemoGame hot
                             </div>
                         </div>
@@ -42,10 +43,10 @@ export default function Earn() {
 
                     {/* Right Section */}
                     <div
-                        className="bg-[#05F292] rounded-[10px] text-[18px] font-bold text-center px-[25px] py-[20px] mt-[20px] md:mt-[0px] cursor-pointer hover:bg-[#04D582] hover:scale-105 transition-all duration-300" 
+                        className="bg-[#05F292] rounded-[10px] text-[18px] font-bold text-center px-[25px] py-[20px] mt-[20px] md:mt-[0px] hover:bg-[#04D582] hover:scale-105 transition-all duration-300"
                         style={{ pointerEvents: 'none', opacity: '0.5' }}
                     >
-                        Start To Earn
+                        Comming Soon
                     </div>
                 </div>
             </div>

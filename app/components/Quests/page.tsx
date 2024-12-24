@@ -82,7 +82,7 @@ export default function BindingPage() {
                     </div>
                 </div>
             </div>
-            <div className="mt-[55px] flex flex-wrap justify-around gap-5">
+            <div className="mt-[55px] flex flex-wrap justify-between gap-5">
                 {items.map((item: Item, index: number) => (
                     // <div
                     //     key={index}
@@ -142,7 +142,7 @@ export default function BindingPage() {
                                 }}
                                 style={{ pointerEvents: questAction.has(index) ? 'none' : 'auto' }}
                             >
-                                <p className={`font-bold text-[16px] text-white ${questAction.has(index) ? 'cursor-not-allowed' : ''}`}>
+                                <p className={`font-bold text-[16px] text-[#171717] ${questAction.has(index) ? 'cursor-not-allowed' : ''}`}>
                                     {questAction.has(index) ? 'Claimed' : 'Claim'}
                                 </p>
                             </div>

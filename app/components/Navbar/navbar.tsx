@@ -7,7 +7,7 @@ import { ConnectButton } from '@rainbow-me/rainbowkit';
 // Reusable styles for NavItems and Buttons
 const commonStyles = `
   font-family: 'Josefin Sans', sans-serif;
-  color: white;
+  color: #171717;
   line-height: 1.5;
   text-align: center;
   padding: 9px 17px;
@@ -23,6 +23,7 @@ const commonStyles = `
 const NavItem = styled.div`
   ${commonStyles};
   font-size: 13px;
+  color: white;
   width: 100%;
   margin: 0;
   padding: 5px 10px;

@@ -139,7 +139,7 @@ export default function CyclePage() {
     }, [address, isConnected, setUserInfo, userInfo]);
 
     return (
-        <div className="mt-[55px]">
+        <div className="mt-[120px]">
             {/* Header Section */}
             <div className="text-center">
                 <h1 className={`${paytoneOne.className} text-transparent bg-clip-text bg-gradient-to-b from-[#214177] to-[#05F292] text-[34px] md:text-[48px] font-bold animate-fade-in`}>
@@ -161,7 +161,7 @@ export default function CyclePage() {
                                 <p className="text-[#05F292] text-[18px] mt-2">{unit}</p>
                             </div>
                             {i !== 3 && (
-                                <div className="text-[#FFC917] text-[20px]">:</div>
+                                <div className="text-[#FFC917] text-[20px] mb-[35px]">:</div>
                             )}
                         </div>
                     ))}
@@ -187,7 +187,7 @@ export default function CyclePage() {
             </div>
 
             {/* Cards Section */}
-            <div className="mt-[56px] flex justify-around flex-wrap gap-8 animate-fade-in">
+            <div className="mt-[56px] flex justify-between flex-wrap gap-8">
                 {cards.map((card, index) => {
                     isJoined = false;
                     let count = 0;
@@ -228,7 +228,7 @@ export default function CyclePage() {
                                             <div className='text-[#038C54] w-[25px] h-[25px] rounded-full bg-white text-center'>{count}</div>
                                         </div>
                                     ) : (
-                                        <div className="text-center text-white text-[22px]">Join</div>
+                                        <div className="text-center text-[#171717] text-[22px]">Join</div>
                                     )}
                                 </div>
                             </div>

@@ -91,7 +91,7 @@ export default function Refer() {
     };
 
     return (
-        <div className="mt-[90px] px-4 animate-fade-in">
+        <div className="mt-[90px] animate-fade-in">
             {/* Heading */}
             <h1
                 className={`${paytoneOne.className} text-transparent bg-clip-text bg-gradient-to-b from-[#214177] to-[#05F292] text-[28px] sm:text-[34px] md:text-[48px] font-bold animate-slide-in text-center md:text-left`}
@@ -103,7 +103,7 @@ export default function Refer() {
             </div>
 
             {/* Content Section */}
-            <div className="w-full rounded-[10px] bg-gradient-to-b from-[#064E33] to-[#214177] mt-[20px] p-5 flex flex-col lg:flex-row gap-6 animate-card-load">
+            <div className="w-full rounded-[10px] bg-gradient-to-b from-[#064E33] to-[#214177] mt-[20px] p-5 flex flex-col lg:flex-row lg:justify-between gap-6 animate-card-load">
                 {/* Left Section */}
                 <div className="flex flex-col gap-6">
                     <div className="text-[24px] sm:text-[34px] text-white font-bold text-center md:text-left">

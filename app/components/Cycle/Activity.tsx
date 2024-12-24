@@ -11,12 +11,18 @@ import { cards } from "./CyclePage";
 import { API_URL } from '../config/config';
 export default function Activity() {
     const [popupData, setPopupData] = useState<{ label: string; reward: number } | null>(null);
+    const [alertMessage, setAlertMessage] = useState<string | null>(null); // State for the alert
 
     const { joinId, leaveProject, cycleAction, setCycle } = useAction();
     // const router = useRouter();
     const { userInfo } = useUser();
 
-    const tasks = [
+    const dailyTasks = [
+        { id: 'task1', label: 'Share Harmony task links on Twitter', reward: 20 },
+        { id: 'task2', label: 'Share the Harmony task link to the TG group', reward: 20 },
+    ];
+
+    const onetimeTasks = [
         { id: "task1", label: "Follow Twitter", reward: 50 },
         { id: "task2", label: "Join Telegram", reward: 50 },
         { id: "task3", label: "Visit Website", reward: 50 },
@@ -70,6 +76,16 @@ export default function Activity() {
 
     const closePopup = () => setPopupData(null);
 
+    const copyToClipboard = (text: string) => {
+        navigator.clipboard.writeText(text).then(() => {
+            setAlertMessage('Referral Code Copied!'); // Show the alert
+            setTimeout(() => setAlertMessage(null), 3000); // Hide after 3 seconds
+        }).catch((err) => {
+            console.error('Failed to copy: ', err);
+            alert('Failed to copy text.');
+        });
+    };
+
     return (
         <div
             style={{
@@ -120,7 +136,7 @@ export default function Activity() {
 
                 <div className={`${paytoneOne.className} text-white text-lg sm:text-xl mt-6`}>Tasks</div>
                 <div className="border-2 border-white rounded-lg mt-4 px-4 py-6 space-y-4 animate-fade-in">
-                    {tasks.map((task, index) => (
+                    {onetimeTasks.map((task, index) => (
                         <div
                             key={task.id}
                             className="bg-gradient-to-r from-[#082B5A] to-[#064D33] px-6 py-4 flex justify-between items-center rounded-lg transition-transform hover:scale-105"
@@ -151,7 +167,7 @@ export default function Activity() {
                     >
                         <div
                             onClick={(e) => e.stopPropagation()}
-                            className="bg-gradient-to-b from-[#214177] to-[#064E33] text-white rounded-lg shadow-lg p-6 w-[70%] sm:w-[300px]"
+                            className="bg-gradient-to-b from-[#214177] to-[#064E33] text-white rounded-lg shadow-lg px-2 sm:px-6 py-6 w-[70%] sm:w-[300px]"
                         >
                             <h3 className="text-lg font-bold text-center">{popupData.label}</h3>
                             <p className="text-base mt-4 text-center">+{popupData.reward} Points</p>
@@ -165,6 +181,15 @@ export default function Activity() {
                     </div>
                 )}
             </div>
+            {/* Alert message container */}
+            {alertMessage && (
+                <div
+                    className="fixed bottom-4 right-4 bg-green-500 text-white py-2 px-4 rounded-lg shadow-lg transition-opacity duration-300"
+                    style={{ opacity: alertMessage ? 1 : 0 }}
+                >
+                    {alertMessage}
+                </div>
+            )}
         </div>
     );
 }

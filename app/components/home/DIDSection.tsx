@@ -181,7 +181,7 @@ export default function DidSection() {
                                 onClick={openDid}
                                 className="w-[150px] bg-[#05F292] flex justify-center items-center rounded-full px-4 py-2 mt-5 shadow-md transform hover:scale-110 transition-transform duration-300 cursor-pointer"
                             >
-                                <span className="font-bold text-[14px] sm:text-[16px] text-white">
+                                <span className="font-bold text-[14px] sm:text-[16px] text-[#171717]">
                                     Create DID
                                 </span>
                             </div>
