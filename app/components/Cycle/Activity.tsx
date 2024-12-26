@@ -18,8 +18,8 @@ export default function Activity() {
     const { userInfo } = useUser();
 
     const dailyTasks = [
-        { id: 'task1', label: 'Share Harmony task links on Twitter', reward: 20 },
-        { id: 'task2', label: 'Share the Harmony task link to the TG group', reward: 20 },
+        { id: 'task4', label: 'Share task links on Twitter', reward: 20 },
+        { id: 'task5', label: 'Share the  task link to the TG group', reward: 20 },
     ];
 
     const onetimeTasks = [
@@ -45,6 +45,7 @@ export default function Activity() {
         // const data = TaskData{}
         if (joinId !== -1 && !cycleAction.some((t) => t.projectId === joinId && t.taskId === taskId)) {
             try {
+                console.log("ID", joinId, taskId);
                 const actionId = 1011 + 10 * joinId + taskId;
                 console.log(actionId, joinId, taskId);
                 const respond = await axios.post(API_URL.AIRDROP_RECORD_ADD, {
@@ -97,9 +98,7 @@ export default function Activity() {
         >
             <div className="border-2 rounded-lg border-white px-6 py-8 bg-gradient-to-r from-[#064E33] to-[#214177] max-w-[90%] lg:max-w-[60%] relative animate-fade-in">
                 <div className="flex justify-between items-center">
-                    <div className={`${paytoneOne.className} text-white text-xl sm:text-2xl`}>
-                        {cards[joinId].name || "No Activity"}
-                    </div>
+                    <div></div>
                     <Image
                         src="/Close.png"
                         alt="Close"
@@ -119,13 +118,26 @@ export default function Activity() {
                             height={120}
                             className="mb-4 sm:mb-0 sm:mr-6"
                         />
-                        <div className="text-center sm:text-left">
-                            <div className="flex justify-center sm:justify-start gap-4 mb-2">
-                                {/* {["/globe.png", "/telegram.png", "/twitter.png"].map((src, i) => (
-                                    <Image key={i} src={src} alt="icon" width={32} height={32} className='cursor-pointer' />
-                                ))} */}
+                        <div>
+                            <div className={`${paytoneOne.className} text-white text-xl sm:text-2xl`}>
+                                {cards[joinId].name || "No Activity"}
                             </div>
-                            <div className="text-white text-sm sm:text-base">{cards[joinId].text}</div>
+                            <div className="text-white text-[15px] sm:text-lg">
+                                {cards[joinId].text}
+                            </div>
+                            <div className="flex flex-col sm:flex-row justify-between items-center mt-[20px] gap-2">
+                                <div className="text-white text-[12px] sm:text-[15px] break-all sm:break-normal text-center">
+                                    https://airdrop.memolabs.org/{cards[joinId].aliases || ""}/referralCode=133Pue
+                                </div>
+                                <Image
+                                    src="/copy_symbol.png"
+                                    width={18}
+                                    height={18}
+                                    className="w-[18px] h-[18px] cursor-pointer"
+                                    alt="copy symbol"
+                                    onClick={() => copyToClipboard(`https://airdrop.memolabs.org/${cards[joinId].aliases || ""}/referralCode=133Pue`)}
+                                />
+                            </div>
                         </div>
                     </div>
                 ) : (
@@ -133,8 +145,32 @@ export default function Activity() {
                         No joined cards available.
                     </div>
                 )}
-
-                <div className={`${paytoneOne.className} text-white text-lg sm:text-xl mt-6`}>Tasks</div>
+                <div className={`${paytoneOne.className} text-white text-lg sm:text-xl mt-6`}>Daily Tasks</div>
+                <div className="border-2 border-white rounded-lg mt-4 px-4 py-6 space-y-4 animate-fade-in">
+                    {dailyTasks.map((task, index) => (
+                        <div
+                            key={task.id}
+                            className="bg-gradient-to-r from-[#082B5A] to-[#064D33] px-6 py-4 flex justify-between items-center rounded-lg transition-transform hover:scale-105"
+                        >
+                            <div className="text-white text-[15px] sm:text-lg">{task.label}</div>
+                            {cycleAction.some((t) => t.projectId === joinId && t.taskId === index + 3) ? (
+                                <Image src="/checked.png" alt="Checked" width={28} height={28} className='cursor-pointer' />
+                            ) : (
+                                <div
+                                    className="bg-[#62EDB5] text-black text-sm sm:text-base font-bold px-4 py-2 rounded-full cursor-pointer hover:bg-[#4AC18A] transition-colors"
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        handleTaskClick(task, index + 3);
+                                        navigateToLink(joinId, index);
+                                    }}
+                                >
+                                    +{task.reward}
+                                </div>
+                            )}
+                        </div>
+                    ))}
+                </div>
+                <div className={`${paytoneOne.className} text-white text-lg sm:text-xl mt-6`}>One-time Tasks</div>
                 <div className="border-2 border-white rounded-lg mt-4 px-4 py-6 space-y-4 animate-fade-in">
                     {onetimeTasks.map((task, index) => (
                         <div

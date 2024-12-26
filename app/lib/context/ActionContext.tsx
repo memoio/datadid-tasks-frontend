@@ -84,7 +84,7 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
                                 params: {
                                     "page": 1,
                                     "size": 20,
-                                    "type": 1
+                                    "type": 1,
                                 }
                             });
 
@@ -125,11 +125,18 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
                             // eslint-disable-next-line
                             if (dailyRespond.data.data.length > 0) {
                                 dailyRespond.data.data.forEach((element: any) => {
-                                    const action = element.action - 70;
-                                    console.log(action);
-                                    const preDayTime = Date.now() - 86400000;
-                                    if (element.time > preDayTime) {
-                                        setDailyAction((prev) => new Set(prev).add(action));
+                                    if (element.action >= 1011) {
+                                        const projectId = Math.floor((element.action - 1011) / 10);
+                                        const taskId = (element.action - 1011) % 10;
+                                        console.log("Daily", projectId, taskId);
+                                        setCycle(projectId, taskId);
+                                    } else {
+                                        const action = element.action - 70;
+                                        console.log("Daily", action);
+                                        const preDayTime = Date.now() - 86400000;
+                                        if (element.time > preDayTime) {
+                                            setDailyAction((prev) => new Set(prev).add(action));
+                                        }
                                     }
                                 });
                             }
