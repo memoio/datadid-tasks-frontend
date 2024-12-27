@@ -14,11 +14,13 @@ import RatePage from "./components/Rate/RatePage";
 import { useDIDInfo } from "@/app/lib/context/DIDContext";
 import { useWallet } from "@/app/lib/context/WalletContext";
 import { useAction } from "@/app/lib/context/ActionContext";
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
   const { isOpenDid } = useDIDInfo();
   const { isInvited } = useWallet();
   const { joinId } = useAction();
+
   return (
     <div>
       <main className="bg-[#051610] px-[20px] sm:px-[40px] md:px-[60px] lg:px-[80px] xl:px-[102px] py-[20px] sm:py-[25px] md:py-[30px] lg:py-[35px] xl:px-[40px] min-h-[100vh]">
@@ -29,18 +31,16 @@ export default function Home() {
             <Invite />
           ) : (isOpenDid ? (
             <DID />
-          ) : (joinId !== -1 ? (<Activity />)
-            : (
-              <div>
-                <HomePage />
-                <Daily />
-                <Quest />
-                <CyclePage />
-                <Bonus />
-                <LeaderboardPage />
-                <RatePage />
-              </div>
-            )
+          ) : (
+            <div>
+              <HomePage />
+              <Daily />
+              <Quest />
+              <CyclePage />
+              <Bonus />
+              <LeaderboardPage />
+              <RatePage />
+            </div>
           )
           )
         }

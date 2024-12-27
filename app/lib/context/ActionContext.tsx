@@ -4,7 +4,7 @@ import { createContext, useContext, useState, ReactNode, useEffect } from 'react
 import { useAccount } from "wagmi";
 import axios from 'axios';
 import { API_URL } from '@/app/components/config/config';
-
+import { useRouter } from 'next/navigation';
 interface TaskData {
     projectId: number;
     taskId: number;
@@ -42,9 +42,11 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
             setCycleAction((prev) => [...prev, { projectId, taskId }]);
         }
     };
+    const router = useRouter();
+
 
     const joinProject = (index: number) => setJoinId(index);
-    const leaveProject = () => setJoinId(-1);
+    const leaveProject = () => setJoinId(-2);
 
     const clear = () => {
         setDailyAction(new Set());
@@ -52,6 +54,14 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
         setCycleAction([]);
         setJoinId(-1);
     }
+
+    useEffect(() => {
+        if (joinId >= 0) {
+            router.push(`/projects/${joinId}`);
+        } else if (joinId === -2) {
+            router.push(`/`);
+        }
+    }, [joinId])
 
     useEffect(() => {
         if (isConnected && address) {
