@@ -80,7 +80,7 @@ export default function LeaderboardPage() {
         <div className="mt-[120px] px-4 sm:px-6 lg:px-12 flex flex-col items-center">
             {/* Title Section */}
             <div
-                className={`${paytoneOne.className} text-transparent text-center bg-clip-text bg-gradient-to-b from-[#214177] to-[#05F292] text-[34px] leading-[40px] md:leading-[40px] fade-in`}
+                className={`${paytoneOne.className} text-transparent text-center bg-clip-text text-white text-[34px] leading-[40px] md:leading-[40px] fade-in`}
             >
                 Leaderboard
             </div>
@@ -92,14 +92,14 @@ export default function LeaderboardPage() {
             <div className="flex space-x-6 justify-center mt-[10px]">
                 <div
                     onClick={() => setIsWeekly(true)}
-                    className={`cursor-pointer transition-all ${isWeekly ? 'text-[#05F292]' : 'text-[#FFFFFF80]'
+                    className={`cursor-pointer transition-all ${isWeekly ? 'text-[#0079F2]' : 'text-white'
                         } font-bold text-[18px] sm:text-[25px] leading-[25px] sm:leading-[30px] hover:scale-105`}
                 >
                     Weekly
                 </div>
                 <div
                     onClick={() => setIsWeekly(false)}
-                    className={`cursor-pointer transition-all ${!isWeekly ? 'text-[#05F292]' : 'text-[#FFFFFF80]'
+                    className={`cursor-pointer transition-all ${!isWeekly ? 'text-[#0079F2]' : 'text-white'
                         } font-bold text-[18px] sm:text-[25px] leading-[25px] sm:leading-[30px] hover:scale-105`}
                 >
                     All Time
@@ -107,7 +107,7 @@ export default function LeaderboardPage() {
             </div>
 
             {/* Leaderboard */}
-            <div className="bg-[#01180E] rounded-[11px] py-[40px] sm:py-[59px] px-[20px] sm:px-[51px] mt-[30px] sm:mt-[45px] w-full border-x-[3px] border-[#05F292]">
+            <div className="bg-[#01180E] rounded-[11px] py-[40px] sm:py-[59px] px-[20px] sm:px-[51px] mt-[30px] sm:mt-[45px] w-full">
                 <div className="flex justify-between items-center text-center mb-[30px] sm:mb-[43px] fade-in">
                     <div className="text-white text-[16px] sm:text-[20px] font-bold leading-[24px] sm:leading-[30px] w-[5%]">
                         Rank

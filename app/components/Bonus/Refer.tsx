@@ -9,10 +9,10 @@ import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleCheck } from "@fortawesome/free-solid-svg-icons";
 import { API_URL } from '../config/config';
-
+import { useConnectModal } from '@rainbow-me/rainbowkit';
 export default function Refer() {
     const { isConnected, address } = useAccount();
-
+    const { openConnectModal } = useConnectModal();
 
     const [inviteCode, setInviteCode] = useState("")
     const { userInfo, setUserInfo } = useUser();
@@ -94,7 +94,7 @@ export default function Refer() {
         <div className="mt-[90px] animate-fade-in">
             {/* Heading */}
             <h1
-                className={`${paytoneOne.className} text-transparent bg-clip-text bg-gradient-to-b from-[#214177] to-[#05F292] text-[28px] sm:text-[34px] md:text-[48px] font-bold animate-slide-in text-center md:text-left`}
+                className={`${paytoneOne.className} text-transparent bg-clip-text text-white text-[28px] sm:text-[34px] md:text-[48px] font-bold animate-slide-in text-center md:text-left`}
             >
                 Referral Bonus
             </h1>
@@ -103,12 +103,9 @@ export default function Refer() {
             </div>
 
             {/* Content Section */}
-            <div className="w-full rounded-[10px] bg-gradient-to-b from-[#064E33] to-[#214177] mt-[20px] p-5 flex flex-col lg:flex-row lg:justify-between gap-6 animate-card-load">
+            <div className="w-full rounded-[10px]  mt-[20px] p-5 flex flex-col lg:flex-row  gap-6 animate-card-load">
                 {/* Left Section */}
-                <div className="flex flex-col gap-6">
-                    <div className="text-[24px] sm:text-[34px] text-white font-bold text-center md:text-left">
-                        Invite Friends
-                    </div>
+                <div className="p-4 rounded-[10px] flex flex-col gap-6 bg-gradient-to-b from-[#064E33] to-[#214177] flex-grow">
                     {/* Card 1 */}
                     <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-6 group hover:scale-105 transition-transform duration-300 cursor-pointer">
                         <Image
@@ -168,11 +165,11 @@ export default function Refer() {
                         https://airdrop.memolabs.org/?referralCode={inviteCode}
                     </div>
                     <div
-                        className="bg-[#05F292] text-dark text-[14px] sm:text-[16px] md:text-[18px] font-bold px-6 py-3 text-center rounded-full cursor-pointer hover:bg-[#04D582] transition-colors duration-300"
-                        onClick={() => copyToClipboard('link')}
+                        className="bg-[#0079F2] text-white text-[14px] sm:text-[16px] md:text-[18px] font-bold px-6 py-3 text-center rounded-full cursor-pointer hover:bg-[#04D582] transition-colors duration-300"
+                        onClick={() => isConnected ? copyToClipboard('link') : openConnectModal ? openConnectModal() : null}
                         id="copy_link"
                     >
-                        Copy Referral Link
+                        {isConnected ? "Copy Link" : "Connect Wallet"}
                     </div>
                 </div>
             </div>

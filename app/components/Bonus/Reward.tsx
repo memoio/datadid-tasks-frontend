@@ -10,7 +10,7 @@ export default function Reward() {
             className="transition-transform duration-700 ease-out translate-x-0 opacity-100 animate-slide-in"
         >
             <h1
-                className={`${paytoneOne.className} text-transparent bg-clip-text bg-gradient-to-b from-[#214177] to-[#05F292] text-[34px] md:text-[48px] font-bold mt-[50px]`}
+                className={`${paytoneOne.className} text-transparent bg-clip-text text-white text-[34px] md:text-[48px] font-bold mt-[50px]`}
             >
                 Redeem Past Reward
             </h1>
@@ -41,7 +41,7 @@ export default function Reward() {
                     </div>
                     {/* Right Section */}
                     <div
-                        className="bg-[#05F292] text-[18px] font-bold text-center px-[25px] py-[20px] hover:bg-[#04D582] hover:scale-105 transition-transform duration-300 rounded-[10px]"
+                        className="bg-[#0079F2] text-white text-[18px] font-bold text-center px-[25px] py-[20px] hover:bg-[#04D582] hover:scale-105 transition-transform duration-300 rounded-[10px]"
                         style={{ pointerEvents: 'none', opacity: '0.5' }}
                     >
                         Comming Soon

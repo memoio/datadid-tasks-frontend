@@ -19,7 +19,7 @@ export default function RatePage() {
             </div>
 
             {/* Rate Box */}
-            <div className="bg-[#1E48744A] border-[1px] border-white rounded-[13px] px-[10px] sm:px-[40px] md:px-[50px] py-[20px] sm:py-[25px] md:py-[30px] flex flex-col sm:flex-row justify-between items-center mt-5 space-y-4 sm:space-y-0 hover:shadow-lg transition-shadow">
+            <div className="bg-gradient-to-r from-[#0095F2] to-[#13E292] border-[1px] border-white rounded-[13px] px-[10px] sm:px-[40px] md:px-[50px] py-[20px] sm:py-[25px] md:py-[30px] flex flex-col sm:flex-row justify-between items-center mt-5 space-y-4 sm:space-y-0 hover:shadow-lg transition-shadow">
                 {/* Left Section */}
                 <div className="w-full sm:w-[50%] flex justify-around items-center gap-10 fade-in">
                     <div className="text-[14px] sm:text-[16px] md:text-[19px] leading-[15px] sm:leading-[18px] md:leading-[24px] text-white">
@@ -38,7 +38,7 @@ export default function RatePage() {
                 </div>
 
                 {/* Right Section */}
-                <div className="text-[14px] sm:text-[16px] md:text-[19px] leading-[24px] sm:leading-[28px] md:leading-[36px] text-center px-[10px] py-[5px] text-[#0EB476] rounded-full hover:scale-105 transition-transform">
+                <div className="text-[14px] sm:text-[16px] md:text-[19px] leading-[24px] sm:leading-[28px] md:leading-[36px] text-center px-[10px] py-[5px] text-white rounded-full hover:scale-105 transition-transform">
                     Coming Soon...
                 </div>
             </div>

@@ -10,18 +10,19 @@ import { useAccount } from "wagmi";
 import { useDIDInfo } from '@/app/lib/context/DIDContext';
 import { useConnectModal } from '@rainbow-me/rainbowkit';
 import { API_URL } from '../config/config';
+import { disconnect } from 'process';
 
 export const cards = [
-    { id: 1, imgSrc: "/Cycle1.png", participants: 800, name: "Metis", aliases: "metis", text: "Metis is a permissionless Layer 2 network powering the next generation of decentralized applications." },
-    { id: 2, imgSrc: "/Cycle2.png", participants: 800, name: "Arkreen", aliases: "arkreen", text: "Arkreen Network is a Web3-based infrastructure for globally distributed renewable energy resources that enables the connection and monetization of carbon reduction applications." },
-    { id: 3, imgSrc: "/Cycle3.png", participants: 800, name: "zCloak Network", aliases: "zcloak-network", text: "zCloak Network leads the Web3 revolution, focusing on trust and privacy in the AI age. Their solutions, using technologies like Zero-Knowledge Proof and Decentralized Identity, protect personal data and secure transactions. " },
-    { id: 4, imgSrc: "/Cycle4.png", participants: 800, name: "Adot", aliases: "adot", text: "Adot is a decentralized AI Internet search network. It not only provides users with a more convenient and intelligent Web3 content search experience, but also helps developers quickly build their own personalized search functions." },
-    { id: 5, imgSrc: "/Cycle5.png", participants: 800, name: "Infinitar", aliases: "infinitar", text: "Infinitar is a Web3 MOBA game that supports multiple arena modes, including 421 levels of individual ranked, 3v3, and 5v5 battles to satisfy different players' preferences." },
-    { id: 6, imgSrc: "/Cycle6.png", participants: 800, name: "Odyssey", aliases: "odyssey", text: "Odyssey is an open-source, decentralized meta-universe stack where each user owns their own meta-universe, can modify it to their liking, and can implement their own business model, completely independent of the platform itself." },
-    { id: 7, imgSrc: "/Cycle7.png", participants: 800, name: "Ultiland", aliases: "ultiland", text: "Ultiland focuses on real-world asset (RWA) issuance and lending protocols, addressing market pain points in RWA and digital art." },
-    { id: 8, imgSrc: "/Cycle8.png", participants: 800, name: "Do Network", aliases: "do-network", text: "Do Network is a decentralized network with ultra-high performance.It has achieved a scalable DPOS consensus agreement through a number of technological innovations." },
-    { id: 9, imgSrc: "/Cycle9.png", participants: 800, name: "FLock.io", aliases: "flock-io", text: "FLock.io is a revolutionary end-to-end AI co-creation platform that redefines the process of training, fine-tuning, and inference of AI models by integrating decentralized machine learning technologies in the chain." },
-    { id: 10, imgSrc: "/Cycle10.png", participants: 800, name: ".bit", aliases: "bit", text: "The d.id is building protocols for proof of humanity and achievement network, connecting every human. Own your ID and achievement through  blockchain-powered protocol network, and be ready for the next societal breakthrough." },
+    { id: 1, imgSrc: "/Cycle1.png", participants: 800, name: "Metis", aliases: "metis", short: "Metis is a permissionless Layer 2 network powering the next generation of decentralized applications.", text: "Metis is a permissionless Layer 2 network powering the next generation of decentralized applications." },
+    { id: 2, imgSrc: "/Cycle2.png", participants: 800, name: "Arkreen", aliases: "arkreen", short: "Arkreen Network is a Web3 - based infrastructure enabling carbon - reduction monetization.", text: "Arkreen Network is a Web3-based infrastructure for globally distributed renewable energy resources that enables the connection and monetization of carbon reduction applications." },
+    { id: 3, imgSrc: "/Cycle3.png", participants: 800, name: "zCloak Network", aliases: "zcloak-network", short: "zCloak Network drives Web3 trust & privacy with key tech.", text: "zCloak Network leads the Web3 revolution, focusing on trust and privacy in the AI age. Their solutions, using technologies like Zero-Knowledge Proof and Decentralized Identity, protect personal data and secure transactions. " },
+    { id: 4, imgSrc: "/Cycle4.png", participants: 800, name: "Adot", aliases: "adot", short: "Adot, a decentralized AI search net, benefits users and developers.", text: "Adot is a decentralized AI Internet search network. It not only provides users with a more convenient and intelligent Web3 content search experience, but also helps developers quickly build their own personalized search functions." },
+    { id: 5, imgSrc: "/Cycle5.png", participants: 800, name: "Infinitar", aliases: "infinitar", short: "Infinitar is a Web3 MOBA with multi-mode for various players.", text: "Infinitar is a Web3 MOBA game that supports multiple arena modes, including 421 levels of individual ranked, 3v3, and 5v5 battles to satisfy different players' preferences." },
+    { id: 6, imgSrc: "/Cycle6.png", participants: 800, name: "Odyssey", aliases: "odyssey", short: "Odyssey is an open-source decentralized metaverse stack.", text: "Odyssey is an open-source, decentralized meta-universe stack where each user owns their own meta-universe, can modify it to their liking, and can implement their own business model, completely independent of the platform itself." },
+    { id: 7, imgSrc: "/Cycle7.png", participants: 800, name: "Ultiland", aliases: "ultiland", short: "Ultiland focuses on RWA protocols, solving market issues.", text: "Ultiland focuses on real-world asset (RWA) issuance and lending protocols, addressing market pain points in RWA and digital art." },
+    { id: 8, imgSrc: "/Cycle8.png", participants: 800, name: "Do Network", aliases: "do-network", short: "Do Network is a high-perf decentralized network with DPOS.", text: "Do Network is a decentralized network with ultra-high performance.It has achieved a scalable DPOS consensus agreement through a number of technological innovations." },
+    { id: 9, imgSrc: "/Cycle9.png", participants: 800, name: "FLock.io", aliases: "flock-io", short: "FLock.io is an AI co-creation platform with decentralized tech.", text: "FLock.io is a revolutionary end-to-end AI co-creation platform that redefines the process of training, fine-tuning, and inference of AI models by integrating decentralized machine learning technologies in the chain." },
+    { id: 10, imgSrc: "/Cycle10.png", participants: 800, name: ".bit", aliases: "bit", short: "The d.id builds protocols for human proof and connects all.", text: "The d.id is building protocols for proof of humanity and achievement network, connecting every human. Own your ID and achievement through  blockchain-powered protocol network, and be ready for the next societal breakthrough." },
 ];
 
 export default function CyclePage() {
@@ -170,7 +171,7 @@ export default function CyclePage() {
             </div>
 
             {/* Stats Section */}
-            <div className="flex flex-col sm:flex-row justify-around items-center mt-[65px] gap-8 px-6 animate-fade-in bg-[#05F2920D] border-x-[3px] border-[#05F292] rounded-[10px] py-[20px]">
+            <div className="flex flex-col sm:flex-row justify-around items-center mt-[65px] gap-8 px-6 animate-fade-in bg-[#05F2920D] rounded-[10px] py-[20px]">
                 {[
                     { label: 'Total Projects Completed', value: completed },
                     { label: 'Total Tasks Accomplished', value: cycleAction.length },
@@ -179,7 +180,7 @@ export default function CyclePage() {
                     <div key={i}>
                         <div className="text-center">
                             <p className="text-white text-[16px] sm:text-[20px]">{stat.label}</p>
-                            <p className="text-[#05F292] text-[28px] font-bold mt-2">{stat.value}</p>
+                            <p className="text-[#05F292] text-[28px] font-bold mt-2">{isConnected ? stat.value : "-"}</p>
                         </div>
                     </div>
 
@@ -187,7 +188,7 @@ export default function CyclePage() {
             </div>
 
             {/* Cards Section */}
-            <div className="mt-[56px] flex justify-between flex-wrap gap-8">
+            <div className="mt-[56px] flex  flex-wrap gap-8">
                 {cards.map((card, index) => {
                     isJoined = false;
                     let count = 0;
@@ -203,24 +204,24 @@ export default function CyclePage() {
                         : 'bg-[#0663412B] hover:scale-105';
 
                     const buttonClasses = isJoined
-                        ? 'bg-[#038C54] text-white cursor-default'
-                        : 'bg-[#05F292] text-black hover:bg-gradient-to-b hover:from-[#05F292] hover:to-[#038C54] cursor-pointer';
+                        ? 'bg-[#0079F2] text-white cursor-default'
+                        : 'bg-[#0079F2] text-black hover:bg-gradient-to-b cursor-pointer';
 
                     return (
                         <div
                             key={card.id}
-                            className={`w-full sm:w-[46%] lg:w-[30%] p-4 rounded-[10px] transform transition-transform duration-300 ${cardBackground}`}
+                            className={`w-full sm:w-[46%] lg:w-[23%] p-4 rounded-[10px] transform transition-transform duration-300 ${cardBackground}`}
                         >
                             <div className="flex justify-between items-center">
                                 <Image src={card.imgSrc} width={100} height={100} alt={card.name} />
-                                <div className="text-[40px] text-white">{card.name}</div>
+                                <div className="text-[25px] text-white">{card.name}</div>
                             </div>
-                            <div className="text-white text-[15px] leading-[18px] mb-4 mt-[20px]">{card.text}</div>
+                            <div className="text-white text-[15px] leading-[18px] mb-4 mt-[20px]">{card.short}</div>
                             <div>
-                                <p className="text-white text-[20px] font-bold">{card.participants} Participants</p>
+                                <p className="text-[#0079F2] text-[20px] font-bold">{card.participants} Participants</p>
                                 <div
                                     onClick={() => (isConnected ? isDIDExistState && joinProject ? joinProject(index) : alert("Please create did first!") : openConnectModal ? openConnectModal() : alert("Can not connect to chain"))}
-                                    className={`mt-3 py-2 px-4 rounded-full text-[17.5px] font-bold transition-colors duration-300  cursor-pointer ${buttonClasses} `}
+                                    className={`mt-3 py-2 px-4 rounded-full text-[17.5px] font-bold transition-colors duration-300  cursor-pointer ${buttonClasses}`}
                                 >
                                     {isJoined ? (
                                         <div className="flex justify-center items-center gap-2">
@@ -228,7 +229,7 @@ export default function CyclePage() {
                                             <div className='text-[#038C54] w-[25px] h-[25px] rounded-full bg-white text-center'>{count}</div>
                                         </div>
                                     ) : (
-                                        <div className="text-center text-[#171717] text-[22px]">Join</div>
+                                        <div className="text-center text-white text-[22px]">Join</div>
                                     )}
                                 </div>
                             </div>

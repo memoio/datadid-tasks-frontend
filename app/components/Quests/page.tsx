@@ -74,7 +74,7 @@ export default function BindingPage() {
         <div className="mt-[80px] mb-[50px]">
             <div className="flex flex-col sm:flex-row sm:justify-between items-center gap-3">
                 <div>
-                    <div className="text-[34px] text-center sm:text-left font-bold bg-gradient-to-r from-[#05F292] to-[#214177] text-transparent bg-clip-text">
+                    <div className="text-[34px] text-center sm:text-left font-bold text-white text-transparent bg-clip-text">
                         MEMO Community Quests
                     </div>
                     <div className="text-[14px] md:text-[24px] text-white bg-gradient-to-r from-[#FFFFFF] to-[#999999] text-transparent bg-clip-text">
@@ -135,14 +135,14 @@ export default function BindingPage() {
                                 {item.reward}
                             </div>
                             <div
-                                className={`${questAction.has(index) ? 'bg-gray-500' : 'bg-[#05F292]'} flex justify-center items-center rounded-full px-[10px] py-[5px] mt-[5px] shadow-md transform hover:scale-110 transition-transform duration-300`}
+                                className={`${questAction.has(index) ? 'bg-gray-500' : 'bg-[#0079F2]'}  flex justify-center items-center rounded-full px-[10px] py-[5px] mt-[5px] shadow-md transform hover:scale-110 transition-transform duration-300`}
                                 onClick={(e) => {
                                     e.stopPropagation(); // 阻止事件冒泡，避免触发外层div的onClick
                                     handleClick(index, item.url);
                                 }}
                                 style={{ pointerEvents: questAction.has(index) ? 'none' : 'auto' }}
                             >
-                                <p className={`font-bold text-[16px] text-[#171717] ${questAction.has(index) ? 'cursor-not-allowed' : ''}`}>
+                                <p className={`font-bold text-[16px] text-white ${questAction.has(index) ? 'cursor-not-allowed' : ''}`}>
                                     {questAction.has(index) ? 'Claimed' : 'Claim'}
                                 </p>
                             </div>

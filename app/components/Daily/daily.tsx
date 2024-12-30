@@ -83,7 +83,7 @@ export default function Daily() {
             {/* Header Section */}
             <div className="flex flex-col sm:flex-row sm:justify-between items-center gap-3">
                 <div>
-                    <h1 className="text-[24px] sm:text-[34px] font-bold bg-gradient-to-r from-[#05F292] to-[#214177] text-transparent bg-clip-text text-center sm:text-left">
+                    <h1 className="text-[24px] sm:text-[34px] font-bold text-white  text-transparent bg-clip-text text-center sm:text-left">
                         Daily Reward
                     </h1>
                     <p className="text-[14px] sm:text-[16px] md:text-[20px] text-white bg-gradient-to-r from-[#FFFFFF] to-[#999999] text-transparent bg-clip-text text-center sm:text-left">
@@ -119,7 +119,7 @@ export default function Daily() {
                             <h2 className="font-bold text-white text-[20px] sm:text-[22px] mb-2">{item.title}</h2>
                             <p className="font-bold text-white text-[18px] sm:text-[20px]">{item.reward}</p>
                             <div
-                                className={`${dailyAction.has(index) ? 'bg-gray-500' : 'bg-[#05F292]'
+                                className={`${dailyAction.has(index) ? 'bg-[#000000]' : 'bg-[#0079F2]'
                                     } flex justify-center items-center rounded-full px-4 py-2 mt-5 shadow-md transform hover:scale-110 transition-transform duration-300`}
                             >
                                 <span className="font-bold text-[14px] sm:text-[16px] text-white">

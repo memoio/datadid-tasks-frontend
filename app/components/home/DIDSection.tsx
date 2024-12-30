@@ -16,7 +16,7 @@ interface PopupData {
 
 export default function DidSection() {
     const { setToggleDid } = useDIDInfo();
-    const { address, isConnected } = useAccount();
+    const { address, isConnected, isDisconnected } = useAccount();
     const { didInfo, setDID, isDIDInfoState, isDIDExistState, setIsDIDExist, setDIDInfoExist } = useDIDInfo();
     const { openConnectModal } = useConnectModal();
     const [popupData, setPopupData] = useState<PopupData[]>([]);
@@ -66,35 +66,40 @@ export default function DidSection() {
     useEffect(() => {
 
         const getDIDExist = async () => {
-            try {
-                const response = await axios.get(
-                    "https://didapi.memolabs.org/did/exist",
-                    {
-                        params: {
-                            address,
-                        },
+            if (address && isConnected) {
+                try {
+                    const response = await axios.get(
+                        "https://didapi.memolabs.org/did/exist",
+                        {
+                            params: {
+                                address,
+                            },
+                        }
+                    );
+
+                    if (response.status === 200) {
+                        if (response.data.exist === 1) {
+                            console.log("did eixst:", response.data);
+                            setIsDIDExist(true);
+                        } else {
+                            setIsDIDExist(false)
+                            setDIDInfoExist(false)
+                        }
                     }
-                );
 
-                if (response.status === 200) {
-                    if (response.data.exist === 1) {
-                        console.log("did eixst:", response.data);
-                        setIsDIDExist(true);
-                    } else {
-                        setIsDIDExist(false)
-                        setDIDInfoExist(false)
+                    if (response.status === 506) {
+                        console.log("ddd")
                     }
-                }
+                } catch (error: any) {
+                    if (error.response && error.response.status === 506) {
 
-                if (response.status === 506) {
-                    console.log("ddd")
-                }
-            } catch (error: any) {
-                if (error.response && error.response.status === 506) {
+                    }
 
+                    return
                 }
-
-                return
+            } else {
+                setIsDIDExist(false)
+                setDIDInfoExist(false)
             }
         };
 
@@ -158,7 +163,7 @@ export default function DidSection() {
                     <div
                         className={`${paytoneOne.className} text-white text-[40px] sm:text-[40px] md:text-[45px] lg:text-[60px] xl:text-[80px] leading-tight mt-[30px] text-center sm:text-left`}
                     >
-                        <span className="text-[#05F292] animate-pulse">Data</span> <span>DID</span>
+                        <span className="text-white">Data</span> <span>DID</span>
                     </div>
                     <div className="text-white text-[14px] sm:text-[16px] md:text-[18px] lg:text-[20px] xl:text-[23px] leading-7 mt-[15px] text-center sm:text-left">
                         Your all-in-one, privacy-preserving self-sovereign identity. Own, manage, and monetize your data!
@@ -168,20 +173,20 @@ export default function DidSection() {
                     </div>
                     <div className="text-center flex justify-center sm:justify-start">
                         {isDIDExistState && isDIDInfoState && isConnected ? (
-                            <div className="rounded-[10px] mt-[25px] px-[5px] border-[1px] border-solid border-[#05F292] bg-[#121212] shadow-md shadow-[#05F292]">
+                            <div className="rounded-[10px] mt-[25px] px-[5px] bg-[#121212] ">
                                 <div className="text-[15px] text-white mt-[16px] text-left animate-fade-in">
-                                    <span className="text-[#05F292]">No.</span> <span className='text-right'>{didInfo.number}</span>
+                                    <span className="text-[#0079F2]">No.</span> <span className='text-right text-[#0079F2]'>{didInfo.number}</span>
                                 </div>
                                 <div className="text-[15px] leading-[30px] text-white mt-[5px] text-left animate-fade-in">
-                                    <span className="text-[#05F292]">DID</span> : <span>{didInfo.did}</span>
+                                    <span className='text-[#0079F2]'>{didInfo.did}</span>
                                 </div>
                             </div>
                         ) : (
                             <div
                                 onClick={openDid}
-                                className="w-[150px] bg-[#05F292] flex justify-center items-center rounded-full px-4 py-2 mt-5 shadow-md transform hover:scale-110 transition-transform duration-300 cursor-pointer"
+                                className="w-[150px] bg-[#0079F2] flex justify-center items-center rounded-full px-4 py-2 mt-5 shadow-md transform hover:scale-110 transition-transform duration-300 cursor-pointer"
                             >
-                                <span className="font-bold text-[14px] sm:text-[16px] text-[#171717]">
+                                <span className="font-bold text-[14px] sm:text-[16px] text-white">
                                     Create DID
                                 </span>
                             </div>
@@ -193,30 +198,16 @@ export default function DidSection() {
                 {/* Right Section (Images) */}
                 <div className="flex w-full mt-[50px] xl:mt-[0px] px-[20px] md:px-[0px] relative z-10">
                     <Image
-                        src="/airdrop_1.png"
-                        width={171}
-                        height={248}
-                        className="w-[20%] h-auto object-contain cursor-pointer mb-[120px] transform hover:scale-110 transition-transform duration-300 ease-in-out"
-                        alt="airdrop"
-                    />
-                    <Image
-                        src="/memo_logo.png"
+                        src="/NFT_bg.png"
                         width={287}
-                        height={287}
-                        className="w-[60%] h-auto object-contain cursor-pointer transform hover:rotate-6 transition-transform duration-300 ease-in-out"
-                        alt="memo logo"
-                    />
-                    <Image
-                        src="/airdrop_2.png"
-                        width={116}
-                        height={164}
-                        className="w-[20%] h-auto object-contain cursor-pointer mb-[50px] transform hover:scale-110 transition-transform duration-300 ease-in-out"
-                        alt="airdrop"
+                        height={248}
+                        className="w-full h-auto object-contain mb-[120px] "
+                        alt="NFT"
                     />
                 </div>
             </div>
             {/* Stats Section */}
-            <div className="w-full mt-[20px] sm:mt-[33px] py-[30px] sm:py-[61px] px-[10px] sm:px-[20px] border-x-[3px] border-[#05F292] rounded-[10px] bg-[#05F2920D] flex flex-col items-center shadow-md glow-effect">
+            <div className="bg-gradient-to-r from-[#064E33] to-[#214177] w-full mt-[20px] sm:mt-[33px] py-[30px] sm:py-[61px] px-[10px] sm:px-[20px] border-[1px] border-[#0079F2] rounded-[10px]  flex flex-col items-center shadow-md glow-effect">
                 <div className="grid grid-cols-1 sm:grid-cols-4 gap-6 w-full fade-in">
                     {inviteDatas.map((item, index) => (
                         <div
@@ -228,7 +219,7 @@ export default function DidSection() {
                                 <span className="hidden lg:block">{item.title.full}</span>
                                 <span className="lg:hidden">{item.title.short}</span>
                             </div>
-                            <div className="text-white font-bold text-[16px] sm:leading-[20px] lg:leading-[30px] bg-[#1E4874] px-[10px] lg:px-[25px] sm:py-[12px] lg:py-[17px] rounded-[10px] mt-2 w-full sm:w-auto cursor-pointer">
+                            <div className="text-white font-bold text-[16px] sm:leading-[20px] lg:leading-[30px]  px-[10px] lg:px-[25px] sm:py-[12px] lg:py-[17px] rounded-[10px] mt-2 w-full sm:w-auto cursor-pointer">
                                 {item.value}
                             </div>
                         </div>

@@ -8,7 +8,7 @@ export default function Earn() {
         <div className="animate-fade-in">
             {/* Heading */}
             <h1
-                className={`${paytoneOne.className} text-transparent bg-clip-text bg-gradient-to-b from-[#214177] to-[#05F292] text-[34px] md:text-[48px] font-bold animate-slide-in mt-[50px]`}>
+                className={`${paytoneOne.className} text-transparent bg-clip-text text-white text-[34px] md:text-[48px] font-bold animate-slide-in mt-[50px]`}>
                 Play to Earn
             </h1>
             <div className="text-[20px] text-white mt-[20px]">
@@ -43,7 +43,7 @@ export default function Earn() {
 
                     {/* Right Section */}
                     <div
-                        className="bg-[#05F292] rounded-[10px] text-[18px] font-bold text-center px-[25px] py-[20px] mt-[20px] md:mt-[0px] hover:bg-[#04D582] hover:scale-105 transition-all duration-300"
+                        className="bg-[#0079F2] text-white text-[18px] font-bold text-center px-[25px] py-[20px] hover:bg-[#04D582] hover:scale-105 transition-transform duration-300 rounded-[10px]"
                         style={{ pointerEvents: 'none', opacity: '0.5' }}
                     >
                         Comming Soon
