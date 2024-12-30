@@ -93,12 +93,12 @@ export default function Daily() {
             </div>
 
             {/* Items Section */}
-            <div className="mt-[55px] flex flex-wrap justify-center gap-5">
+            <div className="mt-[55px] flex flex-wrap justify-between gap-5">
                 {items.map((item: Item, index: number) => (
                     <div
                         key={index}
                         onClick={() => handleClick(index)}
-                        className={`w-full sm:w-[48%] md:w-[30%] xl:w-[20%] transform transition-transform duration-300 ${dailyAction.has(index)
+                        className={`w-full sm:w-[48%] md:w-[30%] xl:w-[23%] transform transition-transform duration-300 ${dailyAction.has(index)
                             ? 'bg-gradient-to-r from-[#214177] to-[#064E33] scale-105 shadow-lg'
                             : 'bg-[#0663412B] hover:scale-105'
                             } p-6 rounded-[15px] cursor-pointer`}
@@ -116,8 +116,8 @@ export default function Daily() {
 
                         {/* Item Text */}
                         <div className="text-center">
-                            <h2 className="font-bold text-white text-[20px] sm:text-[22px] mb-2">{item.title}</h2>
-                            <p className="font-bold text-white text-[18px] sm:text-[20px]">{item.reward}</p>
+                            <h2 className="text-white text-[16px] sm:text-[16px] mb-2">{item.title}</h2>
+                            <p className="text-white text-[16px]  sm:text-[16px]">{item.reward}</p>
                             <div
                                 className={`${dailyAction.has(index) ? 'bg-[#000000]' : 'bg-[#0079F2]'
                                     } flex justify-center items-center rounded-full px-4 py-2 mt-5 shadow-md transform hover:scale-110 transition-transform duration-300`}
