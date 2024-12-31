@@ -41,7 +41,7 @@ export default function DidSection() {
         },
         {
             title: { full: "My Smart Wallet Address", short: "Wallet" },
-            value: "0x49e65cd..4c",
+            value: address ? address.slice(0, 6) + "..." + address.slice(-4) : "-",
         },
         {
             title: { full: "Friends Invited", short: "Friends" },

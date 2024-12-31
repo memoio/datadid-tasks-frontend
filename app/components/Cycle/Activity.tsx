@@ -41,6 +41,15 @@ export default function Activity({ joinId }: { joinId: number }) {
         { id: 8, links: [{ url: "https://x.com/Donetwork_club" }, { url: "https://t.me/DoNetworkclub" }, { url: "https://www.donetwork.io/#/pc/Index" },] },
         { id: 9, links: [{ url: "https://x.com/flock_io" }, { url: "https://t.me/flock_io_community" }, { url: "https://www.flock.io/" },] },
         { id: 10, links: [{ url: "https://x.com/DIDbased" }, { url: "https://discord.com/invite/did" }, { url: "https://d.id/" },] },
+        { id: 12, links: [{ url: "https://x.com/flapdotsh" }, { url: "https://t.me/FlapOfficial" }, { url: "https://flap.sh/" },] },
+        { id: 13, links: [{ url: "https://x.com/ccarbonWorld" }, { url: "https://ccarbon.world/" }, { url: "https://ccarbon.world/" },] },
+        { id: 14, links: [{ url: "https://x.com/onlylayer" }, { url: "https://t.me/onlylayer" }, { url: "https://onlylayer.com/" },] },
+        { id: 15, links: [{ url: "https://x.com/ClusterProtocol" }, { url: "https://t.me/clusterprotocolchat" }, { url: "https://www.clusterprotocol.ai/" },] },
+        { id: 16, links: [{ url: "https://x.com/harmonyprotocol" }, { url: "https://t.me/harmony_one" }, { url: "https://www.harmony.one/" },] },
+        { id: 17, links: [{ url: "https://x.com/4everland_org" }, { url: "https://t.me/org_4everland" }, { url: "https://www.4everland.org/" },] },
+        { id: 18, links: [{ url: "https://x.com/ionet" }, { url: "https://t.me/io_net" }, { url: "https://io.net/" },] },
+        { id: 19, links: [{ url: "https://x.com/SugreNetwork" }, { url: "https://t.me/SugreNetwork" }, { url: "https://www.sugre.xyz/" },] },
+        { id: 11, links: [{ url: "https://x.com/Meter_IO" }, { url: "https://t.me/Meter_IO" }, { url: "https://meter.io/" },] },
     ];
 
     const handleTaskClick = async (task: { id: string; label: string; reward: number }, taskId: number) => {
@@ -79,18 +88,22 @@ export default function Activity({ joinId }: { joinId: number }) {
 
     const closePopup = () => setPopupData(null);
 
-    const copyToClipboard = (text: string) => {
-        navigator.clipboard.writeText(text).then(() => {
-            setAlertMessage('Referral Code Copied!'); // Show the alert
-            setTimeout(() => setAlertMessage(null), 3000); // Hide after 3 seconds
-        }).catch((err) => {
-            console.error('Failed to copy: ', err);
-            alert('Failed to copy text.');
-        });
+    const copyToClipboard = (id: string) => {
+        const element = document.getElementById(id);
+        if (element) {
+            const textToCopy = element.textContent || '';
+            navigator.clipboard.writeText(id).then(() => {
+                setAlertMessage(`Referral Code Copied! ${textToCopy}`,); // Show the alert
+                setTimeout(() => setAlertMessage(null), 3000); // Hide after 3 seconds
+            }).catch((err) => {
+                console.error('Failed to copy: ', err);
+                alert('Failed to copy text.');
+            });
+        }
     };
 
     return (
-        <div className="bg-[#051610] px-[20px] sm:px-[40px] md:px-[60px] lg:px-[80px] xl:px-[102px] py-[20px] sm:py-[25px] md:py-[30px] lg:py-[35px] xl:px-[40px] min-h-[100vh]">
+        <div className="w-full flex flex-col">
             <div
                 style={{
                     backgroundImage: 'url(/activity_bg.png)',
@@ -99,7 +112,7 @@ export default function Activity({ joinId }: { joinId: number }) {
                 }}
                 className="min-h-screen px-4 flex justify-center items-center"
             >
-                <div className="border-2 rounded-lg border-white px-6 py-8 bg-gradient-to-r from-[#064E33] to-[#214177] max-w-[90%] lg:max-w-[60%] relative animate-fade-in">
+                <div className="rounded-lg  max-w-[90%] lg:max-w-[80%] relative animate-fade-in">
                     <div className="flex justify-between items-center">
                         <Image
                             src="/Arrow_left.png"
@@ -112,7 +125,7 @@ export default function Activity({ joinId }: { joinId: number }) {
                     </div>
 
                     {joinId > -1 ? (
-                        <div className="flex flex-col sm:flex-row items-center border-2 border-white rounded-lg mt-6 px-4 py-6 animate-slide-in">
+                        <div className="flex flex-col sm:flex-row items-center rounded-lg mt-6 px-4 py-6 animate-slide-in">
                             <Image
                                 src={cards[joinId].imgSrc}
                                 alt={cards[joinId].name}
@@ -128,8 +141,8 @@ export default function Activity({ joinId }: { joinId: number }) {
                                     {cards[joinId].text}
                                 </div>
                                 <div className="flex flex-col sm:flex-row justify-between items-center mt-[20px] gap-2">
-                                    <div className="text-white text-[12px] sm:text-[15px] break-all sm:break-normal text-center">
-                                        https://airdrop.memolabs.org/projects/{joinId || ""}?referralCode=133Pue
+                                    <div className="text-white text-[12px] sm:text-[15px] break-all sm:break-normal text-center" id="copy">
+                                        https://airdrop.memolabs.org/projects/{joinId || 0}?referralCode=133Pue
                                     </div>
                                     <Image
                                         src="/copy_symbol.png"
@@ -137,7 +150,7 @@ export default function Activity({ joinId }: { joinId: number }) {
                                         height={18}
                                         className="w-[18px] h-[18px] cursor-pointer"
                                         alt="copy symbol"
-                                        onClick={() => copyToClipboard(`https://airdrop.memolabs.org/projects/${joinId || ""}?referralCode=133Pue`)}
+                                        onClick={() => copyToClipboard('copy')}
                                     />
                                 </div>
                             </div>
@@ -148,7 +161,7 @@ export default function Activity({ joinId }: { joinId: number }) {
                         </div>
                     )}
                     <div className={`${paytoneOne.className} text-white text-lg sm:text-xl mt-6`}>Daily Tasks</div>
-                    <div className="border-2 border-white rounded-lg mt-4 px-4 py-6 space-y-4 animate-fade-in">
+                    <div className=" rounded-lg mt-4 px-4 py-6 space-y-4 animate-fade-in">
                         {dailyTasks.map((task, index) => (
                             <div
                                 key={task.id}
@@ -173,7 +186,7 @@ export default function Activity({ joinId }: { joinId: number }) {
                         ))}
                     </div>
                     <div className={`${paytoneOne.className} text-white text-lg sm:text-xl mt-6`}>One-time Tasks</div>
-                    <div className="border-2 border-white rounded-lg mt-4 px-4 py-6 space-y-4 animate-fade-in">
+                    <div className="rounded-lg mt-4 px-4 py-6 space-y-4 animate-fade-in">
                         {onetimeTasks.map((task, index) => (
                             <div
                                 key={task.id}
