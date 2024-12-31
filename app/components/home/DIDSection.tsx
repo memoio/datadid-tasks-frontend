@@ -151,15 +151,10 @@ export default function DidSection() {
 
     return (
         <div className="relative">
-            {/* Background container with image and opacity */}
-            {/* <div className="absolute inset-0 flex justify-center items-center">
-                <div className="w-[50vw] h-[50vh] md:w-[60vw] md:h-[100vh] lg:w-[60vw] opacity-10 animate-pulse"></div>
-            </div> */}
-
             {/* Main content */}
-            <div className="flex flex-col-reverse md:flex-row justify-center items-center w-full h-auto">
+            <div className="flex flex-col md:flex-row justify-center items-center w-full h-auto mb-[80px]">
                 {/* Left Section */}
-                <div className="flex flex-col w-full ">
+                <div className="flex flex-col w-full mt-[50px] xl:mt-[0px] px-[20px] md:px-[0px]">
                     <div
                         className={`${paytoneOne.className} text-white text-[28px] sm:text-[28px] md:text-[32px] lg:text-[40px] xl:text-[48px] leading-tight mt-[30px] text-center sm:text-left`}
                     >
@@ -173,12 +168,12 @@ export default function DidSection() {
                     </div>
                     <div className="text-center flex justify-center sm:justify-start">
                         {isDIDExistState && isDIDInfoState && isConnected ? (
-                            <div className="rounded-[10px] mt-[25px] px-[5px] bg-[#121212] ">
-                                <div className="text-[15px] text-white mt-[16px] text-left animate-fade-in">
-                                    <span className="text-[#13E292]">No.</span> <span className='text-right text-[#13E292]'>{didInfo.number}</span>
+                            <div className="rounded-[10px] mt-[5px] px-[5px] bg-[#121212] ">
+                                <div className="text-[16px] text-[#13E292] mt-[16px] text-left">
+                                    No.{didInfo.number}
                                 </div>
-                                <div className="text-[15px] leading-[30px] text-white mt-[5px] text-left animate-fade-in">
-                                    <span className='text-[#13E292]'>{didInfo.did}</span>
+                                <div className="text-[16px] text-[#13E292]">
+                                    {didInfo.did}
                                 </div>
                             </div>
                         ) : (
@@ -196,12 +191,12 @@ export default function DidSection() {
                 </div>
 
                 {/* Right Section (Images) */}
-                <div className="flex w-full mt-[50px] xl:mt-[0px] px-[20px] md:px-[0px]">
+                <div className="flex w-full flex-col mt-[50px] xl:mt-[0px] px-[20px] md:px-[0px]">
                     <Image
                         src="/NFT_bg.png"
                         width={287}
                         height={248}
-                        className="w-full h-auto object-contain mb-[120px] "
+                        className="w-full h-auto object-contain mb-[20px] "
                         alt="NFT"
                     />
                 </div>

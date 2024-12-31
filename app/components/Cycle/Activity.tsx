@@ -101,10 +101,9 @@ export default function Activity({ joinId }: { joinId: number }) {
             >
                 <div className="border-2 rounded-lg border-white px-6 py-8 bg-gradient-to-r from-[#064E33] to-[#214177] max-w-[90%] lg:max-w-[60%] relative animate-fade-in">
                     <div className="flex justify-between items-center">
-                        <div></div>
                         <Image
-                            src="/Close.png"
-                            alt="Close"
+                            src="/Arrow_left.png"
+                            alt="arrow"
                             width={24}
                             height={24}
                             className="cursor-pointer hover:scale-110 transition-transform"
