@@ -23,7 +23,7 @@ export default function Home() {
 
   return (
     <div>
-      <main className="bg-[#051610] px-[120px] sm:px-[100px] md:px-[120px] lg:px-[160px] xl:px-[224px] py-[20px] sm:py-[25px] md:py-[30px] lg:py-[35px] xl:px-[40px] min-h-[100vh]">
+      <main className="bg-[#051610] px-[120px] sm:px-[100px] md:px-[120px] lg:px-[160px] xl:px-[224px] py-[20px] sm:py-[25px] md:py-[30px] lg:py-[35px] xl:py -[40px] min-h-[100vh]">
         {/* <FlagProvider> */}
         <Navbar />
         {
