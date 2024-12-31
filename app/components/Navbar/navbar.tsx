@@ -23,27 +23,27 @@ const commonStyles = `
 
 const NavItem = styled.div`
   ${commonStyles};
-  font-size: 13px;
+  font-size: 14px;
   color: white;
   width: 100%;
   margin: 0;
   padding: 5px 10px;
 
   @media (min-width: 640px) {
-    font-size: 13px;
+    font-size: 12px;
     padding: 0px;
     margin-left: 20px;
   }
   @media (min-width: 768px) {
-    font-size: 16px;
+    font-size: 14px;
     margin-left: 35px;
   }
   @media (min-width: 1024px) {
-    font-size: 18px;
+    font-size: 16px;
     margin-left: 40px;
   }
   @media (min-width: 1280px) {
-    font-size: 21px;
+    font-size: 18px;
     margin-left: 50px;
   }
 `;
@@ -97,7 +97,7 @@ export default function Navbar() {
         {/* Logo */}
         <div className="text-white text-[18px] md:text-[24px] lg:text-[28px]">
           <a href="https://memolabs.org/" target="_blank" rel="noopener noreferrer">
-            <img src="/logo.ico" alt="Logo" className="w-[40px] md:w-[40px]" />
+            <img src="/logo.png" alt="Logo" className="w-[120px] md:w-[120px]" />
           </a>
         </div>
 
@@ -127,9 +127,9 @@ export default function Navbar() {
         <div className="hidden sm:flex justify-between items-center gap-12">
           <div className="flex">
             <a href="https://memolabs.gitbook.io/memo-docs" target="_blank" rel="noopener noreferrer">
-              <NavItem>DOCS</NavItem>
+              <NavItem>Docs</NavItem>
             </a>
-            <NavItem onClick={() => invite()}>Profile</NavItem>
+            <NavItem onClick={() => invite()}>InviteCode</NavItem>
             {/* <NavItem>TotalPoints</NavItem> */}
           </div>
           <div className="flex gap-1">

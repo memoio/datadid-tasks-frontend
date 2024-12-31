@@ -33,14 +33,15 @@ export default function Activity({ joinId }: { joinId: number }) {
     const urls = [
         { id: 1, links: [{ url: "https://x.com/MetisL2" }, { url: "https://t.me/MetisL" }, { url: "https://www.metis.io/" },] },
         { id: 2, links: [{ url: "https://x.com/arkreen_network" }, { url: "https://t.me/arkreen_network" }, { url: "https://www.arkreen.com/" },] },
-        { id: 3, links: [{ url: "https://x.com/zCloakNetwork" }, { url: "https://discord.com/invite/wcKt6MDRJz" }, { url: "https://zcloak.network/" },] },
+        { id: 3, links: [{ url: "https://x.com/zCloakNetwork" }, { url: "https://t.me/memolabsio" }, { url: "https://zcloak.network/" },] },
         { id: 4, links: [{ url: "https://x.com/Adot_web3" }, { url: "https://t.me/AdotWeb3_Official" }, { url: "https://www.a.xyz/" },] },
         { id: 5, links: [{ url: "https://x.com/Infinitar_MOBA" }, { url: "https://t.me/infinitar_MOBA" }, { url: "https://www.infinitar.com/#/" },] },
         { id: 6, links: [{ url: "https://x.com/Odyssey_ODS" }, { url: "https://t.me/odyssey_global" }, { url: "https://odysseyglobal.io/#/" },] },
         { id: 7, links: [{ url: "https://x.com/ULTILAND" }, { url: "https://t.me/ULTILAND_RWA" }, { url: "https://www.ultiland.io/" },] },
         { id: 8, links: [{ url: "https://x.com/Donetwork_club" }, { url: "https://t.me/DoNetworkclub" }, { url: "https://www.donetwork.io/#/pc/Index" },] },
         { id: 9, links: [{ url: "https://x.com/flock_io" }, { url: "https://t.me/flock_io_community" }, { url: "https://www.flock.io/" },] },
-        { id: 10, links: [{ url: "https://x.com/DIDbased" }, { url: "https://discord.com/invite/did" }, { url: "https://d.id/" },] },
+        { id: 10, links: [{ url: "https://x.com/DIDbased" }, { url: "https://t.me/memolabsio" }, { url: "https://d.id/" },] },
+        { id: 11, links: [{ url: "https://x.com/Meter_IO" }, { url: "https://t.me/Meter_IO" }, { url: "https://meter.io/" },] },
         { id: 12, links: [{ url: "https://x.com/flapdotsh" }, { url: "https://t.me/FlapOfficial" }, { url: "https://flap.sh/" },] },
         { id: 13, links: [{ url: "https://x.com/ccarbonWorld" }, { url: "https://ccarbon.world/" }, { url: "https://ccarbon.world/" },] },
         { id: 14, links: [{ url: "https://x.com/onlylayer" }, { url: "https://t.me/onlylayer" }, { url: "https://onlylayer.com/" },] },
@@ -49,7 +50,7 @@ export default function Activity({ joinId }: { joinId: number }) {
         { id: 17, links: [{ url: "https://x.com/4everland_org" }, { url: "https://t.me/org_4everland" }, { url: "https://www.4everland.org/" },] },
         { id: 18, links: [{ url: "https://x.com/ionet" }, { url: "https://t.me/io_net" }, { url: "https://io.net/" },] },
         { id: 19, links: [{ url: "https://x.com/SugreNetwork" }, { url: "https://t.me/SugreNetwork" }, { url: "https://www.sugre.xyz/" },] },
-        { id: 11, links: [{ url: "https://x.com/Meter_IO" }, { url: "https://t.me/Meter_IO" }, { url: "https://meter.io/" },] },
+        { id: 20, links: [{ url: "https://x.com/ESCC_io" }, { url: "https://t.me/ESCCIO" }, { url: "https://www.escc.io/" },] },
     ];
 
     const handleTaskClick = async (task: { id: string; label: string; reward: number }, taskId: number) => {

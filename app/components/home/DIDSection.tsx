@@ -37,7 +37,7 @@ export default function DidSection() {
     const inviteDatas = [
         {
             title: { full: "My Rank", short: "Rank" },
-            value: "1K+",
+            value: isConnected ? "1K+" : "-",
         },
         {
             title: { full: "My Smart Wallet Address", short: "Wallet" },
@@ -45,12 +45,12 @@ export default function DidSection() {
         },
         {
             title: { full: "Friends Invited", short: "Friends" },
-            value: "2K+",
+            value: isConnected ? "2K+" : "-",
             onClick: handlePopup, // Add onClick to this item
         },
         {
             title: { full: "Leaderboard Reward", short: "Reward" },
-            value: "100",
+            value: isConnected ? "100" : "-",
         },
     ];
 
@@ -161,18 +161,18 @@ export default function DidSection() {
                         <span className="text-white">Data</span> <span>DID</span>
                     </div>
                     <div className="text-white text-[14px] sm:text-[16px] md:text-[18px] lg:text-[20px] xl:text-[23px] leading-7 mt-[15px] text-center sm:text-left">
-                        Your all-in-one, privacy-preserving self-sovereign identity.Own,<br></br> manage, and monetize your data!
+                        Your all-in-one, privacy-preserving self-sovereign identity.Own, manage, and monetize your data!
                     </div>
                     <div className="text-white text-[12px] sm:text-[14px] mt-[15px] text-center sm:text-left">
-                        Note: Users need to log in to MEMO and successfully create DID <br></br> before they can participate in earning points.
+                        Note: Users need to log in to MEMO and successfully create DID before they can participate in earning points.
                     </div>
                     <div className="text-center flex justify-center sm:justify-start">
                         {isDIDExistState && isDIDInfoState && isConnected ? (
                             <div className="rounded-[10px] mt-[5px] px-[5px] bg-[#121212] ">
-                                <div className="text-[16px] text-[#13E292] mt-[16px] text-left">
+                                <div className="text-[18px] text-[#13E292] mt-[16px] text-left">
                                     No.{didInfo.number}
                                 </div>
-                                <div className="text-[16px] text-[#13E292]">
+                                <div className="text-[12px] text-[#13E292]">
                                     {didInfo.did}
                                 </div>
                             </div>
