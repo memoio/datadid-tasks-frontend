@@ -7,7 +7,7 @@ import { ConnectButton } from '@rainbow-me/rainbowkit';
 // Reusable styles for NavItems and Buttons
 const commonStyles = `
   font-family: 'Josefin Sans', sans-serif;
-  color: white;
+  color: #171717;
   line-height: 1.5;
   text-align: center;
   padding: 9px 17px;
@@ -23,6 +23,7 @@ const commonStyles = `
 const NavItem = styled.div`
   ${commonStyles};
   font-size: 13px;
+  color: white;
   width: 100%;
   margin: 0;
   padding: 5px 10px;
@@ -91,7 +92,7 @@ export default function Navbar() {
 
   return (
     <div className="w-full">
-      <div className="flex justify-between items-center sm:pb-[25px] sm:border-[#616161] sm:border-b-[1px] sm:font-bold">
+      <div className="flex justify-between items-center sm:pb-[25px]  sm:font-bold">
         {/* Logo */}
         <div className="text-white text-[18px] md:text-[24px] lg:text-[28px]">
           <a href="https://memolabs.org/" target="_blank" rel="noopener noreferrer">

@@ -4,7 +4,8 @@ import { createContext, useContext, useState, ReactNode, useEffect } from 'react
 import { useAccount } from "wagmi";
 import axios from 'axios';
 import { API_URL } from '@/app/components/config/config';
-
+import { useRouter } from 'next/navigation';
+import { disconnect } from 'process';
 interface TaskData {
     projectId: number;
     taskId: number;
@@ -34,7 +35,7 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
     const [questAction, setQuestAction] = useState(new Set<number>());
     const [cycleAction, setCycleAction] = useState<TaskData[]>([]);
     const [joinId, setJoinId] = useState(-1);
-    const { isConnected, address } = useAccount();
+    const { isDisconnected, isConnected, address } = useAccount();
     const setDaily = (index: number) => setDailyAction((prev) => new Set(prev).add(index));
     const setQuest = (index: number) => setQuestAction((prev) => new Set(prev).add(index));
     const setCycle = (projectId: number, taskId: number) => {
@@ -42,9 +43,11 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
             setCycleAction((prev) => [...prev, { projectId, taskId }]);
         }
     };
+    const router = useRouter();
+
 
     const joinProject = (index: number) => setJoinId(index);
-    const leaveProject = () => setJoinId(-1);
+    const leaveProject = () => setJoinId(-2);
 
     const clear = () => {
         setDailyAction(new Set());
@@ -54,10 +57,27 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
     }
 
     useEffect(() => {
+        console.log("isDisconnected: ", isDisconnected);
+        if (isDisconnected) {
+            clear();
+        }
+
+    }, [isDisconnected])
+
+    useEffect(() => {
+        if (joinId >= 0) {
+            router.push(`/projects/${joinId}`);
+        } else if (joinId === -2) {
+            router.push(`/`);
+        }
+    }, [joinId])
+
+    useEffect(() => {
         if (isConnected && address) {
             // 调用绑定钱包接口
             const HandleDailyAction = async () => {
                 try {
+                    console.log("clear");
                     clear();
                     const response = await axios.post(
                         API_URL.AIRDROP_USER_WALLET_BIND,
@@ -84,7 +104,7 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
                                 params: {
                                     "page": 1,
                                     "size": 20,
-                                    "type": 1
+                                    "type": 1,
                                 }
                             });
 
@@ -125,11 +145,18 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
                             // eslint-disable-next-line
                             if (dailyRespond.data.data.length > 0) {
                                 dailyRespond.data.data.forEach((element: any) => {
-                                    const action = element.action - 70;
-                                    console.log(action);
-                                    const preDayTime = Date.now() - 86400000;
-                                    if (element.time > preDayTime) {
-                                        setDailyAction((prev) => new Set(prev).add(action));
+                                    if (element.action >= 1011) {
+                                        const projectId = Math.floor((element.action - 1011) / 10);
+                                        const taskId = (element.action - 1011) % 10;
+                                        console.log("Daily", projectId, taskId);
+                                        setCycle(projectId, taskId);
+                                    } else {
+                                        const action = element.action - 70;
+                                        console.log("Daily", action);
+                                        const preDayTime = Date.now() - 86400000;
+                                        if (element.time > preDayTime) {
+                                            setDailyAction((prev) => new Set(prev).add(action));
+                                        }
                                     }
                                 });
                             }
@@ -146,7 +173,7 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
 
             HandleDailyAction();
         }
-    }, [isConnected, address]);
+    }, [isConnected]);
     console.log("daily: ", dailyAction);
     console.log("quest: ", questAction);
     console.log("cycle: ", cycleAction);

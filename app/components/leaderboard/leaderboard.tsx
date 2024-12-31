@@ -22,7 +22,9 @@ export default function LeaderboardPage() {
         address: string;
         score: number;
         soul: number;
-        isCrown: boolean;
+        isFirst: boolean;
+        isSecond: boolean;
+        isThird: boolean;
     }
 
     const [elements, setElements] = useState<ElementData[]>([])
@@ -52,7 +54,9 @@ export default function LeaderboardPage() {
                         address: (item.walletAddress ? item.walletAddress < 8 ? item.walletAddress : `${item.walletAddress.substring(0, 4)}...${item.walletAddress.substring(item.walletAddress.length - 4)}` : ''),
                         score: (item.inviteCount ? item.inviteCount : 0),
                         soul: item.points,
-                        isCrown: index < 3
+                        isFirst: index === 0,
+                        isSecond: index === 1,
+                        isThird: index === 2,
                     }))
                     setElements(ranklist)
                     console.log(response.data)
@@ -73,10 +77,10 @@ export default function LeaderboardPage() {
 
 
     return (
-        <div className="mt-[68px] px-4 sm:px-6 lg:px-12 flex flex-col items-center">
+        <div className="mt-[120px] px-4 sm:px-6 lg:px-12 flex flex-col items-center">
             {/* Title Section */}
             <div
-                className={`${paytoneOne.className} text-transparent text-center bg-clip-text bg-gradient-to-b from-[#214177] to-[#05F292] text-[34px] leading-[40px] md:leading-[40px] fade-in`}
+                className={`${paytoneOne.className} text-transparent text-center bg-clip-text text-white text-[34px] leading-[40px] md:leading-[40px] fade-in`}
             >
                 Leaderboard
             </div>
@@ -88,14 +92,14 @@ export default function LeaderboardPage() {
             <div className="flex space-x-6 justify-center mt-[10px]">
                 <div
                     onClick={() => setIsWeekly(true)}
-                    className={`cursor-pointer transition-all ${isWeekly ? 'text-[#05F292]' : 'text-[#FFFFFF80]'
+                    className={`cursor-pointer transition-all ${isWeekly ? 'text-[#0079F2]' : 'text-white'
                         } font-bold text-[18px] sm:text-[25px] leading-[25px] sm:leading-[30px] hover:scale-105`}
                 >
                     Weekly
                 </div>
                 <div
                     onClick={() => setIsWeekly(false)}
-                    className={`cursor-pointer transition-all ${!isWeekly ? 'text-[#05F292]' : 'text-[#FFFFFF80]'
+                    className={`cursor-pointer transition-all ${!isWeekly ? 'text-[#0079F2]' : 'text-white'
                         } font-bold text-[18px] sm:text-[25px] leading-[25px] sm:leading-[30px] hover:scale-105`}
                 >
                     All Time
@@ -103,7 +107,7 @@ export default function LeaderboardPage() {
             </div>
 
             {/* Leaderboard */}
-            <div className="bg-[#01180E] rounded-[11px] py-[40px] sm:py-[59px] px-[20px] sm:px-[51px] mt-[30px] sm:mt-[45px] w-full border-x-[3px] border-[#05F292]">
+            <div className="bg-[#101413] rounded-[11px] py-[40px] sm:py-[59px] px-[20px] sm:px-[51px] mt-[30px] sm:mt-[45px] w-full border border-[#FFFFFF4D]">
                 <div className="flex justify-between items-center text-center mb-[30px] sm:mb-[43px] fade-in">
                     <div className="text-white text-[16px] sm:text-[20px] font-bold leading-[24px] sm:leading-[30px] w-[5%]">
                         Rank
@@ -131,8 +135,30 @@ export default function LeaderboardPage() {
                     >
                         <div className="flex justify-between items-center my-[15px] sm:my-[25px] px-[10px] sm:px-[5px]">
                             <div className="w-[5%] text-center">
-                                {item.isCrown ? (
-                                    <Image src="/crown.png" alt="crown" width={30} height={20} className="sm:w-[43.4px] sm:h-[27px]" />
+                                {item.isFirst ? (
+                                    <Image
+                                        src="/first_winner.png"
+                                        alt="First Winner"
+                                        width={30}
+                                        height={20}
+                                        className="sm:w-[27px] sm:h-[27px] mx-[10px]"
+                                    />
+                                ) : item.isSecond ? (
+                                    <Image
+                                        src="/second_winner.png"
+                                        alt="Second Winner"
+                                        width={30}
+                                        height={20}
+                                        className="sm:w-[27px] sm:h-[27px] mx-[10px]"
+                                    />
+                                ) : item.isThird ? (
+                                    <Image
+                                        src="/third_winner.png"
+                                        alt="Third Winner"
+                                        width={30}
+                                        height={20}
+                                        className="sm:w-[27px] sm:h-[27px] mx-[10px]"
+                                    />
                                 ) : (
                                     <div className="text-[16px] sm:text-[20px] leading-[24px] sm:leading-[38px] text-white">
                                         {String(item.id).padStart(2, "0")}
