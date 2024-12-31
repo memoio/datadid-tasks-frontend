@@ -99,9 +99,10 @@ export default function Daily() {
                         key={index}
                         onClick={() => handleClick(index)}
                         className={`w-full sm:w-[48%] md:w-[30%] xl:w-[23%] transform transition-transform duration-300 ${dailyAction.has(index)
-                            ? 'bg-gradient-to-r from-[#214177] to-[#064E33] scale-105 shadow-lg'
-                            : 'bg-[#0663412B] hover:scale-105'
+                            ? 'bg-[#0663412B] hover:scale-105'
+                            : 'bg-gradient-to-r from-[#214177] to-[#064E33] scale-105 shadow-lg'
                             } p-6 rounded-[15px] cursor-pointer`}
+                        style={{ pointerEvents: dailyAction.has(index) ? 'none' : 'auto' }}
                     >
                         {/* Item Image */}
                         <div className="flex justify-center">
@@ -119,10 +120,14 @@ export default function Daily() {
                             <h2 className="text-white text-[16px] sm:text-[16px] mb-2">{item.title}</h2>
                             <p className="text-white text-[16px]  sm:text-[16px]">{item.reward}</p>
                             <div
-                                className={`${dailyAction.has(index) ? 'bg-[#000000]' : 'bg-[#0079F2]'
-                                    } flex justify-center items-center rounded-full px-4 py-2 mt-5 shadow-md transform hover:scale-110 transition-transform duration-300`}
+                                className={`${dailyAction.has(index) ? 'bg-gray-500' : 'bg-[#0079F2]'
+                                    } flex justify-center items-center rounded-full px-[10px] py-[5px] mt-[5px] shadow-md transform hover:scale-110 transition-transform duration-300`}
+                                onClick={(e) => {
+                                    e.stopPropagation(); // 阻止事件冒泡，避免触发外层div的onClick
+                                    handleClick(index);
+                                }}
                             >
-                                <span className="font-bold text-[14px] sm:text-[16px] text-white">
+                                <span className={`font-bold text-[16px] text-white ${dailyAction.has(index) ? 'cursor-not-allowed' : ''}`}>
                                     {dailyAction.has(index) ? 'Claimed' : 'Claim'}
                                 </span>
                             </div>

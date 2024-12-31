@@ -20,7 +20,7 @@ export default function Home() {
                 <div
                     className={`${paytoneOne.className} text-white text-[28px] sm:text-[40px] md:text-[45px] lg:text-[60px] xl:text-[80px] leading-tight mt-[30px] text-center sm:text-left`}
                 >
-                    Task to earn AirDrop
+                    Task to Earn AirDrop
                 </div>
 
                 {/* Subtitle */}

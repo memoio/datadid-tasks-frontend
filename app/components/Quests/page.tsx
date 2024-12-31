@@ -118,8 +118,8 @@ export default function BindingPage() {
                         key={index}
                         onClick={() => handleClick(index, item.url)}
                         className={`w-full sm:w-[40%] lg:w-[30%] xl:w-[20%] transform transition-transform duration-300 ${questAction.has(index)
-                            ? 'bg-gradient-to-r from-[#214177] to-[#064E33] scale-105 shadow-lg'
-                            : 'bg-[#0663412B] hover:scale-105'
+                            ? 'bg-[#0663412B] hover:scale-105'
+                            : 'bg-gradient-to-r from-[#214177] to-[#064E33] scale-105 shadow-lg'
                             } pt-[35px] pb-[25px] px-[10px] flex items-center justify-around rounded-[10px] cursor-pointer`}
                         style={{ pointerEvents: questAction.has(index) ? 'none' : 'auto' }}
                     >

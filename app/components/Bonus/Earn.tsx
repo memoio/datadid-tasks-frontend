@@ -12,7 +12,7 @@ export default function Earn() {
                 Play to Earn
             </h1>
             <div className="text-[20px] text-white mt-[20px]">
-                Experience the mini-games in TG and get more SBT! Comming soon...
+                Experience the mini-games in TG and get more Points!
             </div>
 
             {/* Content Section */}

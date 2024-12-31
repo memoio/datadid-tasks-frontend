@@ -5,7 +5,7 @@ import Image from 'next/image';
 
 export default function RatePage() {
     return (
-        <div className="bg-[#05F2920D] rounded-[11px] px-6 sm:px-12 md:px-[80px] py-6 sm:py-8 md:py-[45px] mt-10 sm:mt-14 md:mt-[155px] fade-in">
+        <div className=" rounded-[11px] px-6 sm:px-12 md:px-[80px] py-6 sm:py-8 md:py-[45px] mt-10 sm:mt-14 md:mt-[155px] fade-in">
             {/* Title */}
             <div
                 className={`${paytoneOne.className} text-white text-[19px] sm:text-[22px] md:text-[25px] leading-[20px] sm:leading-[24px] md:leading-[30px] text-center`}
@@ -19,7 +19,7 @@ export default function RatePage() {
             </div>
 
             {/* Rate Box */}
-            <div className="bg-gradient-to-r from-[#0095F2] to-[#13E292] rounded-[13px] px-[10px] sm:px-[40px] md:px-[50px] py-[20px] sm:py-[25px] md:py-[30px] flex flex-col sm:flex-row justify-between items-center mt-5 space-y-4 sm:space-y-0 hover:shadow-lg transition-shadow">
+            <div className="bg-gradient-to-br from-[#064E33] to-[#214177] rounded-[13px] px-[10px] sm:px-[40px] md:px-[50px] py-[20px] sm:py-[25px] md:py-[30px] flex flex-col sm:flex-row justify-between items-center mt-5 space-y-4 sm:space-y-0 hover:shadow-lg transition-shadow">
                 {/* Left Section */}
                 <div className="w-full sm:w-[50%] flex justify-around items-center gap-10 fade-in">
                     <div className="text-[14px] sm:text-[16px] md:text-[19px] leading-[15px] sm:leading-[18px] md:leading-[24px] text-white">

@@ -32,7 +32,7 @@ export const cards = [
     { id: 17, imgSrc: "/Cycle17.png", participants: 800, name: "4everland", aliases: "4everland", short: "A web3 cloud computing platform dedicated to DePIN. ", text: "4EVERLAND is a Web 3.0 cloud computing platform that combines storage, computing, and networking core capabilities to provide cross-chain communication, decentralized front-end, write-once, run-any-blockchain solutions, and web services." },
     { id: 18, imgSrc: "/Cycle18.png", participants: 800, name: "IO", aliases: "io", short: "An advanced distributed computing network.", text: "io.net is an advanced distributed computing network that provides access to unlimited computing power for machine learning engineers by offering GPU computing services that are cheaper, faster, and more flexible than traditional centralized services." },
     { id: 19, imgSrc: "/Cycle19.png", participants: 800, name: "Sugre", aliases: "sugre", short: "A decentralized mobile infrastructure network.", text: "Sugre Network is building a decentralized mobile infrastructure network, integrating advanced AI technology, DePIN, and the Web3 ecosystem. Through seamless integration of smartphones with decentralized networks, redefining the future of mobile technology. " },
-
+    { id: 20, imgSrc: "/Cycle20.png", participants: 800, name: "ESCC", aliases: "escc", short: "Stablecoin chain based on EOS technology.", text: "Eos Stable Coin Chain (ESCC) is a public blockchain based on EOS and EOS EVM architecture, designed to support stablecoin scenarios." },
 ];
 
 export default function CyclePage() {
@@ -67,9 +67,9 @@ export default function CyclePage() {
 
     useEffect(() => {
         const interval = setInterval(() => {
-            // const now = new Date();
-            // const distance = targetDate - now.getTime();
-            const distance = 60 * 24 * 60 * 60 * 1000
+            const now = new Date();
+            const distance = targetDate - now.getTime();
+            // const distance = 60 * 24 * 60 * 60 * 1000
 
             if (distance < 0) {
                 clearInterval(interval);
@@ -198,7 +198,7 @@ export default function CyclePage() {
             </div>
 
             {/* Cards Section */}
-            <div className="mt-[56px] flex flex-wrap gap-5">
+            <div className="mt-[56px] flex flex-wrap gap-5 justify-between">
                 {cards.map((card, index) => {
                     isJoined = false;
                     let count = 0;
@@ -210,8 +210,8 @@ export default function CyclePage() {
                     });
 
                     const cardBackground = isJoined
-                        ? 'bg-gradient-to-br from-[#1E4874] to-[#0EB476] border-b-[5px] border-[#05F292] scale-105'
-                        : 'bg-[#0663412B] hover:scale-105';
+                        ? 'bg-[#0663412B] hover:scale-105'
+                        : 'bg-gradient-to-br from-[#1E4874] to-[#0EB476] border-b-[5px] border-[#05F292] scale-105';
 
                     const buttonClasses = isJoined
                         ? 'bg-[#0079F2] text-white cursor-default'
@@ -228,10 +228,11 @@ export default function CyclePage() {
                             </div>
                             <div className="text-white text-[16px] leading-[18px] mb-4 mt-[20px]">{card.short}</div>
                             <div>
-                                <p className="text-[#0079F2] text-[16px]">{card.participants} Participants</p>
+                                {/* <p className="text-[#0079F2] text-[16px]">{card.participants} Participants</p> */}
+
                                 <div
                                     onClick={() => (isConnected ? isDIDExistState && joinProject ? joinProject(index) : alert("Please create did first!") : openConnectModal ? openConnectModal() : alert("Can not connect to chain"))}
-                                    className={`mt-3 py-2 px-4 rounded-full text-[17.5px] font-bold transition-colors duration-300  cursor-pointer ${buttonClasses}`}
+                                    className={`mt-3 mt-[40px] py-2 px-4 rounded-full text-[17.5px] font-bold transition-colors duration-300  cursor-pointer ${buttonClasses}`}
                                 >
                                     {isJoined ? (
                                         <div className="flex justify-center items-center gap-2">
