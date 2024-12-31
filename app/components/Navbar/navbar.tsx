@@ -3,6 +3,7 @@ import { useState } from 'react';
 import styled from 'styled-components';// Import the useAuth hook
 
 import { ConnectButton } from '@rainbow-me/rainbowkit';
+import { useWallet } from '@/app/lib/context/WalletContext';
 
 // Reusable styles for NavItems and Buttons
 const commonStyles = `
@@ -85,7 +86,7 @@ const Dbutton = styled(ButtonBase)`
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
-
+  const { invite } = useWallet();
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
 
@@ -96,7 +97,7 @@ export default function Navbar() {
         {/* Logo */}
         <div className="text-white text-[18px] md:text-[24px] lg:text-[28px]">
           <a href="https://memolabs.org/" target="_blank" rel="noopener noreferrer">
-            <img src="/logo.png" alt="Logo" className="w-[100px] md:w-[150px]" />
+            <img src="/logo.ico" alt="Logo" className="w-[40px] md:w-[40px]" />
           </a>
         </div>
 
@@ -128,6 +129,7 @@ export default function Navbar() {
             <a href="https://memolabs.gitbook.io/memo-docs" target="_blank" rel="noopener noreferrer">
               <NavItem>DOCS</NavItem>
             </a>
+            <NavItem onClick={() => invite()}>Profile</NavItem>
             {/* <NavItem>TotalPoints</NavItem> */}
           </div>
           <div className="flex gap-1">
@@ -149,3 +151,7 @@ export default function Navbar() {
     </div>
   );
 }
+function useAuth(): { invite: any; } {
+  throw new Error('Function not implemented.');
+}
+
