@@ -48,7 +48,10 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
     const router = useRouter();
 
 
-    const joinProject = (index: number) => setJoinId(index);
+    const joinProject = (index: number) => {
+        console.log("joinId: ", joinId)
+        setJoinId(index)
+    };
     const leaveProject = () => setJoinId(-2);
 
     const clear = () => {

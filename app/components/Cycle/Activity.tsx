@@ -16,7 +16,7 @@ export default function Activity({ joinId }: { joinId: number }) {
     const [alertMessage, setAlertMessage] = useState<string | null>(null); // State for the alert
 
     const { leaveProject, cycleAction, setCycle, inviteCode } = useAction();
-    // const router = useRouter();
+    const router = useRouter();
     const { userInfo } = useUser();
 
     const dailyTasks = [
@@ -121,7 +121,10 @@ export default function Activity({ joinId }: { joinId: number }) {
                             width={24}
                             height={24}
                             className="cursor-pointer hover:scale-110 transition-transform"
-                            onClick={() => window.history.back()}
+                            onClick={() => {
+                                router.push('/');
+                                leaveProject();
+                            }}
                         />
                     </div>
 
