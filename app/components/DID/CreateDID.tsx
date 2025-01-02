@@ -62,12 +62,14 @@ export default function CreateDID() {
 
                         }
 
+                    } else if (response1.status === 501) {
+                        alert(`Error: ${response1.status} - ${response.data.preview}`);
                     } else {
-                        alert(`Error: ${response1.status} - ${response1.statusText}`);
+                        alert(`Error: ${response1.status} - ${response1.data.Message}`);
                     }
                 }
             } catch (err: any) {
-                alert(`Error: ${err.status} - ${err.statusText}`);
+                alert(`Error: ${err.status}-${err.data}`);
                 return
             }
         } else {
@@ -132,7 +134,7 @@ export default function CreateDID() {
                 <div
                     className="text-[10px] leading-[30px] text-white mt-[16px] text-center animate-fade-in"
                 >
-                    Total cost includes gas fees for Smart Account deployment, NFT minting, and future profile upgrades.
+                    Total cost includes gas fee for DID creation, and future profile updates. Currently, users can participate for free.
                 </div>
             </div>
         </div>

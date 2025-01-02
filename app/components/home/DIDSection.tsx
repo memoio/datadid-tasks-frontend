@@ -50,7 +50,7 @@ export default function DidSection() {
         },
         {
             title: { full: "Leaderboard Reward", short: "Reward" },
-            value: isConnected ? "100" : "-",
+            value: isConnected ? "100k+" : "-",
         },
     ];
 
@@ -194,8 +194,8 @@ export default function DidSection() {
                 <div className="flex w-full flex-col mt-[50px] xl:mt-[0px] px-[20px] md:px-[0px]">
                     <Image
                         src="/NFT_bg.png"
-                        width={287}
-                        height={248}
+                        width={777}
+                        height={449}
                         className="w-full h-auto object-contain mb-[20px] "
                         alt="NFT"
                     />

@@ -14,9 +14,7 @@ export default function DID() {
     return (
         <div>
             {isOpenDid ? (
-                isCreatedState ? (
-                    <DIDCreated />
-                ) : isCreatingDidState ? (
+                isCreatingDidState ? (
                     <DIDCreating />
                 ) : (
                     <CreateDID />

@@ -23,8 +23,8 @@ export default function DIDCreated() {
                     <Image
                         src="/NFT_bg.png"
                         alt="NFT Background"
-                        width={283}
-                        height={233}
+                        width={777}
+                        height={449}
                         className="rounded-md transform hover:scale-105 transition-transform duration-300"
                     />
                 </div>

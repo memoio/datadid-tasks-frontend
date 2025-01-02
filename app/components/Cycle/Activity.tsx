@@ -15,7 +15,7 @@ export default function Activity({ joinId }: { joinId: number }) {
     const [popupData, setPopupData] = useState<{ label: string; reward: number } | null>(null);
     const [alertMessage, setAlertMessage] = useState<string | null>(null); // State for the alert
 
-    const { leaveProject, cycleAction, setCycle } = useAction();
+    const { leaveProject, cycleAction, setCycle, inviteCode } = useAction();
     // const router = useRouter();
     const { userInfo } = useUser();
 
@@ -93,7 +93,7 @@ export default function Activity({ joinId }: { joinId: number }) {
         const element = document.getElementById(id);
         if (element) {
             const textToCopy = element.textContent || '';
-            navigator.clipboard.writeText(id).then(() => {
+            navigator.clipboard.writeText(textToCopy).then(() => {
                 setAlertMessage(`Referral Code Copied! ${textToCopy}`,); // Show the alert
                 setTimeout(() => setAlertMessage(null), 3000); // Hide after 3 seconds
             }).catch((err) => {
@@ -121,7 +121,7 @@ export default function Activity({ joinId }: { joinId: number }) {
                             width={24}
                             height={24}
                             className="cursor-pointer hover:scale-110 transition-transform"
-                            onClick={() => cards[joinId].id && leaveProject()}
+                            onClick={() => window.history.back()}
                         />
                     </div>
 
@@ -143,7 +143,7 @@ export default function Activity({ joinId }: { joinId: number }) {
                                 </div>
                                 <div className="flex flex-col sm:flex-row justify-between items-center mt-[20px] gap-2">
                                     <div className="text-white text-[12px] sm:text-[15px] break-all sm:break-normal text-center" id="copy">
-                                        https://airdrop.memolabs.org/projects/{joinId || 0}?referralCode=133Pue
+                                        https://airdrop.memolabs.org/projects/{joinId || 0}?referralCode={inviteCode}
                                     </div>
                                     <Image
                                         src="/copy_symbol.png"

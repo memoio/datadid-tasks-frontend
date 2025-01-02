@@ -215,12 +215,12 @@ export default function CyclePage() {
 
                     const buttonClasses = isJoined
                         ? 'bg-[#0079F2] text-white cursor-default'
-                        : 'bg-[#0079F2] text-black hover:bg-gradient-to-b cursor-pointer';
+                        : 'bg-[#0079F2] text-black hover:bg-[#05f292] cursor-pointer';
 
                     return (
                         <div
                             key={card.id}
-                            className={`w-full sm:w-[46%] lg:w-[23%] p-4 rounded-[10px] transform transition-transform duration-300 ${cardBackground}`}
+                            className={`w-full mt-[10px] sm:w-[46%] lg:w-[23%] p-4 rounded-[10px] transform transition-transform duration-300 ${cardBackground}`}
                         >
                             <div className="flex justify-between items-center">
                                 <Image src={card.imgSrc} width={68} height={68} alt={card.name} />

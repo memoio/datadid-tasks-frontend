@@ -133,7 +133,7 @@ export default function LeaderboardPage() {
                         className="fade-in transition hover:scale-105"
                         style={{ animationDelay: `${index * 100}ms` }}
                     >
-                        <div className="flex justify-between items-center my-[15px] sm:my-[25px] px-[10px] sm:px-[5px]">
+                        <div className="flex justify-between  items-center my-[15px] sm:my-[25px] px-[10px] sm:px-[5px]">
                             <div className="w-[5%] text-center">
                                 {item.isFirst ? (
                                     <Image
@@ -171,7 +171,7 @@ export default function LeaderboardPage() {
                             <div className="text-[#FFC917] text-[16px] sm:text-[20px] leading-[24px] sm:leading-[38px] text-center w-[20%]">
                                 {item.score}
                             </div>
-                            <div className="flex justify-end items-center w-[30%]">
+                            <div className="flex justify-center items-center w-[30%]">
                                 <Image
                                     src="/coin.png"
                                     alt="coin"
@@ -179,7 +179,7 @@ export default function LeaderboardPage() {
                                     height={14}
                                     className="sm:w-[18px] sm:h-[18px] mr-[5px] hidden md:block"
                                 />
-                                <div className="text-[16px] sm:text-[20px] text-white leading-[24px] sm:leading-[38px] text-right">
+                                <div className="text-[16px] sm:text-[20px] text-white leading-[24px] sm:leading-[38px] text-center">
                                     {item.soul}
                                 </div>
                             </div>

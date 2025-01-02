@@ -10,70 +10,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleCheck } from "@fortawesome/free-solid-svg-icons";
 import { API_URL } from '../config/config';
 import { useConnectModal } from '@rainbow-me/rainbowkit';
+import { useAction } from '@/app/lib/context/ActionContext';
 export default function Refer() {
     const { isConnected, address } = useAccount();
     const { openConnectModal } = useConnectModal();
-
-    const [inviteCode, setInviteCode] = useState("")
-    const { userInfo, setUserInfo } = useUser();
-
-    useEffect(() => {
-        if (isConnected) {
-            const getUserInviteCode = async () => {
-                if (!userInfo) {
-                    const bindWallet = async () => {
-                        try {
-                            const response = await axios.post(
-                                API_URL.AIRDROP_USER_WALLET_BIND,
-                                {
-                                    walletAddress: address,
-                                },
-                                {
-                                    headers: {
-                                        accept: "application/hal+json",
-                                        uid: "11735283",
-                                        token: "37595d3a6e43876682b37cdcf941938e",
-                                        "Content-Type": "application/json",
-                                    },
-                                }
-                            );
-
-                            if (response.data.result === 1) {
-                                setUserInfo({
-                                    uid: response.data.data.uid,
-                                    token: response.data.data.token,
-                                });
-                            } else {
-                                alert(`Failed to bind wallet: ${JSON.stringify(response.data)}`);
-                            }
-                        } catch (error) {
-                            alert(`Error binding wallet: ${error}`);
-                        }
-                    };
-                    bindWallet();
-                }
-                try {
-                    if (userInfo) {
-                        const response = await axios.get(API_URL.AIRDROP_USER_INFO, {
-                            headers: {
-                                'accept': '*/*',
-                                'uid': userInfo.uid,
-                                'token': userInfo.token,
-                            },
-                        });
-                        setInviteCode(response.data.data.inviteCode);
-                        console.log(response.data.data.inviteCode);
-                    }
-
-                } catch (error) {
-                    alert(error);
-                }
-            };
-            getUserInviteCode();
-        } else {
-            setInviteCode('******');
-        }
-    }, [address, isConnected, setUserInfo, userInfo]);
+    const { inviteCode } = useAction();
 
     const [showPopup, setShowPopup] = useState<string | null>(null); // State to manage popup visibility with a message
 

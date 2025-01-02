@@ -22,6 +22,7 @@ interface ActionContextType {
     joinProject: (index: number) => void;
     leaveProject: () => void;
     clear: () => void;
+    inviteCode: string;
 }
 
 export const ActionContext = createContext<ActionContextType | null>(null);
@@ -31,6 +32,7 @@ interface ActionContextProviderProps {
 }
 
 export const ActionProvider = ({ children }: ActionContextProviderProps) => {
+    const [inviteCode, setInviteCode] = useState("")
     const [dailyAction, setDailyAction] = useState(new Set<number>());
     const [questAction, setQuestAction] = useState(new Set<number>());
     const [cycleAction, setCycleAction] = useState<TaskData[]>([]);
@@ -60,6 +62,7 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
         console.log("isDisconnected: ", isDisconnected);
         if (isDisconnected) {
             clear();
+            setInviteCode('******');
         }
 
     }, [isDisconnected])
@@ -95,6 +98,17 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
                     );
 
                     if (response.data.result === 1) {
+                        // get user info
+                        const userresponse = await axios.get(API_URL.AIRDROP_USER_INFO, {
+                            headers: {
+                                "uid": response.data.data.uid,
+                                "token": response.data.data.token,
+                            },
+                        });
+                        setInviteCode(userresponse.data.data.inviteCode);
+                        console.log(userresponse.data.data.inviteCode);
+
+                        // get one time action
                         const oneTimeRespond = await axios.get(API_URL.AIRDROP_RECORD_LIST,
                             {
                                 headers: {
@@ -177,6 +191,7 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
     console.log("daily: ", dailyAction);
     console.log("quest: ", questAction);
     console.log("cycle: ", cycleAction);
+    console.log("invite: ", inviteCode);
 
     return (
         <ActionContext.Provider value={{
@@ -189,7 +204,8 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
             setCycle,
             joinProject,
             leaveProject,
-            clear
+            clear,
+            inviteCode,
         }}>
             {children}
         </ActionContext.Provider>

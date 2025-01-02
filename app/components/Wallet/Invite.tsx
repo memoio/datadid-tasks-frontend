@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import axios from 'axios';
 import { useWallet } from "../../lib/context/WalletContext";
 import { useUser } from "../../lib/context/AuthContext";
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useParams } from 'next/navigation';
 import { API_URL } from "../config/config";
 
 export default function Invite() {
@@ -12,8 +12,12 @@ export default function Invite() {
     const [values, setValues] = useState(Array(6).fill("")); // Separate state for each input
     const [success, setSuccess] = useState(false); // State for success popup
     const searchParams = useSearchParams()
+    const params = useParams();
 
     const referralCode = searchParams.get('referralCode')?.toString() || '';
+    const projectId = params.projectId;
+    console.log("projectId: ", projectId)
+
     useEffect(() => {
         if (referralCode.length === 6) {
             console.log("referralCode", referralCode);
@@ -60,7 +64,8 @@ export default function Invite() {
         try {
             const inviteCode = values.join("");
             const respond = await axios.post(API_URL.AIRDROP_INVITE_BIND, {
-                "inviteCode": inviteCode
+                "inviteCode": inviteCode,
+                "projectId": projectId
             }, {
                 headers: {
                     "accept": "application/hal+json",
@@ -73,6 +78,8 @@ export default function Invite() {
                 if (respond.data.result == 1) {
                     setSuccess(true);
                     console.log(respond.data.data);
+                } else {
+                    alert(respond.data.message);
                 }
             }
         } catch (error) {
