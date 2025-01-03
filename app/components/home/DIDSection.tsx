@@ -7,7 +7,7 @@ import axios from 'axios';
 import { useAccount } from "wagmi";
 import { useConnectModal } from '@rainbow-me/rainbowkit';
 import { useEffect, useState } from 'react';
-
+import { API_URL } from '../config/config';
 interface PopupData {
     invitee: string;
     time: string;
@@ -23,15 +23,15 @@ export default function DidSection() {
     const [showPopup, setShowPopup] = useState(false);
     const handlePopup = () => {
         // Mock invitation details
-        const mockData: PopupData[] = [
-            { invitee: "0x06B45...EBFEe", time: "2024-12-01 14:30:32", points: 100 },
-            { invitee: "0x06B45...EBFE1", time: "2024-12-03 10:45:32", points: 50 },
-            { invitee: "0x06B45...EBFE2", time: "2024-12-03 10:45:32", points: 50 },
-            { invitee: "0x06B45...EBFE3", time: "2024-12-03 10:45:32", points: 50 },
-            { invitee: "0x06B45...EBFE4", time: "2024-12-03 10:45:32", points: 50 },
-        ];
-        setPopupData(mockData);
-        setShowPopup(true);
+        // const mockData: PopupData[] = [
+        //     { invitee: "0x06B45...EBFEe", time: "2024-12-01 14:30:32", points: 100 },
+        //     { invitee: "0x06B45...EBFE1", time: "2024-12-03 10:45:32", points: 50 },
+        //     { invitee: "0x06B45...EBFE2", time: "2024-12-03 10:45:32", points: 50 },
+        //     { invitee: "0x06B45...EBFE3", time: "2024-12-03 10:45:32", points: 50 },
+        //     { invitee: "0x06B45...EBFE4", time: "2024-12-03 10:45:32", points: 50 },
+        // ];
+        // setPopupData(mockData);
+        // setShowPopup(true);
     };
 
     const inviteDatas = [
@@ -64,12 +64,11 @@ export default function DidSection() {
     };
 
     useEffect(() => {
-
         const getDIDExist = async () => {
             if (address && isConnected) {
                 try {
                     const response = await axios.get(
-                        "https://didapi.memolabs.org/did/exist",
+                        API_URL.DID_EXIST,
                         {
                             params: {
                                 address,
@@ -113,7 +112,7 @@ export default function DidSection() {
             const getDIDInfo = async () => {
                 try {
                     const response = await axios.get(
-                        "https://didapi.memolabs.org/did/info",
+                        API_URL.DID_INFO,
                         {
                             params: {
                                 address,
@@ -144,7 +143,7 @@ export default function DidSection() {
 
             getDIDInfo();
         }
-    }, [setIsDIDExist, isConnected])
+    }, [isDIDExistState, isConnected])
 
 
     const closePopup = () => setShowPopup(false);

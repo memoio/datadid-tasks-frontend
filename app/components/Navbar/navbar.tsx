@@ -4,6 +4,8 @@ import styled from 'styled-components';// Import the useAuth hook
 
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { useWallet } from '@/app/lib/context/WalletContext';
+import { useRouter } from 'next/navigation';
+import { useAction } from '@/app/lib/context/ActionContext';
 
 // Reusable styles for NavItems and Buttons
 const commonStyles = `
@@ -89,16 +91,20 @@ export default function Navbar() {
   const { invite } = useWallet();
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
-
+  const { leaveProject, } = useAction();
+  const router = useRouter();
 
   return (
     <div className="w-full">
       <div className="flex justify-between items-center sm:pb-[25px]  sm:font-bold">
         {/* Logo */}
         <div className="text-white text-[18px] md:text-[24px] lg:text-[28px]">
-          <a href="https://airdrop.memolabs.org/" target="_blank" rel="noopener noreferrer">
-            <img src="/logo.png" alt="Logo" className="w-[120px] md:w-[120px]" />
-          </a>
+
+          <img src="/logo.png" alt="Logo" className="w-[180px] md:w-[180px]" onClick={() => {
+            router.push('/');
+            leaveProject();
+          }} />
+
         </div>
 
         {/* Hamburger Button */}
