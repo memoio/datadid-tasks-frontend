@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import axios from 'axios';
-import { useUser } from "@/app/lib/context/AuthContext";
+import { useAuth } from "@/app/lib/context/AuthContext";
 import { useAction } from '@/app/lib/context/ActionContext';
 import { cards } from "./CyclePage";
 import { API_URL } from '../config/config';
@@ -14,10 +14,9 @@ import { join } from 'path';
 export default function Activity({ joinId }: { joinId: number }) {
     const [popupData, setPopupData] = useState<{ label: string; reward: number } | null>(null);
     const [alertMessage, setAlertMessage] = useState<string | null>(null); // State for the alert
-
     const { leaveProject, cycleAction, setCycle, inviteCode } = useAction();
     const router = useRouter();
-    const { userInfo } = useUser();
+    const { userInfo, isExist } = useAuth();
 
     const dailyTasks = [
         { id: 'task4', label: 'Share task links on Twitter', reward: 20 },
@@ -55,7 +54,7 @@ export default function Activity({ joinId }: { joinId: number }) {
 
     const handleTaskClick = async (task: { id: string; label: string; reward: number }, taskId: number) => {
         // const data = TaskData{}
-        if (joinId > -1 && !cycleAction.some((t) => t.projectId === joinId && t.taskId === taskId)) {
+        if (isExist && joinId > -1 && !cycleAction.some((t) => t.projectId === joinId && t.taskId === taskId)) {
             try {
                 console.log("ID", joinId, taskId);
                 const actionId = 1011 + 10 * joinId + taskId;
@@ -66,8 +65,8 @@ export default function Activity({ joinId }: { joinId: number }) {
                     headers: {
                         "accept": "application/hal+json",
                         "Content-Type": "application/json",
-                        "uid": userInfo.uid,
-                        "token": userInfo.token
+                        "uid": userInfo?.uid,
+                        "token": userInfo?.token
                     }
                 });
 
@@ -146,7 +145,7 @@ export default function Activity({ joinId }: { joinId: number }) {
                                 </div>
                                 <div className="flex flex-col sm:flex-row justify-between items-center mt-[20px] gap-2">
                                     <div className="text-white text-[12px] sm:text-[15px] break-all sm:break-normal text-center" id="copy">
-                                        https://airdrop.memolabs.org/projects/{joinId || 0}?referralCode={inviteCode}
+                                        https://points.memolabs.org/projects/{joinId || 0}?referralCode={inviteCode}
                                     </div>
                                     <Image
                                         src="/copy_symbol.png"

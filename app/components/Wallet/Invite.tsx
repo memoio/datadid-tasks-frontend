@@ -2,13 +2,13 @@
 import { useEffect, useState } from "react";
 import axios from 'axios';
 import { useWallet } from "../../lib/context/WalletContext";
-import { useUser } from "../../lib/context/AuthContext";
+import { useAuth } from "../../lib/context/AuthContext";
 import { useSearchParams, useParams } from 'next/navigation';
 import { API_URL } from "../config/config";
 
 export default function Invite() {
     const { isInvited, closeInvite } = useWallet();
-    const { userInfo } = useUser();
+    const { userInfo } = useAuth();
     const [values, setValues] = useState(Array(6).fill("")); // Separate state for each input
     const [success, setSuccess] = useState(false); // State for success popup
     const searchParams = useSearchParams()
@@ -70,8 +70,8 @@ export default function Invite() {
                 headers: {
                     "accept": "application/hal+json",
                     "Content-Type": "application/json",
-                    "uid": userInfo.uid,
-                    "token": userInfo.token
+                    "uid": userInfo?.uid,
+                    "token": userInfo?.token
                 }
             });
             if (respond.status == 200) {

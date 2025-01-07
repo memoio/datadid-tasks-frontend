@@ -4,11 +4,10 @@ export const TEST_AIRDROP_BACKEND_URL = "https://apapitest.memoscan.org/api"
 
 export const PRODUCT_AIRDROP_BACKEND_URL = "https://apapi.memoscan.org/api"
 
-export const DEV_AIRDROP_BACKEND_URL = "https://airdrop.7nc.top/api"
 
 export const AIRDROP_BACKEND_URL = TEST_AIRDROP_BACKEND_URL
 export const DID_SERVER_URL = DEV_DID_SERVER_URL
-
+ 
 export const API_URL = {
     "DID_CREATE": DID_SERVER_URL + "/create",
     "DID_INFO": DID_SERVER_URL + "/info",

@@ -136,6 +136,7 @@ export default function Navbar() {
               <NavItem>Docs</NavItem>
             </a>
             <NavItem onClick={() => invite()}>InviteCode</NavItem>
+            <NavItem onClick={() => window.open("http://faucet.metamemo.one")}>Faucet</NavItem>
             {/* <NavItem>TotalPoints</NavItem> */}
           </div>
           <div className="flex gap-1">

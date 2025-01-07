@@ -12,7 +12,7 @@ import { AuthContextProvider } from "@/app/lib/context/AuthContext";
 import { DIDContextProvider } from "@/app/lib/context/DIDContext";
 import { WalletContextProvider } from "./lib/context/WalletContext";
 import { ActionProvider } from "@/app/lib/context/ActionContext";
-import { AppProgressBar as ProgressBar } from 'next-nprogress-bar';
+
 
 const queryClient = new QueryClient();
 

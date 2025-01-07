@@ -1,6 +1,6 @@
 'use client';
 
-import { getDefaultConfig } from '@rainbow-me/rainbowkit';
+import { getDefaultConfig, Chain } from '@rainbow-me/rainbowkit';
 import {
   arbitrum,
   base,
@@ -9,6 +9,22 @@ import {
   polygon,
   sepolia,
 } from 'wagmi/chains';
+
+const memoriae = {
+  id: 985,
+  name: 'Memo Megrez',
+  iconUrl: "",
+  rpcUrls: {
+    default: {
+      http: ["https://chain.metamemo.one:8501"],
+    }
+  },
+  nativeCurrency: {
+    name: 'Memo Megrez',
+    symbol: 'CMEMO',
+    decimals: 10,
+  },
+} as const as Chain;
 
 export const config = getDefaultConfig({
   appName: 'did',
@@ -19,7 +35,9 @@ export const config = getDefaultConfig({
     optimism,
     arbitrum,
     base,
+    memoriae,
     ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true' ? [sepolia] : []),
   ],
   ssr: true,
 });
+

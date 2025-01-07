@@ -20,12 +20,12 @@ export default function Home() {
                 <div
                     className={`${paytoneOne.className} text-white text-[28px] sm:text-[40px] md:text-[45px] lg:text-[60px] xl:text-[80px] leading-tight mt-[30px] text-center sm:text-left`}
                 >
-                    Task to Earn AirDrop
+                    Task to Earn Points
                 </div>
 
                 {/* Subtitle */}
                 <div className="text-white text-[14px] sm:text-[16px] md:text-[18px] lg:text-[20px] xl:text-[23px] leading-7 mt-[15px] text-center sm:text-left">
-                    Claim the mission and maximize your total points to lock in more $MEMO airdrops!
+                    Claim the mission and maximize your total points to lock in more $MEMO points!
                 </div>
 
                 {/* Action Buttons */}

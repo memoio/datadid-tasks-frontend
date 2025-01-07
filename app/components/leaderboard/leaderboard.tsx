@@ -5,7 +5,7 @@ import axios from 'axios';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
 
-import { useUser } from "@/app/lib/context/AuthContext"
+import { useAuth } from "@/app/lib/context/AuthContext"
 import { API_URL } from '../config/config';
 
 
@@ -15,7 +15,7 @@ import { API_URL } from '../config/config';
 
 export default function LeaderboardPage() {
     const [isWeekly, setIsWeekly] = useState(true);
-
+    const { isExist, userInfo, setBindWallet } = useAuth();
 
     interface ElementData {
         id: number;
@@ -28,19 +28,21 @@ export default function LeaderboardPage() {
     }
 
     const [elements, setElements] = useState<ElementData[]>([])
-    const { userInfo } = useUser();
 
     useEffect(() => {
         console.log("weekly")
-        if (userInfo) {
+        if (!isExist) {
+            setBindWallet()
+        }
+        if (isExist) {
             const getRank = async () => {
                 try {
                     const response = await axios.get(API_URL.AIRDROP_POINTS_RANK,
                         {
                             headers: {
                                 'accept': '*/*',
-                                uid: userInfo.uid,
-                                token: userInfo.token,
+                                uid: userInfo?.uid,
+                                token: userInfo?.token,
                             },
                             params: {
                                 type: isWeekly ? 1 : 0,

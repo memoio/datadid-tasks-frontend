@@ -1,7 +1,7 @@
 'use client';
 import Image from 'next/image';
 
-import { useUser } from "../../lib/context/AuthContext";
+import { useAuth } from "../../lib/context/AuthContext";
 import { useAction } from "../../lib/context/ActionContext";
 import axios from 'axios';
 import { useDIDInfo } from "@/app/lib/context/DIDContext";
@@ -26,7 +26,7 @@ const items: Item[] = [
 
 export default function Daily() {
     const { dailyAction, setDaily } = useAction();
-    const { userInfo } = useUser();
+    const { userInfo, isExist } = useAuth();
     const { isConnected } = useAccount();
     const { openConnectModal } = useConnectModal();
     const { isDIDExistState } = useDIDInfo();
@@ -35,7 +35,7 @@ export default function Daily() {
     const handleClick = async (index: number) => {
         try {
             if (isConnected) {
-                if (isDIDExistState) {
+                if (isDIDExistState && isExist) {
                     const currentUrl = window.location.href;
                     const tweetText = "Join MEMO's Airdrop! " + currentUrl;
                     const urls = [
@@ -54,8 +54,8 @@ export default function Daily() {
                         headers: {
                             "accept": "application/hal+json",
                             "Content-Type": "application/json",
-                            "uid": userInfo.uid,
-                            "token": userInfo.token
+                            "uid": userInfo?.uid,
+                            "token": userInfo?.token
                         }
                     });
 

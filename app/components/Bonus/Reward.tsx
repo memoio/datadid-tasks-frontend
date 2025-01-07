@@ -2,8 +2,36 @@
 
 import Image from 'next/image';
 import { paytoneOne } from '@/app/ui/fonts';
+import { useAccount } from 'wagmi';
+import { useAuth } from '@/app/lib/context/AuthContext';
+import axios from 'axios';
+import { API_URL } from '../config/config';
 
 export default function Reward() {
+    const { isConnected, address } = useAccount();
+    const { userInfo, isExist } = useAuth();
+
+    const handVerifyOAT = async () => {
+        if (isConnected) {
+            const actionId = 85;
+            console.log(isExist);
+            // const respond = await axios.post(API_URL.AIRDROP_RECORD_ADD, {
+            //     "action": actionId
+            // }, {
+            //     headers: {
+            //         "accept": "application/hal+json",
+            //         "Content-Type": "application/json",
+            //         "uid": userInfo?.uid,
+            //         "token": userInfo?.token
+            //     }
+            // });
+
+            // if (respond.status === 200) {
+
+            // }
+            return;
+        }
+    }
     return (
         <div
             id="reward-section"
@@ -39,7 +67,8 @@ export default function Reward() {
                     {/* Right Section */}
                     <div
                         className="bg-[#0079F2] text-white text-[18px] font-bold text-center px-[25px] py-[20px] hover:bg-[#04D582] hover:scale-105 transition-transform duration-300 rounded-[10px]"
-                        style={{ pointerEvents: 'none', opacity: '0.5' }}
+                        // style={{ pointerEvents: 'none', opacity: '0.5' }}
+                        onClick={() => handVerifyOAT()}
                     >
                         Comming Soon
                     </div>

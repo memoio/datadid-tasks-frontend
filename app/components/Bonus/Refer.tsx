@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import { paytoneOne } from '@/app/ui/fonts';
 import { useAccount } from 'wagmi';
-import { useUser } from "../../lib/context/AuthContext";
+import { useAuth } from "../../lib/context/AuthContext";
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -103,7 +103,7 @@ export default function Refer() {
                     </div>
                     <div className="text-[12px] sm:text-[14px] text-white text-center cursor-pointer hover:underline break-all"
                         id="link">
-                        https://airdrop.memolabs.org/?referralCode={inviteCode}
+                        https://points.memolabs.org/?referralCode={inviteCode}
                     </div>
                     <div
                         className="bg-[#0079F2] text-white text-[14px] sm:text-[16px] md:text-[18px] font-bold px-6 py-3 text-center rounded-full cursor-pointer hover:bg-[#04D582] transition-colors duration-300"

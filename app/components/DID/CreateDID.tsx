@@ -1,7 +1,7 @@
 import { paytoneOne } from '@/app/ui/fonts';
 import Image from 'next/image';
 import { useDIDInfo } from "@/app/lib/context/DIDContext";
-import { useUser } from '@/app/lib/context/AuthContext';
+import { useAuth } from '@/app/lib/context/AuthContext';
 import axios from 'axios';
 import { useAccount, useSignMessage } from 'wagmi';
 import React, { useState, useEffect } from 'react';
@@ -12,13 +12,12 @@ export default function CreateDID() {
     const { setIsCreatingDid, setToggleDid } = useDIDInfo();
     const { isConnected, address, chain } = useAccount();
     const { openConnectModal } = useConnectModal();
-    const { userInfo } = useUser();
+    const { userInfo } = useAuth();
 
 
     // const currentAddress = isConnected && address ? address.slice(0, 6) + '...' + address.slice(-4) : '0x0000...0000'
     const { signMessageAsync } = useSignMessage()
 
-    const url = 'https://didapi.memolabs.org/did'
 
     const handleCreateDid = async () => {
         if (isConnected) {
@@ -53,8 +52,8 @@ export default function CreateDID() {
                             headers: {
                                 "accept": "application/hal+json",
                                 "Content-Type": "application/json",
-                                "uid": userInfo.uid,
-                                "token": userInfo.token
+                                "uid": userInfo?.uid,
+                                "token": userInfo?.token
                             }
                         });
 

@@ -1,7 +1,7 @@
 'use client';
 import Image from 'next/image';
 
-import { useUser } from "../../lib/context/AuthContext";
+import { useAuth } from "../../lib/context/AuthContext";
 import { useAction } from "../../lib/context/ActionContext";
 import axios from 'axios';
 import { useDIDInfo } from "@/app/lib/context/DIDContext";
@@ -28,7 +28,7 @@ const items: Item[] = [
 
 export default function BindingPage() {
     const { questAction, setQuest } = useAction();
-    const { userInfo } = useUser();
+    const { userInfo } = useAuth();
     const { isConnected } = useAccount();
     const { openConnectModal } = useConnectModal();
     const { isDIDExistState } = useDIDInfo();
@@ -46,8 +46,8 @@ export default function BindingPage() {
                         headers: {
                             "accept": "application/hal+json",
                             "Content-Type": "application/json",
-                            "uid": userInfo.uid,
-                            "token": userInfo.token
+                            "uid": userInfo?.uid,
+                            "token": userInfo?.token
                         }
                     });
 

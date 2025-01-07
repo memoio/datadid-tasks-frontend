@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { paytoneOne } from '@/app/ui/fonts';
 import Image from 'next/image';
-import { useUser } from "@/app/lib/context/AuthContext";
+import { useAuth } from "@/app/lib/context/AuthContext";
 import { useAction } from "@/app/lib/context/ActionContext";
 import axios from 'axios';
 import { useAccount } from "wagmi";
@@ -39,7 +39,7 @@ export default function CyclePage() {
     const { joinProject, cycleAction } = useAction();
     const [points, setPoints] = useState("")
 
-    const { userInfo, setUserInfo } = useUser();
+    const { isExist, userInfo, setBindWallet } = useAuth();
     const { isConnected, address } = useAccount();
     const { isDIDExistState } = useDIDInfo();
     const { openConnectModal } = useConnectModal();
@@ -88,66 +88,34 @@ export default function CyclePage() {
     }, [targetDate]);
 
     useEffect(() => {
-        if (isConnected && address) {
-            if (!userInfo) {
-                const bindWallet = async () => {
-                    try {
-                        const response = await axios.post(
-                            API_URL.AIRDROP_USER_WALLET_BIND,
-                            {
-                                walletAddress: address,
-                            },
-                            {
-                                headers: {
-                                    accept: "application/hal+json",
-                                    uid: "11735283", // 根据您的实际情况传入 uid
-                                    token: "37595d3a6e43876682b37cdcf941938e", // 根据您的实际情况传入 token
-                                    "Content-Type": "application/json",
-                                },
-                            }
-                        );
+        if (isExist && isConnected && address) {
+            console.log("isexist:", isExist, userInfo?.uid,)
+            const getUserPoints = async () => {
+                try {
+                    const response = await axios.get(API_URL.AIRDROP_USER_INFO, {
+                        headers: {
+                            'accept': '*/*',
+                            'uid': userInfo?.uid,
+                            'token': userInfo?.token,
+                        },
 
+                    });
+                    if (response.status === 200) {
                         if (response.data.result === 1) {
-                            setUserInfo({
-                                uid: response.data.data.uid,
-                                token: response.data.data.token,
-                            });
-                        } else {
-                            alert(`Failed to bind wallet: ${JSON.stringify(response.data)}`);
-                            return
+                            setPoints(response.data.data.points)
+                            console.log(response.data.data.points);
                         }
-                    } catch (error) {
-                        alert(`Error binding wallet: ${error}`);
-                        return
-                    }
-                };
-
-                bindWallet();
-            } else {
-                const getUserPoints = async () => {
-
-                    try {
-                        const response = await axios.get(API_URL.AIRDROP_USER_INFO, {
-                            headers: {
-                                'accept': '*/*',
-                                'uid': userInfo.uid, // 根据实际情况传入 uid
-                                'token': userInfo.token, // 根据实际情况传入 token
-                            },
-
-                        });
-                        setPoints(response.data.data.points)
-                        console.log(response.data.data.points);
-                    } catch (error) {
-                        alert(error);
-                        return
                     }
 
-                };
-                getUserPoints();
-            }
+                } catch (error) {
+                    alert(error);
+                    return
+                }
 
+            };
+            getUserPoints();
         }
-    }, [address, isConnected, setUserInfo, userInfo]);
+    }, [address, isConnected, isExist]);
 
     return (
         <div className="mt-[120px]">
