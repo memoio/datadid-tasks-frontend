@@ -2,10 +2,11 @@
 import { useState } from 'react';
 import styled from 'styled-components';// Import the useAuth hook
 
-import { ConnectButton } from '@rainbow-me/rainbowkit';
+import { ConnectButton, useConnectModal } from '@rainbow-me/rainbowkit';
 import { useWallet } from '@/app/lib/context/WalletContext';
 import { useRouter } from 'next/navigation';
 import { useAction } from '@/app/lib/context/ActionContext';
+import { useAccount } from 'wagmi';
 
 // Reusable styles for NavItems and Buttons
 const commonStyles = `
@@ -89,10 +90,21 @@ const Dbutton = styled(ButtonBase)`
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const { invite } = useWallet();
-
+  const { address, isConnected } = useAccount();
   const toggleMenu = () => setMenuOpen(!menuOpen);
   const { leaveProject, } = useAction();
   const router = useRouter();
+  const { openConnectModal } = useConnectModal();
+
+  const handleFaucetClick = () => {
+    if (isConnected) {
+      window.open(`http://faucet.metamemo.one?address=${address}`, '_blank');
+    } else {
+      if (openConnectModal) {
+        openConnectModal();
+      }
+    }
+  }
 
   return (
     <div className="w-full">
@@ -136,7 +148,7 @@ export default function Navbar() {
               <NavItem>Docs</NavItem>
             </a>
             <NavItem onClick={() => invite()}>InviteCode</NavItem>
-            <NavItem onClick={() => window.open("http://faucet.metamemo.one")}>Faucet</NavItem>
+            <NavItem onClick={() => handleFaucetClick()}>Faucet</NavItem>
             {/* <NavItem>TotalPoints</NavItem> */}
           </div>
           <div className="flex gap-1">

@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import { paytoneOne } from '@/app/ui/fonts';
 import Image from 'next/image';
 import { useDIDInfo } from "@/app/lib/context/DIDContext";
@@ -17,7 +18,7 @@ interface PopupData {
 export default function DidSection() {
     const { setToggleDid } = useDIDInfo();
     const { address, isConnected, isDisconnected } = useAccount();
-    const { didInfo, setDID, isDIDInfoState, isDIDExistState, setIsDIDExist, setDIDInfoExist } = useDIDInfo();
+    const { setFreeDid, didInfo, setDID, isDIDInfoState, isDIDExistState, setIsDIDExist, setDIDInfoExist } = useDIDInfo();
     const { openConnectModal } = useConnectModal();
     const [popupData, setPopupData] = useState<PopupData[]>([]);
     const [showPopup, setShowPopup] = useState(false);
@@ -55,12 +56,17 @@ export default function DidSection() {
     ];
 
 
-    const openDid = () => {
+    const openDid = (free: boolean) => {
         if (!isConnected) {
             openConnectModal?.();
             return;
         }
+        console.log("TESTopenDid", free)
+        if (free) {
+            setFreeDid()
+        }
         setToggleDid(); // Toggle the DID state
+
     };
 
     useEffect(() => {
@@ -176,13 +182,23 @@ export default function DidSection() {
                                 </div>
                             </div>
                         ) : (
-                            <div
-                                onClick={openDid}
-                                className="w-[150px] bg-[#0079F2] flex justify-center items-center rounded-full px-4 py-2 mt-5 shadow-md transform hover:scale-110 transition-transform duration-300 cursor-pointer"
-                            >
-                                <span className="font-bold text-[14px] sm:text-[16px] text-white">
-                                    Create DID
-                                </span>
+                            <div className='flex flex-row gap-5'>
+                                <div
+                                    onClick={() => openDid(true)}
+                                    className="bg-[#0079F2] flex justify-center items-center rounded-full px-4 py-2 mt-5 shadow-md transform hover:scale-110 transition-transform duration-300 cursor-pointer"
+                                >
+                                    <span className="font-bold text-[14px] sm:text-[16px] text-white">
+                                        Create DID Free
+                                    </span>
+                                </div>
+                                <div
+                                    onClick={() => openDid(false)}
+                                    className="bg-[#0079F2] flex justify-center items-center rounded-full px-4 py-2 mt-5 shadow-md transform hover:scale-110 transition-transform duration-300 cursor-pointer"
+                                >
+                                    <span className="font-bold text-[14px] sm:text-[16px] text-white">
+                                        Create DID
+                                    </span>
+                                </div>
                             </div>
                         )}
 
