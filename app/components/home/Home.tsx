@@ -8,7 +8,7 @@ export default function Home() {
     return (
         <div>
             {/* Main Content */}
-            <div className="flex flex-col w-full items-center mb-[30px] sm:mt-[40px] sm:mb-[80px] px-4"
+            <div className="flex flex-col w-full items-center mb-[30px] sm:mt-[16px] sm:mb-[80px] px-4"
                 style={{
                     backgroundImage: 'url(/bg.png)',
                     backgroundSize: 'cover',

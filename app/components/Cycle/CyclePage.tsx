@@ -88,7 +88,10 @@ export default function CyclePage() {
     }, [targetDate]);
 
     useEffect(() => {
-        if (isExist && isConnected && address) {
+        if (userInfo === undefined) {
+            setBindWallet()
+        }
+        if (isExist && isConnected && address && userInfo) {
             console.log("isexist:", isExist, userInfo?.uid,)
             const getUserPoints = async () => {
                 try {
@@ -115,7 +118,7 @@ export default function CyclePage() {
             };
             getUserPoints();
         }
-    }, [address, isConnected, isExist]);
+    }, [address, isConnected, isExist, userInfo]);
 
     return (
         <div className="mt-[120px]">

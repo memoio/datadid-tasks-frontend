@@ -169,7 +169,9 @@ export default function DidSection() {
                         Your all-in-one, privacy-preserving self-sovereign identity.Own, manage, and monetize your data!
                     </div>
                     <div className="text-white text-[12px] sm:text-[14px] mt-[15px] text-center sm:text-left">
-                        Note: Users need to log in to MEMO and successfully create DID before they can participate in earning points.
+                        <p className='mt-[15px]'>Check DID, you need to click the faucet button to get the gas fee.</p>
+                        <p className='mt-[15px]'>Note 1: Users need to create did before participating in earning points. </p>
+                        <p className='mt-[15px]'>Note 2: Create DID +1000, Check DID +500.</p>
                     </div>
                     <div className="text-center flex justify-center sm:justify-start">
                         {isDIDExistState && isDIDInfoState && isConnected ? (
@@ -178,7 +180,7 @@ export default function DidSection() {
                                     No.{didInfo.number}
                                 </div>
                                 <div className="text-[12px] text-[#13E292]">
-                                    {didInfo.did}
+                                    {didInfo.did.slice(0, 18) + "..." + didInfo.did.slice(-18)}
                                 </div>
                             </div>
                         ) : (
@@ -188,15 +190,15 @@ export default function DidSection() {
                                     className="bg-[#0079F2] flex justify-center items-center rounded-full px-4 py-2 mt-5 shadow-md transform hover:scale-110 transition-transform duration-300 cursor-pointer"
                                 >
                                     <span className="font-bold text-[14px] sm:text-[16px] text-white">
-                                        Create DID Free
+                                        Create DID
                                     </span>
                                 </div>
                                 <div
                                     onClick={() => openDid(false)}
-                                    className="bg-[#0079F2] flex justify-center items-center rounded-full px-4 py-2 mt-5 shadow-md transform hover:scale-110 transition-transform duration-300 cursor-pointer"
+                                    className="bg-[#13E292] flex justify-center items-center rounded-full px-4 py-2 mt-5 shadow-md transform hover:scale-110 transition-transform duration-300 cursor-pointer"
                                 >
                                     <span className="font-bold text-[14px] sm:text-[16px] text-white">
-                                        Create DID
+                                        Check DID
                                     </span>
                                 </div>
                             </div>
