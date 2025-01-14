@@ -159,9 +159,9 @@ export default function DidSection() {
             {/* Main content */}
             <div className="flex flex-col md:flex-row justify-center items-center w-full h-auto mb-[80px]">
                 {/* Left Section */}
-                <div className="flex flex-col w-full mt-[50px] xl:mt-[0px] px-[20px] md:px-[0px]">
+                <div className="flex flex-col w-full  px-[20px] md:px-[0px]">
                     <div
-                        className={`${paytoneOne.className} text-white text-[28px] sm:text-[28px] md:text-[32px] lg:text-[40px] xl:text-[48px] leading-tight mt-[30px] text-center sm:text-left`}
+                        className={`${paytoneOne.className} text-white text-[28px] sm:text-[28px] md:text-[32px] lg:text-[40px] xl:text-[48px] leading-tight text-center sm:text-left`}
                     >
                         <span className="text-white">Data</span> <span>DID</span>
                     </div>

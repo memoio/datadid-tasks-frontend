@@ -74,7 +74,7 @@ export default function BindingPage() {
         <div className="mt-[80px] mb-[50px]">
             <div className="flex flex-col sm:flex-row sm:justify-between items-center gap-3">
                 <div>
-                    <div className="text-[34px] text-center sm:text-left font-bold text-white text-transparent bg-clip-text">
+                    <div className="text-[28px] text-center sm:text-left font-bold text-white text-transparent bg-clip-text">
                         MEMO Community Quests
                     </div>
                     <div className="text-[14px] sm:text-[16px] md:text-[20px] text-white bg-gradient-to-r from-[#FFFFFF] to-[#999999] text-transparent bg-clip-text text-center sm:text-left">
