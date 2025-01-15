@@ -6,10 +6,10 @@ interface WalletContextType {
     invite: () => void;
     // skiped: boolean;
     // skip: () => void;
-    // isShown: boolean;
+    isShown: boolean;
     // isOpened: boolean;
     // toggleWallet: () => void;
-    // showWallet: () => void;
+    showWallet: () => void;
     closeInvite: () => void;
 }
 
@@ -22,25 +22,25 @@ interface WalletContextProviderProps {
 export const WalletContextProvider = ({ children }: WalletContextProviderProps) => {
     const [isInvited, setIsInvited] = useState(false);
     // const [skiped, setSkiped] = useState(false);
-    // const [isShown, setIsShown] = useState(false);
+    const [isShown, setIsShown] = useState(false);
     // const [isOpened, setIsOpened] = useState(false);
 
     const invite = () => setIsInvited(true);
     const closeInvite = () => setIsInvited(false);
     // const skip = () => setSkiped(true);
-
+    const showWallet = () => { setIsShown(!isShown); console.log(isShown); }
     return (
         <WalletContext.Provider
             value={{
                 isInvited,
                 invite,
-                closeInvite
+                closeInvite,
                 // skiped,
                 // skip
-                // isShown,
+                isShown,
                 // isOpened,
                 // toggleWallet,
-                // showWallet
+                showWallet,
             }}
         >
             {children}

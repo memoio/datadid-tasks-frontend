@@ -67,7 +67,7 @@ export default function Reward() {
                     {/* Right Section */}
                     <div
                         className="bg-[#0079F2] text-white text-[18px] font-bold text-center px-[25px] py-[20px] hover:bg-[#04D582] hover:scale-105 transition-transform duration-300 rounded-[10px]"
-                        // style={{ pointerEvents: 'none', opacity: '0.5' }}
+                        style={{ pointerEvents: 'none', opacity: '0.5' }}
                         onClick={() => handVerifyOAT()}
                     >
                         Comming Soon

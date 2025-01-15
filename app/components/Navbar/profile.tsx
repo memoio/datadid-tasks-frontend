@@ -1,0 +1,93 @@
+'use client';
+import { useDIDInfo } from "@/app/lib/context/DIDContext";
+import { useWallet } from "@/app/lib/context/WalletContext";
+import { paytoneOne } from "@/app/ui/fonts";
+import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Image from 'next/image'; // Import Image from Next.js
+import { useState } from "react";
+import { useAccount } from "wagmi";
+
+export default function Profile() {
+    const { didInfo } = useDIDInfo();
+    const [showPopup, setShowPopup] = useState(false); // Popup visibility state
+    const { address } = useAccount();
+    const { invite } = useWallet();
+
+    const copyToClipboard = (text: string) => {
+        navigator.clipboard.writeText(text).then(() => {
+            setShowPopup(true);
+            setTimeout(() => setShowPopup(false), 2000); // Hide after 2s
+        }).catch(() => {
+            alert('Failed to copy text.');
+        });
+    };
+
+    function toggleWallet() {
+        throw new Error("Function not implemented.");
+    }
+
+    return (
+        <div className="w-[400px] h-auto mx-auto">
+            <div className="border-2 rounded-[15px] px-6 py-6 border-white bg-gradient-to-b from-[#23895E] to-[#092318] flex flex-col justify-between shadow-lg">
+                {/* DID Section */}
+                <div className="flex justify-between items-center mb-4">
+                    <div className={`${paytoneOne.className} text-white font-semibold text-[16px] leading-[36px]`}>
+                        DID
+                    </div>
+                    <div className="flex items-center">
+                        <div className={`${paytoneOne.className} text-white font-medium text-[14px] leading-[36px] mr-3`}>
+                            {didInfo.did.slice(0, 6) + "..." + didInfo.did.slice(-6)}
+                        </div>
+                        <Image
+                            src="/copy_symbol.png"
+                            width={18}
+                            height={18}
+                            className="w-[18px] h-[18px] cursor-pointer"
+                            alt="copy symbol"
+                            onClick={() => copyToClipboard(didInfo.did || '')}
+                        />
+                    </div>
+                </div>
+
+                {/* DID Number Section */}
+                <div className="flex justify-between items-center mb-4">
+                    <div className={`${paytoneOne.className} text-white font-semibold text-[16px] leading-[36px]`}>
+                        DID Number
+                    </div>
+                    <div className={`${paytoneOne.className} text-white font-medium text-[14px] leading-[36px]`}>
+                        {didInfo.number}
+                    </div>
+                </div>
+
+                {/* Wallet Section */}
+                <div className="flex justify-between items-center mb-4">
+                    <div className={`${paytoneOne.className} text-white font-semibold text-[16px] leading-[36px]`}>
+                        Wallet
+                    </div>
+                    <div className="flex items-center">
+                        <div className={`${paytoneOne.className} text-white font-medium text-[14px] leading-[36px] mr-3`}>
+                            {(address) ? (address.slice(0, 6) + "..." + address.slice(-4)) : ("")}
+                        </div>
+                        <Image
+                            src="/copy_symbol.png"
+                            width={18}
+                            height={18}
+                            className="w-[18px] h-[18px] cursor-pointer"
+                            alt="copy symbol"
+                            onClick={() => copyToClipboard(address || '')}
+                        />
+                    </div>
+                </div>
+
+                {/* Invite Code Section */}
+                <div className="flex justify-between items-center mb-4">
+                    <div className={`${paytoneOne.className} text-white font-semibold text-[16px] leading-[36px]`}>
+                        Invite Code
+                    </div>
+                    <FontAwesomeIcon icon={faPenToSquare} className="text-white cursor-pointer" onClick={() => { invite(); }} />
+                </div>
+            </div>
+        </div>
+    )
+}

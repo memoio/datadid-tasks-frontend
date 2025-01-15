@@ -159,9 +159,9 @@ export default function DidSection() {
             {/* Main content */}
             <div className="flex flex-col md:flex-row justify-center items-center w-full h-auto mb-[80px]">
                 {/* Left Section */}
-                <div className="flex flex-col w-full mt-[50px] xl:mt-[0px] px-[20px] md:px-[0px]">
+                <div className="flex flex-col w-full  px-[20px] md:px-[0px]">
                     <div
-                        className={`${paytoneOne.className} text-white text-[28px] sm:text-[28px] md:text-[32px] lg:text-[40px] xl:text-[48px] leading-tight mt-[30px] text-center sm:text-left`}
+                        className={`${paytoneOne.className} text-white text-[28px] sm:text-[28px] md:text-[32px] lg:text-[40px] xl:text-[48px] leading-tight text-center sm:text-left`}
                     >
                         <span className="text-white">Data</span> <span>DID</span>
                     </div>
@@ -169,7 +169,7 @@ export default function DidSection() {
                         Your all-in-one, privacy-preserving self-sovereign identity.Own, manage, and monetize your data!
                     </div>
                     <div className="text-white text-[12px] sm:text-[14px] mt-[15px] text-center sm:text-left">
-                        <p className='mt-[15px]'>Check DID, you need to click the faucet button to get the gas fee.</p>
+                        <p className='mt-[15px]'>Check DID, you need to click the <a className="text-[#13E292]" href='https://faucet.metamemo.one/'>faucet button</a> to get the gas fee.</p>
                         <p className='mt-[15px]'>Note 1: Users need to create did before participating in earning points. </p>
                         <p className='mt-[15px]'>Note 2: Create DID +1000, Check DID +500.</p>
                     </div>
@@ -241,41 +241,43 @@ export default function DidSection() {
             </div>
 
             {/* Popup */}
-            {showPopup && (
-                <div
-                    className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-[#196144] bg-opacity-50 z-50"
-                    onClick={closePopup} // This will trigger the `closePopup` function when clicking outside the popup
-                >
+            {
+                showPopup && (
                     <div
-                        className="bg-[#01180E] p-6 rounded-lg shadow-lg w-[90%] sm:w-[50%] border-x-[3px] border-[#05F292]"
-                        onClick={(e) => e.stopPropagation()} // Prevents closing when clicking inside the popup
+                        className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-[#196144] bg-opacity-50 z-50"
+                        onClick={closePopup} // This will trigger the `closePopup` function when clicking outside the popup
                     >
-                        <h2 className="text-xl font-bold mb-4 text-white text-[24px]">Invitation Details</h2>
-                        <ul>
-                            <li className="mb-3 border-b pb-3 last:border-none last:mb-0">
-                                <div className="flex justify-between w-full">
-                                    <div className="w-[40%] text-center text-[20px] font-bold text-white">Invitee</div>
-                                    <div className="w-[40%] text-center text-[20px] font-bold text-white">Time</div>
-                                    <div className="w-[20%] text-center text-[20px] font-bold text-white">Points</div>
-                                </div>
-                            </li>
-                            {popupData.map((data, i) => (
-                                <li
-                                    key={i}
-                                    className="mb-3 border-b pb-3 last:border-none last:mb-0"
-                                >
+                        <div
+                            className="bg-[#01180E] p-6 rounded-lg shadow-lg w-[90%] sm:w-[50%] border-x-[3px] border-[#05F292]"
+                            onClick={(e) => e.stopPropagation()} // Prevents closing when clicking inside the popup
+                        >
+                            <h2 className="text-xl font-bold mb-4 text-white text-[24px]">Invitation Details</h2>
+                            <ul>
+                                <li className="mb-3 border-b pb-3 last:border-none last:mb-0">
                                     <div className="flex justify-between w-full">
-                                        <div className="w-[40%] text-center text-white">{data.invitee}</div>
-                                        <div className="w-[40%] text-center text-white">{data.time}</div>
-                                        <div className="w-[20%] text-center text-white">{data.points}</div>
+                                        <div className="w-[40%] text-center text-[20px] font-bold text-white">Invitee</div>
+                                        <div className="w-[40%] text-center text-[20px] font-bold text-white">Time</div>
+                                        <div className="w-[20%] text-center text-[20px] font-bold text-white">Points</div>
                                     </div>
                                 </li>
-                            ))}
-                        </ul>
+                                {popupData.map((data, i) => (
+                                    <li
+                                        key={i}
+                                        className="mb-3 border-b pb-3 last:border-none last:mb-0"
+                                    >
+                                        <div className="flex justify-between w-full">
+                                            <div className="w-[40%] text-center text-white">{data.invitee}</div>
+                                            <div className="w-[40%] text-center text-white">{data.time}</div>
+                                            <div className="w-[20%] text-center text-white">{data.points}</div>
+                                        </div>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
                     </div>
-                </div>
 
-            )}
+                )
+            }
             <div className="rounded-full px-[20px] py-[10px]"></div>
         </div >
     );
