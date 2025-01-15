@@ -1,10 +1,14 @@
 
+import React from 'react'; // Import React
 import { paytoneOne } from '@/app/ui/fonts';
 import Image from 'next/image';
+import Profile from '../Navbar/profile';
+import { useWallet } from '@/app/lib/context/WalletContext';
 
 
 
 export default function Home() {
+    const { isShown } = useWallet();
     return (
         <div>
             {/* Main Content */}
@@ -16,6 +20,12 @@ export default function Home() {
                     backgroundRepeat: 'no-repeat',
                 }}
             >
+                {isShown && (
+                    <div className="fixed top-[100px] right-[20px] z-50">
+                        <Profile />
+                    </div>
+                )}
+
                 {/* Title */}
                 <div
                     className={`${paytoneOne.className} text-white text-[28px] sm:text-[40px] md:text-[45px] lg:text-[60px] xl:text-[80px] leading-tight mt-[30px] text-center sm:text-left`}

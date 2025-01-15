@@ -89,12 +89,13 @@ const Dbutton = styled(ButtonBase)`
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const { invite } = useWallet();
+  const { invite, showWallet } = useWallet();
   const { address, isConnected } = useAccount();
   const toggleMenu = () => setMenuOpen(!menuOpen);
   const { leaveProject, } = useAction();
   const router = useRouter();
   const { openConnectModal } = useConnectModal();
+
 
   const handleFaucetClick = () => {
     if (isConnected) {
@@ -147,7 +148,7 @@ export default function Navbar() {
             <a href="https://memolabs.gitbook.io/memo-docs" target="_blank" rel="noopener noreferrer">
               <NavItem>Docs</NavItem>
             </a>
-            <NavItem onClick={() => invite()}>InviteCode</NavItem>
+            <NavItem onClick={() => showWallet()}>Profile</NavItem>
             <NavItem onClick={() => handleFaucetClick()}>Faucet</NavItem>
             {/* <NavItem>TotalPoints</NavItem> */}
           </div>
@@ -162,10 +163,18 @@ export default function Navbar() {
         className={`${menuOpen ? 'block' : 'hidden'
           } flex flex-col items-start gap-2 sm:hidden mt-2`}
       >
-        <NavItem>Docs</NavItem>
-        <NavItem>Airdrop</NavItem>
-        <Dbutton>Check In</Dbutton>
-        <ConnectButton />
+
+        <NavItem><a href="https://memolabs.gitbook.io/memo-docs" target="_blank" rel="noopener noreferrer">Docs </a></NavItem>
+
+        <NavItem onClick={() => {
+          if (!isConnected) {
+            showWallet();
+          } else if (openConnectModal) {
+            openConnectModal();
+          }
+        }}>Profile</NavItem>
+        <NavItem onClick={() => handleFaucetClick()}>Faucet</NavItem>
+        <NavItem><ConnectButton /></NavItem>
       </div>
     </div>
   );
