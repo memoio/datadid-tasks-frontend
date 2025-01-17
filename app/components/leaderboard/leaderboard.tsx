@@ -66,7 +66,7 @@ export default function LeaderboardPage() {
 
             getRank()
         }
-    }, [isWeekly])
+    }, [userInfo, isWeekly])
 
 
 
