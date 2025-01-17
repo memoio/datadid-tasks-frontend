@@ -26,8 +26,8 @@ export default function RatePage() {
                         1 Points
                     </div>
                     <div className="flex flex-col items-center animate-bounce">
-                        <Image src="/Arrow_right.png" alt="right" width={28} height={10} />
-                        <Image src="/Arrow_left.png" alt="left" width={28} height={10} />
+                        <Image src="/Arrow_right.png" alt="right" width={28} height={10} loading="lazy" />
+                        <Image src="/Arrow_left.png" alt="left" width={28} height={10} loading="lazy" />
                     </div>
                     <div className="flex items-center">
                         <Image src="/none.png" alt="none" width={18} height={18} className="sm:w-[22px] sm:h-[22px] mr-2" />

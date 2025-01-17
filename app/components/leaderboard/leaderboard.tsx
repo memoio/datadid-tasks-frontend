@@ -9,10 +9,6 @@ import { useAuth } from "@/app/lib/context/AuthContext"
 import { API_URL } from '../config/config';
 
 
-
-
-
-
 export default function LeaderboardPage() {
     const [isWeekly, setIsWeekly] = useState(true);
     const { isExist, userInfo, setBindWallet } = useAuth();
@@ -70,7 +66,7 @@ export default function LeaderboardPage() {
 
             getRank()
         }
-    }, [userInfo, isWeekly])
+    }, [isWeekly])
 
 
 

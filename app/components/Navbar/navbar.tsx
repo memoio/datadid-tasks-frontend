@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import styled from 'styled-components';// Import the useAuth hook
 
 import { ConnectButton, useConnectModal } from '@rainbow-me/rainbowkit';
@@ -97,7 +97,7 @@ export default function Navbar() {
   const { openConnectModal } = useConnectModal();
 
 
-  const handleFaucetClick = () => {
+  const handleFaucetClick = useCallback(() => {
     if (isConnected) {
       window.open(`http://faucet.metamemo.one?address=${address}`, '_blank');
     } else {
@@ -105,7 +105,11 @@ export default function Navbar() {
         openConnectModal();
       }
     }
-  }
+  }, [isConnected, address, openConnectModal]);
+
+  const showWalletHandler = useCallback(() => {
+    showWallet();
+  }, [showWallet]);
 
   return (
     <div className="w-full">
@@ -146,10 +150,10 @@ export default function Navbar() {
         <div className="hidden sm:flex justify-between items-center gap-12">
           <div className="flex">
             <a href="https://memolabs.gitbook.io/memo-docs" target="_blank" rel="noopener noreferrer">
-              <NavItem>Docs</NavItem>
+              <div className='text-white mr-[20px]'>Docs</div>
             </a>
-            <NavItem onClick={() => showWallet()}>Profile</NavItem>
-            <NavItem onClick={() => handleFaucetClick()}>Faucet</NavItem>
+            <div className='text-white mr-[20px]' onClick={() => showWallet()}>Profile</div>
+            <div className='text-white mr-[20px]' onClick={() => handleFaucetClick()}>Faucet</div>
             {/* <NavItem>TotalPoints</NavItem> */}
           </div>
           <div className="flex gap-1">
@@ -166,15 +170,9 @@ export default function Navbar() {
 
         <NavItem><a href="https://memolabs.gitbook.io/memo-docs" target="_blank" rel="noopener noreferrer">Docs </a></NavItem>
 
-        <NavItem onClick={() => {
-          if (!isConnected) {
-            showWallet();
-          } else if (openConnectModal) {
-            openConnectModal();
-          }
-        }}>Profile</NavItem>
-        <NavItem onClick={() => handleFaucetClick()}>Faucet</NavItem>
-        <NavItem><ConnectButton /></NavItem>
+        <NavItem onClick={showWalletHandler}>Profile</NavItem>
+        <NavItem onClick={handleFaucetClick}>Faucet</NavItem>
+        <NavItem ><ConnectButton /></NavItem>
       </div>
     </div>
   );
