@@ -14,7 +14,7 @@ import { join } from 'path';
 export default function Activity({ joinId }: { joinId: number }) {
     const [popupData, setPopupData] = useState<{ label: string; reward: number } | null>(null);
     const [alertMessage, setAlertMessage] = useState<string | null>(null); // State for the alert
-    const { leaveProject, cycleAction, setCycle, inviteCode } = useAction();
+    const { leaveProject, cycleAction, setCycle, userInfos } = useAction();
     const router = useRouter();
     const { userInfo, isExist } = useAuth();
 
@@ -145,7 +145,7 @@ export default function Activity({ joinId }: { joinId: number }) {
                                 </div>
                                 <div className="flex flex-col sm:flex-row justify-between items-center mt-[20px] gap-2">
                                     <div className="text-white text-[12px] sm:text-[15px] break-all sm:break-normal text-center" id="copy">
-                                        https://points.memolabs.org/projects/{joinId || 0}?referralCode={inviteCode}
+                                        https://points.memolabs.org/projects/{joinId || 0}?referralCode={userInfos.invideCode }
                                     </div>
                                     <Image
                                         src="/copy_symbol.png"
@@ -224,7 +224,7 @@ export default function Activity({ joinId }: { joinId: number }) {
                                 className="bg-gradient-to-b from-[#214177] to-[#064E33] text-white rounded-lg shadow-lg px-2 sm:px-6 py-6 w-[70%] sm:w-[300px]"
                             >
                                 <h3 className="text-lg font-bold text-center">{popupData.label}</h3>
-                                <p className="text-base mt-4 text-center">+{popupData.reward} Points</p>
+                                <p className="text-base mt-4 text-center">+{popupData.reward} Rewards</p>
                                 <button
                                     onClick={closePopup}
                                     className="bg-[#05F292] text-black text-sm sm:text-base font-bold px-6 py-2 mt-4 rounded-full w-full hover:bg-[#04C27C] transition-colors"

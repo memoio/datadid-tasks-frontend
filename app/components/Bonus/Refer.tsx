@@ -14,7 +14,7 @@ import { useAction } from '@/app/lib/context/ActionContext';
 export default function Refer() {
     const { isConnected, address } = useAccount();
     const { openConnectModal } = useConnectModal();
-    const { inviteCode } = useAction();
+    const { userInfos } = useAction();
 
     const [showPopup, setShowPopup] = useState<string | null>(null); // State to manage popup visibility with a message
 
@@ -76,7 +76,7 @@ export default function Refer() {
                         />
                         <div>
                             <div className="text-[18px] sm:text-[25px] text-white font-bold text-center sm:text-left">
-                                GET Points When Users Sign Up
+                                GET Rewards When Users Sign Up
                             </div>
                             <div className="text-[14px] sm:text-[18px] text-white text-center sm:text-left">
                                 When your friend signs up on the app, you will receive points.
@@ -90,7 +90,7 @@ export default function Refer() {
                     <div
                         className="flex justify-between items-center gap-[30px] rounded-[10px] bg-[#096A62] px-4 py-3 sm:px-[20px] sm:py-[25px] text-white text-center transition-colors duration-300 text-[14px] sm:text-[16px] md:text-[18px]"
                     >
-                        <div id="icon_txt">{inviteCode}</div>
+                        <div id="icon_txt">{userInfos.invideCode}</div>
                         <Image
                             src="/copy_symbol.png"
                             width={18}
@@ -103,7 +103,7 @@ export default function Refer() {
                     </div>
                     <div className="text-[12px] sm:text-[14px] text-white text-center cursor-pointer hover:underline break-all"
                         id="link">
-                        https://points.memolabs.org/?referralCode={inviteCode}
+                        https://points.memolabs.org/?referralCode={userInfos.invideCode}
                     </div>
                     <div
                         className="bg-[#0079F2] text-white text-[14px] sm:text-[16px] md:text-[18px] font-bold px-6 py-3 text-center rounded-full cursor-pointer hover:bg-[#04D582] transition-colors duration-300"

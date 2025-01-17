@@ -20,10 +20,10 @@ const tweetText = "Come and participate in MEMO's points airdrop event!";
 const tweetUrl = 'https://x.com/MemoLabsOrg/status/1862453981072826816';
 
 const items: Item[] = [
-    { src: "/x.png", alt: "SBT1", reward: "+50 Points", url: 'https://x.com/MemoLabsOrg' },
-    { src: "/tg.png", alt: "SBT2", reward: "+50 Points", url: 'https://t.me/memolabsio' },
-    { src: "/discord.png", alt: "SBT3", reward: "+50 Points", url: 'https://discord.com/invite/YG4Ydv2E7X' },
-    { src: "/retweet.png", alt: "SBT4", reward: "+50 Points", url: 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(tweetText) + '&url=' + encodeURIComponent(tweetUrl) },
+    { src: "/x.png", alt: "SBT1", reward: "+50", url: 'https://x.com/MemoLabsOrg' },
+    { src: "/tg.png", alt: "SBT2", reward: "+50", url: 'https://t.me/memolabsio' },
+    { src: "/discord.png", alt: "SBT3", reward: "+50", url: 'https://discord.com/invite/YG4Ydv2E7X' },
+    { src: "/retweet.png", alt: "SBT4", reward: "+50", url: 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(tweetText) + '&url=' + encodeURIComponent(tweetUrl) },
 ];
 
 export default function BindingPage() {

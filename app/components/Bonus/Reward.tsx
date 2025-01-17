@@ -55,12 +55,12 @@ export default function Reward() {
                         />
                         <div>
                             <div className="text-[23px] text-white font-bold">
-                                Verify OAT & NFT
+                                Verify OAT
                             </div>
                             <div className="text-[16px] text-white text-center sm:text-left">
-                                Verify past OAT & NFT and redeem corresponding points
+                                Verify past OAT and redeem corresponding points
                                 rewards. Please make sure that the current wallet address is
-                                consistent with the address for receiving OAT and NFT.
+                                consistent with the address for receiving OAT.
                             </div>
                         </div>
                     </div>

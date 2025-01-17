@@ -9,6 +9,8 @@ import { useAccount } from "wagmi";
 import { useConnectModal } from '@rainbow-me/rainbowkit';
 import { useEffect, useState } from 'react';
 import { API_URL } from '../config/config';
+import { useAuth } from '@/app/lib/context/AuthContext';
+import { useAction } from '@/app/lib/context/ActionContext';
 interface PopupData {
     invitee: string;
     time: string;
@@ -16,9 +18,10 @@ interface PopupData {
 }
 
 export default function DidSection() {
-    const { setToggleDid } = useDIDInfo();
+    const { userInfos } = useAction();
+    const { userInfo } = useAuth();
     const { address, isConnected, isDisconnected } = useAccount();
-    const { setFreeDid, didInfo, setDID, isDIDInfoState, isDIDExistState, setIsDIDExist, setDIDInfoExist } = useDIDInfo();
+    const { setToggleDid, setFreeDid, didInfo, setDID, isDIDInfoState, isDIDExistState, setIsDIDExist, setDIDInfoExist } = useDIDInfo();
     const { openConnectModal } = useConnectModal();
     const [popupData, setPopupData] = useState<PopupData[]>([]);
     const [showPopup, setShowPopup] = useState(false);
@@ -38,7 +41,7 @@ export default function DidSection() {
     const inviteDatas = [
         {
             title: { full: "My Rank", short: "Rank" },
-            value: isConnected ? "1K+" : "-",
+            value: isConnected ? userInfos.PointsRank : "-",
         },
         {
             title: { full: "My Smart Wallet Address", short: "Wallet" },
@@ -46,12 +49,12 @@ export default function DidSection() {
         },
         {
             title: { full: "Friends Invited", short: "Friends" },
-            value: isConnected ? "2K+" : "-",
+            value: isConnected ? userInfos.inviteCount : "-",
             onClick: handlePopup, // Add onClick to this item
         },
         {
             title: { full: "Leaderboard Reward", short: "Reward" },
-            value: isConnected ? "100k+" : "-",
+            value: isConnected ? userInfos.points : "-",
         },
     ];
 
@@ -151,6 +154,9 @@ export default function DidSection() {
         }
     }, [isDIDExistState, isConnected])
 
+    useEffect(() => {
+
+    })
 
     const closePopup = () => setShowPopup(false);
 
@@ -171,7 +177,7 @@ export default function DidSection() {
                     <div className="text-white text-[12px] sm:text-[14px] mt-[15px] text-center sm:text-left">
                         <p className='mt-[15px]'>Check DID, you need to click the <a className="text-[#13E292]" href='https://faucet.metamemo.one/'>faucet button</a> to get the gas fee.</p>
                         <p className='mt-[15px]'>Note 1: Users need to create did before participating in earning points. </p>
-                        <p className='mt-[15px]'>Note 2: Create DID +1000, Check DID +500.</p>
+                        <p className='mt-[15px]'>Note 2: Create DID +1000, Check DID +1500.</p>
                     </div>
                     <div className="text-center flex justify-center sm:justify-start">
                         {isDIDExistState && isDIDInfoState && isConnected ? (
@@ -190,7 +196,7 @@ export default function DidSection() {
                                     className="bg-[#0079F2] flex justify-center items-center rounded-full px-4 py-2 mt-5 shadow-md transform hover:scale-110 transition-transform duration-300 cursor-pointer"
                                 >
                                     <span className="font-bold text-[14px] sm:text-[16px] text-white">
-                                        Create DID
+                                        Create DID Free
                                     </span>
                                 </div>
                                 <div
@@ -257,7 +263,7 @@ export default function DidSection() {
                                     <div className="flex justify-between w-full">
                                         <div className="w-[40%] text-center text-[20px] font-bold text-white">Invitee</div>
                                         <div className="w-[40%] text-center text-[20px] font-bold text-white">Time</div>
-                                        <div className="w-[20%] text-center text-[20px] font-bold text-white">Points</div>
+                                        <div className="w-[20%] text-center text-[20px] font-bold text-white">Rewards</div>
                                     </div>
                                 </li>
                                 {popupData.map((data, i) => (

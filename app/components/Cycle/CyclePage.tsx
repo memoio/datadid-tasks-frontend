@@ -36,9 +36,7 @@ export const cards = [
 ];
 
 export default function CyclePage() {
-    const { joinProject, cycleAction } = useAction();
-    const [points, setPoints] = useState("")
-
+    const { userInfos, joinProject, cycleAction } = useAction();
     const { isExist, userInfo, setBindWallet } = useAuth();
     const { isConnected, address } = useAccount();
     const { isDIDExistState } = useDIDInfo();
@@ -87,38 +85,6 @@ export default function CyclePage() {
         return () => clearInterval(interval);
     }, [targetDate]);
 
-    useEffect(() => {
-        if (userInfo === undefined) {
-            setBindWallet()
-        }
-        if (isExist && isConnected && address && userInfo) {
-            console.log("isexist:", isExist, userInfo?.uid,)
-            const getUserPoints = async () => {
-                try {
-                    const response = await axios.get(API_URL.AIRDROP_USER_INFO, {
-                        headers: {
-                            'accept': '*/*',
-                            'uid': userInfo?.uid,
-                            'token': userInfo?.token,
-                        },
-
-                    });
-                    if (response.status === 200) {
-                        if (response.data.result === 1) {
-                            setPoints(response.data.data.points)
-                            console.log(response.data.data.points);
-                        }
-                    }
-
-                } catch (error) {
-                    alert(error);
-                    return
-                }
-
-            };
-            getUserPoints();
-        }
-    }, [address, isConnected, isExist, userInfo]);
 
     return (
         <div className="mt-[120px]">
@@ -128,7 +94,7 @@ export default function CyclePage() {
                     Activity Cycle
                 </h1>
                 <p className="text-white text-[16px] md:text-[24px] mt-3 animate-fade-in-delay">
-                    Complete Cycle To Receive Points Rewards
+                    Complete Cycle To Receive Rewards
                 </p>
                 <p className="text-[#05F292] text-[22px] mt-5 animate-pulse">
                     This Cycle Ends In:
@@ -156,7 +122,7 @@ export default function CyclePage() {
                 {[
                     { label: 'Total Projects Completed', value: completed },
                     { label: 'Total Tasks Accomplished', value: cycleAction.length },
-                    { label: 'Total Points Earned', value: points },
+                    { label: 'Total Rewards Earned', value: userInfos.points },
                 ].map((stat, i) => (
                     <div key={i}>
                         <div className="text-center">

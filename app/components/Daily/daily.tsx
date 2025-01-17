@@ -18,10 +18,10 @@ interface Item {
 }
 
 const items: Item[] = [
-    { src: "/x.png", alt: "SBT1", reward: "+20 Points", title: "Check In" },
-    { src: "/tg.png", alt: "SBT2", reward: "+20 Points", title: "Share to chat group" },
-    { src: "/discord.png", alt: "SBT3", reward: "+20 Points", title: "Share to friends" },
-    { src: "/retweet.png", alt: "SBT4", reward: "+20 Points", title: "Share to Twitter" },
+    { src: "/x.png", alt: "SBT1", reward: "+20", title: "Check In" },
+    { src: "/tg.png", alt: "SBT2", reward: "+20", title: "Share to chat group" },
+    { src: "/discord.png", alt: "SBT3", reward: "+20", title: "Share to friends" },
+    { src: "/retweet.png", alt: "SBT4", reward: "+20", title: "Share to Twitter" },
 ];
 
 export default function Daily() {

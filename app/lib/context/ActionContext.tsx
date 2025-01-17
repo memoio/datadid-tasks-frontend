@@ -11,10 +11,18 @@ interface TaskData {
     taskId: number;
 }
 
+interface UserInfos {
+    points: number;
+    invideCode: string;
+    PointsRank: string;
+    inviteCount: string;
+}
+
 interface ActionContextType {
     dailyAction: Set<number>;
     questAction: Set<number>;
     cycleAction: TaskData[];
+    userInfos: UserInfos;
     joinId: number;
     setDaily: (index: number) => void;
     setQuest: (index: number) => void;
@@ -22,7 +30,6 @@ interface ActionContextType {
     joinProject: (index: number) => void;
     leaveProject: () => void;
     clear: () => void;
-    inviteCode: string;
 }
 
 export const ActionContext = createContext<ActionContextType | null>(null);
@@ -32,10 +39,11 @@ interface ActionContextProviderProps {
 }
 
 export const ActionProvider = ({ children }: ActionContextProviderProps) => {
-    const [inviteCode, setInviteCode] = useState("")
     const [dailyAction, setDailyAction] = useState(new Set<number>());
     const [questAction, setQuestAction] = useState(new Set<number>());
     const [cycleAction, setCycleAction] = useState<TaskData[]>([]);
+    const [userInfos, setUserInfos] = useState<UserInfos>({ points: 0, invideCode: '******', PointsRank: '-', inviteCount: '-' })
+
     const [joinId, setJoinId] = useState(-1);
     const { isDisconnected, isConnected, address } = useAccount();
     const setDaily = (index: number) => setDailyAction((prev) => new Set(prev).add(index));
@@ -57,6 +65,12 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
     const clear = () => {
         setDailyAction(new Set());
         setQuestAction(new Set());
+        setUserInfos({
+            points: 0,
+            invideCode: '******',
+            PointsRank: '-',
+            inviteCount: '-',
+        });
         setCycleAction([]);
         setJoinId(-1);
     }
@@ -65,7 +79,8 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
         console.log("isDisconnected: ", isDisconnected);
         if (isDisconnected) {
             clear();
-            setInviteCode('******');
+            // setInviteCode('******');
+
         }
 
     }, [isDisconnected])
@@ -108,8 +123,12 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
                                 "token": response.data.data.token,
                             },
                         });
-                        setInviteCode(userresponse.data.data.inviteCode);
-                        console.log(userresponse.data.data.inviteCode);
+                        setUserInfos({
+                            points: userresponse.data.data.points,
+                            invideCode: userresponse.data.data.inviteCode,
+                            PointsRank: userresponse.data.data.pointsRank,
+                            inviteCount: userresponse.data.data.inviteCount,
+                        });
 
                         // get one time action
                         const oneTimeRespond = await axios.get(API_URL.AIRDROP_RECORD_LIST,
@@ -194,7 +213,6 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
     console.log("daily: ", dailyAction);
     console.log("quest: ", questAction);
     console.log("cycle: ", cycleAction);
-    console.log("invite: ", inviteCode);
 
     return (
         <ActionContext.Provider value={{
@@ -202,13 +220,13 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
             questAction,
             cycleAction,
             joinId,
+            userInfos,
             setDaily,
             setQuest,
             setCycle,
             joinProject,
             leaveProject,
             clear,
-            inviteCode,
         }}>
             {children}
         </ActionContext.Provider>
