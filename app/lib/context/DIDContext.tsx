@@ -11,8 +11,6 @@ import {
 
 interface DIDContextType {
   isOpenDid: boolean;
-  isFreeDid: boolean;
-  setFreeDid: () => void;
   setToggleDid: () => void;
   isCreatingDidState: boolean;
   setIsCreatingDid: () => void;
@@ -41,7 +39,6 @@ interface DIDContextProviderProps {
 
 // Create the provider component
 export const DIDContextProvider = ({ children }: DIDContextProviderProps) => {
-  const [isFreeDid, setIsFree] = useState(false);
   const [isOpenDid, setIsOpenDid] = useState(false);
   const [isCreatingDidState, setIsCreatingDidState] = useState(false);
   const [isCreatedState, setIsCreatedState] = useState(false);
@@ -54,10 +51,6 @@ export const DIDContextProvider = ({ children }: DIDContextProviderProps) => {
   const setToggleDid = () => {
     setIsOpenDid((prev) => !prev);
   };
-
-  const setFreeDid = () => {
-    setIsFree((prev) => !prev);
-  }
 
 
   const setIsCreatingDid = () => {
@@ -86,8 +79,6 @@ export const DIDContextProvider = ({ children }: DIDContextProviderProps) => {
   return (
     <DIDContext.Provider
       value={{
-        isFreeDid,
-        setFreeDid,
         isOpenDid,
         setToggleDid,
         isCreatingDidState,

@@ -9,7 +9,7 @@ import { useConnectModal } from '@rainbow-me/rainbowkit';
 import { API_URL } from '../config/config';
 
 export default function CreateDID() {
-    const { isFreeDid, setIsCreatingDid, setFreeDid, setToggleDid } = useDIDInfo();
+    const { setIsCreatingDid, setToggleDid } = useDIDInfo();
     const { isConnected, address, chain } = useAccount();
     const { openConnectModal } = useConnectModal();
     const { userInfo } = useAuth();
@@ -23,82 +23,82 @@ export default function CreateDID() {
         if (isConnected) {
             console.log("create")
             try {
-                if (isFreeDid) {
-                    const response1 = await axios.post(API_URL.DID_CREATE_ADMIN, {
-                        address,
+                // if (isFreeDid) {
+                const response1 = await axios.post(API_URL.DID_CREATE_ADMIN, {
+                    address,
+                });
+
+                if (response1.status === 200) {
+                    setIsCreatingDid();
+
+                    const actionId = 1;
+                    console.log(actionId);
+                    const respond = await axios.post(API_URL.AIRDROP_RECORD_ADD, {
+                        "action": actionId
+                    }, {
+                        headers: {
+                            "accept": "application/hal+json",
+                            "Content-Type": "application/json",
+                            "uid": userInfo?.uid,
+                            "token": userInfo?.token
+                        }
                     });
 
-                    if (response1.status === 200) {
-                        setIsCreatingDid();
+                    if (respond.status === 200) {
 
-                        const actionId = 1;
-                        console.log(actionId);
-                        const respond = await axios.post(API_URL.AIRDROP_RECORD_ADD, {
-                            "action": actionId
-                        }, {
-                            headers: {
-                                "accept": "application/hal+json",
-                                "Content-Type": "application/json",
-                                "uid": userInfo?.uid,
-                                "token": userInfo?.token
-                            }
-                        });
-
-                        if (respond.status === 200) {
-
-                        }
-
-                    } else if (response1.status === 501) {
-                        alert(`Error: ${response1.status} - ${response1.data.preview}`);
-                    } else {
-                        alert(`Error: ${response1.status} - ${response1.data.Message}`);
                     }
+
+                } else if (response1.status === 501) {
+                    alert(`Error: ${response1.status} - ${response1.data.preview}`);
                 } else {
-                    const responsemsg = await axios.get(API_URL.DID_CREATE_MSG, {
-                        params: {
-                            address,
-                        },
-                    })
-
-                    if (responsemsg.status === 200) {
-                        const message = responsemsg.data.msg
-
-                        console.log("message: ", message)
-                        const sig = await signMessageAsync({ message: { raw: message } });
-                        console.log("sig:", sig)
-
-                        const response1 = await axios.post(API_URL.DID_CREATE, {
-                            address,
-                            sig,
-                        });
-
-                        if (response1.status === 200) {
-                            setIsCreatingDid();
-
-                            const actionId = 1;
-                            console.log(actionId);
-                            const respond = await axios.post(API_URL.AIRDROP_RECORD_ADD, {
-                                "action": actionId
-                            }, {
-                                headers: {
-                                    "accept": "application/hal+json",
-                                    "Content-Type": "application/json",
-                                    "uid": userInfo?.uid,
-                                    "token": userInfo?.token
-                                }
-                            });
-
-                            if (respond.status === 200) {
-
-                            }
-
-                        } else if (response1.status === 501) {
-                            alert(`Error: ${response1.status} - ${response1.data.preview}`);
-                        } else {
-                            alert(`Error: ${response1.status} - ${response1.data.Message}`);
-                        }
-                    }
+                    alert(`Error: ${response1.status} - ${response1.data.Message}`);
                 }
+                // } else {
+                //     const responsemsg = await axios.get(API_URL.DID_CREATE_MSG, {
+                //         params: {
+                //             address,
+                //         },
+                //     })
+
+                //     if (responsemsg.status === 200) {
+                //         const message = responsemsg.data.msg
+
+                //         console.log("message: ", message)
+                //         const sig = await signMessageAsync({ message: { raw: message } });
+                //         console.log("sig:", sig)
+
+                //         const response1 = await axios.post(API_URL.DID_CREATE, {
+                //             address,
+                //             sig,
+                //         });
+
+                //         if (response1.status === 200) {
+                //             setIsCreatingDid();
+
+                //             const actionId = 1;
+                //             console.log(actionId);
+                //             const respond = await axios.post(API_URL.AIRDROP_RECORD_ADD, {
+                //                 "action": actionId
+                //             }, {
+                //                 headers: {
+                //                     "accept": "application/hal+json",
+                //                     "Content-Type": "application/json",
+                //                     "uid": userInfo?.uid,
+                //                     "token": userInfo?.token
+                //                 }
+                //             });
+
+                //             if (respond.status === 200) {
+
+                //             }
+
+                //         } else if (response1.status === 501) {
+                //             alert(`Error: ${response1.status} - ${response1.data.preview}`);
+                //         } else {
+                //             alert(`Error: ${response1.status} - ${response1.data.Message}`);
+                //         }
+                //     }
+                // }
 
 
 
@@ -129,7 +129,7 @@ export default function CreateDID() {
                         width={24}
                         height={24}
                         className="cursor-pointer hover:scale-110 transition-transform"
-                        onClick={() => { setToggleDid(), (isFreeDid) ? setFreeDid() : null }}
+                        onClick={() => { setToggleDid() }}
                     />
                 </div>
 
@@ -153,11 +153,11 @@ export default function CreateDID() {
                 </div>
                 <div className="flex justify-between mt-[16px] animate-fade-in-delay">
                     <div className="text-[16px] text-white leading-[30px]">Play With</div>
-                    <div className="text-[16px] text-white leading-[30px]">{isFreeDid ? "0.00 MEMO" : "1.00 MEMO"}</div>
+                    <div className="text-[16px] text-white leading-[30px]">{"1.00 MEMO"}</div>
                 </div>
                 <div className="flex justify-between mt-[16px] animate-fade-in-delay">
                     <div className="text-[16px] text-white leading-[30px]">Total</div>
-                    <div className="text-[16px] text-white leading-[30px]">{isFreeDid ? "0.00 MEMO" : "1.00 MEMO"} + GAS FEE</div>
+                    <div className="text-[16px] text-white leading-[30px]">{"1.00 MEMO"} + GAS FEE</div>
                 </div>
                 <div
                     onClick={handleCreateDid}

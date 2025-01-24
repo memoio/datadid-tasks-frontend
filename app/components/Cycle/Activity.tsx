@@ -145,7 +145,7 @@ export default function Activity({ joinId }: { joinId: number }) {
                                 </div>
                                 <div className="flex flex-col sm:flex-row justify-between items-center mt-[20px] gap-2">
                                     <div className="text-white text-[12px] sm:text-[15px] break-all sm:break-normal text-center" id="copy">
-                                        https://points.memolabs.org/projects/{joinId || 0}?referralCode={userInfos.invideCode }
+                                        https://data.memolabs.org/projects/{joinId || 0}?referralCode={userInfos.invideCode}
                                     </div>
                                     <Image
                                         src="/copy_symbol.png"

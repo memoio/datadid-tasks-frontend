@@ -152,6 +152,7 @@ export default function Navbar() {
             <a href="https://memolabs.gitbook.io/memo-docs" target="_blank" rel="noopener noreferrer">
               <div className='text-white mr-[20px]'>Docs</div>
             </a>
+            <div className='text-white mr-[20px]' onClick={() => window.open("https://docs.google.com/forms/d/e/1FAIpQLSfyrgViv6ABqLV_1pcGoqnQuF1dAQs8igIQWOunrCEFhg8RgQ/viewform")}>Join</div>
             <div className='text-white mr-[20px]' onClick={() => showWallet()}>Profile</div>
             <div className='text-white mr-[20px]' onClick={() => handleFaucetClick()}>Faucet</div>
             {/* <NavItem>TotalPoints</NavItem> */}
@@ -169,7 +170,7 @@ export default function Navbar() {
       >
 
         <NavItem><a href="https://memolabs.gitbook.io/memo-docs" target="_blank" rel="noopener noreferrer">Docs </a></NavItem>
-
+        <NavItem onClick={() => window.open("https://docs.google.com/forms/d/e/1FAIpQLSfyrgViv6ABqLV_1pcGoqnQuF1dAQs8igIQWOunrCEFhg8RgQ/viewform")}>Join</NavItem>
         <NavItem onClick={showWalletHandler}>Profile</NavItem>
         <NavItem onClick={handleFaucetClick}>Faucet</NavItem>
         <NavItem ><ConnectButton /></NavItem>

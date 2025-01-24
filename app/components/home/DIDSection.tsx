@@ -21,7 +21,7 @@ export default function DidSection() {
     const { userInfos } = useAction();
     const { userInfo } = useAuth();
     const { address, isConnected, isDisconnected } = useAccount();
-    const { setToggleDid, setFreeDid, didInfo, setDID, isDIDInfoState, isDIDExistState, setIsDIDExist, setDIDInfoExist } = useDIDInfo();
+    const { setToggleDid, didInfo, setDID, isDIDInfoState, isDIDExistState, setIsDIDExist, setDIDInfoExist } = useDIDInfo();
     const { openConnectModal } = useConnectModal();
     const [popupData, setPopupData] = useState<PopupData[]>([]);
     const [showPopup, setShowPopup] = useState(false);
@@ -59,14 +59,10 @@ export default function DidSection() {
     ];
 
 
-    const openDid = (free: boolean) => {
+    const openDid = () => {
         if (!isConnected) {
             openConnectModal?.();
             return;
-        }
-        console.log("TESTopenDid", free)
-        if (free) {
-            setFreeDid()
         }
         setToggleDid(); // Toggle the DID state
 
@@ -171,11 +167,11 @@ export default function DidSection() {
                     >
                         <span className="text-white">Data</span> <span>DID</span>
                     </div>
-                    <div className="text-white text-[14px] sm:text-[16px] md:text-[18px] lg:text-[20px] xl:text-[23px] leading-7 mt-[15px] text-center sm:text-left">
+                    <div className="text-white text-[14px] sm:text-[16px] md:text-[18px] lg:text-[20px] xl:text-[23px] leading-7 mt-[15px] text-left sm:text-left">
                         Your all-in-one, privacy-preserving self-sovereign identity.Own, manage, and monetize your data!
                     </div>
-                    <div className="text-white text-[12px] sm:text-[14px] mt-[15px] text-center sm:text-left">
-                        <p className='mt-[15px]'>Check DID, you need to click the <a className="text-[#13E292]" href='https://faucet.metamemo.one/'>faucet button</a> to get the gas fee.</p>
+                    <div className="text-white text-[12px] sm:text-[14px] text-left sm:text-left">
+                        <p className='mt-[15px]'>Check DID, you need to click the <a className="text-[#13E292]" onClick={() => window.open(`http://faucet.metamemo.one?address=${address}`, '_blank')}>faucet button</a> to get the gas fee.</p>
                         <p className='mt-[15px]'>Note 1: Users need to create did before participating in earning points. </p>
                         <p className='mt-[15px]'>Note 2: Create DID +1000, Check DID +1500.</p>
                     </div>
@@ -188,26 +184,20 @@ export default function DidSection() {
                                 <div className="text-[12px] text-[#13E292]">
                                     {didInfo.did.slice(0, 18) + "..." + didInfo.did.slice(-18)}
                                 </div>
+                                <div className='flex flex-row gap-5'>
+                                    <div
+                                        onClick={() => openDid()}
+                                        className="bg-[#13E292] flex justify-center items-center rounded-full px-4 py-2 mt-5 shadow-md transform hover:scale-110 transition-transform duration-300 cursor-pointer"
+                                    >
+                                        <span className="font-bold text-[14px] sm:text-[16px] text-white">
+                                            Check DID
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
+
                         ) : (
-                            <div className='flex flex-row gap-5'>
-                                <div
-                                    onClick={() => openDid(true)}
-                                    className="bg-[#0079F2] flex justify-center items-center rounded-full px-4 py-2 mt-5 shadow-md transform hover:scale-110 transition-transform duration-300 cursor-pointer"
-                                >
-                                    <span className="font-bold text-[14px] sm:text-[16px] text-white">
-                                        Create DID Free
-                                    </span>
-                                </div>
-                                <div
-                                    onClick={() => openDid(false)}
-                                    className="bg-[#13E292] flex justify-center items-center rounded-full px-4 py-2 mt-5 shadow-md transform hover:scale-110 transition-transform duration-300 cursor-pointer"
-                                >
-                                    <span className="font-bold text-[14px] sm:text-[16px] text-white">
-                                        Check DID
-                                    </span>
-                                </div>
-                            </div>
+                            <div></div>
                         )}
 
                     </div>

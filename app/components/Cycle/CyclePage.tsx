@@ -99,10 +99,10 @@ export default function CyclePage() {
                 <p className="text-[#05F292] text-[22px] mt-5 animate-pulse">
                     This Cycle Ends In:
                 </p>
-                <div className="flex justify-center items-center gap-3 mt-4 animate-fade-in-delay">
+                <div className="flex justify-center items-center mt-4 animate-fade-in-delay">
                     {(['Days', 'Hours', 'Minutes', 'Seconds'] as const).map((unit, i) => (
                         <div key={i} className="flex items-center">
-                            <div className="flex flex-col items-center mr-[10px]">
+                            <div className="flex flex-col items-center mr-[5px]">
                                 <div className="w-[80px] h-[80px] bg-[#1E4874] rounded-sm flex justify-center items-center text-[28px] font-bold text-white">
                                     {countdown[unit.toLowerCase() as keyof typeof countdown]}
                                 </div>
@@ -118,11 +118,13 @@ export default function CyclePage() {
             </div>
 
             {/* Stats Section */}
-            <div className="flex flex-col sm:flex-row justify-around items-center mt-[65px] gap-8 px-6 animate-fade-in bg-[#05F2920D] rounded-[10px] py-[20px] border border-[#0079F2]">
+            <div className="flex flex-col sm:flex-row justify-around items-center mt-[65px] gap-5 px-6 animate-fade-in bg-[#05F2920D] rounded-[10px] py-[20px] border border-[#0079F2]">
                 {[
-                    { label: 'Total Projects Completed', value: completed },
-                    { label: 'Total Tasks Accomplished', value: cycleAction.length },
-                    { label: 'Total Rewards Earned', value: userInfos.points },
+                    { label: 'Rank', value: userInfos.PointsRank },
+                    { label: 'Projects Completed', value: completed },
+                    { label: 'Tasks Accomplished', value: cycleAction.length },
+                    { label: 'Rewards Earned', value: userInfos.points },
+                    { label: 'Friends Invited', value: userInfos.inviteCount },
                 ].map((stat, i) => (
                     <div key={i}>
                         <div className="text-center">

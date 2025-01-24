@@ -4,11 +4,27 @@ import { paytoneOne } from '@/app/ui/fonts';
 import Image from 'next/image';
 import Profile from '../Navbar/profile';
 import { useWallet } from '@/app/lib/context/WalletContext';
+import { useAccount } from 'wagmi';
+import { useConnectModal } from '@rainbow-me/rainbowkit';
+import { useDIDInfo } from '@/app/lib/context/DIDContext';
 
 
 
 export default function Home() {
     const { isShown } = useWallet();
+    const { address, isConnected, isDisconnected } = useAccount();
+    const { setToggleDid, didInfo, setDID, isDIDInfoState, isDIDExistState, setIsDIDExist, setDIDInfoExist } = useDIDInfo();
+    const { openConnectModal } = useConnectModal();
+
+    const openDid = () => {
+        if (!isConnected) {
+            openConnectModal?.();
+            return;
+        }
+
+        setToggleDid(); // Toggle the DID state
+    };
+
     return (
         <div>
             {/* Main Content */}
@@ -42,9 +58,10 @@ export default function Home() {
                 <div className="flex flex-col md:flex-row items-center gap-3 mt-[30px]">
                     <div
                         className="bg-[#0079F2] text-white flex justify-center items-center rounded-full px-8 py-4  shadow-md transform hover:scale-110 transition-transform duration-300 cursor-pointer"
-                        onClick={() => window.open("https://docs.google.com/forms/d/e/1FAIpQLSfyrgViv6ABqLV_1pcGoqnQuF1dAQs8igIQWOunrCEFhg8RgQ/viewform")}>
+                        onClick={() => openDid()}
+                    >
                         <span className="font-bold text-[14px] sm:text-[16px] text-white">
-                            Join Data Ecosystem
+                            Create DID Free
                         </span>
                     </div>
                 </div>

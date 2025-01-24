@@ -103,7 +103,7 @@ export default function Refer() {
                     </div>
                     <div className="text-[12px] sm:text-[14px] text-white text-center cursor-pointer hover:underline break-all"
                         id="link">
-                        https://points.memolabs.org/?referralCode={userInfos.invideCode}
+                        https://data.memolabs.org/?referralCode={userInfos.invideCode}
                     </div>
                     <div
                         className="bg-[#0079F2] text-white text-[14px] sm:text-[16px] md:text-[18px] font-bold px-6 py-3 text-center rounded-full cursor-pointer hover:bg-[#04D582] transition-colors duration-300"
