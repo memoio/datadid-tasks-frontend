@@ -53,6 +53,7 @@ export default function BindingPage() {
 
                     if (respond.status === 200) {
                         setQuest(index);
+                        location.reload();
                     }
 
                 } else {

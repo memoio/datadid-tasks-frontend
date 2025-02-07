@@ -13,7 +13,7 @@ import { useDIDInfo } from '@/app/lib/context/DIDContext';
 export default function Home() {
     const { isShown } = useWallet();
     const { address, isConnected, isDisconnected } = useAccount();
-    const { setToggleDid, didInfo, setDID, isDIDInfoState, isDIDExistState, setIsDIDExist, setDIDInfoExist } = useDIDInfo();
+    const { setToggleDid, isDIDExistState } = useDIDInfo();
     const { openConnectModal } = useConnectModal();
 
     const openDid = () => {
@@ -57,8 +57,12 @@ export default function Home() {
                 {/* Action Buttons */}
                 <div className="flex flex-col md:flex-row items-center gap-3 mt-[30px]">
                     <div
-                        className="bg-[#0079F2] text-white flex justify-center items-center rounded-full px-8 py-4  shadow-md transform hover:scale-110 transition-transform duration-300 cursor-pointer"
-                        onClick={() => openDid()}
+                        className={`bg-[#0079F2] text-white flex justify-center items-center rounded-full px-8 py-4  shadow-md transform hover:scale-110 transition-transform duration-300 cursor-pointer ${isDIDExistState ? 'opacity-50 cursor-not-allowed' : ''}`}
+                        onClick={() => {
+                            if (!isDIDExistState) {
+                                openDid();
+                            }
+                        }}
                     >
                         <span className="font-bold text-[14px] sm:text-[16px] text-white">
                             Create DID Free

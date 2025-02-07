@@ -24,6 +24,7 @@ interface ActionContextType {
     cycleAction: TaskData[];
     userInfos: UserInfos;
     joinId: number;
+    isPointUpdate: boolean;
     setDaily: (index: number) => void;
     setQuest: (index: number) => void;
     setCycle: (projectId: number, taskId: number) => void;
@@ -43,6 +44,7 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
     const [questAction, setQuestAction] = useState(new Set<number>());
     const [cycleAction, setCycleAction] = useState<TaskData[]>([]);
     const [userInfos, setUserInfos] = useState<UserInfos>({ points: 0, invideCode: '******', PointsRank: '-', inviteCount: '-' })
+    const [isPointUpdate, setPointUpdate] = useState(false);
 
     const [joinId, setJoinId] = useState(-1);
     const { isDisconnected, isConnected, address } = useAccount();
@@ -80,7 +82,6 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
         if (isDisconnected) {
             clear();
             // setInviteCode('******');
-
         }
 
     }, [isDisconnected])
@@ -129,6 +130,7 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
                             PointsRank: userresponse.data.data.pointsRank,
                             inviteCount: userresponse.data.data.inviteCount,
                         });
+                        setPointUpdate(true);
 
                         // get one time action
                         const oneTimeRespond = await axios.get(API_URL.AIRDROP_RECORD_LIST,
@@ -221,6 +223,7 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
             cycleAction,
             joinId,
             userInfos,
+            isPointUpdate,
             setDaily,
             setQuest,
             setCycle,

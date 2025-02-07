@@ -63,6 +63,10 @@ export default function Invite() {
     const handleClick = async () => {
         try {
             const inviteCode = values.join("");
+            if (inviteCode.length !== 6) {
+                alert("Please enter a valid invite code.");
+                return;
+            }
             const respond = await axios.post(API_URL.AIRDROP_INVITE_BIND, {
                 "inviteCode": inviteCode,
                 "projectId": projectId

@@ -42,8 +42,7 @@ export default function CyclePage() {
     const { isDIDExistState } = useDIDInfo();
     const { openConnectModal } = useConnectModal();
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    const targetDate = new Date(new Date().setHours(15, 0, 0, 0) + 60 * 24 * 60 * 60 * 1000).getTime();
+    const targetDate = new Date('2025-04-07T23:59:59').getTime();
 
     const [countdown, setCountdown] = useState<{ days: number; hours: number; minutes: number; seconds: number }>({
         days: 0,

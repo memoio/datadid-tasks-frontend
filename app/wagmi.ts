@@ -8,6 +8,7 @@ import {
   optimism,
   polygon,
   sepolia,
+  bsc
 } from 'wagmi/chains';
 
 const memoriae = {
@@ -36,6 +37,7 @@ export const config = getDefaultConfig({
     optimism,
     arbitrum,
     base,
+    bsc,
 
     ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true' ? [sepolia] : []),
   ],

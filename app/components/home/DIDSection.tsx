@@ -18,13 +18,13 @@ interface PopupData {
 }
 
 export default function DidSection() {
-    const { userInfos } = useAction();
-    const { userInfo } = useAuth();
+    const { userInfos, isPointUpdate } = useAction();
     const { address, isConnected, isDisconnected } = useAccount();
     const { setToggleDid, didInfo, setDID, isDIDInfoState, isDIDExistState, setIsDIDExist, setDIDInfoExist } = useDIDInfo();
     const { openConnectModal } = useConnectModal();
     const [popupData, setPopupData] = useState<PopupData[]>([]);
     const [showPopup, setShowPopup] = useState(false);
+
     const handlePopup = () => {
         // Mock invitation details
         // const mockData: PopupData[] = [
@@ -38,7 +38,7 @@ export default function DidSection() {
         // setShowPopup(true);
     };
 
-    const inviteDatas = [
+    const [inviteDatas, setInviteDatas] = useState([
         {
             title: { full: "My Rank", short: "Rank" },
             value: isConnected ? userInfos.PointsRank : "-",
@@ -56,16 +56,33 @@ export default function DidSection() {
             title: { full: "Leaderboard Reward", short: "Reward" },
             value: isConnected ? userInfos.points : "-",
         },
-    ];
+    ]);
 
+
+    useEffect(() => {
+        setInviteDatas([
+            {
+                title: { full: "My Rank", short: "Rank" },
+                value: isConnected ? userInfos.PointsRank : "-",
+            },
+            {
+                title: { full: "My Smart Wallet Address", short: "Wallet" },
+                value: address ? address.slice(0, 6) + "..." + address.slice(-4) : "-",
+            },
+            {
+                title: { full: "Friends Invited", short: "Friends" },
+                value: isConnected ? userInfos.inviteCount : "-",
+                onClick: handlePopup, // Add onClick to this item
+            },
+            {
+                title: { full: "Leaderboard Reward", short: "Reward" },
+                value: isConnected ? userInfos.points : "-",
+            },
+        ]);
+    }, [isConnected, address, isPointUpdate]);
 
     const openDid = () => {
-        if (!isConnected) {
-            openConnectModal?.();
-            return;
-        }
-        setToggleDid(); // Toggle the DID state
-
+        window.open(`http://faucet.metamemo.one?address=${address}`, '_blank')
     };
 
     useEffect(() => {
@@ -171,9 +188,9 @@ export default function DidSection() {
                         Your all-in-one, privacy-preserving self-sovereign identity.Own, manage, and monetize your data!
                     </div>
                     <div className="text-white text-[12px] sm:text-[14px] text-left sm:text-left">
-                        <p className='mt-[15px]'>Check DID, you need to click the <a className="text-[#13E292]" onClick={() => window.open(`http://faucet.metamemo.one?address=${address}`, '_blank')}>faucet button</a> to get the gas fee.</p>
+                        <p className='mt-[15px]'>Check DID, you need to click the <a className="text-[#13E292] cursor-pointer" onClick={() => window.open(`http://faucet.metamemo.one?address=${address}`, '_blank')}>faucet button</a> to get the gas fee.</p>
                         <p className='mt-[15px]'>Note 1: Users need to create did before participating in earning points. </p>
-                        <p className='mt-[15px]'>Note 2: Create DID +1000, Check DID +1500.</p>
+                        <p className='mt-[15px]'>Note 2: Create DID +1000, Check DID +500.</p>
                     </div>
                     <div className="text-center flex justify-center sm:justify-start">
                         {isDIDExistState && isDIDInfoState && isConnected ? (

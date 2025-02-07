@@ -9,7 +9,6 @@ import { useAuth } from "@/app/lib/context/AuthContext";
 import { useAction } from '@/app/lib/context/ActionContext';
 import { cards } from "./CyclePage";
 import { API_URL } from '../config/config';
-import { join } from 'path';
 
 export default function Activity({ joinId }: { joinId: number }) {
     const [popupData, setPopupData] = useState<{ label: string; reward: number } | null>(null);
@@ -72,6 +71,7 @@ export default function Activity({ joinId }: { joinId: number }) {
 
                 if (respond.status === 200) {
                     setCycle(joinId, taskId);
+                    location.reload();
                     setPopupData(task);
                 }
             } catch (error) {
