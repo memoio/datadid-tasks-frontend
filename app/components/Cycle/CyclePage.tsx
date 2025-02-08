@@ -88,7 +88,7 @@ export default function CyclePage() {
     return (
         <div className="mt-[120px]">
             {/* Header Section */}
-            <div className="text-center">
+            {/* <div className="text-center">
                 <h1 className={`${paytoneOne.className} text-transparent bg-clip-text bg-gradient-to-b from-[#214177] to-[#05F292] text-[34px] md:text-[48px] font-bold animate-fade-in`}>
                     Activity Cycle
                 </h1>
@@ -114,7 +114,7 @@ export default function CyclePage() {
                     ))}
 
                 </div>
-            </div>
+            </div> */}
 
             {/* Stats Section */}
             <div className="flex flex-col sm:flex-row justify-around items-center mt-[65px] gap-5 px-6 animate-fade-in bg-[#05F2920D] rounded-[10px] py-[20px] border border-[#0079F2]">

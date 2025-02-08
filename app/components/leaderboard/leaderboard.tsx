@@ -68,12 +68,6 @@ export default function LeaderboardPage() {
         }
     }, [userInfo, isWeekly])
 
-
-
-
-
-
-
     return (
         <div className="mt-[120px] px-4 sm:px-6 lg:px-12 flex flex-col items-center">
             {/* Title Section */}
