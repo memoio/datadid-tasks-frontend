@@ -38,48 +38,7 @@ export default function DidSection() {
         // setShowPopup(true);
     };
 
-    const [inviteDatas, setInviteDatas] = useState([
-        {
-            title: { full: "My Rank", short: "Rank" },
-            value: isConnected ? userInfos.PointsRank : "-",
-        },
-        {
-            title: { full: "My Smart Wallet Address", short: "Wallet" },
-            value: address ? address.slice(0, 6) + "..." + address.slice(-4) : "-",
-        },
-        {
-            title: { full: "Friends Invited", short: "Friends" },
-            value: isConnected ? userInfos.inviteCount : "-",
-            onClick: handlePopup, // Add onClick to this item
-        },
-        {
-            title: { full: "Leaderboard Reward", short: "Reward" },
-            value: isConnected ? userInfos.points : "-",
-        },
-    ]);
 
-
-    useEffect(() => {
-        setInviteDatas([
-            {
-                title: { full: "My Rank", short: "Rank" },
-                value: isConnected ? userInfos.PointsRank : "-",
-            },
-            {
-                title: { full: "My Smart Wallet Address", short: "Wallet" },
-                value: address ? address.slice(0, 6) + "..." + address.slice(-4) : "-",
-            },
-            {
-                title: { full: "Friends Invited", short: "Friends" },
-                value: isConnected ? userInfos.inviteCount : "-",
-                onClick: handlePopup, // Add onClick to this item
-            },
-            {
-                title: { full: "Leaderboard Reward", short: "Reward" },
-                value: isConnected ? userInfos.points : "-",
-            },
-        ]);
-    }, [isConnected, address, isPointUpdate]);
 
     const openDid = () => {
         window.open(`http://faucet.metamemo.one?address=${address}`, '_blank')
@@ -233,7 +192,7 @@ export default function DidSection() {
             </div>
 
             {/* Stats Section */}
-            <div className="bg-gradient-to-r from-[#064E33] to-[#214177] w-full mt-[20px] sm:mt-[33px] py-[30px] sm:py-[24px] px-[10px] sm:px-[20px] border-[1px] border-[#0079F2] rounded-[10px]  flex flex-col items-center shadow-md glow-effect">
+            {/* <div className="bg-gradient-to-r from-[#064E33] to-[#214177] w-full mt-[20px] sm:mt-[33px] py-[30px] sm:py-[24px] px-[10px] sm:px-[20px] border-[1px] border-[#0079F2] rounded-[10px]  flex flex-col items-center shadow-md glow-effect">
                 <div className="grid grid-cols-1 sm:grid-cols-4 gap-6 w-full fade-in">
                     {inviteDatas.map((item, index) => (
                         <div
@@ -251,7 +210,7 @@ export default function DidSection() {
                         </div>
                     ))}
                 </div>
-            </div>
+            </div> */}
 
             {/* Popup */}
             {

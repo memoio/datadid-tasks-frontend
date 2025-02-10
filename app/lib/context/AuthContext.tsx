@@ -4,7 +4,7 @@ import { useAccount } from "wagmi";
 import axios from "axios";
 import { API_URL } from "@/app/components/config/config";
 
-interface UserInfo {
+interface UidInfo {
   uid: string;
   token: string;
 }
@@ -12,7 +12,7 @@ interface UserInfo {
 interface AuthContextType {
   isExist: boolean;
   setBindWallet: () => void;
-  userInfo: UserInfo | null;
+  uidInfo: UidInfo | null;
 }
 // Create the context
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -23,14 +23,12 @@ interface AuthContextProviderProps {
 
 // Create the provider component
 export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
-  const { isConnected, address } = useAccount();
+  const { isConnected, address, isDisconnected } = useAccount();
   const [isExist, setIsExist] = useState(false);
-
-
-  const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
+  const [uidInfo, setUserInfo] = useState<UidInfo | null>(null);
 
   const setBindWallet = () => {
-    if (address) {
+    if (address && !isExist) {
       const bindWallet = async () => {
         try {
           const response = await axios.post(
@@ -53,6 +51,7 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
               uid: response.data.data.uid,
               token: response.data.data.token,
             });
+            setIsExist(true);
           } else {
             alert(`Failed to bind wallet: ${JSON.stringify(response.data)}`);
           }
@@ -62,7 +61,6 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
       };
 
       bindWallet();
-      setIsExist(true);
     }
   }
 
@@ -72,8 +70,16 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
     }
   }, [isConnected, address]);
 
+  useEffect(() => {
+    console.log("isDisconnected: ", isDisconnected);
+    if (isDisconnected) {
+      setIsExist(false);
+      // setInviteCode('******');
+    }
+
+  }, [isDisconnected])
   return (
-    <AuthContext.Provider value={{ isExist, userInfo, setBindWallet }}>
+    <AuthContext.Provider value={{ isExist, uidInfo, setBindWallet }}>
       {children}
     </AuthContext.Provider>
   );

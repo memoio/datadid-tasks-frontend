@@ -7,11 +7,13 @@ import { useState, useEffect } from 'react';
 
 import { useAuth } from "@/app/lib/context/AuthContext"
 import { API_URL } from '../config/config';
+import { useAccount } from 'wagmi';
 
 
 export default function LeaderboardPage() {
+    const { isConnected } = useAccount();
     const [isWeekly, setIsWeekly] = useState(true);
-    const { isExist, userInfo, setBindWallet } = useAuth();
+    const { isExist, uidInfo, setBindWallet } = useAuth();
 
     interface ElementData {
         id: number;
@@ -27,18 +29,15 @@ export default function LeaderboardPage() {
 
     useEffect(() => {
         console.log("weekly")
-        if (!isExist) {
-            setBindWallet()
-        }
-        if (isExist) {
+        if (isConnected && isExist) {
             const getRank = async () => {
                 try {
                     const response = await axios.get(API_URL.AIRDROP_POINTS_RANK,
                         {
                             headers: {
                                 'accept': '*/*',
-                                uid: userInfo?.uid,
-                                token: userInfo?.token,
+                                uid: uidInfo?.uid,
+                                token: uidInfo?.token,
                             },
                             params: {
                                 type: isWeekly ? 1 : 0,
@@ -66,7 +65,7 @@ export default function LeaderboardPage() {
 
             getRank()
         }
-    }, [userInfo, isWeekly])
+    }, [isConnected, isWeekly, isExist])
 
     return (
         <div className="mt-[120px] px-4 sm:px-6 lg:px-12 flex flex-col items-center">

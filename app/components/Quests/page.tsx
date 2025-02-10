@@ -27,8 +27,8 @@ const items: Item[] = [
 ];
 
 export default function BindingPage() {
-    const { questAction, setQuest } = useAction();
-    const { userInfo } = useAuth();
+    const { questAction, setQuest, setPointUpdate } = useAction();
+    const { uidInfo } = useAuth();
     const { isConnected } = useAccount();
     const { openConnectModal } = useConnectModal();
     const { isDIDExistState } = useDIDInfo();
@@ -46,13 +46,14 @@ export default function BindingPage() {
                         headers: {
                             "accept": "application/hal+json",
                             "Content-Type": "application/json",
-                            "uid": userInfo?.uid,
-                            "token": userInfo?.token
+                            "uid": uidInfo?.uid,
+                            "token": uidInfo?.token
                         }
                     });
 
                     if (respond.status === 200) {
                         setQuest(index);
+                        setPointUpdate(true)
                     }
 
                 } else {
@@ -65,7 +66,7 @@ export default function BindingPage() {
             }
 
         } catch (error) {
-            console.log(error);
+            alert(`binding page: ${error}`);
             return
         }
     };

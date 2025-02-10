@@ -8,7 +8,7 @@ import { API_URL } from "../config/config";
 
 export default function Invite() {
     const { isInvited, closeInvite } = useWallet();
-    const { userInfo } = useAuth();
+    const { uidInfo, isExist, setBindWallet } = useAuth();
     const [values, setValues] = useState(Array(6).fill("")); // Separate state for each input
     const [success, setSuccess] = useState(false); // State for success popup
     const searchParams = useSearchParams()
@@ -62,6 +62,9 @@ export default function Invite() {
 
     const handleClick = async () => {
         try {
+            if (!isExist) {
+                setBindWallet()
+            }
             const inviteCode = values.join("");
             if (inviteCode.length !== 6) {
                 alert("Please enter a valid invite code.");
@@ -74,8 +77,8 @@ export default function Invite() {
                 headers: {
                     "accept": "application/hal+json",
                     "Content-Type": "application/json",
-                    "uid": userInfo?.uid,
-                    "token": userInfo?.token
+                    "uid": uidInfo?.uid,
+                    "token": uidInfo?.token
                 }
             });
             if (respond.status == 200) {

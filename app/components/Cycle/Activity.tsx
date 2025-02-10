@@ -13,9 +13,9 @@ import { API_URL } from '../config/config';
 export default function Activity({ joinId }: { joinId: number }) {
     const [popupData, setPopupData] = useState<{ label: string; reward: number } | null>(null);
     const [alertMessage, setAlertMessage] = useState<string | null>(null); // State for the alert
-    const { leaveProject, cycleAction, setCycle, userInfos } = useAction();
+    const { leaveProject, cycleAction, setCycle, userInfos, setPointUpdate } = useAction();
     const router = useRouter();
-    const { userInfo, isExist } = useAuth();
+    const { uidInfo, isExist, setBindWallet } = useAuth();
 
     const dailyTasks = [
         { id: 'task4', label: 'Share task links on Twitter', reward: 20 },
@@ -53,6 +53,9 @@ export default function Activity({ joinId }: { joinId: number }) {
 
     const handleTaskClick = async (task: { id: string; label: string; reward: number }, taskId: number) => {
         // const data = TaskData{}
+        if (!isExist) {
+            setBindWallet();
+        }
         if (isExist && joinId > -1 && !cycleAction.some((t) => t.projectId === joinId && t.taskId === taskId)) {
             try {
                 console.log("ID", joinId, taskId);
@@ -64,14 +67,15 @@ export default function Activity({ joinId }: { joinId: number }) {
                     headers: {
                         "accept": "application/hal+json",
                         "Content-Type": "application/json",
-                        "uid": userInfo?.uid,
-                        "token": userInfo?.token
+                        "uid": uidInfo?.uid,
+                        "token": uidInfo?.token
                     }
                 });
 
                 if (respond.status === 200) {
                     setCycle(joinId, taskId);
                     setPopupData(task);
+                    setPointUpdate(true)
                 }
             } catch (error) {
                 alert(error);
