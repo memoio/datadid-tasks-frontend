@@ -2,6 +2,8 @@ export const DEV_DID_SERVER_URL = "https://didapi.memolabs.org/did"
 
 export const Test_DID_SERVER_URL = "https://testdidapi.memolabs.org/did"
 
+export const PRODUCT_DID_SERVER_URL = "https://prodidapi.memolabs.org/did"
+
 export const TEST_AIRDROP_BACKEND_URL = "https://apapitest.memoscan.org/api"
 
 export const PRODUCT_AIRDROP_BACKEND_URL = "https://apapi.memoscan.org/api"

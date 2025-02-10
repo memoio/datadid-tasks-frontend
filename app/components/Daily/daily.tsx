@@ -61,7 +61,6 @@ export default function Daily() {
 
                     if (respond.status === 200) {
                         setDaily(index);
-                        location.reload();
                     }
                 } else {
                     alert("Please create did first!")

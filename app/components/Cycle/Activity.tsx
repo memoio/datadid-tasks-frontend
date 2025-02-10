@@ -71,7 +71,6 @@ export default function Activity({ joinId }: { joinId: number }) {
 
                 if (respond.status === 200) {
                     setCycle(joinId, taskId);
-                    location.reload();
                     setPopupData(task);
                 }
             } catch (error) {

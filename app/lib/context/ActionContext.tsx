@@ -153,12 +153,12 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
                                     const action = element.action;
                                     // console.log(action);
                                     if (action >= 50 && action <= 53) {
-                                        console.log(action - 50);
+                                        console.log("action", action - 50);
                                         setQuestAction((prev) => new Set(prev).add(action - 50));
                                     } else if (action >= 1011) {
                                         const projectId = Math.floor((action - 1011) / 10);
                                         const taskId = (action - 1011) % 10;
-                                        console.log(projectId, taskId);
+                                        console.log("daily action", projectId, taskId);
                                         setCycle(projectId, taskId);
                                     }
                                 });
