@@ -19,7 +19,12 @@ const ProjectPage = () => {
                     <Navbar />
                     {
                         isInvited ? (
-                            <Invite />) : (<Activity joinId={value} />)
+                            <Invite />) : (
+                           
+                           
+                            <Activity joinId={value} />
+                           
+                            )
                     }
 
                 </main>
