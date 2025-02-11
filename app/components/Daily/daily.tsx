@@ -8,6 +8,7 @@ import { useDIDInfo } from "@/app/lib/context/DIDContext";
 import { useConnectModal } from '@rainbow-me/rainbowkit';
 import { useAccount } from 'wagmi';
 import React from 'react';
+import { useState } from 'react';
 import { API_URL } from '../config/config';
 
 interface Item {
@@ -25,6 +26,8 @@ const items: Item[] = [
 ];
 
 export default function Daily() {
+    const [loading, setLoading] = useState(false);
+    const [opIndex, setOpIndex] = useState(-1);
     const { dailyAction, setDaily, setPointUpdate } = useAction();
     const { uidInfo, isExist, setBindWallet } = useAuth();
     const { isConnected } = useAccount();
@@ -33,6 +36,7 @@ export default function Daily() {
     // const [isModalOpen, setIsModalOpen] = useState(false);
 
     const handleClick = async (index: number) => {
+        setOpIndex(-1)
         try {
             if (isConnected) {
                 if (!isExist) {
@@ -48,9 +52,10 @@ export default function Daily() {
                         { url: 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(tweetText) },
                     ];
                     window.open(urls[index].url, '_blank');
-
+                    setOpIndex(index)
                     const actionId = 70 + index;
                     console.log(actionId);
+                    setLoading(true);
                     const respond = await axios.post(API_URL.AIRDROP_RECORD_ADD, {
                         "action": actionId
                     }, {
@@ -75,9 +80,10 @@ export default function Daily() {
                     openConnectModal();
                 }
             }
-
+            setLoading(false);
         } catch (error) {
             alert(error);
+            setLoading(false);
             return
         }
     };
@@ -131,6 +137,12 @@ export default function Daily() {
                                     handleClick(index);
                                 }}
                             >
+                                {loading && opIndex == index &&
+                                    <svg className="w-6 h-6 p-0 m-0 animate-spin text-blue-900" viewBox="0 0 50 50">
+                                        <circle className="opacity-25" cx="25" cy="25" r="20" stroke="currentColor" strokeWidth="4" fill="none" />
+                                        <circle className="opacity-75" cx="25" cy="25" r="20" stroke="currentColor" strokeWidth="4" fill="none" strokeDasharray="31.415, 31.415" strokeLinecap="round" />
+                                    </svg>
+                                }
                                 <span className={`font-bold text-[16px] text-white ${dailyAction.has(index) ? 'cursor-not-allowed' : ''}`}>
                                     {dailyAction.has(index) ? 'Claimed' : 'Claim'}
                                 </span>

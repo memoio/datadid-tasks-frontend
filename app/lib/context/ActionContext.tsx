@@ -173,7 +173,11 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
                                 if (element.action >= 1011) {
                                     const projectId = Math.floor((element.action - 1011) / 10);
                                     const taskId = (element.action - 1011) % 10;
-                                    console.log("Daily", projectId, taskId);
+                                    console.log("Daily", projectId, taskId, element.action, Date.now(), element.time);
+                                    const preDayTime = Date.now() - 86400000;
+                                    if (element.time > preDayTime) {
+                                        setDailyAction((prev) => new Set(prev).add(element.action));
+                                    }
                                     setCycle(projectId, taskId);
                                 } else {
                                     const action = element.action - 70;

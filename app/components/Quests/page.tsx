@@ -8,7 +8,7 @@ import { useDIDInfo } from "@/app/lib/context/DIDContext";
 import { useConnectModal } from '@rainbow-me/rainbowkit';
 import { useAccount } from 'wagmi';
 import { API_URL } from '../config/config';
-
+import { useState } from 'react';
 interface Item {
     src: string;
     alt: string;
@@ -27,6 +27,8 @@ const items: Item[] = [
 ];
 
 export default function BindingPage() {
+    const [loading, setLoading] = useState(false);
+    const [opIndex, setOpIndex] = useState(-1);
     const { questAction, setQuest, setPointUpdate } = useAction();
     const { uidInfo } = useAuth();
     const { isConnected } = useAccount();
@@ -34,12 +36,16 @@ export default function BindingPage() {
     const { isDIDExistState } = useDIDInfo();
 
     const handleClick = async (index: number, url: string) => {
+        setOpIndex(-1);
         try {
             if (isConnected) {
                 if (isDIDExistState) {
                     window.open(url, '_blank');
+                    setOpIndex(index);
                     const actionId = 50 + index;
                     console.log(actionId);
+                    setLoading(true);
+                    setOpIndex(index);
                     const respond = await axios.post(API_URL.AIRDROP_RECORD_ADD, {
                         "action": actionId
                     }, {
@@ -64,9 +70,10 @@ export default function BindingPage() {
                     openConnectModal();
                 }
             }
-
+            setLoading(false);
         } catch (error) {
             alert(`binding page: ${error}`);
+            setLoading(false);
             return
         }
     };
@@ -143,6 +150,12 @@ export default function BindingPage() {
                                 }}
                                 style={{ pointerEvents: questAction.has(index) ? 'none' : 'auto' }}
                             >
+                                {loading && opIndex == index &&
+                                    <svg className="w-6 h-6 p-0 m-0 animate-spin text-blue-900" viewBox="0 0 50 50">
+                                        <circle className="opacity-25" cx="25" cy="25" r="20" stroke="currentColor" strokeWidth="4" fill="none" />
+                                        <circle className="opacity-75" cx="25" cy="25" r="20" stroke="currentColor" strokeWidth="4" fill="none" strokeDasharray="31.415, 31.415" strokeLinecap="round" />
+                                    </svg>
+                                }
                                 <p className={`font-bold text-[16px] text-white ${questAction.has(index) ? 'cursor-not-allowed' : ''}`}>
                                     {questAction.has(index) ? 'Claimed' : 'Claim'}
                                 </p>
