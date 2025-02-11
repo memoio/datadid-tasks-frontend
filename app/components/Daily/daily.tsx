@@ -26,15 +26,10 @@ const items: Item[] = [
 ];
 
 export default function Daily() {
-<<<<<<< HEAD
     const [loading, setLoading] = useState(false);
     const [opIndex, setOpIndex] = useState(-1);
-    const { dailyAction, setDaily } = useAction();
-    const { userInfo, isExist } = useAuth();
-=======
     const { dailyAction, setDaily, setPointUpdate } = useAction();
     const { uidInfo, isExist, setBindWallet } = useAuth();
->>>>>>> 2e69054bad98dcb52195d2ab42e9667e97e54218
     const { isConnected } = useAccount();
     const { openConnectModal } = useConnectModal();
     const { isDIDExistState } = useDIDInfo();

@@ -13,12 +13,8 @@ import { useAccount } from 'wagmi';
 export default function LeaderboardPage() {
     const { isConnected } = useAccount();
     const [isWeekly, setIsWeekly] = useState(true);
-<<<<<<< HEAD
-    const { isExist, userInfo, setBindWallet } = useAuth();
-    const [loading, setLoading] = useState(false);
-=======
     const { isExist, uidInfo, setBindWallet } = useAuth();
->>>>>>> 2e69054bad98dcb52195d2ab42e9667e97e54218
+    const [loading, setLoading] = useState(false);
 
     interface ElementData {
         id: number;
