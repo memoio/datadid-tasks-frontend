@@ -56,6 +56,10 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
     const setCycle = (projectId: number, taskId: number) => {
         if (!cycleAction.some((t) => t.projectId === projectId && t.taskId === taskId)) {
             setCycleAction((prev) => [...prev, { projectId, taskId }]);
+        } else {
+            setCycleAction((prev) =>
+                prev.filter((t) => !(t.projectId === projectId && t.taskId === taskId))
+            );
         }
     };
     const router = useRouter();
@@ -173,8 +177,25 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
                                 if (element.action >= 1011) {
                                     const projectId = Math.floor((element.action - 1011) / 10);
                                     const taskId = (element.action - 1011) % 10;
-                                    console.log("Daily", projectId, taskId);
-                                    setCycle(projectId, taskId);
+
+                                    const currentDate = new Date();
+                                    const elementDate = new Date(element.time)
+
+                                    const currentYear = currentDate.getFullYear();
+                                    const currentMonth = currentDate.getMonth();
+                                    const currentDay = currentDate.getDate();
+
+
+                                    const elementYear = elementDate.getFullYear();
+                                    const elementMonth = elementDate.getMonth();
+                                    const elementDay = elementDate.getDate();
+                                    console.log("days", projectId, taskId, currentDay, elementDay);
+                                    if (currentYear === elementYear &&
+                                        currentMonth === elementMonth &&
+                                        currentDay === elementDay) {
+                                        setDailyAction((prev) => new Set(prev).add(element.action));
+                                        setCycle(projectId, taskId);
+                                    }
                                 } else {
                                     const action = element.action - 70;
                                     console.log("Daily", action);

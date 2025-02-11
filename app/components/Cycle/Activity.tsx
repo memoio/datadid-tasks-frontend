@@ -11,9 +11,14 @@ import { cards } from "./CyclePage";
 import { API_URL } from '../config/config';
 
 export default function Activity({ joinId }: { joinId: number }) {
+
+    const [dailyLoading, setDailyLoading] = useState(false);
+    const [dailyOpIndex, setDailyOpIndex] = useState(-1);
+    const [onetimeLoading, setOnetimeLoading] = useState(false);
+    const [onetimeOpIndex, setOnetimeOpIndex] = useState(-1);
     const [popupData, setPopupData] = useState<{ label: string; reward: number } | null>(null);
     const [alertMessage, setAlertMessage] = useState<string | null>(null); // State for the alert
-    const { leaveProject, cycleAction, setCycle, userInfos, setPointUpdate } = useAction();
+    const { leaveProject, cycleAction, setCycle, userInfos, setPointUpdate, dailyAction } = useAction();
     const router = useRouter();
     const { uidInfo, isExist, setBindWallet } = useAuth();
 
@@ -78,6 +83,11 @@ export default function Activity({ joinId }: { joinId: number }) {
                     setPointUpdate(true)
                 }
             } catch (error) {
+                setOnetimeLoading(false);
+                setOnetimeOpIndex(-1);
+                setDailyLoading(false);
+                setDailyOpIndex(-1);
+
                 alert(error);
             }
         }
@@ -174,20 +184,35 @@ export default function Activity({ joinId }: { joinId: number }) {
                                 className="bg-gradient-to-r from-[#082B5A] to-[#064D33] px-6 py-4 flex justify-between items-center rounded-lg transition-transform hover:scale-105"
                             >
                                 <div className="text-white text-[15px] sm:text-lg">{task.label}</div>
-                                {cycleAction.some((t) => t.projectId === joinId && t.taskId === index + 3) ? (
-                                    <Image src="/checked.png" alt="Checked" width={28} height={28} className='cursor-pointer' />
-                                ) : (
-                                    <div
-                                        className="bg-[#62EDB5] text-black text-sm sm:text-base font-bold px-4 py-2 rounded-full cursor-pointer hover:bg-[#4AC18A] transition-colors"
-                                        onClick={(e) => {
-                                            e.preventDefault();
-                                            handleTaskClick(task, index + 3);
-                                            navigateToLink(joinId, index);
-                                        }}
-                                    >
-                                        +{task.reward}
-                                    </div>
-                                )}
+                                <div className=' flex justify-between items-center'>
+                                    {dailyLoading && dailyOpIndex == index + 3 &&
+                                        <svg className="mr-2 w-10 h-10 p-0 m-0 animate-spin text-white" viewBox="0 0 50 50">
+                                            <circle className="opacity-25" cx="25" cy="25" r="20" stroke="currentColor" strokeWidth="4" fill="none" />
+                                            <circle className="opacity-75" cx="25" cy="25" r="20" stroke="currentColor" strokeWidth="4" fill="none" strokeDasharray="31.415, 31.415" strokeLinecap="round" />
+                                        </svg>
+                                    }
+                                    {cycleAction.some((t) => t.projectId === joinId && t.taskId === index + 3 && dailyAction.has(1011 + joinId * 10 + index + 3)) ? (
+                                        <Image src="/checked.png" alt="Checked" width={28} height={28} className='cursor-pointer' />
+                                    ) : (
+                                        <div
+                                            className="bg-[#62EDB5] text-black text-sm sm:text-base font-bold px-4 py-2 rounded-full cursor-pointer hover:bg-[#4AC18A] transition-colors"
+                                            onClick={async (e) => {
+                                                e.preventDefault();
+
+                                                setDailyOpIndex(-1);
+                                                setDailyLoading(true);
+                                                setDailyOpIndex(index + 3);
+                                                navigateToLink(joinId, index);
+                                                await handleTaskClick(task, index + 3);
+                                                setDailyLoading(false);
+                                                setDailyOpIndex(-1);
+                                            }}
+
+                                        >
+
+                                            +{task.reward}
+                                        </div>
+                                    )} </div>
                             </div>
                         ))}
                     </div>
@@ -199,20 +224,35 @@ export default function Activity({ joinId }: { joinId: number }) {
                                 className="bg-gradient-to-r from-[#082B5A] to-[#064D33] px-6 py-4 flex justify-between items-center rounded-lg transition-transform hover:scale-105"
                             >
                                 <div className="text-white text-base sm:text-lg">{task.label}</div>
-                                {cycleAction.some((t) => t.projectId === joinId && t.taskId === index) ? (
-                                    <Image src="/checked.png" alt="Checked" width={28} height={28} className='cursor-pointer' />
-                                ) : (
-                                    <div
-                                        className="bg-[#62EDB5] text-black text-sm sm:text-base font-bold px-4 py-2 rounded-full cursor-pointer hover:bg-[#4AC18A] transition-colors"
-                                        onClick={(e) => {
-                                            e.preventDefault();
-                                            handleTaskClick(task, index);
-                                            navigateToLink(joinId, index);
-                                        }}
-                                    >
-                                        +{task.reward}
-                                    </div>
-                                )}
+                                <div className=' flex justify-between items-center'>
+                                    {onetimeLoading && onetimeOpIndex == index &&
+                                        <svg className="mr-2 w-10 h-10 p-0 m-0 animate-spin text-white" viewBox="0 0 50 50">
+                                            <circle className="opacity-25" cx="25" cy="25" r="20" stroke="currentColor" strokeWidth="4" fill="none" />
+                                            <circle className="opacity-75" cx="25" cy="25" r="20" stroke="currentColor" strokeWidth="4" fill="none" strokeDasharray="31.415, 31.415" strokeLinecap="round" />
+                                        </svg>
+                                    }
+                                    {cycleAction.some((t) => t.projectId === joinId && t.taskId === index) ? (
+                                        <Image src="/checked.png" alt="Checked" width={28} height={28} className='cursor-pointer' />
+                                    ) : (
+                                        <div
+                                            className="bg-[#62EDB5] text-black text-sm sm:text-base font-bold px-4 py-2 rounded-full cursor-pointer hover:bg-[#4AC18A] transition-colors"
+                                            onClick={async (e) => {
+                                                e.preventDefault();
+                                                setOnetimeOpIndex(-1);
+                                                setOnetimeLoading(true);
+                                                setOnetimeOpIndex(index);
+                                                navigateToLink(joinId, index);
+                                                await handleTaskClick(task, index);
+                                                setOnetimeLoading(false);
+                                                setOnetimeOpIndex(-1);
+
+                                            }}
+                                        >
+
+                                            +{task.reward}
+                                        </div>
+                                    )}
+                                </div>
                             </div>
                         ))}
                     </div>

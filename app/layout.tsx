@@ -12,7 +12,8 @@ import { AuthContextProvider } from "@/app/lib/context/AuthContext";
 import { DIDContextProvider } from "@/app/lib/context/DIDContext";
 import { WalletContextProvider } from "./lib/context/WalletContext";
 import { ActionProvider } from "@/app/lib/context/ActionContext";
-
+import { Inter } from "next/font/google";
+import GoogleAnalytics from "@/app/components/googleanalytics";
 
 const queryClient = new QueryClient();
 
@@ -20,13 +21,14 @@ interface RootLayoutProps {
   children: ReactNode; // Explicitly type the 'children' prop
 }
 
+const inter = Inter({ subsets: ['latin'] });
 
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en">
       <head />
-      <body>
+      <body className={inter.className}>
         {/* Wrap your app in the AuthContextProvider to provide context globally */}
         <WagmiProvider config={config}>
           <QueryClientProvider client={queryClient}>
@@ -36,6 +38,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
                   <DIDContextProvider>
                     <WalletContextProvider>
                       {children}
+                      <GoogleAnalytics />
                     </WalletContextProvider>
                   </DIDContextProvider>
                 </ActionProvider>

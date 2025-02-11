@@ -14,6 +14,7 @@ export default function LeaderboardPage() {
     const { isConnected } = useAccount();
     const [isWeekly, setIsWeekly] = useState(true);
     const { isExist, uidInfo, setBindWallet } = useAuth();
+    const [loading, setLoading] = useState(false);
 
     interface ElementData {
         id: number;
@@ -30,8 +31,12 @@ export default function LeaderboardPage() {
     useEffect(() => {
         console.log("weekly")
         if (isConnected && isExist) {
+            setBindWallet()
+        }
+        if (isExist) {
             const getRank = async () => {
                 try {
+                    setLoading(true)
                     const response = await axios.get(API_URL.AIRDROP_POINTS_RANK,
                         {
                             headers: {
@@ -59,8 +64,10 @@ export default function LeaderboardPage() {
                     console.log(response.data)
                 } catch (error) {
                     alert(`Error: ${error}`);
+                    setLoading(false)
                     return
                 }
+                setLoading(false)
             }
 
             getRank()
@@ -116,9 +123,15 @@ export default function LeaderboardPage() {
                         <span className="hidden md:block">Leaderboard Reward</span>
                     </div>
                 </div>
-                <div className="w-full h-[1px] bg-[#FFFFFF4D]"></div>
-
-                {elements.map((item, index) => (
+                <div className="w-full m-auto h-[1px] bg-[#FFFFFF4D]"></div>
+                {loading && <div className='m-5 flex  items-center flex-rows'>
+                    <svg className="w-12 h-12 animate-spin text-blue-500" viewBox="0 0 50 50">
+                        <circle className="opacity-25" cx="25" cy="25" r="20" stroke="currentColor" strokeWidth="4" fill="none" />
+                        <circle className="opacity-75" cx="25" cy="25" r="20" stroke="currentColor" strokeWidth="4" fill="none" strokeDasharray="31.415, 31.415" strokeLinecap="round" />
+                    </svg>
+                    <div className='text-white  text-[16px] sm:text-[20px] font-bold'>Loading Data ...</div>
+                </div>}
+                {(!loading) && elements.map((item, index) => (
                     <div
                         key={index}
                         className="fade-in transition hover:scale-105"
