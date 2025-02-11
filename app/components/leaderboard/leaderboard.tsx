@@ -7,12 +7,18 @@ import { useState, useEffect } from 'react';
 
 import { useAuth } from "@/app/lib/context/AuthContext"
 import { API_URL } from '../config/config';
+import { useAccount } from 'wagmi';
 
 
 export default function LeaderboardPage() {
+    const { isConnected } = useAccount();
     const [isWeekly, setIsWeekly] = useState(true);
+<<<<<<< HEAD
     const { isExist, userInfo, setBindWallet } = useAuth();
     const [loading, setLoading] = useState(false);
+=======
+    const { isExist, uidInfo, setBindWallet } = useAuth();
+>>>>>>> 2e69054bad98dcb52195d2ab42e9667e97e54218
 
     interface ElementData {
         id: number;
@@ -28,10 +34,7 @@ export default function LeaderboardPage() {
 
     useEffect(() => {
         console.log("weekly")
-        if (!isExist) {
-            setBindWallet()
-        }
-        if (isExist) {
+        if (isConnected && isExist) {
             const getRank = async () => {
                 try {
                     setLoading(true)
@@ -39,8 +42,8 @@ export default function LeaderboardPage() {
                         {
                             headers: {
                                 'accept': '*/*',
-                                uid: userInfo?.uid,
-                                token: userInfo?.token,
+                                uid: uidInfo?.uid,
+                                token: uidInfo?.token,
                             },
                             params: {
                                 type: isWeekly ? 1 : 0,
@@ -70,7 +73,7 @@ export default function LeaderboardPage() {
 
             getRank()
         }
-    }, [userInfo, isWeekly])
+    }, [isConnected, isWeekly, isExist])
 
     return (
         <div className="mt-[120px] px-4 sm:px-6 lg:px-12 flex flex-col items-center">

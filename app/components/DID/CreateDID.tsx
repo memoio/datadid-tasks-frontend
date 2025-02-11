@@ -12,7 +12,7 @@ export default function CreateDID() {
     const { setIsCreatingDid, setToggleDid } = useDIDInfo();
     const { isConnected, address, chain } = useAccount();
     const { openConnectModal } = useConnectModal();
-    const { userInfo } = useAuth();
+    const { uidInfo, isExist, setBindWallet } = useAuth();
 
 
     // const currentAddress = isConnected && address ? address.slice(0, 6) + '...' + address.slice(-4) : '0x0000...0000'
@@ -22,6 +22,9 @@ export default function CreateDID() {
     const handleCreateDid = async () => {
         if (isConnected) {
             console.log("create")
+            if (!isExist) {
+                setBindWallet();
+            }
             try {
                 // if (isFreeDid) {
                 const response1 = await axios.post(API_URL.DID_CREATE_ADMIN, {
@@ -39,8 +42,8 @@ export default function CreateDID() {
                         headers: {
                             "accept": "application/hal+json",
                             "Content-Type": "application/json",
-                            "uid": userInfo?.uid,
-                            "token": userInfo?.token
+                            "uid": uidInfo?.uid,
+                            "token": uidInfo?.token
                         }
                     });
 
@@ -53,55 +56,6 @@ export default function CreateDID() {
                 } else {
                     alert(`Error: ${response1.status} - ${response1.data.Message}`);
                 }
-                // } else {
-                //     const responsemsg = await axios.get(API_URL.DID_CREATE_MSG, {
-                //         params: {
-                //             address,
-                //         },
-                //     })
-
-                //     if (responsemsg.status === 200) {
-                //         const message = responsemsg.data.msg
-
-                //         console.log("message: ", message)
-                //         const sig = await signMessageAsync({ message: { raw: message } });
-                //         console.log("sig:", sig)
-
-                //         const response1 = await axios.post(API_URL.DID_CREATE, {
-                //             address,
-                //             sig,
-                //         });
-
-                //         if (response1.status === 200) {
-                //             setIsCreatingDid();
-
-                //             const actionId = 1;
-                //             console.log(actionId);
-                //             const respond = await axios.post(API_URL.AIRDROP_RECORD_ADD, {
-                //                 "action": actionId
-                //             }, {
-                //                 headers: {
-                //                     "accept": "application/hal+json",
-                //                     "Content-Type": "application/json",
-                //                     "uid": userInfo?.uid,
-                //                     "token": userInfo?.token
-                //                 }
-                //             });
-
-                //             if (respond.status === 200) {
-
-                //             }
-
-                //         } else if (response1.status === 501) {
-                //             alert(`Error: ${response1.status} - ${response1.data.preview}`);
-                //         } else {
-                //             alert(`Error: ${response1.status} - ${response1.data.Message}`);
-                //         }
-                //     }
-                // }
-
-
-
             } catch (err: any) {
                 alert(`Error: ${err.status}-${err.data}`);
                 return

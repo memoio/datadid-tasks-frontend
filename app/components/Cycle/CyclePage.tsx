@@ -37,7 +37,7 @@ export const cards = [
 
 export default function CyclePage() {
     const { userInfos, joinProject, cycleAction } = useAction();
-    const { isExist, userInfo, setBindWallet } = useAuth();
+    const { isExist, uidInfo, setBindWallet } = useAuth();
     const { isConnected, address } = useAccount();
     const { isDIDExistState } = useDIDInfo();
     const { openConnectModal } = useConnectModal();

@@ -26,10 +26,15 @@ const items: Item[] = [
 ];
 
 export default function Daily() {
+<<<<<<< HEAD
     const [loading, setLoading] = useState(false);
     const [opIndex, setOpIndex] = useState(-1);
     const { dailyAction, setDaily } = useAction();
     const { userInfo, isExist } = useAuth();
+=======
+    const { dailyAction, setDaily, setPointUpdate } = useAction();
+    const { uidInfo, isExist, setBindWallet } = useAuth();
+>>>>>>> 2e69054bad98dcb52195d2ab42e9667e97e54218
     const { isConnected } = useAccount();
     const { openConnectModal } = useConnectModal();
     const { isDIDExistState } = useDIDInfo();
@@ -39,6 +44,9 @@ export default function Daily() {
         setOpIndex(-1)
         try {
             if (isConnected) {
+                if (!isExist) {
+                    setBindWallet();
+                }
                 if (isDIDExistState && isExist) {
                     const currentUrl = window.location.href;
                     const tweetText = "Join MEMO's Airdrop! " + currentUrl;
@@ -59,13 +67,14 @@ export default function Daily() {
                         headers: {
                             "accept": "application/hal+json",
                             "Content-Type": "application/json",
-                            "uid": userInfo?.uid,
-                            "token": userInfo?.token
+                            "uid": uidInfo?.uid,
+                            "token": uidInfo?.token
                         }
                     });
 
                     if (respond.status === 200) {
                         setDaily(index);
+                        setPointUpdate(true)
                     }
                 } else {
                     alert("Please create did first!")

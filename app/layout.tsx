@@ -14,6 +14,7 @@ import { WalletContextProvider } from "./lib/context/WalletContext";
 import { ActionProvider } from "@/app/lib/context/ActionContext";
 
 
+
 const queryClient = new QueryClient();
 
 interface RootLayoutProps {

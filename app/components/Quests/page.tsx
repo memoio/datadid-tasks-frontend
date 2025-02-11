@@ -27,10 +27,15 @@ const items: Item[] = [
 ];
 
 export default function BindingPage() {
+<<<<<<< HEAD
     const [loading, setLoading] = useState(false);
     const [opIndex, setOpIndex] = useState(-1);
     const { questAction, setQuest } = useAction();
     const { userInfo } = useAuth();
+=======
+    const { questAction, setQuest, setPointUpdate } = useAction();
+    const { uidInfo } = useAuth();
+>>>>>>> 2e69054bad98dcb52195d2ab42e9667e97e54218
     const { isConnected } = useAccount();
     const { openConnectModal } = useConnectModal();
     const { isDIDExistState } = useDIDInfo();
@@ -52,13 +57,14 @@ export default function BindingPage() {
                         headers: {
                             "accept": "application/hal+json",
                             "Content-Type": "application/json",
-                            "uid": userInfo?.uid,
-                            "token": userInfo?.token
+                            "uid": uidInfo?.uid,
+                            "token": uidInfo?.token
                         }
                     });
 
                     if (respond.status === 200) {
                         setQuest(index);
+                        setPointUpdate(true)
                     }
 
                 } else {
@@ -71,8 +77,12 @@ export default function BindingPage() {
             }
             setLoading(false);
         } catch (error) {
+<<<<<<< HEAD
             console.log(error);
             setLoading(false);
+=======
+            alert(`binding page: ${error}`);
+>>>>>>> 2e69054bad98dcb52195d2ab42e9667e97e54218
             return
         }
     };

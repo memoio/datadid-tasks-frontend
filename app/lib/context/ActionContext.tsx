@@ -6,6 +6,7 @@ import axios from 'axios';
 import { API_URL } from '@/app/components/config/config';
 import { useRouter } from 'next/navigation';
 import { disconnect } from 'process';
+import { useAuth } from './AuthContext';
 interface TaskData {
     projectId: number;
     taskId: number;
@@ -25,6 +26,7 @@ interface ActionContextType {
     userInfos: UserInfos;
     joinId: number;
     isPointUpdate: boolean;
+    setPointUpdate: (value: boolean) => void;
     setDaily: (index: number) => void;
     setQuest: (index: number) => void;
     setCycle: (projectId: number, taskId: number) => void;
@@ -40,6 +42,7 @@ interface ActionContextProviderProps {
 }
 
 export const ActionProvider = ({ children }: ActionContextProviderProps) => {
+    const { uidInfo, isExist, setBindWallet } = useAuth();
     const [dailyAction, setDailyAction] = useState(new Set<number>());
     const [questAction, setQuestAction] = useState(new Set<number>());
     const [cycleAction, setCycleAction] = useState<TaskData[]>([]);
@@ -95,123 +98,104 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
     }, [joinId])
 
     useEffect(() => {
-        if (isConnected && address) {
+        if (isExist) {
             // 调用绑定钱包接口
             const HandleDailyAction = async () => {
                 try {
                     console.log("clear");
                     clear();
-                    const response = await axios.post(
-                        API_URL.AIRDROP_USER_WALLET_BIND,
-                        {
-                            walletAddress: address,
+                    // get user info
+                    const userresponse = await axios.get(API_URL.AIRDROP_USER_INFO, {
+                        headers: {
+                            "uid": uidInfo?.uid,
+                            "token": uidInfo?.token,
                         },
+                    });
+                    setUserInfos({
+                        points: userresponse.data.data.points,
+                        invideCode: userresponse.data.data.inviteCode,
+                        PointsRank: userresponse.data.data.pointsRank,
+                        inviteCount: userresponse.data.data.inviteCount,
+                    });
+                    setPointUpdate(false);
+
+                    // get one time action
+                    const oneTimeRespond = await axios.get(API_URL.AIRDROP_RECORD_LIST,
                         {
                             headers: {
-                                accept: "application/hal+json",
-                                uid: "11735283", // 根据您的实际情况传入 uid
-                                token: "37595d3a6e43876682b37cdcf941938e", // 根据您的实际情况传入 token
-                                "Content-Type": "application/json",
+                                "uid": uidInfo?.uid,
+                                "token": uidInfo?.token,
                             },
+                            params: {
+                                "page": 1,
+                                "size": 20,
+                                "type": 1,
+                            }
+                        });
+
+                    if (oneTimeRespond.status === 200) {
+                        // eslint-disable-next-line
+                        if (oneTimeRespond.data.data.length > 0) {
+                            oneTimeRespond.data.data.some((element: any) => {
+                                const action = element.action;
+                                // console.log(action);
+                                if (action >= 50 && action <= 53) {
+                                    console.log("action", action - 50);
+                                    setQuestAction((prev) => new Set(prev).add(action - 50));
+                                } else if (action >= 1011) {
+                                    const projectId = Math.floor((action - 1011) / 10);
+                                    const taskId = (action - 1011) % 10;
+                                    console.log("daily action", projectId, taskId);
+                                    setCycle(projectId, taskId);
+                                }
+                            });
+                        }
+                    }
+
+                    const dailyRespond = await axios.get(API_URL.AIRDROP_RECORD_LIST,
+                        {
+                            headers: {
+                                "uid": uidInfo?.uid,
+                                "token": uidInfo?.token,
+                            },
+                            params: {
+                                "page": 1,
+                                "size": 20,
+                                "type": 2
+                            }
                         }
                     );
 
-                    if (response.data.result === 1) {
-                        // get user info
-                        const userresponse = await axios.get(API_URL.AIRDROP_USER_INFO, {
-                            headers: {
-                                "uid": response.data.data.uid,
-                                "token": response.data.data.token,
-                            },
-                        });
-                        setUserInfos({
-                            points: userresponse.data.data.points,
-                            invideCode: userresponse.data.data.inviteCode,
-                            PointsRank: userresponse.data.data.pointsRank,
-                            inviteCount: userresponse.data.data.inviteCount,
-                        });
-                        setPointUpdate(true);
-
-                        // get one time action
-                        const oneTimeRespond = await axios.get(API_URL.AIRDROP_RECORD_LIST,
-                            {
-                                headers: {
-                                    "uid": response.data.data.uid,
-                                    "token": response.data.data.token,
-                                },
-                                params: {
-                                    "page": 1,
-                                    "size": 20,
-                                    "type": 1,
+                    if (dailyRespond.status === 200) {
+                        // eslint-disable-next-line
+                        if (dailyRespond.data.data.length > 0) {
+                            dailyRespond.data.data.forEach((element: any) => {
+                                if (element.action >= 1011) {
+                                    const projectId = Math.floor((element.action - 1011) / 10);
+                                    const taskId = (element.action - 1011) % 10;
+                                    console.log("Daily", projectId, taskId);
+                                    setCycle(projectId, taskId);
+                                } else {
+                                    const action = element.action - 70;
+                                    console.log("Daily", action);
+                                    const preDayTime = Date.now() - 86400000;
+                                    if (element.time > preDayTime) {
+                                        setDailyAction((prev) => new Set(prev).add(action));
+                                    }
                                 }
                             });
-
-                        if (oneTimeRespond.status === 200) {
-                            // eslint-disable-next-line
-                            if (oneTimeRespond.data.data.length > 0) {
-                                oneTimeRespond.data.data.some((element: any) => {
-                                    const action = element.action;
-                                    // console.log(action);
-                                    if (action >= 50 && action <= 53) {
-                                        console.log("action", action - 50);
-                                        setQuestAction((prev) => new Set(prev).add(action - 50));
-                                    } else if (action >= 1011) {
-                                        const projectId = Math.floor((action - 1011) / 10);
-                                        const taskId = (action - 1011) % 10;
-                                        console.log("daily action", projectId, taskId);
-                                        setCycle(projectId, taskId);
-                                    }
-                                });
-                            }
                         }
-
-                        const dailyRespond = await axios.get(API_URL.AIRDROP_RECORD_LIST,
-                            {
-                                headers: {
-                                    "uid": response.data.data.uid,
-                                    "token": response.data.data.token,
-                                },
-                                params: {
-                                    "page": 1,
-                                    "size": 20,
-                                    "type": 2
-                                }
-                            }
-                        );
-
-                        if (dailyRespond.status === 200) {
-                            // eslint-disable-next-line
-                            if (dailyRespond.data.data.length > 0) {
-                                dailyRespond.data.data.forEach((element: any) => {
-                                    if (element.action >= 1011) {
-                                        const projectId = Math.floor((element.action - 1011) / 10);
-                                        const taskId = (element.action - 1011) % 10;
-                                        console.log("Daily", projectId, taskId);
-                                        setCycle(projectId, taskId);
-                                    } else {
-                                        const action = element.action - 70;
-                                        console.log("Daily", action);
-                                        const preDayTime = Date.now() - 86400000;
-                                        if (element.time > preDayTime) {
-                                            setDailyAction((prev) => new Set(prev).add(action));
-                                        }
-                                    }
-                                });
-                            }
-                        }
-                    } else {
-                        alert(`Failed to get record list: ${JSON.stringify(response.data)}`);
-                        return
                     }
+
                 } catch (error) {
-                    alert(`Error binding wallet: ${error}`);
+                    alert(`Error get daily action: ${error}`);
                     return
                 }
             };
 
             HandleDailyAction();
         }
-    }, [isConnected]);
+    }, [isExist, isPointUpdate]);
     console.log("daily: ", dailyAction);
     console.log("quest: ", questAction);
     console.log("cycle: ", cycleAction);
@@ -224,6 +208,7 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
             joinId,
             userInfos,
             isPointUpdate,
+            setPointUpdate,
             setDaily,
             setQuest,
             setCycle,
