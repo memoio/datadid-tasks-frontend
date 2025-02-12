@@ -1,6 +1,12 @@
 'use client';
 
-import { getDefaultConfig, Chain } from '@rainbow-me/rainbowkit';
+import { getDefaultConfig, Chain, connectorsForWallets } from '@rainbow-me/rainbowkit';
+import {
+  metaMaskWallet,
+  injectedWallet,
+  coinbaseWallet,
+} from '@rainbow-me/rainbowkit/wallets';
+
 import {
   arbitrum,
   base,
@@ -27,7 +33,21 @@ const memoriae = {
   },
 } as const as Chain;
 
+const connectors = connectorsForWallets(
+  [
+    {
+      groupName: 'Recommended',
+      wallets: [metaMaskWallet, injectedWallet, coinbaseWallet],
+    },
+  ],
+  {
+    appName: 'did',
+    projectId: 'a4c0191a67edd0463e46fc2c3380a3f8',
+  }
+);
+
 export const config = getDefaultConfig({
+  connectors,
   appName: 'did',
   projectId: 'a4c0191a67edd0463e46fc2c3380a3f8',
   chains: [
