@@ -36,6 +36,7 @@ interface ActionContextType {
 }
 
 const getFromLocalStorage = <T,>(key: string, defaultValue: T, isset = false): T => {
+
     const storedValue = localStorage.getItem(key);
     if (storedValue) {
         try {
@@ -68,8 +69,7 @@ const getFromLocalStorage = <T,>(key: string, defaultValue: T, isset = false): T
 // Utility function to set data to localStorage
 const setToLocalStorage = <T,>(key: string, value: T) => {
     try {
-        //console.log(key,JSON.stringify(value));
-        // localStorage.setItem(key, JSON.stringify(value));
+
         if (value instanceof Set) {
             console.log(key, JSON.stringify(Array.from(value)));
             localStorage.setItem(key, JSON.stringify(Array.from(value)));
@@ -90,14 +90,14 @@ interface ActionContextProviderProps {
 export const ActionProvider = ({ children }: ActionContextProviderProps) => {
     const { uidInfo, isExist, setBindWallet } = useAuth();
 
-    /*
+
     const [dailyAction, setDailyAction] = useState(new Set<number>());
     const [questAction, setQuestAction] = useState(new Set<number>());
     const [cycleAction, setCycleAction] = useState<TaskData[]>([]);
     const [userInfos, setUserInfos] = useState<UserInfos>({ points: 0, invideCode: '******', PointsRank: '-', inviteCount: '-' })
-    */
 
-    const [dailyAction, setDailyAction] = useState<Set<number>>(() =>
+    /*
+       const [dailyAction, setDailyAction] = useState<Set<number>>(() =>
         getFromLocalStorage<Set<number>>('dailyAction', new Set<number>(), true)
     );
     const [questAction, setQuestAction] = useState<Set<number>>(() =>
@@ -107,8 +107,17 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
         getFromLocalStorage<TaskData[]>('cycleAction', [])
     );
     const [userInfos, setUserInfos] = useState<UserInfos>(() =>
-        getFromLocalStorage<UserInfos>('userInfos', { points: 0, invideCode: '******', PointsRank: '-', inviteCount: '-' })
+        
     );
+
+    */
+
+    useEffect(() => {
+        setDailyAction(getFromLocalStorage<Set<number>>('dailyAction', new Set<number>(), true))
+        setQuestAction(getFromLocalStorage<Set<number>>('questAction', new Set<number>(), true))
+        setCycleAction(getFromLocalStorage<TaskData[]>('cycleAction', []))
+        setUserInfos(getFromLocalStorage<UserInfos>('userInfos', { points: 0, invideCode: '******', PointsRank: '-', inviteCount: '-' }))
+    }, []);
 
 
 
@@ -139,7 +148,7 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
 
     const clear = () => {
 
-        //setDailyAction(new Set());
+        // setDailyAction(new Set());
         // setQuestAction(new Set());
         setUserInfos({
             points: 0,
