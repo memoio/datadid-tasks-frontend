@@ -35,6 +35,52 @@ interface ActionContextType {
     clear: () => void;
 }
 
+const getFromLocalStorage = <T,>(key: string, defaultValue: T, isset = false): T => {
+    const storedValue = localStorage.getItem(key);
+    if (storedValue) {
+        try {
+
+            if (isset == true) {
+                const parsedValue = JSON.parse(storedValue);
+
+                if (Array.isArray(parsedValue)) {
+                    return new Set(parsedValue) as T; // Return as Set<number>
+                } else {
+                    return parsedValue as T;
+                }
+
+
+
+            } else {
+                const parsedValue = JSON.parse(storedValue);
+                return parsedValue as T;
+            }
+            // TypeScript casting the parsed value to T type
+
+        } catch (e) {
+            console.warn(`Error parsing localStorage key "${key}":`, e);
+            return defaultValue as T;
+        }
+    }
+    return defaultValue as T;
+};
+
+// Utility function to set data to localStorage
+const setToLocalStorage = <T,>(key: string, value: T) => {
+    try {
+        //console.log(key,JSON.stringify(value));
+        // localStorage.setItem(key, JSON.stringify(value));
+        if (value instanceof Set) {
+            console.log(key, JSON.stringify(Array.from(value)));
+            localStorage.setItem(key, JSON.stringify(Array.from(value)));
+        } else {
+            localStorage.setItem(key, JSON.stringify(value));
+        }
+    } catch (e) {
+        console.error(`Error setting to localStorage key "${key}":`, e);
+    }
+};
+
 export const ActionContext = createContext<ActionContextType | null>(null);
 
 interface ActionContextProviderProps {
@@ -43,10 +89,30 @@ interface ActionContextProviderProps {
 
 export const ActionProvider = ({ children }: ActionContextProviderProps) => {
     const { uidInfo, isExist, setBindWallet } = useAuth();
+
+    /*
     const [dailyAction, setDailyAction] = useState(new Set<number>());
     const [questAction, setQuestAction] = useState(new Set<number>());
     const [cycleAction, setCycleAction] = useState<TaskData[]>([]);
     const [userInfos, setUserInfos] = useState<UserInfos>({ points: 0, invideCode: '******', PointsRank: '-', inviteCount: '-' })
+    */
+
+    const [dailyAction, setDailyAction] = useState<Set<number>>(() =>
+        getFromLocalStorage<Set<number>>('dailyAction', new Set<number>(), true)
+    );
+    const [questAction, setQuestAction] = useState<Set<number>>(() =>
+        getFromLocalStorage<Set<number>>('questAction', new Set<number>(), true)
+    );
+    const [cycleAction, setCycleAction] = useState<TaskData[]>(() =>
+        getFromLocalStorage<TaskData[]>('cycleAction', [])
+    );
+    const [userInfos, setUserInfos] = useState<UserInfos>(() =>
+        getFromLocalStorage<UserInfos>('userInfos', { points: 0, invideCode: '******', PointsRank: '-', inviteCount: '-' })
+    );
+
+
+
+
     const [isPointUpdate, setPointUpdate] = useState(false);
 
     const [joinId, setJoinId] = useState(-1);
@@ -72,16 +138,18 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
     const leaveProject = () => setJoinId(-2);
 
     const clear = () => {
-        setDailyAction(new Set());
-        setQuestAction(new Set());
+
+        //setDailyAction(new Set());
+        // setQuestAction(new Set());
         setUserInfos({
             points: 0,
             invideCode: '******',
             PointsRank: '-',
             inviteCount: '-',
         });
-        setCycleAction([]);
+        // setCycleAction([]);
         setJoinId(-1);
+
     }
 
     useEffect(() => {
@@ -107,7 +175,7 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
             const HandleDailyAction = async () => {
                 try {
                     console.log("clear");
-                    clear();
+                    // clear();
                     // get user info
                     const userresponse = await axios.get(API_URL.AIRDROP_USER_INFO, {
                         headers: {
@@ -138,14 +206,17 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
                         });
 
                     if (oneTimeRespond.status === 200) {
+                        const tmpOneTime = new Set<number>()
                         // eslint-disable-next-line
                         if (oneTimeRespond.data.data.length > 0) {
+
                             oneTimeRespond.data.data.some((element: any) => {
                                 const action = element.action;
                                 // console.log(action);
                                 if (action >= 50 && action <= 53) {
                                     console.log("action", action - 50);
-                                    setQuestAction((prev) => new Set(prev).add(action - 50));
+                                    tmpOneTime.add(action - 50);
+                                    //setQuestAction((prev) => new Set(prev).add(action - 50));
                                 } else if (action >= 1011) {
                                     const projectId = Math.floor((action - 1011) / 10);
                                     const taskId = (action - 1011) % 10;
@@ -154,6 +225,7 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
                                 }
                             });
                         }
+                        setQuestAction(tmpOneTime)
                     }
 
                     const dailyRespond = await axios.get(API_URL.AIRDROP_RECORD_LIST,
@@ -171,8 +243,10 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
                     );
 
                     if (dailyRespond.status === 200) {
+                        const tmpDaily = new Set<number>()
                         // eslint-disable-next-line
                         if (dailyRespond.data.data.length > 0) {
+
                             dailyRespond.data.data.forEach((element: any) => {
                                 if (element.action >= 1011) {
                                     const projectId = Math.floor((element.action - 1011) / 10);
@@ -193,7 +267,8 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
                                     if (currentYear === elementYear &&
                                         currentMonth === elementMonth &&
                                         currentDay === elementDay) {
-                                        setDailyAction((prev) => new Set(prev).add(element.action));
+                                        tmpDaily.add(element.action)
+                                        //setDailyAction((prev) => new Set(prev).add(element.action));
                                         setCycle(projectId, taskId);
                                     }
                                 } else {
@@ -201,11 +276,14 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
                                     console.log("Daily", action);
                                     const preDayTime = Date.now() - 86400000;
                                     if (element.time > preDayTime) {
-                                        setDailyAction((prev) => new Set(prev).add(action));
+                                        tmpDaily.add(action);
+                                        //setDailyAction((prev) => new Set(prev).add(action));
                                     }
                                 }
                             });
+
                         }
+                        setDailyAction(tmpDaily);
                     }
 
                 } catch (error) {
@@ -220,6 +298,23 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
     console.log("daily: ", dailyAction);
     console.log("quest: ", questAction);
     console.log("cycle: ", cycleAction);
+
+
+    useEffect(() => {
+        setToLocalStorage('dailyAction', dailyAction);
+    }, [dailyAction]);
+
+    useEffect(() => {
+        setToLocalStorage('questAction', questAction);
+    }, [questAction]);
+
+    useEffect(() => {
+        setToLocalStorage('cycleAction', cycleAction);
+    }, [cycleAction]);
+
+    useEffect(() => {
+        setToLocalStorage('userInfos', userInfos);
+    }, [userInfos]);
 
     return (
         <ActionContext.Provider value={{

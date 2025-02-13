@@ -125,11 +125,11 @@ export default function BindingPage() {
                     <div
                         key={index}
                         onClick={() => handleClick(index, item.url)}
-                        className={`w-full sm:w-[40%] lg:w-[30%] xl:w-[20%] transform transition-transform duration-300 ${questAction.has(index)
+                        className={`w-full sm:w-[40%] lg:w-[30%] xl:w-[20%] transform transition-transform duration-300 ${isConnected && questAction.has(index)
                             ? 'bg-[#0663412B] hover:scale-105'
                             : 'bg-gradient-to-r from-[#214177] to-[#064E33] scale-105 shadow-lg'
                             } pt-[35px] pb-[25px] px-[10px] flex items-center justify-around rounded-[10px] cursor-pointer`}
-                        style={{ pointerEvents: questAction.has(index) ? 'none' : 'auto' }}
+                        style={{ pointerEvents: isConnected && questAction.has(index) ? 'none' : 'auto' }}
                     >
                         <Image
                             src={item.src}
@@ -143,12 +143,12 @@ export default function BindingPage() {
                                 {item.reward}
                             </div>
                             <div
-                                className={`${questAction.has(index) ? 'bg-gray-500' : 'bg-[#0079F2]'}  flex justify-center items-center rounded-full px-[10px] py-[5px] mt-[5px] shadow-md transform hover:scale-110 transition-transform duration-300`}
+                                className={`${isConnected && questAction.has(index) ? 'bg-gray-500' : 'bg-[#0079F2]'}  flex justify-center items-center rounded-full px-[10px] py-[5px] mt-[5px] shadow-md transform hover:scale-110 transition-transform duration-300`}
                                 onClick={(e) => {
                                     e.stopPropagation(); // 阻止事件冒泡，避免触发外层div的onClick
                                     handleClick(index, item.url);
                                 }}
-                                style={{ pointerEvents: questAction.has(index) ? 'none' : 'auto' }}
+                                style={{ pointerEvents: isConnected && questAction.has(index) ? 'none' : 'auto' }}
                             >
                                 {loading && opIndex == index &&
                                     <svg className="w-6 h-6 p-0 m-0 animate-spin text-blue-900" viewBox="0 0 50 50">
@@ -156,8 +156,8 @@ export default function BindingPage() {
                                         <circle className="opacity-75" cx="25" cy="25" r="20" stroke="currentColor" strokeWidth="4" fill="none" strokeDasharray="31.415, 31.415" strokeLinecap="round" />
                                     </svg>
                                 }
-                                <p className={`font-bold text-[16px] text-white ${questAction.has(index) ? 'cursor-not-allowed' : ''}`}>
-                                    {questAction.has(index) ? 'Claimed' : 'Claim'}
+                                <p className={`font-bold text-[16px] text-white ${isConnected && questAction.has(index) ? 'cursor-not-allowed' : ''}`}>
+                                    {isConnected && questAction.has(index) ? 'Claimed' : 'Claim'}
                                 </p>
                             </div>
                         </div>

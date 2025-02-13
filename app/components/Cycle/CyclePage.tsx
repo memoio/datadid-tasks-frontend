@@ -36,6 +36,8 @@ export const cards = [
 ];
 
 export default function CyclePage() {
+    const [loading, setLoading] = useState(false);
+    const [cyIndex, setCyIndex] = useState(-1);
     const { userInfos, joinProject, cycleAction } = useAction();
     const { isExist, uidInfo, setBindWallet } = useAuth();
     const { isConnected, address } = useAccount();
@@ -61,7 +63,13 @@ export default function CyclePage() {
             completed = completed + 1;
         }
     })
-
+    const navProjects = (index: number) => {
+        setLoading(true);
+        setCyIndex(index);
+        joinProject(index);
+        setLoading(false);
+        setCyIndex(-1);
+    }
     useEffect(() => {
         const interval = setInterval(() => {
             const now = new Date();
@@ -172,6 +180,12 @@ export default function CyclePage() {
                                     onClick={() => (isConnected ? isDIDExistState && joinProject ? joinProject(index) : alert("Please create did first!") : openConnectModal ? openConnectModal() : alert("Can not connect to chain"))}
                                     className={`mt-3 mt-[40px] py-2 px-4 rounded-full text-[17.5px] font-bold transition-colors duration-300  cursor-pointer ${buttonClasses}`}
                                 >
+                                    {loading && cyIndex == index &&
+                                        <svg className="w-6 h-6 p-0 m-0 animate-spin text-blue-900" viewBox="0 0 50 50">
+                                            <circle className="opacity-25" cx="25" cy="25" r="20" stroke="currentColor" strokeWidth="4" fill="none" />
+                                            <circle className="opacity-75" cx="25" cy="25" r="20" stroke="currentColor" strokeWidth="4" fill="none" strokeDasharray="31.415, 31.415" strokeLinecap="round" />
+                                        </svg>
+                                    }
                                     {isJoined ? (
                                         <div className="flex justify-center items-center gap-2">
                                             <div className="text-center text-white text-[16px]">Joined</div>
