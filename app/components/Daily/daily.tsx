@@ -108,11 +108,11 @@ export default function Daily() {
                     <div
                         key={index}
                         onClick={() => handleClick(index)}
-                        className={`w-full sm:w-[48%] md:w-[30%] xl:w-[23%] transform transition-transform duration-300 ${dailyAction.has(index)
+                        className={`w-full sm:w-[48%] md:w-[30%] xl:w-[23%] transform transition-transform duration-300 ${isConnected && dailyAction.has(index)
                             ? 'bg-[#0663412B] hover:scale-105'
                             : 'bg-gradient-to-r from-[#214177] to-[#064E33] scale-105 shadow-lg'
                             } p-6 rounded-[15px] cursor-pointer`}
-                        style={{ pointerEvents: dailyAction.has(index) ? 'none' : 'auto' }}
+                        style={{ pointerEvents: isConnected && dailyAction.has(index) ? 'none' : 'auto' }}
                     >
                         {/* Item Image */}
                         <div className="flex justify-center">
@@ -130,7 +130,7 @@ export default function Daily() {
                             <h2 className="text-white text-[16px] sm:text-[16px] mb-2">{item.title}</h2>
                             <p className="text-white text-[16px]  sm:text-[16px]">{item.reward}</p>
                             <div
-                                className={`${dailyAction.has(index) ? 'bg-gray-500' : 'bg-[#0079F2]'
+                                className={`${isConnected && dailyAction.has(index) ? 'bg-gray-500' : 'bg-[#0079F2]'
                                     } flex justify-center items-center rounded-full px-[10px] py-[5px] mt-[5px] shadow-md transform hover:scale-110 transition-transform duration-300`}
                                 onClick={(e) => {
                                     e.stopPropagation(); // 阻止事件冒泡，避免触发外层div的onClick
@@ -143,8 +143,8 @@ export default function Daily() {
                                         <circle className="opacity-75" cx="25" cy="25" r="20" stroke="currentColor" strokeWidth="4" fill="none" strokeDasharray="31.415, 31.415" strokeLinecap="round" />
                                     </svg>
                                 }
-                                <span className={`font-bold text-[16px] text-white ${dailyAction.has(index) ? 'cursor-not-allowed' : ''}`}>
-                                    {dailyAction.has(index) ? 'Claimed' : 'Claim'}
+                                <span className={`font-bold text-[16px] text-white ${isConnected && dailyAction.has(index) ? 'cursor-not-allowed' : ''}`}>
+                                    {isConnected && dailyAction.has(index) ? 'Claimed' : 'Claim'}
                                 </span>
                             </div>
                         </div>
