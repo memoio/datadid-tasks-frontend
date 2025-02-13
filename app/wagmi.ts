@@ -1,10 +1,9 @@
 'use client';
 
-import { getDefaultConfig, Chain } from '@rainbow-me/rainbowkit';
-import { connectorsForWallets } from '@rainbow-me/rainbowkit';
+import { getDefaultConfig, Chain, connectorsForWallets } from '@rainbow-me/rainbowkit';
 import {
   metaMaskWallet,
-  injectedWallet ,
+  injectedWallet,
   coinbaseWallet,
 } from '@rainbow-me/rainbowkit/wallets';
 
@@ -38,7 +37,7 @@ const connectors = connectorsForWallets(
   [
     {
       groupName: 'Recommended',
-      wallets: [metaMaskWallet,injectedWallet,coinbaseWallet ],
+      wallets: [metaMaskWallet, injectedWallet, coinbaseWallet],
     },
   ],
   {
