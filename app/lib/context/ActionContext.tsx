@@ -36,6 +36,7 @@ interface ActionContextType {
 }
 
 const getFromLocalStorage = <T,>(key: string, defaultValue: T, isset = false): T => {
+
     const storedValue = localStorage.getItem(key);
     if (storedValue) {
         try {
@@ -68,8 +69,7 @@ const getFromLocalStorage = <T,>(key: string, defaultValue: T, isset = false): T
 // Utility function to set data to localStorage
 const setToLocalStorage = <T,>(key: string, value: T) => {
     try {
-        //console.log(key,JSON.stringify(value));
-        // localStorage.setItem(key, JSON.stringify(value));
+
         if (value instanceof Set) {
             console.log(key, JSON.stringify(Array.from(value)));
             localStorage.setItem(key, JSON.stringify(Array.from(value)));
@@ -90,14 +90,14 @@ interface ActionContextProviderProps {
 export const ActionProvider = ({ children }: ActionContextProviderProps) => {
     const { uidInfo, isExist, setBindWallet } = useAuth();
 
-    /*
+
     const [dailyAction, setDailyAction] = useState(new Set<number>());
     const [questAction, setQuestAction] = useState(new Set<number>());
     const [cycleAction, setCycleAction] = useState<TaskData[]>([]);
     const [userInfos, setUserInfos] = useState<UserInfos>({ points: 0, invideCode: '******', PointsRank: '-', inviteCount: '-' })
-    */
 
-    const [dailyAction, setDailyAction] = useState<Set<number>>(() =>
+    /*
+       const [dailyAction, setDailyAction] = useState<Set<number>>(() =>
         getFromLocalStorage<Set<number>>('dailyAction', new Set<number>(), true)
     );
     const [questAction, setQuestAction] = useState<Set<number>>(() =>
@@ -107,8 +107,17 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
         getFromLocalStorage<TaskData[]>('cycleAction', [])
     );
     const [userInfos, setUserInfos] = useState<UserInfos>(() =>
-        getFromLocalStorage<UserInfos>('userInfos', { points: 0, invideCode: '******', PointsRank: '-', inviteCount: '-' })
+        
     );
+
+    */
+
+    useEffect(() => {
+        setDailyAction(getFromLocalStorage<Set<number>>('dailyAction', new Set<number>(), true))
+        setQuestAction(getFromLocalStorage<Set<number>>('questAction', new Set<number>(), true))
+        setCycleAction(getFromLocalStorage<TaskData[]>('cycleAction', []))
+        setUserInfos(getFromLocalStorage<UserInfos>('userInfos', { points: 0, invideCode: '******', PointsRank: '-', inviteCount: '-' }))
+    }, []);
 
 
 
@@ -139,7 +148,7 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
 
     const clear = () => {
 
-        //setDailyAction(new Set());
+        // setDailyAction(new Set());
         // setQuestAction(new Set());
         setUserInfos({
             points: 0,
@@ -163,17 +172,37 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
 
     useEffect(() => {
         if (joinId >= 0) {
-            router.push(`/projects/${joinId}`);
+            router.push(`/projects/${joinId}`); // TODO delete row
         } else if (joinId === -2) {
             router.push(`/`);
         }
     }, [joinId])
 
     useEffect(() => {
+        const fun = async () => {
+            const userresponse = await axios.get(API_URL.AIRDROP_USER_INFO, {
+                headers: {
+                    "uid": uidInfo?.uid,
+                    "token": uidInfo?.token,
+                },
+            });
+            setUserInfos({
+                points: userresponse.data.data.points,
+                invideCode: userresponse.data.data.inviteCode,
+                PointsRank: userresponse.data.data.pointsRank,
+                inviteCount: userresponse.data.data.inviteCount,
+            });
+            setPointUpdate(false);
+        }
+        if (isPointUpdate) fun();
+    }, [isPointUpdate]);
+
+    useEffect(() => {
         if (isExist) {
             // 调用绑定钱包接口
             const HandleDailyAction = async () => {
                 try {
+                    const tmpCycle:TaskData[] = []
                     console.log("clear");
                     // clear();
                     // get user info
@@ -189,7 +218,7 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
                         PointsRank: userresponse.data.data.pointsRank,
                         inviteCount: userresponse.data.data.inviteCount,
                     });
-                    setPointUpdate(false);
+                    //setPointUpdate(false);
 
                     // get one time action
                     const oneTimeRespond = await axios.get(API_URL.AIRDROP_RECORD_LIST,
@@ -221,7 +250,8 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
                                     const projectId = Math.floor((action - 1011) / 10);
                                     const taskId = (action - 1011) % 10;
                                     console.log("daily action", projectId, taskId);
-                                    setCycle(projectId, taskId);
+                                    tmpCycle.push({projectId, taskId});
+                                    //setCycle(projectId, taskId);
                                 }
                             });
                         }
@@ -244,6 +274,7 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
 
                     if (dailyRespond.status === 200) {
                         const tmpDaily = new Set<number>()
+                        
                         // eslint-disable-next-line
                         if (dailyRespond.data.data.length > 0) {
 
@@ -269,7 +300,8 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
                                         currentDay === elementDay) {
                                         tmpDaily.add(element.action)
                                         //setDailyAction((prev) => new Set(prev).add(element.action));
-                                        setCycle(projectId, taskId);
+                                        tmpCycle.push({projectId, taskId});
+                                        //setCycle(projectId, taskId);
                                     }
                                 } else {
                                     const action = element.action - 70;
@@ -285,6 +317,7 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
                         }
                         setDailyAction(tmpDaily);
                     }
+                    setCycleAction(tmpCycle);
 
                 } catch (error) {
                     alert(`Error get daily action: ${error}`);
@@ -294,7 +327,7 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
 
             HandleDailyAction();
         }
-    }, [isExist, isPointUpdate]);
+    }, [isExist]); // , isPointUpdate
     console.log("daily: ", dailyAction);
     console.log("quest: ", questAction);
     console.log("cycle: ", cycleAction);

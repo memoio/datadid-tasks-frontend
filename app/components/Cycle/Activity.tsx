@@ -18,7 +18,7 @@ export default function Activity({ joinId }: { joinId: number }) {
     const [onetimeOpIndex, setOnetimeOpIndex] = useState(-1);
     const [popupData, setPopupData] = useState<{ label: string; reward: number } | null>(null);
     const [alertMessage, setAlertMessage] = useState<string | null>(null); // State for the alert
-    const { leaveProject, cycleAction, setCycle, userInfos, setPointUpdate, dailyAction } = useAction();
+    const { leaveProject, cycleAction, setCycle,setDaily, userInfos, setPointUpdate, dailyAction } = useAction();
     const router = useRouter();
     const { uidInfo, isExist, setBindWallet } = useAuth();
 
@@ -79,6 +79,7 @@ export default function Activity({ joinId }: { joinId: number }) {
 
                 if (respond.status === 200) {
                     setCycle(joinId, taskId);
+                    setDaily(actionId);
                     setPopupData(task);
                     setPointUpdate(true)
                 }

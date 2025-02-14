@@ -11,7 +11,7 @@ import { useDIDInfo } from '@/app/lib/context/DIDContext';
 import { useConnectModal } from '@rainbow-me/rainbowkit';
 import { API_URL } from '../config/config';
 import { disconnect } from 'process';
-
+import { useRouter } from 'next/navigation';
 export const cards = [
     { id: 1, imgSrc: "/Cycle1.png", participants: 800, name: "Metis", aliases: "metis", short: "Superfluid Self-Sustainable Blockchain.", text: "Metis is a permissionless Layer 2 network powering the next generation of decentralized applications." },
     { id: 2, imgSrc: "/Cycle2.png", participants: 800, name: "Arkreen", aliases: "arkreen", short: "Net Zero DeEnergy Data Network.", text: "Arkreen Network is a Web3-based infrastructure for globally distributed renewable energy resources that enables the connection and monetization of carbon reduction applications." },
@@ -36,6 +36,7 @@ export const cards = [
 ];
 
 export default function CyclePage() {
+    const router = useRouter();
     const [loading, setLoading] = useState(false);
     const [cyIndex, setCyIndex] = useState(-1);
     const { userInfos, joinProject, cycleAction } = useAction();
@@ -67,6 +68,7 @@ export default function CyclePage() {
         setLoading(true);
         setCyIndex(index);
         joinProject(index);
+        setTimeout(router.push(`/projects/${index}`),500);
         setLoading(false);
         setCyIndex(-1);
     }
@@ -177,7 +179,7 @@ export default function CyclePage() {
                                 {/* <p className="text-[#0079F2] text-[16px]">{card.participants} Participants</p> */}
 
                                 <div
-                                    onClick={() => (isConnected ? isDIDExistState && joinProject ? joinProject(index) : alert("Please create did first!") : openConnectModal ? openConnectModal() : alert("Can not connect to chain"))}
+                                    onClick={() => (isConnected ? isDIDExistState  ? navProjects(index) : alert("Please create did first!") : openConnectModal ? openConnectModal() : alert("Can not connect to chain"))}
                                     className={`mt-3 mt-[40px] py-2 px-4 rounded-full text-[17.5px] font-bold transition-colors duration-300  cursor-pointer ${buttonClasses}`}
                                 >
                                     {loading && cyIndex == index &&
