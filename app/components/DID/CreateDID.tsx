@@ -68,8 +68,9 @@ export default function CreateDID() {
 
     };
 
+    const shortenedAddress = address?.slice(0, 6) + '...' + address?.slice(-4);
     return (
-        <div className="mt-[40px] flex justify-center bg-dark animate-fade-in w-full">
+        <div className="mt-[20px] flex justify-center bg-dark animate-fade-in w-full">
             <div className="border-[3px] rounded-[11px] px-4 py-2 bg-gradient-to-r from-[#064E33] to-[#214177] shadow-lg transform hover:scale-105 transition-transform duration-300">
                 <div className='flex justify-between items-center'>
                     <div
@@ -88,7 +89,7 @@ export default function CreateDID() {
                 </div>
 
 
-                <div className="rounded-[10px] mt-[25px] px-[5px]">
+                <div className="rounded-[10px] mt-[25px] px-[15px]">
                     <Image
                         src="/NFT_bg.png"
                         alt="NFT Background"
@@ -103,7 +104,12 @@ export default function CreateDID() {
                 </div>
                 <div className="flex justify-between mt-[16px] animate-fade-in-delay">
                     <div className="text-[16px] text-white leading-[30px]">Mint To</div>
-                    <div className="text-[16px] text-white leading-[30px]">{address}</div>
+                    <div className="text-[16px] text-white leading-[30px] sm:block hidden">
+                        {address}
+                    </div>
+                    <div className="text-[16px] text-white leading-[30px] sm:hidden block">
+                        {shortenedAddress}
+                    </div>
                 </div>
                 <div className="flex justify-between mt-[16px] animate-fade-in-delay">
                     <div className="text-[16px] text-white leading-[30px]">Play With</div>
@@ -120,7 +126,7 @@ export default function CreateDID() {
                     Create
                 </div>
                 <div
-                    className="text-[10px] leading-[30px] text-white mt-[16px] text-center animate-fade-in"
+                    className="flex justify-between text-[10px] leading-[20px] text-white mt-[10px] text-center animate-fade-in"
                 >
                     Total cost includes gas fee for DID creation, and future profile updates. Currently, users can participate for free.
                 </div>
