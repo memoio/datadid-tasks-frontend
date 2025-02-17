@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { FC } from 'react';
 import { paytoneOne } from '@/app/ui/fonts';
 import Image from 'next/image';
 import { useDIDInfo } from "@/app/lib/context/DIDContext";
@@ -18,7 +18,8 @@ interface PopupData {
 }
 
 export default function DidSection() {
-    const { userInfos, isPointUpdate } = useAction();
+    const { uidInfo } = useAuth();
+    const { isCheckDID, setPointUpdate } = useAction();
     const { address, isConnected, isDisconnected } = useAccount();
     const { setToggleDid, didInfo, setDID, isDIDInfoState, isDIDExistState, setIsDIDExist, setDIDInfoExist } = useDIDInfo();
     const { openConnectModal } = useConnectModal();
@@ -40,8 +41,23 @@ export default function DidSection() {
 
 
 
-    const openDid = () => {
+    const openDid = async () => {
         window.open(`http://faucet.metamemo.one?address=${address}`, '_blank')
+        const actionId = 2;
+        const respond = await axios.post(API_URL.AIRDROP_RECORD_ADD, {
+            "action": actionId
+        }, {
+            headers: {
+                "accept": "application/hal+json",
+                "Content-Type": "application/json",
+                "uid": uidInfo?.uid,
+                "token": uidInfo?.token
+            }
+        });
+
+        if (respond.status === 200) {
+            setPointUpdate(true)
+        }
     };
 
     useEffect(() => {
@@ -151,9 +167,9 @@ export default function DidSection() {
                         <p className='mt-[15px]'>Note 1: Users need to create did before participating in earning points. </p>
                         <p className='mt-[15px]'>Note 2: Create DID +1000, Check DID +500.</p>
                     </div>
-                    <div className="text-center flex justify-center sm:justify-start">
+                    <div className="text-center flex justify-start sm:justify-start">
                         {isDIDExistState && isDIDInfoState && isConnected ? (
-                            <div className="rounded-[10px] mt-[5px] px-[5px] bg-[#121212] ">
+                            <div className="mt-[5px] px-[5px] bg-[#121212] ">
                                 <div className="text-[18px] text-[#13E292] mt-[16px] text-left">
                                     No.{didInfo.number}
                                 </div>
@@ -163,7 +179,7 @@ export default function DidSection() {
                                 <div className='flex flex-row gap-5'>
                                     <div
                                         onClick={() => openDid()}
-                                        className="bg-[#13E292] flex justify-center items-center rounded-full px-4 py-2 mt-5 shadow-md transform hover:scale-110 transition-transform duration-300 cursor-pointer"
+                                        className={`bg-[#13E292] flex justify-center items-center rounded-full px-4 py-2 mt-5 shadow-md transform hover:scale-110 transition-transform duration-300 cursor-pointer ${isCheckDID ? 'opacity-50 cursor-not-allowed' : ''}`}
                                     >
                                         <span className="font-bold text-[14px] sm:text-[16px] text-white">
                                             Check DID

@@ -26,6 +26,7 @@ interface ActionContextType {
     userInfos: UserInfos;
     joinId: number;
     isPointUpdate: boolean;
+    isCheckDID: boolean;
     setPointUpdate: (value: boolean) => void;
     setDaily: (index: number) => void;
     setQuest: (index: number) => void;
@@ -89,7 +90,7 @@ interface ActionContextProviderProps {
 
 export const ActionProvider = ({ children }: ActionContextProviderProps) => {
     const { uidInfo, isExist, setBindWallet } = useAuth();
-
+    const [isCheckDID, setIsCheckDID] = useState(false);
 
     const [dailyAction, setDailyAction] = useState(new Set<number>());
     const [questAction, setQuestAction] = useState(new Set<number>());
@@ -202,7 +203,7 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
             // 调用绑定钱包接口
             const HandleDailyAction = async () => {
                 try {
-                    const tmpCycle:TaskData[] = []
+                    const tmpCycle: TaskData[] = []
                     console.log("clear");
                     // clear();
                     // get user info
@@ -250,8 +251,10 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
                                     const projectId = Math.floor((action - 1011) / 10);
                                     const taskId = (action - 1011) % 10;
                                     console.log("daily action", projectId, taskId);
-                                    tmpCycle.push({projectId, taskId});
+                                    tmpCycle.push({ projectId, taskId });
                                     //setCycle(projectId, taskId);
+                                } else if (action === 2) {
+                                    setIsCheckDID(true)
                                 }
                             });
                         }
@@ -274,7 +277,7 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
 
                     if (dailyRespond.status === 200) {
                         const tmpDaily = new Set<number>()
-                        
+
                         // eslint-disable-next-line
                         if (dailyRespond.data.data.length > 0) {
 
@@ -300,7 +303,7 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
                                         currentDay === elementDay) {
                                         tmpDaily.add(element.action)
                                         //setDailyAction((prev) => new Set(prev).add(element.action));
-                                        tmpCycle.push({projectId, taskId});
+                                        tmpCycle.push({ projectId, taskId });
                                         //setCycle(projectId, taskId);
                                     }
                                 } else {
@@ -357,6 +360,7 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
             joinId,
             userInfos,
             isPointUpdate,
+            isCheckDID,
             setPointUpdate,
             setDaily,
             setQuest,

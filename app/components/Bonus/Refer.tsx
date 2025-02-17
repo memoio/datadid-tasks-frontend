@@ -40,7 +40,7 @@ export default function Refer() {
                 Referral Bonus
             </h1>
             <div className="text-[16px] sm:text-[20px] text-white mt-[10px] md:mt-[20px] text-center md:text-left">
-                Invite friends to earn more $SBT
+                Invite friends to earn more Points
             </div>
 
             {/* Content Section */}

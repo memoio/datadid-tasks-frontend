@@ -18,7 +18,7 @@ export default function Activity({ joinId }: { joinId: number }) {
     const [onetimeOpIndex, setOnetimeOpIndex] = useState(-1);
     const [popupData, setPopupData] = useState<{ label: string; reward: number } | null>(null);
     const [alertMessage, setAlertMessage] = useState<string | null>(null); // State for the alert
-    const { leaveProject, cycleAction, setCycle,setDaily, userInfos, setPointUpdate, dailyAction } = useAction();
+    const { leaveProject, cycleAction, setCycle, setDaily, userInfos, setPointUpdate, dailyAction } = useAction();
     const router = useRouter();
     const { uidInfo, isExist, setBindWallet } = useAuth();
 
@@ -126,8 +126,8 @@ export default function Activity({ joinId }: { joinId: number }) {
                 }}
                 className="min-h-screen px-4 flex justify-center items-center"
             >
-                <div className="rounded-lg  max-w-[90%] lg:max-w-[80%] relative animate-fade-in">
-                    <div className="flex justify-between items-center">
+                <div className="rounded-lg  max-w-[100%] lg:max-w-[80%] relative animate-fade-in">
+                    <div className="flex mt-[20px] justify-between items-center">
                         <Image
                             src="/Arrow_left.png"
                             alt="arrow"
@@ -157,8 +157,8 @@ export default function Activity({ joinId }: { joinId: number }) {
                                 <div className="text-white text-[15px] sm:text-lg">
                                     {cards[joinId].text}
                                 </div>
-                                <div className="flex flex-col sm:flex-row justify-between items-center mt-[20px] gap-2">
-                                    <div className="text-white text-[12px] sm:text-[15px] break-all sm:break-normal text-center" id="copy">
+                                <div className="flex flex-row sm:flex-row justify-between items-center mt-[20px] gap-2">
+                                    <div className="text-white text-[10px] sm:text-[15px] break-all sm:break-normal text-center" id="copy">
                                         https://data.memolabs.org/projects/{joinId || 0}?referralCode={userInfos.invideCode}
                                     </div>
                                     <Image

@@ -89,7 +89,7 @@ export default function Daily() {
     };
 
     return (
-        <div className="mt-[80px] mb-[50px] px-4">
+        <div className="mt-[10px] mb-[50px] px-4">
             {/* Header Section */}
             <div className="flex flex-col sm:flex-row sm:justify-between items-center gap-3">
                 <div>

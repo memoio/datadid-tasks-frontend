@@ -13,7 +13,7 @@ const commonStyles = `
   font-family: 'Josefin Sans', sans-serif;
   color: #171717;
   line-height: 1.5;
-  text-align: center;
+  text-align: start;
   padding: 9px 17px;
   border-radius: 50px;
   transition: all 0.3s ease;
@@ -117,7 +117,7 @@ export default function Navbar() {
         {/* Logo */}
         <div className="text-white text-[18px] md:text-[24px] lg:text-[28px]">
 
-          <img src="/logo.png" alt="Logo" className="w-[180px] md:w-[180px]" onClick={() => {
+          <img src="/logo.png" alt="Logo" className="w-[120px] md:w-[180px]" onClick={() => {
             router.push('/');
             leaveProject();
           }} />
