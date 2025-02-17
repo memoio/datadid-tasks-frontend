@@ -68,7 +68,7 @@ export default function CyclePage() {
         setLoading(true);
         setCyIndex(index);
         joinProject(index);
-        setTimeout(router.push(`/projects/${index}`),500);
+        setTimeout(() => router.push(`/projects/${index}`), 500);
         setLoading(false);
         setCyIndex(-1);
     }
