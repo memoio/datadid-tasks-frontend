@@ -151,7 +151,7 @@ export default function DidSection() {
                         <p className='mt-[15px]'>Note 1: Users need to create did before participating in earning points. </p>
                         <p className='mt-[15px]'>Note 2: Create DID +1000, Check DID +500.</p>
                     </div>
-                    <div className="text-center flex justify-center sm:justify-start">
+                    <div className="text-center flex justify-start">
                         {isDIDExistState && isDIDInfoState && isConnected ? (
                             <div className="rounded-[10px] mt-[5px] px-[5px] bg-[#121212] ">
                                 <div className="text-[18px] text-[#13E292] mt-[16px] text-left">

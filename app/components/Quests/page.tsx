@@ -85,7 +85,8 @@ export default function BindingPage() {
                     <div className="text-[28px] text-center sm:text-left font-bold text-white text-transparent bg-clip-text">
                         MEMO Community Quests
                     </div>
-                    <div className="text-[14px] sm:text-[16px] md:text-[20px] text-white bg-gradient-to-r from-[#FFFFFF] to-[#999999] text-transparent bg-clip-text text-center sm:text-left">
+                    {/* bg-gradient-to-r from-[#FFFFFF] to-[#999999] */}
+                    <div className="text-[14px] sm:text-[16px] md:text-[20px] text-white  text-transparent bg-clip-text text-center sm:text-left">
                         Bind your social account & receive points rewards
                     </div>
                 </div>

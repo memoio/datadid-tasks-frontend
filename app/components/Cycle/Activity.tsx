@@ -133,7 +133,7 @@ export default function Activity({ joinId }: { joinId: number }) {
                             alt="arrow"
                             width={24}
                             height={24}
-                            className="cursor-pointer hover:scale-110 transition-transform"
+                            className="mt-5 md:mt-2 cursor-pointer hover:scale-110 transition-transform"
                             onClick={() => {
                                 router.push('/');
                                 leaveProject();
@@ -157,7 +157,7 @@ export default function Activity({ joinId }: { joinId: number }) {
                                 <div className="text-white text-[15px] sm:text-lg">
                                     {cards[joinId].text}
                                 </div>
-                                <div className="flex flex-col sm:flex-row justify-between items-center mt-[20px] gap-2">
+                                <div className="flex flex-row justify-between  mt-[20px] gap-2">
                                     <div className="text-white text-[12px] sm:text-[15px] break-all sm:break-normal text-center" id="copy">
                                         https://data.memolabs.org/projects/{joinId || 0}?referralCode={userInfos.invideCode}
                                     </div>

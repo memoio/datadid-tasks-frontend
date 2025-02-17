@@ -26,6 +26,7 @@ const commonStyles = `
 
 const NavItem = styled.div`
   ${commonStyles};
+  text-align: left;
   font-size: 14px;
   color: white;
   width: 100%;
@@ -112,7 +113,7 @@ export default function Navbar() {
   }, [showWallet]);
 
   return (
-    <div className="w-full">
+    <div className="relative  w-full">
       <div className="flex justify-between items-center sm:pb-[25px]  sm:font-bold">
         {/* Logo */}
         <div className="text-white text-[18px] md:text-[24px] lg:text-[28px]">
@@ -166,7 +167,7 @@ export default function Navbar() {
       {/* Nav Items for Small Screens */}
       <div
         className={`${menuOpen ? 'block' : 'hidden'
-          } flex flex-col items-start gap-2 sm:hidden mt-2`}
+          } absolute top-8 bg-[#0a0a0a] w-full z-20  left-0 flex justify-start flex-col items-start gap-2 sm:hidden mt-2`}
       >
 
         <NavItem><a href="https://memolabs.gitbook.io/memo-docs" target="_blank" rel="noopener noreferrer">Docs </a></NavItem>

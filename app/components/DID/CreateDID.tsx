@@ -103,7 +103,7 @@ export default function CreateDID() {
                 </div>
                 <div className="flex justify-between mt-[16px] animate-fade-in-delay">
                     <div className="text-[16px] text-white leading-[30px]">Mint To</div>
-                    <div className="text-[16px] text-white leading-[30px]">{address}</div>
+                    <div className="whitespace-normal break-words text-[11px] md:text-[16px] text-white leading-[30px]">{address}</div>
                 </div>
                 <div className="flex justify-between mt-[16px] animate-fade-in-delay">
                     <div className="text-[16px] text-white leading-[30px]">Play With</div>
