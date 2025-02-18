@@ -7,6 +7,7 @@ import { useWallet } from '@/app/lib/context/WalletContext';
 import { useRouter } from 'next/navigation';
 import { useAction } from '@/app/lib/context/ActionContext';
 import { useAccount } from 'wagmi';
+import { flare } from 'viem/chains';
 
 // Reusable styles for NavItems and Buttons
 const commonStyles = `
@@ -89,7 +90,7 @@ const Dbutton = styled(ButtonBase)`
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const { invite, showWallet } = useWallet();
+  const { isShown, setIsShown } = useWallet();
   const { address, isConnected } = useAccount();
   const toggleMenu = () => setMenuOpen(!menuOpen);
   const { leaveProject, } = useAction();
@@ -107,9 +108,7 @@ export default function Navbar() {
     }
   }, [isConnected, address, openConnectModal]);
 
-  const showWalletHandler = useCallback(() => {
-    showWallet();
-  }, [showWallet]);
+
 
   return (
     <div className="w-full">
@@ -153,7 +152,7 @@ export default function Navbar() {
               <div className='text-white mr-[20px]'>Docs</div>
             </a>
             <div className='text-white mr-[20px] cursor-pointer' onClick={() => window.open("https://docs.google.com/forms/d/e/1FAIpQLSfyrgViv6ABqLV_1pcGoqnQuF1dAQs8igIQWOunrCEFhg8RgQ/viewform")}>Join</div>
-            <div className='text-white mr-[20px] cursor-pointer' onClick={() => showWallet()}>Profile</div>
+            <div className='text-white mr-[20px] cursor-pointer' onClick={() => setIsShown(!isShown)}>Profile</div>
             <div className='text-white mr-[20px] cursor-pointer' onClick={() => handleFaucetClick()}>Faucet</div>
             {/* <NavItem>TotalPoints</NavItem> */}
           </div>
@@ -171,7 +170,7 @@ export default function Navbar() {
 
         <NavItem><a href="https://memolabs.gitbook.io/memo-docs" target="_blank" rel="noopener noreferrer">Docs </a></NavItem>
         <NavItem onClick={() => window.open("https://docs.google.com/forms/d/e/1FAIpQLSfyrgViv6ABqLV_1pcGoqnQuF1dAQs8igIQWOunrCEFhg8RgQ/viewform")}>Join</NavItem>
-        <NavItem onClick={showWalletHandler}>Profile</NavItem>
+        <NavItem onClick={() => setIsShown(!isShown)}>Profile</NavItem>
         <NavItem onClick={handleFaucetClick}>Faucet</NavItem>
         <NavItem ><ConnectButton /></NavItem>
       </div>
