@@ -9,7 +9,7 @@ interface WalletContextType {
     isShown: boolean;
     // isOpened: boolean;
     // toggleWallet: () => void;
-    showWallet: () => void;
+    setIsShown: (value: boolean) => void;
     closeInvite: () => void;
 }
 
@@ -28,7 +28,7 @@ export const WalletContextProvider = ({ children }: WalletContextProviderProps) 
     const invite = () => setIsInvited(true);
     const closeInvite = () => setIsInvited(false);
     // const skip = () => setSkiped(true);
-    const showWallet = () => { setIsShown(!isShown); console.log(isShown); }
+
     return (
         <WalletContext.Provider
             value={{
@@ -40,7 +40,7 @@ export const WalletContextProvider = ({ children }: WalletContextProviderProps) 
                 isShown,
                 // isOpened,
                 // toggleWallet,
-                showWallet,
+                setIsShown,
             }}
         >
             {children}

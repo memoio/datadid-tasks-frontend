@@ -113,16 +113,16 @@ export default function Invite() {
                         value={value}
                         onChange={(e) => handleChange(index, e.target.value)}
                         maxLength={1} // Limit the length to 1 character
-                        className="w-[50px] h-[50px] text-center text-[24px] border border-gray-300 rounded-md"
-                        style={{
-                            lineHeight: "50px",
-                            fontSize: "24px",
-                            textAlign: "center",
-                        }}
+                        className="flex w-[35px] h-[35px] sm:w-[50px] sm:h-[50px] text-center text-[24px] border border-gray-300 rounded-md"
+                    // style={{
+                    //     lineHeight: "50px",
+                    //     fontSize: "24px",
+                    //     textAlign: "center",
+                    // }}
                     />
                 ))}
             </div>
-            <div className="bg-[#05F292] flex justify-center items-center rounded-full px-4 py-2 mt-5 shadow-md transform hover:scale-110 transition-transform duration-300 w-[50%] mx-[25%]">
+            <div className="bg-[#05F292] flex justify-center items-center rounded-full px-4 py-2 mt-5 shadow-md transform hover:scale-110 transition-transform duration-300">
                 <span className="font-bold text-[14px] sm:text-[16px] text-white cursor-pointer"
                     onClick={(e) => {
                         e.preventDefault();

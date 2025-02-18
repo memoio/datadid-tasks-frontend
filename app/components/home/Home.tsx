@@ -1,5 +1,5 @@
 
-import React from 'react'; // Import React
+import React, { useEffect, useRef } from 'react'; // Import React
 import { paytoneOne } from '@/app/ui/fonts';
 import Image from 'next/image';
 import Profile from '../Navbar/profile';
@@ -11,10 +11,28 @@ import { useDIDInfo } from '@/app/lib/context/DIDContext';
 
 
 export default function Home() {
-    const { isShown } = useWallet();
+    const { isShown, setIsShown } = useWallet();
     const { address, isConnected, isDisconnected } = useAccount();
     const { setToggleDid, isDIDExistState } = useDIDInfo();
     const { openConnectModal } = useConnectModal();
+    const windowRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (
+                windowRef.current &&
+                !windowRef.current.contains(event.target as Node)
+            ) {
+                setIsShown(false);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [setIsShown]);
 
     const openDid = () => {
         if (!isConnected) {
@@ -37,7 +55,7 @@ export default function Home() {
                 }}
             >
                 {isShown && (
-                    <div className="fixed top-[100px] right-[20px] z-50">
+                    <div className="fixed top-[100px]" ref={windowRef}>
                         <Profile />
                     </div>
                 )}
