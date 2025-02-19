@@ -46,6 +46,10 @@ const connectors = connectorsForWallets(
   }
 );
 
+type ExtendedGetDefaultConfigParams = Parameters<typeof getDefaultConfig>[0] & {
+  connectors: ReturnType<typeof connectorsForWallets>;
+};
+
 export const config = getDefaultConfig({
   connectors,
   appName: 'did',
@@ -62,5 +66,5 @@ export const config = getDefaultConfig({
     ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true' ? [sepolia] : []),
   ],
   ssr: true,
-});
+} as ExtendedGetDefaultConfigParams);
 

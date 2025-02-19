@@ -4,7 +4,7 @@ import React, { FC } from 'react';
 import { paytoneOne } from '@/app/ui/fonts';
 import Image from 'next/image';
 import { useDIDInfo } from "@/app/lib/context/DIDContext";
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { useAccount } from "wagmi";
 import { useConnectModal } from '@rainbow-me/rainbowkit';
 import { useEffect, useState } from 'react';
@@ -86,11 +86,21 @@ export default function DidSection() {
                     if (response.status === 506) {
                         console.log("ddd")
                     }
-                } catch (error: any) {
-                    if (error.response && error.response.status === 506) {
-
+                } catch (error: unknown) {
+                    let errorMessage = 'An unknown error occurred';
+                    if (error instanceof AxiosError) {
+                        if (error.response) {
+                            const { status } = error.response;
+                            if (status === 506) {
+                                alert('Handling 506 error');
+                            } else {
+                                errorMessage = `Error: ${status} - ${JSON.stringify(error.response.data)}`;
+                            }
+                        } else {
+                            errorMessage = `Error: No response received - ${error.message}`;
+                        }
                     }
-
+                    alert(errorMessage);
                     return
                 }
             } else {
@@ -129,9 +139,11 @@ export default function DidSection() {
                     if (response.status === 506) {
                         console.log("ddd")
                     }
-                } catch (error: any) {
-                    if (error.response && error.response.status === 506) {
+                } catch (error: unknown) {
+                    if (error instanceof AxiosError) {
+                        if (error.response && error.response.status === 506) {
 
+                        }
                     }
 
                     return

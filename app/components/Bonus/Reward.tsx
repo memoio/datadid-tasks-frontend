@@ -9,7 +9,7 @@ import { API_URL } from '../config/config';
 
 export default function Reward() {
     const { isConnected, address } = useAccount();
-    const { userInfo, isExist } = useAuth();
+    const { uidInfo, isExist } = useAuth();
 
     const handVerifyOAT = async () => {
         if (isConnected) {
