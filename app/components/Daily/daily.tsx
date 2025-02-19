@@ -28,11 +28,12 @@ const items: Item[] = [
 export default function Daily() {
     const [loading, setLoading] = useState(false);
     const [opIndex, setOpIndex] = useState(-1);
-    const { dailyAction, setDaily, setPointUpdate } = useAction();
+    const { userInfos, dailyAction, setDaily, setPointUpdate } = useAction();
     const { uidInfo, isExist, setBindWallet } = useAuth();
     const { isConnected } = useAccount();
     const { openConnectModal } = useConnectModal();
     const { isDIDExistState } = useDIDInfo();
+
     // const [isModalOpen, setIsModalOpen] = useState(false);
 
     const handleClick = async (index: number) => {
@@ -43,11 +44,27 @@ export default function Daily() {
                     setBindWallet();
                 }
                 if (isDIDExistState && isExist) {
-                    const currentUrl = window.location.href;
-                    const tweetText = "Join MEMO's Airdrop! " + currentUrl;
+                    const currentUrl = `https://data.memolabs.org/?referralCode=${userInfos.invideCode}`;
+                    const tweetText = `📈I found a platform that can own, manage and monetize your data @MemoLabsOrg!
+
+🚀Currently all users can participate, and you can easily get points rewards by completing tasks, and you can also redeem more value!
+
+➡️Experience now https://data.memolabs.org/?referralCode=${userInfos.invideCode}
+`
+                    const tgText = `🎉 Welcome to the MEMO data ecosystem, a platform where you can own, manage and monetize your data! 💰
+
+🌟 You can easily earn points by completing tasks within the platform, and you can also unlock exclusive tasks with multiple partners to get points!
+·Create DID 📝
+·Link Social Media Accounts🔗
+·Daily Check-in📅
+·Joint Activities🤝
+·Invite friends👫
+
+🚀 Click https://data.memolabs.org/?referralCode=${userInfos.invideCode} to start your data value-added journey!
+`
                     const urls = [
                         { url: "https://x.com/MemoLabsOrg" },
-                        { url: 'https://t.me/share/url?url=' + encodeURIComponent(currentUrl) },
+                        { url: 'https://t.me/share/url?url=' + encodeURIComponent(currentUrl) + '&text=' + encodeURIComponent(tgText) },
                         { url: 'https://discord.com/invite/YG4Ydv2E7X' },
                         { url: 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(tweetText) },
                     ];

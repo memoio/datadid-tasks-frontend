@@ -27,6 +27,7 @@ interface ActionContextType {
     joinId: number;
     isPointUpdate: boolean;
     isCheckDID: boolean;
+    setIsCheckDID: (value: boolean) => void;
     setPointUpdate: (value: boolean) => void;
     setDaily: (index: number) => void;
     setQuest: (index: number) => void;
@@ -361,6 +362,7 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
             userInfos,
             isPointUpdate,
             isCheckDID,
+            setIsCheckDID,
             setPointUpdate,
             setDaily,
             setQuest,

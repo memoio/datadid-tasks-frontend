@@ -7,11 +7,13 @@ import { useAccount, useSignMessage } from 'wagmi';
 import React, { useState, useEffect } from 'react';
 import { useConnectModal } from '@rainbow-me/rainbowkit';
 import { API_URL } from '../config/config';
+import { useAction } from '@/app/lib/context/ActionContext';
 
 export default function CreateDID() {
     const { setIsCreatingDid, setToggleDid } = useDIDInfo();
     const { isConnected, address, chain } = useAccount();
     const { openConnectModal } = useConnectModal();
+    const { setPointUpdate } = useAction();
     const { uidInfo, isExist, setBindWallet } = useAuth();
 
 
@@ -48,7 +50,7 @@ export default function CreateDID() {
                     });
 
                     if (respond.status === 200) {
-
+                        setPointUpdate(true);
                     }
 
                 } else if (response1.status === 501) {
