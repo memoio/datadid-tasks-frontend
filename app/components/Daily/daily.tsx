@@ -129,7 +129,7 @@ export default function Daily() {
                             ? 'bg-[#0663412B] hover:scale-105'
                             : 'bg-gradient-to-r from-[#214177] to-[#064E33] scale-105 shadow-lg'
                             } p-6 rounded-[15px] cursor-pointer`}
-                    // style={{ pointerEvents: isConnected && dailyAction.has(index) ? 'none' : 'auto' }}
+                        style={{ pointerEvents: isConnected && dailyAction.has(index) ? 'none' : 'auto' }}
                     >
                         {/* Item Image */}
                         <div className="flex justify-center">
