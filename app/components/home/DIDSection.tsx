@@ -19,7 +19,7 @@ interface PopupData {
 
 export default function DidSection() {
     const { uidInfo } = useAuth();
-    const { isCheckDID, setPointUpdate } = useAction();
+    const { isCheckDID, setIsCheckDID } = useAction();
     const { address, isConnected, isDisconnected } = useAccount();
     const { setToggleDid, didInfo, setDID, isDIDInfoState, isDIDExistState, setIsDIDExist, setDIDInfoExist } = useDIDInfo();
     const { openConnectModal } = useConnectModal();
@@ -56,7 +56,7 @@ export default function DidSection() {
         });
 
         if (respond.status === 200) {
-            setPointUpdate(true)
+            setIsCheckDID(true)
         }
     };
 
@@ -190,8 +190,13 @@ export default function DidSection() {
                                 </div>
                                 <div className='flex flex-row gap-5'>
                                     <div
-                                        onClick={() => openDid()}
-                                        className={`bg-[#13E292] flex justify-center items-center rounded-full px-4 py-2 mt-5 shadow-md transform hover:scale-110 transition-transform duration-300 cursor-pointer ${isCheckDID ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                        onClick={() => {
+                                            if (!isCheckDID) {
+                                                openDid();
+                                            }
+                                        }}
+                                        className={`bg-[#13E292] flex justify-center items-center rounded-full px-4 py-2 mt-5 shadow-md transform hover:scale-110 transition-transform duration-300 cursor-pointer 
+                                            ${isCheckDID ? 'opacity-50 cursor-not-allowed' : console.log("ischeck", isCheckDID)}`}
                                     >
                                         <span className="font-bold text-[14px] sm:text-[16px] text-white">
                                             Check DID
