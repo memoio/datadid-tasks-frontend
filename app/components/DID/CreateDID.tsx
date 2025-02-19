@@ -2,7 +2,7 @@ import { paytoneOne } from '@/app/ui/fonts';
 import Image from 'next/image';
 import { useDIDInfo } from "@/app/lib/context/DIDContext";
 import { useAuth } from '@/app/lib/context/AuthContext';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { useAccount, useSignMessage } from 'wagmi';
 import React, { useState, useEffect } from 'react';
 import { useConnectModal } from '@rainbow-me/rainbowkit';
@@ -56,8 +56,15 @@ export default function CreateDID() {
                 } else {
                     alert(`Error: ${response1.status} - ${response1.data.Message}`);
                 }
-            } catch (err: any) {
-                alert(`Error: ${err.status}-${err.data}`);
+            } catch (err: unknown) {
+                let errorMessage = 'An unknown error occurred';
+                if (err instanceof AxiosError) {
+                    const { status, data } = err.response || {};
+                    if (status && data) {
+                        errorMessage = `Error: ${status}-${data}`;
+                    }
+                }
+                alert(errorMessage);
                 return
             }
         } else {

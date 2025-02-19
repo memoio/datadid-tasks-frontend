@@ -177,7 +177,5 @@ export default function Navbar() {
     </div>
   );
 }
-function useAuth(): { invite: any; } {
-  throw new Error('Function not implemented.');
-}
+
 

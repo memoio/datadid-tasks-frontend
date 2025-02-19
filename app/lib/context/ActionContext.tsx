@@ -177,7 +177,7 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
         } else if (joinId === -2) {
             router.push(`/`);
         }
-    }, [joinId])
+    }, [joinId, router])
 
     useEffect(() => {
         const fun = async () => {
