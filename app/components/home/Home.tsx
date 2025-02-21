@@ -55,7 +55,7 @@ export default function Home() {
                 }}
             >
                 {isShown && (
-                    <div className="fixed top-[100px]" ref={windowRef}>
+                    <div className="fixed top-[100px] z-50" ref={windowRef}>
                         <Profile />
                     </div>
                 )}
