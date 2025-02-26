@@ -1,5 +1,5 @@
 'use client';
-import { createContext, useContext, useState, ReactNode } from 'react';
+import { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 
 interface WalletContextType {
     isInvited: boolean;
@@ -21,6 +21,7 @@ interface WalletContextProviderProps {
 
 export const WalletContextProvider = ({ children }: WalletContextProviderProps) => {
     const [isInvited, setIsInvited] = useState(false);
+
     // const [skiped, setSkiped] = useState(false);
     const [isShown, setIsShown] = useState(false);
     // const [isOpened, setIsOpened] = useState(false);
@@ -28,6 +29,8 @@ export const WalletContextProvider = ({ children }: WalletContextProviderProps) 
     const invite = () => setIsInvited(true);
     const closeInvite = () => setIsInvited(false);
     // const skip = () => setSkiped(true);
+
+
 
     return (
         <WalletContext.Provider

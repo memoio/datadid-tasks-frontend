@@ -7,6 +7,7 @@ import { API_URL } from '@/app/components/config/config';
 import { useRouter } from 'next/navigation';
 import { disconnect } from 'process';
 import { useAuth } from './AuthContext';
+import { useWallet } from './WalletContext';
 interface TaskData {
     projectId: number;
     taskId: number;
@@ -17,6 +18,7 @@ interface UserInfos {
     invideCode: string;
     PointsRank: string;
     inviteCount: string;
+    parentUid: string;
 }
 
 interface ActionContextType {
@@ -96,8 +98,8 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
     const [dailyAction, setDailyAction] = useState(new Set<number>());
     const [questAction, setQuestAction] = useState(new Set<number>());
     const [cycleAction, setCycleAction] = useState<TaskData[]>([]);
-    const [userInfos, setUserInfos] = useState<UserInfos>({ points: 0, invideCode: '******', PointsRank: '-', inviteCount: '-' })
-
+    const [userInfos, setUserInfos] = useState<UserInfos>({ points: 0, invideCode: '******', PointsRank: '-', inviteCount: '-', parentUid: '' })
+    const { invite } = useWallet();
     /*
        const [dailyAction, setDailyAction] = useState<Set<number>>(() =>
         getFromLocalStorage<Set<number>>('dailyAction', new Set<number>(), true)
@@ -118,7 +120,7 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
         setDailyAction(getFromLocalStorage<Set<number>>('dailyAction', new Set<number>(), true))
         setQuestAction(getFromLocalStorage<Set<number>>('questAction', new Set<number>(), true))
         setCycleAction(getFromLocalStorage<TaskData[]>('cycleAction', []))
-        setUserInfos(getFromLocalStorage<UserInfos>('userInfos', { points: 0, invideCode: '******', PointsRank: '-', inviteCount: '-' }))
+        setUserInfos(getFromLocalStorage<UserInfos>('userInfos', { points: 0, invideCode: '******', PointsRank: '-', inviteCount: '-', parentUid: '' }))
     }, []);
 
 
@@ -157,6 +159,7 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
             invideCode: '******',
             PointsRank: '-',
             inviteCount: '-',
+            parentUid: ''
         });
         // setCycleAction([]);
         setJoinId(-1);
@@ -191,8 +194,9 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
             setUserInfos({
                 points: userresponse.data.data.points,
                 invideCode: userresponse.data.data.inviteCode,
-                PointsRank: userresponse.data.data.pointsRank,
+                PointsRank: (userresponse.data.data.pointsRank === 0) ? ('1000+') : userresponse.data.data.pointsRank,
                 inviteCount: userresponse.data.data.inviteCount,
+                parentUid: userresponse.data.data.parentUid,
             });
             setPointUpdate(false);
         }
@@ -201,12 +205,8 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
 
     useEffect(() => {
         if (isExist) {
-            // 调用绑定钱包接口
-            const HandleDailyAction = async () => {
+            const HandleUserInfo = async () => {
                 try {
-                    const tmpCycle: TaskData[] = []
-                    console.log("clear");
-                    // clear();
                     // get user info
                     const userresponse = await axios.get(API_URL.AIRDROP_USER_INFO, {
                         headers: {
@@ -214,13 +214,37 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
                             "token": uidInfo?.token,
                         },
                     });
-                    setUserInfos({
-                        points: userresponse.data.data.points,
-                        invideCode: userresponse.data.data.inviteCode,
-                        PointsRank: userresponse.data.data.pointsRank,
-                        inviteCount: userresponse.data.data.inviteCount,
-                    });
-                    //setPointUpdate(false);
+
+                    if (userresponse.status === 200) {
+                        setUserInfos({
+                            points: userresponse.data.data.points,
+                            invideCode: userresponse.data.data.inviteCode,
+                            PointsRank: userresponse.data.data.pointsRank,
+                            inviteCount: userresponse.data.data.inviteCount,
+                            parentUid: userresponse.data.data.parentUid,
+                        });
+
+                        if (userresponse.data.data.parentUid === null) {
+                            invite();
+                        }
+                    }
+
+                } catch (error) {
+                    console.log(error)
+                }
+            }
+            HandleUserInfo();
+        }
+
+    }, [isExist])
+
+    useEffect(() => {
+        if (isExist) {
+            // 调用绑定钱包接口
+            const HandleDailyAction = async () => {
+                try {
+                    const tmpCycle: TaskData[] = []
+                    console.log("clear");
 
                     // get one time action
                     const oneTimeRespond = await axios.get(API_URL.AIRDROP_RECORD_LIST,

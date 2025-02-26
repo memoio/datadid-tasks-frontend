@@ -179,7 +179,7 @@ export default function CyclePage() {
                                 {/* <p className="text-[#0079F2] text-[16px]">{card.participants} Participants</p> */}
 
                                 <div
-                                    onClick={() => (isConnected ? isDIDExistState  ? navProjects(index) : alert("Please create did first!") : openConnectModal ? openConnectModal() : alert("Can not connect to chain"))}
+                                    onClick={() => (isConnected ? isDIDExistState ? navProjects(index) : alert("Please create did first!") : openConnectModal ? openConnectModal() : alert("Can not connect to chain"))}
                                     className={`mt-3 mt-[40px] py-2 px-4 rounded-full text-[17.5px] font-bold transition-colors duration-300  cursor-pointer ${buttonClasses}`}
                                 >
                                     {loading && cyIndex == index &&
