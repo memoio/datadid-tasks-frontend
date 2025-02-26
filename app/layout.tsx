@@ -33,16 +33,18 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <WagmiProvider config={config}>
           <QueryClientProvider client={queryClient}>
             <RainbowKitProvider locale="en-US">
-              <WalletContextProvider>
-                <AuthContextProvider>
+
+              <AuthContextProvider>
+
+                <WalletContextProvider>
                   <ActionProvider>
                     <DIDContextProvider>
                       {children}
                       <GoogleAnalytics />
                     </DIDContextProvider>
                   </ActionProvider>
-                </AuthContextProvider>
-              </WalletContextProvider>
+                </WalletContextProvider>
+              </AuthContextProvider>
             </RainbowKitProvider>
           </QueryClientProvider>
         </WagmiProvider>

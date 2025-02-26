@@ -28,7 +28,7 @@ export default function Profile() {
     }
 
     return (
-        <div className="w-[400px] h-auto mx-auto">
+        <div className="w-[400px]  px-4">
             <div className="border-2 rounded-[15px] px-6 py-6 border-white bg-gradient-to-b from-[#23895E] to-[#092318] flex flex-col justify-between shadow-lg">
                 {/* DID Section */}
                 <div className="flex justify-between items-center mb-4">

@@ -3,7 +3,7 @@ import { ReactNode, useEffect, createContext, useContext, useState } from "react
 import { useAccount } from "wagmi";
 import axios from "axios";
 import { API_URL } from "@/app/components/config/config";
-import { useWallet } from "./WalletContext";
+
 
 interface UidInfo {
   uid: string;
@@ -27,7 +27,6 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
   const { isConnected, address, isDisconnected } = useAccount();
   const [isExist, setIsExist] = useState(false);
   const [uidInfo, setUserInfo] = useState<UidInfo | null>(null);
-  const { invite } = useWallet();
   const setBindWallet = () => {
     if (address && !isExist) {
       const bindWallet = async () => {
@@ -53,9 +52,6 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
               token: response.data.data.token,
             });
             setIsExist(true);
-            if (response.data.data.lastLoginTime == 0) {
-              invite();
-            }
           } else {
             alert(`Failed to bind wallet: ${JSON.stringify(response.data)}`);
           }
