@@ -5,6 +5,7 @@ import {
   metaMaskWallet,
   injectedWallet,
   coinbaseWallet,
+  tokenPocketWallet,
 } from '@rainbow-me/rainbowkit/wallets';
 
 import {
@@ -33,11 +34,13 @@ const memoriae = {
   },
 } as const as Chain;
 
+
+
 const connectors = connectorsForWallets(
   [
     {
       groupName: 'Recommended',
-      wallets: [metaMaskWallet, injectedWallet, coinbaseWallet],
+      wallets: [metaMaskWallet, injectedWallet, tokenPocketWallet, coinbaseWallet],
     },
   ],
   {
