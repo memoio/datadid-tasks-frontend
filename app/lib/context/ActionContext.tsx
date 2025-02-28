@@ -219,7 +219,7 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
                         setUserInfos({
                             points: userresponse.data.data.points,
                             invideCode: userresponse.data.data.inviteCode,
-                            PointsRank: userresponse.data.data.pointsRank,
+                            PointsRank: (userresponse.data.data.pointsRank === 1000) ? ('1000+') : userresponse.data.data.pointsRank,
                             inviteCount: userresponse.data.data.inviteCount,
                             parentUid: userresponse.data.data.parentUid,
                         });

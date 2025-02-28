@@ -33,9 +33,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <WagmiProvider config={config}>
           <QueryClientProvider client={queryClient}>
             <RainbowKitProvider locale="en-US">
-
               <AuthContextProvider>
-
                 <WalletContextProvider>
                   <ActionProvider>
                     <DIDContextProvider>
