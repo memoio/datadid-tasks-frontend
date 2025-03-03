@@ -122,11 +122,11 @@ export default function CreateDID() {
                 </div>
                 <div className="flex justify-between mt-[16px] animate-fade-in-delay">
                     <div className="text-[16px] text-white leading-[30px]">Play With</div>
-                    <div className="text-[16px] text-white leading-[30px]">{"1.00 MEMO"}</div>
+                    <div className="text-[16px] text-white leading-[30px]">{"0.00 MEMO"}</div>
                 </div>
                 <div className="flex justify-between mt-[16px] animate-fade-in-delay">
                     <div className="text-[16px] text-white leading-[30px]">Total</div>
-                    <div className="text-[16px] text-white leading-[30px]">{"1.00 MEMO"} + GAS FEE</div>
+                    <div className="text-[16px] text-white leading-[30px]">{"0.00 MEMO"} + GAS FEE</div>
                 </div>
                 <div
                     onClick={handleCreateDid}
@@ -135,9 +135,9 @@ export default function CreateDID() {
                     Create
                 </div>
                 <div
-                    className="flex justify-between text-[10px] leading-[20px] text-white mt-[10px] text-center animate-fade-in"
+                    className=" text-[10px] text-white mt-[10px] text-center animate-fade-in"
                 >
-                    Total cost includes gas fee for DID creation, and future profile updates. Currently, users can participate for free.
+                    {"At this stage, the cost of creating DID is borne by MEMO."}
                 </div>
             </div>
         </div>
