@@ -3,10 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "dev": "NODE_ENV=development next dev",
+    "test-build": "NODE_ENV=test next build",
+    "test-start": "NODE_ENV=test next start",
+    "build": "NODE_ENV=production next build",
+    "start": "NODE_ENV=production next start"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.7.1",
