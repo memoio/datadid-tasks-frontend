@@ -9,7 +9,7 @@ const nextConfig: NextConfig = {
       } else if (process.env.NODE_ENV === 'test') {
         return 'https://testdidapi.memolabs.org/did';
       } else {
-        return 'https://prodidapi.memolabs.org/did';
+        return 'https://didapi.memolabs.org/did';
       }
     })(),
 
