@@ -129,7 +129,7 @@ export default function CyclePage() {
             {/* Stats Section */}
             <div className="flex flex-col sm:flex-row justify-around items-center mt-[65px] gap-5 px-6 animate-fade-in bg-[#05F2920D] rounded-[10px] py-[20px] border border-[#0079F2]">
                 {[
-                    { label: 'Rank', value: userInfos.PointsRank },
+                    { label: 'Rank', value: (userInfos.PointsRank === "1000") ? ('1000+') : userInfos.PointsRank },
                     { label: 'Projects Completed', value: completed },
                     { label: 'Tasks Accomplished', value: cycleAction.length },
                     { label: 'Rewards Earned', value: userInfos.points },
