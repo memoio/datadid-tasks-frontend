@@ -58,10 +58,10 @@ export default function Refer() {
                         />
                         <div>
                             <div className="text-[18px] sm:text-[25px] text-white font-bold text-center sm:text-left">
-                                Refer Your Friends
+                                Invite Friends
                             </div>
                             <div className="text-[14px] sm:text-[18px] text-white text-center sm:text-left">
-                                Share the link with your friends over Twitter or any other social platform.
+                                Share your exclusive invitation link.
                             </div>
                         </div>
                     </div>
@@ -76,10 +76,10 @@ export default function Refer() {
                         />
                         <div>
                             <div className="text-[18px] sm:text-[25px] text-white font-bold text-center sm:text-left">
-                                GET Rewards When Users Sign Up
+                                Bind Invitation Code
                             </div>
                             <div className="text-[14px] sm:text-[18px] text-white text-center sm:text-left">
-                                When your friend signs up on the app, you will receive points.
+                                When your friend binds the invitation code, he or she will get 500 points, you will get 200 points.
                             </div>
                         </div>
                     </div>
