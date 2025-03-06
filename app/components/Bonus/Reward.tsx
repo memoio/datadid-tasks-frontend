@@ -4,31 +4,17 @@ import Image from 'next/image';
 import { paytoneOne } from '@/app/ui/fonts';
 import { useAccount } from 'wagmi';
 import { useAuth } from '@/app/lib/context/AuthContext';
-import axios from 'axios';
-import { API_URL } from '../config/config';
+
 
 export default function Reward() {
-    const { isConnected, address } = useAccount();
-    const { uidInfo, isExist } = useAuth();
+    const { isConnected } = useAccount();
+    const { isExist } = useAuth();
 
     const handVerifyOAT = async () => {
         if (isConnected) {
             const actionId = 85;
-            console.log(isExist);
-            // const respond = await axios.post(API_URL.AIRDROP_RECORD_ADD, {
-            //     "action": actionId
-            // }, {
-            //     headers: {
-            //         "accept": "application/hal+json",
-            //         "Content-Type": "application/json",
-            //         "uid": userInfo?.uid,
-            //         "token": userInfo?.token
-            //     }
-            // });
-
-            // if (respond.status === 200) {
-
-            // }
+        
+            
             return;
         }
     }

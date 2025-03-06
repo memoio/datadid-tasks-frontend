@@ -35,6 +35,21 @@ const memoriae = {
 } as const as Chain;
 
 
+const hashkey = {
+  id: 177,
+  name: "HashKey Chain",
+  rpcUrls: {
+    default: {
+      http: ["https://mainnet.hsk.xyz"],
+    }
+  },
+  nativeCurrency: {
+    name: 'HSK',
+    symbol: 'HSK',
+    decimals: 10,
+  },
+} as const as Chain
+
 
 const connectors = connectorsForWallets(
   [
@@ -58,6 +73,7 @@ export const config = getDefaultConfig({
   appName: 'did',
   projectId: 'a4c0191a67edd0463e46fc2c3380a3f8',
   chains: [
+    hashkey,
     memoriae,
     mainnet,
     polygon,
