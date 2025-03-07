@@ -15,7 +15,8 @@ import {
   optimism,
   polygon,
   sepolia,
-  bsc
+  bsc,
+  hashkeyTestnet
 } from 'wagmi/chains';
 
 const memoriae = {
@@ -44,9 +45,9 @@ const hashkey = {
     }
   },
   nativeCurrency: {
-    name: 'HSK',
+    decimals: 18,
+    name: 'HashKey EcoPoints',
     symbol: 'HSK',
-    decimals: 10,
   },
 } as const as Chain
 
@@ -76,11 +77,12 @@ export const config = getDefaultConfig({
     hashkey,
     memoriae,
     mainnet,
-    polygon,
-    optimism,
-    arbitrum,
-    base,
+    // polygon,
+    // optimism,
+    // arbitrum,
+    // base,
     bsc,
+    hashkeyTestnet,
 
     ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true' ? [sepolia] : []),
   ],
