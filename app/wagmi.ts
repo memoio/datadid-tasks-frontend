@@ -38,6 +38,7 @@ const memoriae = {
 
 const hashkey = {
   id: 177,
+  iconUrl: "https://hsk.xyz/static/logo.png",
   name: "HashKey Chain",
   rpcUrls: {
     default: {
