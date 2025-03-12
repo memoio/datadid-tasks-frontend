@@ -16,7 +16,6 @@ import {
   polygon,
   sepolia,
   bsc,
-  hashkeyTestnet
 } from 'wagmi/chains';
 
 const memoriae = {
@@ -38,6 +37,7 @@ const memoriae = {
 
 const hashkey = {
   id: 177,
+  iconUrl: "https://hsk.xyz/static/logo.png",
   name: "HashKey Chain",
   rpcUrls: {
     default: {
@@ -82,8 +82,6 @@ export const config = getDefaultConfig({
     // arbitrum,
     // base,
     bsc,
-    hashkeyTestnet,
-
     ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true' ? [sepolia] : []),
   ],
   ssr: true,

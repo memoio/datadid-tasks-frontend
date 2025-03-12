@@ -3,7 +3,6 @@
 import React from 'react';
 import Activity from '@/app/components/Cycle/Activity';
 import { useParams } from 'next/navigation';
-import { useAction } from '@/app/lib/context/ActionContext'
 import Navbar from '@/app/components/Navbar/navbar';
 import Invite from '@/app/components/Wallet/Invite';
 import { useWallet } from '@/app/lib/context/WalletContext';
