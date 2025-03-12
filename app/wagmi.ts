@@ -16,7 +16,6 @@ import {
   polygon,
   sepolia,
   bsc,
-  hashkeyTestnet
 } from 'wagmi/chains';
 
 const memoriae = {
@@ -83,8 +82,6 @@ export const config = getDefaultConfig({
     // arbitrum,
     // base,
     bsc,
-    hashkeyTestnet,
-
     ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true' ? [sepolia] : []),
   ],
   ssr: true,
