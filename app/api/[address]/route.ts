@@ -1,10 +1,8 @@
 import prisma from "../../lib/prisma";
 import { NextResponse } from 'next/server'
 
-export async function GET(
-    request: Request,
-    { params }: { params: { address: string } } // 从 params 获取参数
-) {
+export async function GET(request: Request, props: { params: Promise<{ address: string }> }) {
+    const params = await props.params;
 
     const address = decodeURIComponent(params.address)
 
@@ -29,10 +27,8 @@ export async function GET(
 }
 
 
-export async function POST(
-    request: Request,
-    { params }: { params: { address: string } } // 从 params 获取参数
-) {
+export async function POST(request: Request, props: { params: Promise<{ address: string }> }) {
+    const params = await props.params;
     const decodedAddress = decodeURIComponent(params.address)
 
     if (!/^0x[a-fA-F0-9]{40}$/.test(decodedAddress)) {
