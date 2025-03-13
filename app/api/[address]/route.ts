@@ -4,7 +4,7 @@ import { NextResponse } from 'next/server'
 export async function GET(request: Request, props: { params: Promise<{ address: string }> }) {
     const params = await props.params;
 
-    const address = decodeURIComponent(params.address)
+    const address = decodeURIComponent(params.address).toLowerCase();
 
     try {
         const count = await prisma.oAT.count({
