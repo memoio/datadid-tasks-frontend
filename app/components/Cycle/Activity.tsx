@@ -49,9 +49,9 @@ export default function Activity({ joinId }: { joinId: number }) {
         { id: 13, links: [{ url: "https://x.com/ccarbonWorld" }, { url: "https://ccarbon.world/" }, { url: "https://ccarbon.world/" },] },
         { id: 14, links: [{ url: "https://x.com/onlylayer" }, { url: "https://t.me/onlylayer" }, { url: "https://onlylayer.com/" },] },
         { id: 15, links: [{ url: "https://x.com/ClusterProtocol" }, { url: "https://t.me/clusterprotocolchat" }, { url: "https://www.clusterprotocol.ai/" },] },
-        { id: 16, links: [{ url: "https://x.com/harmonyprotocol" }, { url: "https://t.me/harmony_one" }, { url: "https://www.harmony.one/" },] },
+        { id: 16, links: [{ url: "https://x.com/swan_chain" }, { url: "https://t.me/swan_chain/1" }, { url: "https://swanchain.io/" },] },
         { id: 17, links: [{ url: "https://x.com/4everland_org" }, { url: "https://t.me/org_4everland" }, { url: "https://www.4everland.org/" },] },
-        { id: 18, links: [{ url: "https://x.com/ionet" }, { url: "https://t.me/io_net" }, { url: "https://io.net/" },] },
+        { id: 18, links: [{ url: "https://x.com/aidappcom" }, { url: "https://t.me/aidappcom" }, { url: "https://www.aidapp.com/" },] },
         { id: 19, links: [{ url: "https://x.com/SugreNetwork" }, { url: "https://t.me/SugreNetwork" }, { url: "https://www.sugre.xyz/" },] },
         { id: 20, links: [{ url: "https://x.com/ESCC_io" }, { url: "https://t.me/ESCCIO" }, { url: "https://www.escc.io/" },] },
     ];

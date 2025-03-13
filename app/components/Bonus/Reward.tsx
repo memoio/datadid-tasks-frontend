@@ -65,7 +65,7 @@ export default function Reward() {
                 console.error('Address is undefined');
             }
         }
-    }, [address, isConnected, handVerifyOAT])
+    }, [isConnected, handVerifyOAT])
 
     const { isExist } = useAuth();
 
