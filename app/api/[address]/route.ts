@@ -29,7 +29,7 @@ export async function GET(request: Request, props: { params: Promise<{ address: 
 
 export async function POST(request: Request, props: { params: Promise<{ address: string }> }) {
     const params = await props.params;
-    const decodedAddress = decodeURIComponent(params.address)
+    const decodedAddress = decodeURIComponent(params.address).toLowerCase();
 
     if (!/^0x[a-fA-F0-9]{40}$/.test(decodedAddress)) {
         return NextResponse.json(
