@@ -31,12 +31,6 @@ export async function POST(request: Request, props: { params: Promise<{ address:
     const params = await props.params;
     const decodedAddress = decodeURIComponent(params.address).toLowerCase();
 
-    if (!/^0x[a-fA-F0-9]{40}$/.test(decodedAddress)) {
-        return NextResponse.json(
-            { error: 'Invalid Ethereum address' },
-            { status: 400 }
-        )
-    }
 
     try {
         // 更新地址的状态为 true

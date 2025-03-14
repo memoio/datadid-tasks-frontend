@@ -22,7 +22,6 @@ export default function Reward() {
     const handVerifyOAT = async () => {
         if (isConnected && !verify) {
             const actionId = 87;
-            // 根据OATCount次数，多次调用API_URL.AIRDROP_RECORD_ADD
             for (let i = 0; i < OATCount; i++) {
                 const respond = await axios.post(API_URL.AIRDROP_RECORD_ADD, {
                     "action": actionId
@@ -68,7 +67,7 @@ export default function Reward() {
                 console.error('Address is undefined');
             }
         }
-    }, [isConnected, setVerify])
+    }, [isConnected, verify])
 
     const { isExist } = useAuth();
 
