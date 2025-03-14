@@ -35,6 +35,7 @@ export default function Reward() {
                 });
                 console.log("OAT:", respond.data);
             }
+            alert("Verify Success!")
             setVerify(true)
 
 
