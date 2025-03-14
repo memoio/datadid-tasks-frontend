@@ -15,10 +15,12 @@ export default function Reward() {
     const { uidInfo } = useAuth();
     const { setPointUpdate } = useAction();
 
+    const [verify, setVerify] = useState(false)
+
     const [OATCount, setOATCount] = useState(0);
 
     const handVerifyOAT = async () => {
-        if (isConnected) {
+        if (isConnected && !verify) {
             const actionId = 87;
             // 根据OATCount次数，多次调用API_URL.AIRDROP_RECORD_ADD
             for (let i = 0; i < OATCount; i++) {
@@ -34,6 +36,7 @@ export default function Reward() {
                 });
                 console.log("OAT:", respond.data);
             }
+            setVerify(true)
 
 
             if (address) {
@@ -65,7 +68,7 @@ export default function Reward() {
                 console.error('Address is undefined');
             }
         }
-    }, [isConnected, handVerifyOAT])
+    }, [isConnected, setVerify])
 
     const { isExist } = useAuth();
 
@@ -100,14 +103,14 @@ export default function Reward() {
                                 rewards. Please make sure that the current wallet address is
                                 consistent with the address for receiving OAT.
                             </div>
-                            <div className="text-[16px] text-white text-center sm:text-left">
+                            <div className="text-[16px] text-[#13E292] text-center sm:text-left">
                                 OAT Count: {OATCount}
                             </div>
                         </div>
                     </div>
                     {/* Right Section */}
                     <div
-                        className="bg-[#0079F2] text-white text-[18px] font-bold text-center px-[25px] py-[20px] hover:bg-[#04D582] hover:scale-105 transition-transform duration-300 rounded-[10px]"
+                        className="bg-[#0079F2] text-white text-[18px] font-bold text-center px-[25px] py-[20px] hover:bg-[#04D582] hover:scale-105 transition-transform duration-300 rounded-[10px] cursor-pointer"
                         style={{ pointerEvents: (OATCount > 0) ? 'auto' : 'none', opacity: (OATCount > 0) ? 1 : 0.5 }} // 
                         onClick={() => handVerifyOAT()}
                     >
