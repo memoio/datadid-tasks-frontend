@@ -8,69 +8,61 @@ import { use, useEffect, useState } from 'react';
 import axios from 'axios';
 import { API_URL } from '../config/config';
 import { useAction } from '@/app/lib/context/ActionContext';
+import { error } from 'console';
 
 export default function Reward() {
     const { isConnected } = useAccount();
     const { address } = useAccount();
-    const { uidInfo } = useAuth();
     const { setPointUpdate } = useAction();
 
     const [verify, setVerify] = useState(false)
 
-    const [OATCount, setOATCount] = useState(0);
+    const [OATCount, setOATCount] = useState({
+        vcount: 0,
+        ucount: 0,
+    });
 
     const handVerifyOAT = async () => {
+        const verifyOAT = async () => {
+            if (isConnected) {
+                const respond = await axios.post(API_URL.BACKEND_OAT_VERIFY,
+                    {
+                        address: address
+                    })
+                console.log("oatverify", respond.data)
+                if (respond.data.result === 1) {
+                    setVerify(true)
+                }
+            }
+        }
         if (isConnected && !verify) {
-            const actionId = 87;
-            for (let i = 0; i < OATCount; i++) {
-                const respond = await axios.post(API_URL.AIRDROP_RECORD_ADD, {
-                    "action": actionId
-                }, {
-                    headers: {
-                        "accept": "application/hal+json",
-                        "Content-Type": "application/json",
-                        "uid": uidInfo?.uid,
-                        "token": uidInfo?.token
-                    }
-                });
-                console.log("OAT:", respond.data);
-            }
-            alert("Verify Success!")
-            setVerify(true)
-
-
-            if (address) {
-                await fetch(`/api/${encodeURIComponent(address)}`, {
-                    method: 'POST',
-                });
-            } else {
-                console.error('Address is undefined');
-            }
-
+            verifyOAT()
             setPointUpdate(true)
             return;
         }
     }
 
     useEffect(() => {
-        if (isConnected) {
-            if (address) {
-                fetch(`/api/${encodeURIComponent(address)}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        console.log(`Address exists ${data.count} times in the database.`);
-                        setOATCount(data.count);
+        const status = async () => {
+            if (isConnected) {
+                const respond = await axios.get(API_URL.BACKEND_OAT_STATUS,
+                    {
+                        params: {
+                            address: address
+                        }
                     })
-                    .catch(error => {
-                        console.error('Fetch error:', error);
-                    });
-            } else {
-                console.error('Address is undefined');
+                console.log("oatstatus", respond.data.data)
+                if (respond.data.result === 1) {
+                    setOATCount({
+                        vcount: respond.data.data.vcount,
+                        ucount: respond.data.data.ucount
+                    })
+                }
             }
         }
+        status()
     }, [isConnected, verify])
 
-    const { isExist } = useAuth();
 
 
     return (
@@ -104,18 +96,21 @@ export default function Reward() {
                                 consistent with the address for receiving OAT.
                             </div>
                             <div className="text-[16px] text-[#13E292] text-center sm:text-left">
-                                OAT Count: {OATCount}
+                                OAT UnVerify Count: {OATCount.ucount}
+                            </div>
+                            <div className="text-[16px] text-[#13E292] text-center sm:text-left">
+                                OAT Verify Count: {OATCount.vcount}
                             </div>
                         </div>
                     </div>
                     {/* Right Section */}
                     <div
                         className="bg-[#0079F2] text-white text-[18px] font-bold text-center px-[25px] py-[20px] hover:bg-[#04D582] hover:scale-105 transition-transform duration-300 rounded-[10px] cursor-pointer"
-                        style={{ pointerEvents: (OATCount > 0) ? 'auto' : 'none', opacity: (OATCount > 0) ? 1 : 0.5 }} // 
+                        style={{ pointerEvents: (OATCount.ucount > 0) ? 'auto' : 'none', opacity: (OATCount.ucount > 0) ? 1 : 0.5 }} // 
                         onClick={() => handVerifyOAT()}
                     >
                         {
-                            (OATCount > 0) ?
+                            (OATCount.ucount > 0) ?
                                 "Verify OAT" :
                                 "No OAT"
                         }

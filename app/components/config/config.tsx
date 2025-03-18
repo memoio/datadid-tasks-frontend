@@ -8,6 +8,7 @@ export const TEST_AIRDROP_BACKEND_URL = "https://apapitest.memoscan.org/api"
 
 export const PRODUCT_AIRDROP_BACKEND_URL = "https://apapi.memoscan.org/api"
 
+export const BACKEND_URL = "https://data-be.metamemo.one"
 
 export const DID_SERVER_URL = process.env.DID_SERVER_URL;
 export const AIRDROP_BACKEND_URL = process.env.AIRDROP_BACKEND_URL;
@@ -24,5 +25,8 @@ export const API_URL = {
     "AIRDROP_USER_INFO": AIRDROP_BACKEND_URL + "/user/info",
     "AIRDROP_POINTS_RANK": AIRDROP_BACKEND_URL + "/points/rank",
     "AIRDROP_INVITE_BIND": AIRDROP_BACKEND_URL + "/invite/bind",
-    "AIRDROP_RECORD_LIST": AIRDROP_BACKEND_URL + "/record/list"
+    "AIRDROP_RECORD_LIST": AIRDROP_BACKEND_URL + "/record/list",
+
+    "BACKEND_OAT_STATUS": BACKEND_URL + "/oat/status",
+    "BACKEND_OAT_VERIFY": BACKEND_URL + "/oat/verify",
 }
