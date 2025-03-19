@@ -32,6 +32,7 @@ export default function Reward() {
                 console.log("oatverify", respond.data)
                 if (respond.data.result === 1) {
                     setVerify(true)
+                    alert("verify success!")
                 }
             }
         }
@@ -57,10 +58,13 @@ export default function Reward() {
                         vcount: respond.data.data.vcount,
                         ucount: respond.data.data.ucount
                     })
+                } else {
+                    alert(respond.data.error)
                 }
             }
         }
-        status()
+
+        status();
     }, [isConnected, verify])
 
 
