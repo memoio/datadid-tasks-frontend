@@ -29,16 +29,23 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
     if (address && !isExist) {
       const bindWallet = async () => {
         try {
+          const ipresponse = await fetch('https://api.ipify.org?format=json');
+          const data = await ipresponse.json();
+
+
           const response = await axios.post(
             API_URL.BACKEND_AIRDROP_BIND,
             {
               address: address,
-              source: "airdrop"
+              source: "airdrop",
+              useragent: navigator.userAgent,
+              ip: data.ip
             },
           );
 
           if (response.data.result === 1) {
             setIsExist(true);
+
           } else {
             alert(`Failed to bind wallet: ${JSON.stringify(response.data)}`);
           }
