@@ -40,7 +40,7 @@ export default function CyclePage() {
     const [loading, setLoading] = useState(false);
     const [cyIndex, setCyIndex] = useState(-1);
     const { userInfos, joinProject, cycleAction } = useAction();
-    const { isExist, uidInfo, setBindWallet } = useAuth();
+    const { isExist, setBindWallet } = useAuth();
     const { isConnected, address } = useAccount();
     const { isDIDExistState } = useDIDInfo();
     const { openConnectModal } = useConnectModal();
