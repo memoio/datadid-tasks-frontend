@@ -1,12 +1,16 @@
 "use client";
 
+import { API_URL } from "@/app/components/config/config";
+import axios from "axios";
 // import { tree } from "next/dist/build/templates/app-page";
 import {
   createContext,
   useContext,
   useState,
   ReactNode,
+  useEffect,
 } from "react";
+import { useAccount } from "wagmi";
 
 
 interface DIDContextType {
@@ -20,11 +24,7 @@ interface DIDContextType {
     did: string;
     number: string;
   };
-  setDID: (didInfo: {
-    did: string;
-    number: string;
-  }) => void;
-  setDIDInfoExist: (arg0: boolean) => void;
+
   isDIDExistState: boolean;
   setIsDIDExist: (arg0: boolean) => void;
   isDIDInfoState: boolean;
@@ -46,6 +46,7 @@ export const DIDContextProvider = ({ children }: DIDContextProviderProps) => {
     did: "",
     number: "000000",
   });
+  const { isConnected, address } = useAccount();
   const [isDIDExistState, setIsDIDExistState] = useState(false);
   const [isDIDInfoState, setIsDIDInfoState] = useState(false);
   const setToggleDid = () => {
@@ -61,12 +62,40 @@ export const DIDContextProvider = ({ children }: DIDContextProviderProps) => {
     setIsCreatedState(true);
   };
 
-  const setDID = ({ did, number }: { did: string; number: string }) => {
-    setDIDInfo({
-      did: did,
-      number: number,
-    })
-  }
+  useEffect(() => {
+    console.log("didstate", isDIDExistState)
+    if (isConnected) {
+      const getDIDInfo = async () => {
+
+        const response = await axios.get(
+          API_URL.BACKEND_DID_INFO,
+          {
+            params: {
+              address,
+            },
+          }
+        );
+
+        if (response.data.result === 1) {
+          if (response.data.data.exist === 1) {
+            setDIDInfo({
+              did: response.data.data.did,
+              number: response.data.data.number.toString().padStart(6, '0'),
+            })
+            console.log("did info", response.data.data)
+            setIsDIDExistState(true)
+          } else {
+            setIsDIDExistState(false)
+          }
+        } else {
+          alert(response.data.error)
+        }
+      };
+
+      getDIDInfo();
+    }
+  }, [isConnected])
+
 
   const setDIDInfoExist = (flag: boolean) => {
     setIsDIDInfoState(flag)
@@ -86,8 +115,6 @@ export const DIDContextProvider = ({ children }: DIDContextProviderProps) => {
         isCreatedState,
         setIsCreatedDid,
         didInfo,
-        setDID,
-        setDIDInfoExist,
         isDIDExistState,
         setIsDIDExist,
         isDIDInfoState

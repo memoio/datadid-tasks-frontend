@@ -1,5 +1,6 @@
 import type { NextConfig } from "next";
 
+
 const nextConfig: NextConfig = {
   /* config options here */
   env: {
@@ -18,6 +19,14 @@ const nextConfig: NextConfig = {
         return 'https://apapitest.memoscan.org/api';
       } else {
         return 'https://apapi.memoscan.org/api';
+      }
+    })(),
+
+    BACKEND_URL: (() => {
+      if (process.env.NODE_ENV === 'development') {
+        return 'http://localhost:8080';
+      } else {
+        return 'https://data-be.metamemo.one';
       }
     })()
   }

@@ -8,25 +8,28 @@ export const TEST_AIRDROP_BACKEND_URL = "https://apapitest.memoscan.org/api"
 
 export const PRODUCT_AIRDROP_BACKEND_URL = "https://apapi.memoscan.org/api"
 
-export const BACKEND_URL = "https://data-be.metamemo.one"
+export const DEV_BACKEND_URL = "http://localhost:8080"
+
+export const PRODUCT_BACKEND_URL = "https://data-be.metamemo.one"
+
+export const BACKEND_URL = process.env.BACKEND_URL;
 
 export const DID_SERVER_URL = process.env.DID_SERVER_URL;
 export const AIRDROP_BACKEND_URL = process.env.AIRDROP_BACKEND_URL;
 
 export const API_URL = {
-    "DID_CREATE": DID_SERVER_URL + "/create",
-    "DID_CREATE_ADMIN": DID_SERVER_URL + "/createadmin",
-    "DID_INFO": DID_SERVER_URL + "/info",
-    "DID_EXIST": DID_SERVER_URL + "/exist",
-    "DID_CREATE_MSG": DID_SERVER_URL + "/createsigmsg",
-
     "AIRDROP_RECORD_ADD": AIRDROP_BACKEND_URL + "/record/add",
-    "AIRDROP_USER_WALLET_BIND": AIRDROP_BACKEND_URL + "/user/wallet/bind",
-    "AIRDROP_USER_INFO": AIRDROP_BACKEND_URL + "/user/info",
-    "AIRDROP_POINTS_RANK": AIRDROP_BACKEND_URL + "/points/rank",
-    "AIRDROP_INVITE_BIND": AIRDROP_BACKEND_URL + "/invite/bind",
-    "AIRDROP_RECORD_LIST": AIRDROP_BACKEND_URL + "/record/list",
 
     "BACKEND_OAT_STATUS": BACKEND_URL + "/oat/status",
     "BACKEND_OAT_VERIFY": BACKEND_URL + "/oat/verify",
+
+    "BACKEND_AIRDROP_BIND": BACKEND_URL + "/airdrop/bind",
+    "BACKEND_AIRDROP_INFO": BACKEND_URL + "/airdrop/info",
+    "BACKEND_AIRDROP_RANK": BACKEND_URL + "/airdrop/rank",
+    "BACKEND_AIRDROP_INVITE_BIND": BACKEND_URL + "/airdrop/invite/bind",
+    "BACKEND_AIRDROP_RECORD_LIST": BACKEND_URL + "/airdrop/record/list",
+    "BACKEND_AIRDROP_RECORD_ADD": BACKEND_URL + "/airdrop/record/add",
+
+    "BACKEND_DID_CREATEADMIN": BACKEND_URL + "/did/createadmin",
+    "BACKEND_DID_INFO": BACKEND_URL + "/did/info",
 }

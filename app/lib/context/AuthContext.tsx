@@ -13,7 +13,6 @@ interface UidInfo {
 interface AuthContextType {
   isExist: boolean;
   setBindWallet: () => void;
-  uidInfo: UidInfo | null;
 }
 // Create the context
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -26,32 +25,27 @@ interface AuthContextProviderProps {
 export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
   const { isConnected, address, isDisconnected } = useAccount();
   const [isExist, setIsExist] = useState(false);
-  const [uidInfo, setUserInfo] = useState<UidInfo | null>(null);
   const setBindWallet = () => {
     if (address && !isExist) {
       const bindWallet = async () => {
         try {
+          const ipresponse = await fetch('https://api.ipify.org?format=json');
+          const data = await ipresponse.json();
+
+
           const response = await axios.post(
-            API_URL.AIRDROP_USER_WALLET_BIND,
+            API_URL.BACKEND_AIRDROP_BIND,
             {
-              walletAddress: address,
+              address: address,
+              source: "airdrop",
+              useragent: navigator.userAgent,
+              ip: data.ip
             },
-            {
-              headers: {
-                accept: "application/hal+json",
-                uid: "11735283", // 根据您的实际情况传入 uid
-                token: "37595d3a6e43876682b37cdcf941938e", // 根据您的实际情况传入 token
-                "Content-Type": "application/json",
-              },
-            }
           );
 
           if (response.data.result === 1) {
-            setUserInfo({
-              uid: response.data.data.uid,
-              token: response.data.data.token,
-            });
             setIsExist(true);
+
           } else {
             alert(`Failed to bind wallet: ${JSON.stringify(response.data)}`);
           }
@@ -79,7 +73,7 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
 
   }, [isDisconnected])
   return (
-    <AuthContext.Provider value={{ isExist, uidInfo, setBindWallet }}>
+    <AuthContext.Provider value={{ isExist, setBindWallet }}>
       {children}
     </AuthContext.Provider>
   );
