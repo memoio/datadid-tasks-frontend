@@ -29,34 +29,14 @@ export default function CreateDID() {
             }
             try {
                 // if (isFreeDid) {
-                const response1 = await axios.post(API_URL.DID_CREATE_ADMIN, {
+                const response1 = await axios.post(API_URL.BACKEND_DID_CREATEADMIN, {
                     address,
                 });
 
-                if (response1.status === 200) {
-                    setIsCreatingDid();
-
-                    const actionId = 1;
-                    console.log(actionId);
-                    const respond = await axios.post(API_URL.AIRDROP_RECORD_ADD, {
-                        "action": actionId
-                    }, {
-                        headers: {
-                            "accept": "application/hal+json",
-                            "Content-Type": "application/json",
-                            "uid": uidInfo?.uid,
-                            "token": uidInfo?.token
-                        }
-                    });
-
-                    if (respond.status === 200) {
-                        setPointUpdate(true);
-                    }
-
-                } else if (response1.status === 501) {
-                    alert(`Error: ${response1.status} - ${response1.data.preview}`);
+                if (response1.data.result === 1) {
+                    setPointUpdate(true);
                 } else {
-                    alert(`Error: ${response1.status} - ${response1.data.Message}`);
+                    alert("Error: " + response1.data.error);
                 }
             } catch (err: unknown) {
                 let errorMessage = 'An unknown error occurred';

@@ -18,141 +18,33 @@ interface PopupData {
 }
 
 export default function DidSection() {
-    const { uidInfo } = useAuth();
     const { isCheckDID, setIsCheckDID } = useAction();
     const { address, isConnected, isDisconnected } = useAccount();
-    const { setToggleDid, didInfo, setDID, isDIDInfoState, isDIDExistState, setIsDIDExist, setDIDInfoExist } = useDIDInfo();
+    const { setToggleDid, didInfo, isDIDExistState, } = useDIDInfo();
     const { openConnectModal } = useConnectModal();
     const [popupData, setPopupData] = useState<PopupData[]>([]);
     const [showPopup, setShowPopup] = useState(false);
-
-    const handlePopup = () => {
-        // Mock invitation details
-        // const mockData: PopupData[] = [
-        //     { invitee: "0x06B45...EBFEe", time: "2024-12-01 14:30:32", points: 100 },
-        //     { invitee: "0x06B45...EBFE1", time: "2024-12-03 10:45:32", points: 50 },
-        //     { invitee: "0x06B45...EBFE2", time: "2024-12-03 10:45:32", points: 50 },
-        //     { invitee: "0x06B45...EBFE3", time: "2024-12-03 10:45:32", points: 50 },
-        //     { invitee: "0x06B45...EBFE4", time: "2024-12-03 10:45:32", points: 50 },
-        // ];
-        // setPopupData(mockData);
-        // setShowPopup(true);
-    };
 
 
 
     const openDid = async () => {
         window.open(`http://faucet.metamemo.one?address=${address}`, '_blank')
         const actionId = 2;
-        const respond = await axios.post(API_URL.AIRDROP_RECORD_ADD, {
-            "action": actionId
-        }, {
-            headers: {
-                "accept": "application/hal+json",
-                "Content-Type": "application/json",
-                "uid": uidInfo?.uid,
-                "token": uidInfo?.token
-            }
+        const respond = await axios.post(API_URL.BACKEND_AIRDROP_RECORD_ADD, {
+            "actionid": actionId,
+            "address": address
         });
 
         if (respond.status === 200) {
-            setIsCheckDID(true)
+            if (respond.data.result === 1) {
+                setIsCheckDID(true)
+            } else {
+                alert(respond.data.error)
+            }
         }
     };
 
-    useEffect(() => {
-        const getDIDExist = async () => {
-            if (address && isConnected) {
-                try {
-                    const response = await axios.get(
-                        API_URL.DID_EXIST,
-                        {
-                            params: {
-                                address,
-                            },
-                        }
-                    );
 
-                    if (response.status === 200) {
-                        if (response.data.exist === 1) {
-                            console.log("did eixst:", response.data);
-                            setIsDIDExist(true);
-                        } else {
-                            setIsDIDExist(false)
-                            setDIDInfoExist(false)
-                        }
-                    }
-
-                    if (response.status === 506) {
-                        console.log("ddd")
-                    }
-                } catch (error: unknown) {
-                    let errorMessage = 'An unknown error occurred';
-                    if (error instanceof AxiosError) {
-                        if (error.response) {
-                            const { status } = error.response;
-                            if (status === 506) {
-                                alert('Handling 506 error');
-                            } else {
-                                errorMessage = `Error: ${status} - ${JSON.stringify(error.response.data)}`;
-                            }
-                        } else {
-                            errorMessage = `Error: No response received - ${error.message}`;
-                        }
-                    }
-                    alert(errorMessage);
-                    return
-                }
-            } else {
-                setIsDIDExist(false)
-                setDIDInfoExist(false)
-            }
-        };
-
-        getDIDExist();
-
-    }, [isConnected])
-
-    useEffect(() => {
-        console.log("didstate", isDIDExistState)
-        if (isConnected && isDIDExistState && !isDIDInfoState) {
-            const getDIDInfo = async () => {
-                try {
-                    const response = await axios.get(
-                        API_URL.DID_INFO,
-                        {
-                            params: {
-                                address,
-                            },
-                        }
-                    );
-
-                    if (response.status === 200) {
-                        console.log("didinfo:", response.data);
-                        setDID({
-                            did: response.data.did,
-                            number: response.data.number.toString().padStart(6, '0'),
-                        })
-                        setDIDInfoExist(true)
-                    }
-
-                    if (response.status === 506) {
-                        console.log("ddd")
-                    }
-                } catch (error: unknown) {
-                    if (error instanceof AxiosError) {
-                        if (error.response && error.response.status === 506) {
-
-                        }
-                    }
-
-                    return
-                }
-            };
-
-            getDIDInfo();
-        }
-    }, [isDIDExistState, isConnected])
 
     useEffect(() => {
 
@@ -180,7 +72,7 @@ export default function DidSection() {
                         <p className='mt-[15px]'>Note 2: Create DID +1000, Check DID +500.</p>
                     </div>
                     <div className="text-center flex justify-start sm:justify-start">
-                        {isDIDExistState && isDIDInfoState && isConnected ? (
+                        {isDIDExistState && isConnected ? (
                             <div className="mt-[5px] px-[5px] bg-[#121212] ">
                                 <div className="text-[18px] text-[#13E292] mt-[16px] text-left">
                                     No.{didInfo.number}

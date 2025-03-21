@@ -26,10 +26,11 @@ const items: Item[] = [
 ];
 
 export default function Daily() {
+    const { address } = useAccount();
     const [loading, setLoading] = useState(false);
     const [opIndex, setOpIndex] = useState(-1);
     const { userInfos, dailyAction, setDaily, setPointUpdate } = useAction();
-    const { uidInfo, isExist, setBindWallet } = useAuth();
+    const { isExist, setBindWallet } = useAuth();
     const { isConnected } = useAccount();
     const { openConnectModal } = useConnectModal();
     const { isDIDExistState } = useDIDInfo();
@@ -73,20 +74,18 @@ export default function Daily() {
                     const actionId = 70 + index;
                     console.log(actionId);
                     setLoading(true);
-                    const respond = await axios.post(API_URL.AIRDROP_RECORD_ADD, {
-                        "action": actionId
-                    }, {
-                        headers: {
-                            "accept": "application/hal+json",
-                            "Content-Type": "application/json",
-                            "uid": uidInfo?.uid,
-                            "token": uidInfo?.token
-                        }
+                    const respond = await axios.post(API_URL.BACKEND_AIRDROP_RECORD_ADD, {
+                        "actionid": actionId,
+                        "address": address
                     });
 
                     if (respond.status === 200) {
-                        setDaily(index);
-                        setPointUpdate(true)
+                        if (respond.data.result === 1) {
+                            setDaily(index);
+                            setPointUpdate(true)
+                        } else {
+                            alert(respond.data.error)
+                        }
                     }
                 } else {
                     alert("Please create did first!")

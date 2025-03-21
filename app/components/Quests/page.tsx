@@ -30,10 +30,10 @@ export default function BindingPage() {
     const [loading, setLoading] = useState(false);
     const [opIndex, setOpIndex] = useState(-1);
     const { questAction, setQuest, setPointUpdate } = useAction();
-    const { uidInfo } = useAuth();
     const { isConnected } = useAccount();
     const { openConnectModal } = useConnectModal();
     const { isDIDExistState } = useDIDInfo();
+    const { address } = useAccount();
 
     const handleClick = async (index: number, url: string) => {
         setOpIndex(-1);
@@ -46,20 +46,18 @@ export default function BindingPage() {
                     console.log(actionId);
                     setLoading(true);
                     setOpIndex(index);
-                    const respond = await axios.post(API_URL.AIRDROP_RECORD_ADD, {
-                        "action": actionId
-                    }, {
-                        headers: {
-                            "accept": "application/hal+json",
-                            "Content-Type": "application/json",
-                            "uid": uidInfo?.uid,
-                            "token": uidInfo?.token
-                        }
+                    const respond = await axios.post(API_URL.BACKEND_AIRDROP_RECORD_ADD, {
+                        "actionid": actionId,
+                        "address": address
                     });
 
                     if (respond.status === 200) {
-                        setQuest(index);
-                        setPointUpdate(true)
+                        if (respond.data.result === 1) {
+                            setQuest(index);
+                            setPointUpdate(true)
+                        } else {
+                            alert(respond.data.error)
+                        }
                     }
 
                 } else {

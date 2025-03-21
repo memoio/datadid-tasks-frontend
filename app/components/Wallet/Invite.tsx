@@ -5,14 +5,16 @@ import { useWallet } from "../../lib/context/WalletContext";
 import { useAuth } from "../../lib/context/AuthContext";
 import { useSearchParams, useParams } from 'next/navigation';
 import { API_URL } from "../config/config";
+import { useAccount } from "wagmi";
 
 export default function Invite() {
     const { isInvited, closeInvite } = useWallet();
-    const { uidInfo, isExist, setBindWallet } = useAuth();
+    const { isExist, setBindWallet } = useAuth();
     const [values, setValues] = useState(Array(6).fill("")); // Separate state for each input
     const [success, setSuccess] = useState(false); // State for success popup
     const searchParams = useSearchParams()
     const params = useParams();
+    const { address } = useAccount();
 
     const referralCode = searchParams.get('referralCode')?.toString() || '';
     const projectId = params.projectId;
@@ -70,23 +72,16 @@ export default function Invite() {
                 alert("Please enter a valid invite code.");
                 return;
             }
-            const respond = await axios.post(API_URL.AIRDROP_INVITE_BIND, {
-                "inviteCode": inviteCode,
-                "projectId": projectId
-            }, {
-                headers: {
-                    "accept": "application/hal+json",
-                    "Content-Type": "application/json",
-                    "uid": uidInfo?.uid,
-                    "token": uidInfo?.token
-                }
-            });
+            const respond = await axios.post(API_URL.BACKEND_AIRDROP_INVITE_BIND, {
+                "code": inviteCode,
+                "address": address
+            },);
             if (respond.status == 200) {
                 if (respond.data.result == 1) {
                     setSuccess(true);
                     console.log(respond.data.data);
                 } else {
-                    alert(respond.data.message);
+                    alert(respond.data.error);
                 }
             }
         } catch (error) {

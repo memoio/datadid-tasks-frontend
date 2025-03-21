@@ -13,7 +13,7 @@ import { useAccount } from 'wagmi';
 export default function LeaderboardPage() {
     const { isConnected } = useAccount();
     const [isWeekly, setIsWeekly] = useState(true);
-    const { isExist, uidInfo, setBindWallet } = useAuth();
+    const { isExist, setBindWallet } = useAuth();
     const [loading, setLoading] = useState(false);
 
     interface ElementData {
@@ -37,31 +37,30 @@ export default function LeaderboardPage() {
             const getRank = async () => {
                 try {
                     setLoading(true)
-                    const response = await axios.get(API_URL.AIRDROP_POINTS_RANK,
+                    const response = await axios.get(API_URL.BACKEND_AIRDROP_RANK,
                         {
-                            headers: {
-                                'accept': '*/*',
-                                uid: uidInfo?.uid,
-                                token: uidInfo?.token,
-                            },
                             params: {
                                 type: isWeekly ? 1 : 0,
                             }
                         },
                     )
-                    const ranklist = response.data.data.slice(0, 10).map((item: {
-                        walletAddress: any; inviteCount: any; points: any;
-                    }, index: number) => ({
-                        id: index + 1,
-                        address: (item.walletAddress ? item.walletAddress < 8 ? item.walletAddress : `${item.walletAddress.substring(0, 4)}...${item.walletAddress.substring(item.walletAddress.length - 4)}` : ''),
-                        score: (item.inviteCount ? item.inviteCount : 0),
-                        soul: item.points,
-                        isFirst: index === 0,
-                        isSecond: index === 1,
-                        isThird: index === 2,
-                    }))
-                    setElements(ranklist)
-                    console.log(response.data)
+                    if (response.data.result === 1) {
+                        const ranklist = response.data.data.slice(0, 10).map((item: {
+                            address: any; inviteCount: any; points: any;
+                        }, index: number) => ({
+                            id: index + 1,
+                            address: (item.address ? item.address < 8 ? item.address : `${item.address.substring(0, 4)}...${item.address.substring(item.address.length - 4)}` : ''),
+                            score: (item.inviteCount ? item.inviteCount : 0),
+                            soul: item.points,
+                            isFirst: index === 0,
+                            isSecond: index === 1,
+                            isThird: index === 2,
+                        }))
+                        setElements(ranklist)
+                        console.log(response.data)
+                    } else {
+                        alert(response.data.error)
+                    }
                 } catch (error) {
                     alert(`Error: ${error}`);
                     setLoading(false)

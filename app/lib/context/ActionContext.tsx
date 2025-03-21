@@ -92,7 +92,7 @@ interface ActionContextProviderProps {
 }
 
 export const ActionProvider = ({ children }: ActionContextProviderProps) => {
-    const { uidInfo, isExist, setBindWallet } = useAuth();
+    const { isExist } = useAuth();
     const [isCheckDID, setIsCheckDID] = useState(false);
 
     const [dailyAction, setDailyAction] = useState(new Set<number>());
@@ -184,59 +184,33 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
     }, [joinId, router])
 
     useEffect(() => {
-        const fun = async () => {
-            const userresponse = await axios.get(API_URL.AIRDROP_USER_INFO, {
-                headers: {
-                    "uid": uidInfo?.uid,
-                    "token": uidInfo?.token,
-                },
-            });
-            setUserInfos({
-                points: userresponse.data.data.points,
-                invideCode: userresponse.data.data.inviteCode,
-                PointsRank: userresponse.data.data.pointsRank,
-                inviteCount: userresponse.data.data.inviteCount,
-                parentUid: userresponse.data.data.parentUid,
-            });
-            setPointUpdate(false);
-        }
-        if (isPointUpdate) fun();
-    }, [isPointUpdate]);
-
-    useEffect(() => {
-        if (isExist) {
-            const HandleUserInfo = async () => {
-                try {
-                    // get user info
-                    const userresponse = await axios.get(API_URL.AIRDROP_USER_INFO, {
-                        headers: {
-                            "uid": uidInfo?.uid,
-                            "token": uidInfo?.token,
-                        },
-                    });
-
-                    if (userresponse.status === 200) {
-                        setUserInfos({
-                            points: userresponse.data.data.points,
-                            invideCode: userresponse.data.data.inviteCode,
-                            PointsRank: userresponse.data.data.pointsRank,
-                            inviteCount: userresponse.data.data.inviteCount,
-                            parentUid: userresponse.data.data.parentUid,
-                        });
-
-                        if (userresponse.data.data.parentUid === null) {
-                            invite();
-                        }
-                    }
-
-                } catch (error) {
-                    console.log(error)
+        const HandleUserInfo = async () => {
+            const userresponse = await axios.get(API_URL.BACKEND_AIRDROP_INFO, {
+                params: {
+                    address
                 }
-            }
-            HandleUserInfo();
-        }
+            });
+            if (userresponse.data.result === 1) {
+                if (userresponse.data.data.parentUid === null) {
+                    invite();
+                }
 
-    }, [isExist])
+                setUserInfos({
+                    points: userresponse.data.data.points,
+                    invideCode: userresponse.data.data.inviteCode,
+                    PointsRank: userresponse.data.data.pointsRank,
+                    inviteCount: userresponse.data.data.inviteCount,
+                    parentUid: userresponse.data.data.parentUid,
+                });
+                setPointUpdate(false);
+            } else {
+                alert("Error: " + userresponse.data.error);
+            }
+        }
+        if (isExist || isPointUpdate) HandleUserInfo();
+    }, [isPointUpdate, isExist]);
+
+
 
     useEffect(() => {
         if (isExist) {
@@ -247,103 +221,99 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
                     console.log("clear");
 
                     // get one time action
-                    const oneTimeRespond = await axios.get(API_URL.AIRDROP_RECORD_LIST,
+                    const oneTimeRespond = await axios.get(API_URL.BACKEND_AIRDROP_RECORD_LIST,
                         {
-                            headers: {
-                                "uid": uidInfo?.uid,
-                                "token": uidInfo?.token,
-                            },
                             params: {
-                                "page": 1,
-                                "size": 20,
-                                "type": 1,
+                                "address": address,
+                                "ltype": 1,
                             }
                         });
 
                     if (oneTimeRespond.status === 200) {
-                        const tmpOneTime = new Set<number>()
-                        // eslint-disable-next-line
-                        if (oneTimeRespond.data.data.length > 0) {
+                        if (oneTimeRespond.data.result === 1) {
+                            const tmpOneTime = new Set<number>()
+                            // eslint-disable-next-line
+                            if (oneTimeRespond.data.data.length > 0) {
 
-                            oneTimeRespond.data.data.some((element: any) => {
-                                const action = element.action;
-                                // console.log(action);
-                                if (action >= 50 && action <= 53) {
-                                    console.log("action", action - 50);
-                                    tmpOneTime.add(action - 50);
-                                    //setQuestAction((prev) => new Set(prev).add(action - 50));
-                                } else if (action >= 1011) {
-                                    const projectId = Math.floor((action - 1011) / 10);
-                                    const taskId = (action - 1011) % 10;
-                                    console.log("daily action", projectId, taskId);
-                                    tmpCycle.push({ projectId, taskId });
-                                    //setCycle(projectId, taskId);
-                                } else if (action === 2) {
-                                    setIsCheckDID(true)
-                                }
-                            });
+                                oneTimeRespond.data.data.some((element: any) => {
+                                    const action = element.action;
+                                    // console.log(action);
+                                    if (action >= 50 && action <= 53) {
+                                        console.log("action", action - 50);
+                                        tmpOneTime.add(action - 50);
+                                        //setQuestAction((prev) => new Set(prev).add(action - 50));
+                                    } else if (action >= 1011) {
+                                        const projectId = Math.floor((action - 1011) / 10);
+                                        const taskId = (action - 1011) % 10;
+                                        console.log("daily action", projectId, taskId);
+                                        tmpCycle.push({ projectId, taskId });
+                                        //setCycle(projectId, taskId);
+                                    } else if (action === 2) {
+                                        setIsCheckDID(true)
+                                    }
+                                });
+                            }
+                            setQuestAction(tmpOneTime)
                         }
-                        setQuestAction(tmpOneTime)
+
                     }
 
-                    const dailyRespond = await axios.get(API_URL.AIRDROP_RECORD_LIST,
+                    const dailyRespond = await axios.get(API_URL.BACKEND_AIRDROP_RECORD_LIST,
                         {
-                            headers: {
-                                "uid": uidInfo?.uid,
-                                "token": uidInfo?.token,
-                            },
                             params: {
-                                "page": 1,
-                                "size": 20,
-                                "type": 2
+                                "address": address,
+                                "ltype": 2,
                             }
                         }
                     );
 
                     if (dailyRespond.status === 200) {
-                        const tmpDaily = new Set<number>()
+                        if (oneTimeRespond.data.result === 1) {
+                            const tmpDaily = new Set<number>()
 
-                        // eslint-disable-next-line
-                        if (dailyRespond.data.data.length > 0) {
+                            // eslint-disable-next-line
+                            if (dailyRespond.data.data.length > 0) {
 
-                            dailyRespond.data.data.forEach((element: any) => {
-                                if (element.action >= 1011) {
-                                    const projectId = Math.floor((element.action - 1011) / 10);
-                                    const taskId = (element.action - 1011) % 10;
+                                dailyRespond.data.data.forEach((element: any) => {
+                                    if (element.action >= 1011) {
+                                        const projectId = Math.floor((element.action - 1011) / 10);
+                                        const taskId = (element.action - 1011) % 10;
 
-                                    const currentDate = new Date();
-                                    const elementDate = new Date(element.time)
+                                        const currentDate = new Date();
+                                        const elementDate = new Date(element.time)
 
-                                    const currentYear = currentDate.getFullYear();
-                                    const currentMonth = currentDate.getMonth();
-                                    const currentDay = currentDate.getDate();
+                                        const currentYear = currentDate.getFullYear();
+                                        const currentMonth = currentDate.getMonth();
+                                        const currentDay = currentDate.getDate();
 
 
-                                    const elementYear = elementDate.getFullYear();
-                                    const elementMonth = elementDate.getMonth();
-                                    const elementDay = elementDate.getDate();
-                                    console.log("days", projectId, taskId, currentDay, elementDay);
-                                    if (currentYear === elementYear &&
-                                        currentMonth === elementMonth &&
-                                        currentDay === elementDay) {
-                                        tmpDaily.add(element.action)
-                                        //setDailyAction((prev) => new Set(prev).add(element.action));
-                                        tmpCycle.push({ projectId, taskId });
-                                        //setCycle(projectId, taskId);
+                                        const elementYear = elementDate.getFullYear();
+                                        const elementMonth = elementDate.getMonth();
+                                        const elementDay = elementDate.getDate();
+                                        console.log("days", projectId, taskId, currentDay, elementDay);
+                                        if (currentYear === elementYear &&
+                                            currentMonth === elementMonth &&
+                                            currentDay === elementDay) {
+                                            tmpDaily.add(element.action)
+                                            //setDailyAction((prev) => new Set(prev).add(element.action));
+                                            tmpCycle.push({ projectId, taskId });
+                                            //setCycle(projectId, taskId);
+                                        }
+                                    } else {
+                                        const action = element.action - 70;
+                                        console.log("Daily", action);
+                                        const preDayTime = Date.now() - 86400000;
+                                        if (element.time > preDayTime) {
+                                            tmpDaily.add(action);
+                                            //setDailyAction((prev) => new Set(prev).add(action));
+                                        }
                                     }
-                                } else {
-                                    const action = element.action - 70;
-                                    console.log("Daily", action);
-                                    const preDayTime = Date.now() - 86400000;
-                                    if (element.time > preDayTime) {
-                                        tmpDaily.add(action);
-                                        //setDailyAction((prev) => new Set(prev).add(action));
-                                    }
-                                }
-                            });
+                                });
 
+                            }
+                            setDailyAction(tmpDaily);
                         }
-                        setDailyAction(tmpDaily);
+
                     }
                     setCycleAction(tmpCycle);
 

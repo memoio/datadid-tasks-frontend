@@ -9,9 +9,10 @@ import { useAuth } from "@/app/lib/context/AuthContext";
 import { useAction } from '@/app/lib/context/ActionContext';
 import { cards } from "./CyclePage";
 import { API_URL } from '../config/config';
+import { useAccount } from 'wagmi';
 
 export default function Activity({ joinId }: { joinId: number }) {
-
+    const { address } = useAccount();
     const [dailyLoading, setDailyLoading] = useState(false);
     const [dailyOpIndex, setDailyOpIndex] = useState(-1);
     const [onetimeLoading, setOnetimeLoading] = useState(false);
@@ -20,7 +21,7 @@ export default function Activity({ joinId }: { joinId: number }) {
     const [alertMessage, setAlertMessage] = useState<string | null>(null); // State for the alert
     const { leaveProject, cycleAction, setCycle, setDaily, userInfos, setPointUpdate, dailyAction } = useAction();
     const router = useRouter();
-    const { uidInfo, isExist, setBindWallet } = useAuth();
+    const {  isExist, setBindWallet } = useAuth();
 
     const dailyTasks = [
         { id: 'task4', label: 'Share task links on Twitter', reward: 20 },
@@ -66,22 +67,25 @@ export default function Activity({ joinId }: { joinId: number }) {
                 console.log("ID", joinId, taskId);
                 const actionId = 1011 + 10 * joinId + taskId;
                 console.log(actionId, joinId, taskId);
-                const respond = await axios.post(API_URL.AIRDROP_RECORD_ADD, {
-                    "action": actionId
-                }, {
-                    headers: {
-                        "accept": "application/hal+json",
-                        "Content-Type": "application/json",
-                        "uid": uidInfo?.uid,
-                        "token": uidInfo?.token
-                    }
+                const respond = await axios.post(API_URL.BACKEND_AIRDROP_RECORD_ADD, {
+                    "actionid": actionId,
+                    "address": address
                 });
 
                 if (respond.status === 200) {
-                    setCycle(joinId, taskId);
-                    setDaily(actionId);
-                    setPopupData(task);
-                    setPointUpdate(true)
+                    if ((respond.data.result === 1)) {
+                        setCycle(joinId, taskId);
+                        setDaily(actionId);
+                        setPopupData(task);
+                        setPointUpdate(true)
+                    } else {
+                        alert(respond.data.error);
+                        setOnetimeLoading(false);
+                        setOnetimeOpIndex(-1);
+                        setDailyLoading(false);
+                        setDailyOpIndex(-1);
+                    }
+
                 }
             } catch (error) {
                 setOnetimeLoading(false);
