@@ -14,7 +14,7 @@ export default function CreateDID() {
     const { isConnected, address, chain } = useAccount();
     const { openConnectModal } = useConnectModal();
     const { setPointUpdate } = useAction();
-    const { uidInfo, isExist, setBindWallet } = useAuth();
+    const { isExist, setBindWallet } = useAuth();
 
 
     // const currentAddress = isConnected && address ? address.slice(0, 6) + '...' + address.slice(-4) : '0x0000...0000'
