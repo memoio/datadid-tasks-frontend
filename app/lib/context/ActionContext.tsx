@@ -152,8 +152,8 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
 
     const clear = () => {
 
-        // setDailyAction(new Set());
-        // setQuestAction(new Set());
+        setDailyAction(new Set());
+        setQuestAction(new Set());
         setUserInfos({
             points: 0,
             invideCode: '******',
@@ -161,7 +161,7 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
             inviteCount: '-',
             parentUid: ''
         });
-        // setCycleAction([]);
+        setCycleAction([]);
         setJoinId(-1);
 
     }
