@@ -35,6 +35,7 @@ export default function CreateDID() {
 
                 if (response1.data.result === 1) {
                     setPointUpdate(true);
+                    setIsCreatingDid()
                 } else {
                     alert("Error: " + response1.data.error);
                 }
