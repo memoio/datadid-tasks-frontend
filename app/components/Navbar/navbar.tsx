@@ -148,7 +148,7 @@ export default function Navbar() {
         {/* Nav Items for Larger Screens */}
         <div className="hidden sm:flex justify-between items-center gap-12">
           <div className="flex">
-            <a href="https://memolabs.gitbook.io/memo-docs" target="_blank" rel="noopener noreferrer">
+            <a href="https://memolabs.gitbook.io/memodata-docs" target="_blank" rel="noopener noreferrer">
               <div className='text-white mr-[20px]'>Docs</div>
             </a>
             <div className='text-white mr-[20px] cursor-pointer' onClick={() => window.open("https://docs.google.com/forms/d/e/1FAIpQLSfyrgViv6ABqLV_1pcGoqnQuF1dAQs8igIQWOunrCEFhg8RgQ/viewform")}>Join</div>
@@ -168,7 +168,7 @@ export default function Navbar() {
           } flex flex-col items-start gap-2 sm:hidden mt-2`}
       >
 
-        <NavItem><a href="https://memolabs.gitbook.io/memo-docs" target="_blank" rel="noopener noreferrer">Docs </a></NavItem>
+        <NavItem><a href="https://memolabs.gitbook.io/memodata-docs" target="_blank" rel="noopener noreferrer">Docs </a></NavItem>
         <NavItem onClick={() => window.open("https://docs.google.com/forms/d/e/1FAIpQLSfyrgViv6ABqLV_1pcGoqnQuF1dAQs8igIQWOunrCEFhg8RgQ/viewform")}>Join</NavItem>
         <NavItem onClick={() => setIsShown(!isShown)}>Profile</NavItem>
         <NavItem onClick={handleFaucetClick}>Faucet</NavItem>
