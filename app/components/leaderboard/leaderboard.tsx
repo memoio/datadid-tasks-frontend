@@ -119,7 +119,7 @@ export default function LeaderboardPage() {
                     </div>
                     <div className="text-white text-[16px] sm:text-[20px] font-bold leading-[24px] sm:leading-[30px] w-[30%]">
                         <span className="block md:hidden">Reward</span>
-                        <span className="hidden md:block">Leaderboard Reward</span>
+                        <span className="hidden md:block">Total Points</span>
                     </div>
                 </div>
                 <div className="w-full m-auto h-[1px] bg-[#FFFFFF4D]"></div>
