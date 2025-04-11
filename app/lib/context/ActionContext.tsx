@@ -209,9 +209,9 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
                 }
             });
             if (userresponse.data.result === 1) {
-                if (userresponse.data.data.parentUid === null) {
-                    invite();
-                }
+                // if (userresponse.data.data.parentUid === null) {
+                //     invite();
+                // }
 
                 setUserInfos({
                     points: userresponse.data.data.points,
