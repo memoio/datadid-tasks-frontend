@@ -21,6 +21,16 @@ interface AuthContextProviderProps {
   children: ReactNode;
 }
 
+const getUserIP = async () => {
+  try {
+    const response = await axios.get('https://api.ipify.org?format=json');
+    return response.data.ip;
+  } catch (error) {
+    console.error('Failed to get IP address:', error);
+    return null;
+  }
+};
+
 // Create the provider component
 export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
   const { isConnected, address, isDisconnected } = useAccount();
@@ -29,9 +39,8 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
     if (address && !isExist) {
       const bindWallet = async () => {
         try {
-          const ipresponse = await fetch('https://api.ipify.org?format=json');
-          const data = await ipresponse.json();
 
+          const ip = await getUserIP();
 
           const response = await axios.post(
             API_URL.BACKEND_AIRDROP_BIND,
@@ -39,7 +48,7 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
               address: address,
               source: "airdrop",
               useragent: navigator.userAgent,
-              ip: data.ip
+              ip: ip
             },
           );
 

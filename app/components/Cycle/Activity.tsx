@@ -21,7 +21,7 @@ export default function Activity({ joinId }: { joinId: number }) {
     const [alertMessage, setAlertMessage] = useState<string | null>(null); // State for the alert
     const { leaveProject, cycleAction, setCycle, setDaily, userInfos, setPointUpdate, dailyAction } = useAction();
     const router = useRouter();
-    const {  isExist, setBindWallet } = useAuth();
+    const { isExist, setBindWallet } = useAuth();
 
     const dailyTasks = [
         { id: 'task4', label: 'Share task links on Twitter', reward: 20 },
@@ -35,27 +35,30 @@ export default function Activity({ joinId }: { joinId: number }) {
     ];
 
     const urls = [
-        { id: 1, links: [{ url: "https://x.com/MetisL2" }, { url: "https://t.me/MetisL" }, { url: "https://www.metis.io/" },] },
-        { id: 2, links: [{ url: "https://x.com/arkreen_network" }, { url: "https://t.me/arkreen_network" }, { url: "https://www.arkreen.com/" },] },
-        { id: 3, links: [{ url: "https://x.com/zCloakNetwork" }, { url: "https://t.me/memolabsio" }, { url: "https://zcloak.network/" },] },
-        { id: 4, links: [{ url: "https://x.com/Adot_web3" }, { url: "https://t.me/AdotWeb3_Official" }, { url: "https://www.a.xyz/" },] },
-        { id: 5, links: [{ url: "https://x.com/Infinitar_MOBA" }, { url: "https://t.me/infinitar_MOBA" }, { url: "https://www.infinitar.com/#/" },] },
-        { id: 6, links: [{ url: "https://x.com/Odyssey_ODS" }, { url: "https://t.me/odyssey_global" }, { url: "https://odysseyglobal.io/#/" },] },
-        { id: 7, links: [{ url: "https://x.com/ULTILAND" }, { url: "https://t.me/ULTILAND_RWA" }, { url: "https://www.ultiland.io/" },] },
-        { id: 8, links: [{ url: "https://x.com/Donetwork_club" }, { url: "https://t.me/DoNetworkclub" }, { url: "https://www.donetwork.io/#/pc/Index" },] },
-        { id: 9, links: [{ url: "https://x.com/flock_io" }, { url: "https://t.me/flock_io_community" }, { url: "https://www.flock.io/" },] },
-        { id: 10, links: [{ url: "https://x.com/DIDbased" }, { url: "https://t.me/memolabsio" }, { url: "https://d.id/" },] },
-        { id: 11, links: [{ url: "https://x.com/Meter_IO" }, { url: "https://t.me/Meter_IO" }, { url: "https://meter.io/" },] },
-        { id: 12, links: [{ url: "https://x.com/flapdotsh" }, { url: "https://t.me/FlapOfficial" }, { url: "https://flap.sh/" },] },
-        { id: 13, links: [{ url: "https://x.com/ccarbonWorld" }, { url: "https://ccarbon.world/" }, { url: "https://ccarbon.world/" },] },
-        { id: 14, links: [{ url: "https://x.com/onlylayer" }, { url: "https://t.me/onlylayer" }, { url: "https://onlylayer.com/" },] },
-        { id: 15, links: [{ url: "https://x.com/ClusterProtocol" }, { url: "https://t.me/clusterprotocolchat" }, { url: "https://www.clusterprotocol.ai/" },] },
-        { id: 16, links: [{ url: "https://x.com/swan_chain" }, { url: "https://t.me/swan_chain/1" }, { url: "https://swanchain.io/" },] },
-        { id: 17, links: [{ url: "https://x.com/4everland_org" }, { url: "https://t.me/org_4everland" }, { url: "https://www.4everland.org/" },] },
-        { id: 18, links: [{ url: "https://x.com/aidappcom" }, { url: "https://t.me/aidappcom" }, { url: "https://www.aidapp.com/" },] },
-        { id: 19, links: [{ url: "https://x.com/SugreNetwork" }, { url: "https://t.me/SugreNetwork" }, { url: "https://www.sugre.xyz/" },] },
-        { id: 20, links: [{ url: "https://x.com/ESCC_io" }, { url: "https://t.me/ESCCIO" }, { url: "https://www.escc.io/" },] },
+        { id: 20, links: [{ url: "https://x.com/HashKeyHSK" }, { url: "https://t.me/HashKeyChainHSK" }, { url: "https://hsk.xyz/" },] },
+        { id: 0, links: [{ url: "https://x.com/MetisL2" }, { url: "https://t.me/MetisL" }, { url: "https://www.metis.io/" },] },
+        { id: 1, links: [{ url: "https://x.com/arkreen_network" }, { url: "https://t.me/arkreen_network" }, { url: "https://www.arkreen.com/" },] },
+        { id: 2, links: [{ url: "https://x.com/zCloakNetwork" }, { url: "https://t.me/memolabsio" }, { url: "https://zcloak.network/" },] },
+        { id: 3, links: [{ url: "https://x.com/Adot_web3" }, { url: "https://t.me/AdotWeb3_Official" }, { url: "https://www.a.xyz/" },] },
+        { id: 4, links: [{ url: "https://x.com/Infinitar_MOBA" }, { url: "https://t.me/infinitar_MOBA" }, { url: "https://www.infinitar.com/#/" },] },
+        { id: 5, links: [{ url: "https://x.com/Odyssey_ODS" }, { url: "https://t.me/odyssey_global" }, { url: "https://odysseyglobal.io/#/" },] },
+        { id: 6, links: [{ url: "https://x.com/ULTILAND" }, { url: "https://t.me/ULTILAND_RWA" }, { url: "https://www.ultiland.io/" },] },
+        { id: 7, links: [{ url: "https://x.com/Donetwork_club" }, { url: "https://t.me/DoNetworkclub" }, { url: "https://www.donetwork.io/#/pc/Index" },] },
+        { id: 8, links: [{ url: "https://x.com/flock_io" }, { url: "https://t.me/flock_io_community" }, { url: "https://www.flock.io/" },] },
+        { id: 9, links: [{ url: "https://x.com/DIDbased" }, { url: "https://t.me/memolabsio" }, { url: "https://d.id/" },] },
+        { id: 10, links: [{ url: "https://x.com/Meter_IO" }, { url: "https://t.me/Meter_IO" }, { url: "https://meter.io/" },] },
+        // { id: 11, links: [{ url: "https://x.com/flapdotsh" }, { url: "https://t.me/FlapOfficial" }, { url: "https://flap.sh/" },] },
+        { id: 12, links: [{ url: "https://x.com/ccarbonWorld" }, { url: "https://ccarbon.world/" }, { url: "https://ccarbon.world/" },] },
+        { id: 13, links: [{ url: "https://x.com/onlylayer" }, { url: "https://t.me/onlylayer" }, { url: "https://onlylayer.com/" },] },
+        { id: 14, links: [{ url: "https://x.com/ClusterProtocol" }, { url: "https://t.me/clusterprotocolchat" }, { url: "https://www.clusterprotocol.ai/" },] },
+        { id: 15, links: [{ url: "https://x.com/swan_chain" }, { url: "https://t.me/swan_chain/1" }, { url: "https://swanchain.io/" },] },
+        { id: 16, links: [{ url: "https://x.com/4everland_org" }, { url: "https://t.me/org_4everland" }, { url: "https://www.4everland.org/" },] },
+        { id: 17, links: [{ url: "https://x.com/aidappcom" }, { url: "https://t.me/aidappcom" }, { url: "https://www.aidapp.com/" },] },
+        { id: 18, links: [{ url: "https://x.com/SugreNetwork" }, { url: "https://t.me/SugreNetwork" }, { url: "https://www.sugre.xyz/" },] },
+        { id: 19, links: [{ url: "https://x.com/ESCC_io" }, { url: "https://t.me/ESCCIO" }, { url: "https://www.escc.io/" },] },
     ];
+
+    const selectedCard = cards.find(card => card.id === joinId);
 
     const handleTaskClick = async (task: { id: string; label: string; reward: number }, taskId: number) => {
         // const data = TaskData{}
@@ -101,7 +104,11 @@ export default function Activity({ joinId }: { joinId: number }) {
     const navigateToLink = (projectId: number, taskId: number) => {
         // router.push(tasks[index].url);
         console.log(projectId);
-        window.open(urls[projectId].links[taskId].url, '_blank');
+        const selectedUrl = urls.find(url => url.id === projectId);
+
+        if (selectedUrl && selectedUrl.links && selectedUrl.links[taskId]) {
+            window.open(selectedUrl.links[taskId].url, '_blank');
+        }
     };
 
     const closePopup = () => setPopupData(null);
@@ -145,21 +152,22 @@ export default function Activity({ joinId }: { joinId: number }) {
                         />
                     </div>
 
-                    {joinId > -1 ? (
+                    {selectedCard ? (
                         <div className="flex flex-col sm:flex-row items-center rounded-lg mt-6 px-4 py-6 animate-slide-in">
                             <Image
-                                src={cards[joinId].imgSrc}
-                                alt={cards[joinId].name}
+                                src={selectedCard.imgSrc}
+                                alt={selectedCard.name}
                                 width={120}
                                 height={120}
                                 className="mb-4 sm:mb-0 sm:mr-6"
                             />
+
                             <div>
                                 <div className={`${paytoneOne.className} text-white text-xl sm:text-2xl`}>
-                                    {cards[joinId].name || "No Activity"}
+                                    {selectedCard.name || "No Activity"}
                                 </div>
                                 <div className="text-white text-[15px] sm:text-lg">
-                                    {cards[joinId].text}
+                                    {selectedCard.text}
                                 </div>
                                 <div className="flex flex-row sm:flex-row justify-between items-center mt-[20px] gap-2">
                                     <div className="text-white text-[10px] sm:text-[15px] break-all sm:break-normal text-center" id="copy">

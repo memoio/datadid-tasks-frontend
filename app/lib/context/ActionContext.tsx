@@ -184,6 +184,24 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
     }, [joinId, router])
 
     useEffect(() => {
+        if (isConnected) {
+            const HandleUserInfo = async () => {
+                const userresponse = await axios.get(API_URL.BACKEND_AIRDROP_INFO, {
+                    params: {
+                        address
+                    }
+                });
+                if (userresponse.data.result === 1) {
+                    if (userresponse.data.data.parentUid === null) {
+                        invite();
+                    }
+                }
+            }
+            HandleUserInfo()
+        }
+    }, [isConnected])
+
+    useEffect(() => {
         const HandleUserInfo = async () => {
             const userresponse = await axios.get(API_URL.BACKEND_AIRDROP_INFO, {
                 params: {
@@ -191,9 +209,9 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
                 }
             });
             if (userresponse.data.result === 1) {
-                if (userresponse.data.data.parentUid === null) {
-                    invite();
-                }
+                // if (userresponse.data.data.parentUid === null) {
+                //     invite();
+                // }
 
                 setUserInfos({
                     points: userresponse.data.data.points,
