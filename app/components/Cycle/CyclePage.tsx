@@ -13,27 +13,30 @@ import { API_URL } from '../config/config';
 import { disconnect } from 'process';
 import { useRouter } from 'next/navigation';
 export const cards = [
-    { id: 20, imgSrc: "/Cycle20.png", participants: 800, name: "HashKey", aliases: "HSK", short: "A project focused on building a high-performance public blockchain.", text: "HashKey Chain is a public blockchain project that focuses on security, integrates high performance, low cost, community-driven, and innovative technology applications, and is committed to promoting large-scale application of blockchain. " },
+
     { id: 15, imgSrc: "/Cycle21.png", participants: 800, name: "Swanchain", aliases: "swanchain", short: "A Full Toolset AI Blockchain", text: "Swan Chain is a full-toolset AI blockchain infrastructure that leverages OP Stack’s Ethereum Layer 2 technology to fuse Web3 with AI and provide comprehensive solutions for storage, computing, bandwidth, and payments." },
-    { id: 0, imgSrc: "/Cycle1.png", participants: 800, name: "Metis", aliases: "metis", short: "Superfluid Self-Sustainable Blockchain.", text: "Metis is a permissionless Layer 2 network powering the next generation of decentralized applications." },
+    // { id: 0, imgSrc: "/Cycle1.png", participants: 800, name: "Metis", aliases: "metis", short: "Superfluid Self-Sustainable Blockchain.", text: "Metis is a permissionless Layer 2 network powering the next generation of decentralized applications." },
     { id: 1, imgSrc: "/Cycle2.png", participants: 800, name: "Arkreen", aliases: "arkreen", short: "Net Zero DeEnergy Data Network.", text: "Arkreen Network is a Web3-based infrastructure for globally distributed renewable energy resources that enables the connection and monetization of carbon reduction applications." },
+    { id: 4, imgSrc: "/Cycle5.png", participants: 800, name: "Infinitar", aliases: "infinitar", short: "Web3's Next Generation of MOBA and eSports Games.", text: "Infinitar is a Web3 MOBA game that supports multiple arena modes, including 421 levels of individual ranked, 3v3, and 5v5 battles to satisfy different players' preferences." },
     { id: 2, imgSrc: "/Cycle3.png", participants: 800, name: "zCloak", aliases: "zcloak-network", short: "DID and ZKP Infrastructure for Web3.", text: "zCloak Network leads the Web3 revolution, focusing on trust and privacy in the AI age. Their solutions, using technologies like Zero-Knowledge Proof and Decentralized Identity, protect personal data and secure transactions. " },
     { id: 3, imgSrc: "/Cycle4.png", participants: 800, name: "Adot", aliases: "adot", short: "Web3 search engine in the age of AI.", text: "Adot is a decentralized AI Internet search network. It not only provides users with a more convenient and intelligent Web3 content search experience, but also helps developers quickly build their own personalized search functions." },
-    { id: 4, imgSrc: "/Cycle5.png", participants: 800, name: "Infinitar", aliases: "infinitar", short: "Web3's Next Generation of MOBA and eSports Games.", text: "Infinitar is a Web3 MOBA game that supports multiple arena modes, including 421 levels of individual ranked, 3v3, and 5v5 battles to satisfy different players' preferences." },
-    { id: 5, imgSrc: "/Cycle6.png", participants: 800, name: "Odyssey", aliases: "odyssey", short: "Revolutionizing Travel with Web 3.0 and Blockchain.", text: "Odyssey is an open-source, decentralized meta-universe stack where each user owns their own meta-universe, can modify it to their liking, and can implement their own business model, completely independent of the platform itself." },
-    { id: 6, imgSrc: "/Cycle7.png", participants: 800, name: "Ultiland", aliases: "ultiland", short: "RWA Asset Issuance and servicing stack.", text: "Ultiland focuses on real-world asset (RWA) issuance and lending protocols, addressing market pain points in RWA and digital art." },
-    { id: 7, imgSrc: "/Cycle8.png", participants: 800, name: "Do Network", aliases: "do-network", short: "High Performance Decentralized Network.", text: "Do Network is a decentralized network with ultra-high performance.It has achieved a scalable DPOS consensus agreement through a number of technological innovations." },
-    { id: 8, imgSrc: "/Cycle9.png", participants: 800, name: "FLock.io", aliases: "flock-io", short: "World’s 1st Decentralised AI Training Platform.", text: "FLock.io is a revolutionary end-to-end AI co-creation platform that redefines the process of training, fine-tuning, and inference of AI models by integrating decentralized machine learning technologies in the chain." },
-    { id: 9, imgSrc: "/Cycle10.png", participants: 800, name: ".bit", aliases: "bit", short: "Decentralized identity protocol.", text: "The d.id is building protocols for proof of humanity and achievement network, connecting every human. Own your ID and achievement through  blockchain-powered protocol network, and be ready for the next societal breakthrough." },
-    { id: 10, imgSrc: "/Cycle11.png", participants: 800, name: "Meter", aliases: "meter", short: "Web3 infrastructure for a fast, fair and stable economy.", text: "High Performance Blockchain Infrastructure catalyzing borderless economy w disruptive innovations in DeFi, Interoperability, Scalability, Freedom of Money" },
-    // { id: 11, imgSrc: "/Cycle12.png", participants: 800, name: "Flap", aliases: "flap", short: "The first memecoin launchpad on BNB.", text: "Flap is a token fair launch and trading platform that allows anyone to issue an instantly tradable token for less than $1 in less than 30 seconds, without having to provide liquidity." },
-    { id: 12, imgSrc: "/Cycle13.png", participants: 800, name: "CCarbon", aliases: "ccarbon", short: "Global carbon asset trading solution.", text: "ccarbon is committed to solving the problem of non-circulation of global carbon assets and promoting smoother and more efficient transactions of carbon assets around the world." },
-    { id: 13, imgSrc: "/Cycle14.png", participants: 800, name: "Only Layer", aliases: "only-layer", short: "Next-Gen Consumer Blockchain Built for everyone. ", text: "OnlyLayer is a Layer 2 extension framework focused on real-time scalability and EVM compatibility, powered by zkproofs. OnlyLayer is unlocking new possibilities for decentralized applications with ZK proofs and OP stacks." },
-    { id: 14, imgSrc: "/Cycle15.png", participants: 800, name: "Cluster Protocol", aliases: "cluster-protocol", short: "Permissionless Co-ordination Layer for AI Agents.", text: "Cluster Protocol is a computational validation protocol and open source community for decentralized AI models. Through the clever integration of Fully Homomorphic Encryption (FHE), Cluster ensures a paradigm shift by facilitating secure and consistent incentives for GPU providers to empower individuals and SMEs worldwide." },
-    { id: 16, imgSrc: "/Cycle17.png", participants: 800, name: "4everland", aliases: "4everland", short: "A web3 cloud computing platform dedicated to DePIN. ", text: "4EVERLAND is a Web 3.0 cloud computing platform that combines storage, computing, and networking core capabilities to provide cross-chain communication, decentralized front-end, write-once, run-any-blockchain solutions, and web services." },
     { id: 17, imgSrc: "/Cycle22.png", participants: 800, name: "AIDA", aliases: "AIDA", short: "AI-powered decentralized ecosystem for DeFi & AI", text: "AIDA is a decentralized ecosystem that combines DeFi and AI technologies, aiming to provide users with a range of AI-related cryptocurrency services." },
+    { id: 21, imgSrc: "/Cycle23.png", participants: 800, name: "EdgeX", aliases: "edgex", short: "Decentralized infrastructure for Web3 edge AI agents.", text: "EdgeX is a Web3 edge AI proxy decentralized infrastructure for the general public, dedicated to connecting various fields and building a global edge ecosystem." },
+    // { id: 5, imgSrc: "/Cycle6.png", participants: 800, name: "Odyssey", aliases: "odyssey", short: "Revolutionizing Travel with Web 3.0 and Blockchain.", text: "Odyssey is an open-source, decentralized meta-universe stack where each user owns their own meta-universe, can modify it to their liking, and can implement their own business model, completely independent of the platform itself." },
+    // { id: 6, imgSrc: "/Cycle7.png", participants: 800, name: "Ultiland", aliases: "ultiland", short: "RWA Asset Issuance and servicing stack.", text: "Ultiland focuses on real-world asset (RWA) issuance and lending protocols, addressing market pain points in RWA and digital art." },
+    // { id: 7, imgSrc: "/Cycle8.png", participants: 800, name: "Do Network", aliases: "do-network", short: "High Performance Decentralized Network.", text: "Do Network is a decentralized network with ultra-high performance.It has achieved a scalable DPOS consensus agreement through a number of technological innovations." },
+    // { id: 8, imgSrc: "/Cycle9.png", participants: 800, name: "FLock.io", aliases: "flock-io", short: "World’s 1st Decentralised AI Training Platform.", text: "FLock.io is a revolutionary end-to-end AI co-creation platform that redefines the process of training, fine-tuning, and inference of AI models by integrating decentralized machine learning technologies in the chain." },
+    // { id: 9, imgSrc: "/Cycle10.png", participants: 800, name: ".bit", aliases: "bit", short: "Decentralized identity protocol.", text: "The d.id is building protocols for proof of humanity and achievement network, connecting every human. Own your ID and achievement through  blockchain-powered protocol network, and be ready for the next societal breakthrough." },
+    // { id: 10, imgSrc: "/Cycle11.png", participants: 800, name: "Meter", aliases: "meter", short: "Web3 infrastructure for a fast, fair and stable economy.", text: "High Performance Blockchain Infrastructure catalyzing borderless economy w disruptive innovations in DeFi, Interoperability, Scalability, Freedom of Money" },
+    // { id: 11, imgSrc: "/Cycle12.png", participants: 800, name: "Flap", aliases: "flap", short: "The first memecoin launchpad on BNB.", text: "Flap is a token fair launch and trading platform that allows anyone to issue an instantly tradable token for less than $1 in less than 30 seconds, without having to provide liquidity." },
+    // { id: 12, imgSrc: "/Cycle13.png", participants: 800, name: "CCarbon", aliases: "ccarbon", short: "Global carbon asset trading solution.", text: "ccarbon is committed to solving the problem of non-circulation of global carbon assets and promoting smoother and more efficient transactions of carbon assets around the world." },
+    { id: 13, imgSrc: "/Cycle14.png", participants: 800, name: "Only Layer", aliases: "only-layer", short: "Next-Gen Consumer Blockchain Built for everyone. ", text: "OnlyLayer is a Layer 2 extension framework focused on real-time scalability and EVM compatibility, powered by zkproofs. OnlyLayer is unlocking new possibilities for decentralized applications with ZK proofs and OP stacks." },
+    // { id: 14, imgSrc: "/Cycle15.png", participants: 800, name: "Cluster Protocol", aliases: "cluster-protocol", short: "Permissionless Co-ordination Layer for AI Agents.", text: "Cluster Protocol is a computational validation protocol and open source community for decentralized AI models. Through the clever integration of Fully Homomorphic Encryption (FHE), Cluster ensures a paradigm shift by facilitating secure and consistent incentives for GPU providers to empower individuals and SMEs worldwide." },
+    // { id: 16, imgSrc: "/Cycle17.png", participants: 800, name: "4everland", aliases: "4everland", short: "A web3 cloud computing platform dedicated to DePIN. ", text: "4EVERLAND is a Web 3.0 cloud computing platform that combines storage, computing, and networking core capabilities to provide cross-chain communication, decentralized front-end, write-once, run-any-blockchain solutions, and web services." },
+
     { id: 18, imgSrc: "/Cycle19.png", participants: 800, name: "Sugre", aliases: "sugre", short: "A decentralized mobile infrastructure network.", text: "Sugre Network is building a decentralized mobile infrastructure network, integrating advanced AI technology, DePIN, and the Web3 ecosystem. Through seamless integration of smartphones with decentralized networks, redefining the future of mobile technology. " },
-    { id: 19, imgSrc: "/Cycle20.png", participants: 800, name: "ESCC", aliases: "escc", short: "Stablecoin chain based on EOS technology.", text: "Eos Stable Coin Chain (ESCC) is a public blockchain based on EOS and EOS EVM architecture, designed to support stablecoin scenarios." },
+    // { id: 19, imgSrc: "/Cycle20.png", participants: 800, name: "ESCC", aliases: "escc", short: "Stablecoin chain based on EOS technology.", text: "Eos Stable Coin Chain (ESCC) is a public blockchain based on EOS and EOS EVM architecture, designed to support stablecoin scenarios." },
+    { id: 20, imgSrc: "/Cycle20.png", participants: 800, name: "HashKey", aliases: "HSK", short: "A project focused on building a high-performance public blockchain.", text: "HashKey Chain is a public blockchain project that focuses on security, integrates high performance, low cost, community-driven, and innovative technology applications, and is committed to promoting large-scale application of blockchain. " },
 ];
 
 export default function CyclePage() {
@@ -61,7 +64,7 @@ export default function CyclePage() {
     let completed = 0;
     cycleAction.map((t) => {
         projects[t.projectId] = projects[t.projectId] + 1;
-        if (projects[t.projectId] === 3) {
+        if (projects[t.projectId] > 0) {
             completed = completed + 1;
         }
     })
@@ -131,7 +134,7 @@ export default function CyclePage() {
             <div className="flex flex-col sm:flex-row justify-around items-center mt-[65px] gap-5 px-6 animate-fade-in bg-[#05F2920D] rounded-[10px] py-[20px] border border-[#0079F2]">
                 {[
                     { label: 'Rank', value: (userInfos.PointsRank === "1000") ? ('1000+') : userInfos.PointsRank },
-                    { label: 'Projects Completed', value: completed },
+                    { label: 'Projects Joined', value: completed },
                     { label: 'Tasks Accomplished', value: cycleAction.length },
                     { label: 'Rewards Earned', value: userInfos.points },
                     { label: 'Friends Invited', value: userInfos.inviteCount },
@@ -147,7 +150,7 @@ export default function CyclePage() {
             </div>
 
             {/* Cards Section */}
-            <div className="mt-[56px] flex flex-wrap gap-5 justify-between">
+            <div className="mt-[56px] flex flex-wrap gap-7 ">
                 {cards.map((card, index) => {
                     isJoined = false;
                     let count = 0;
@@ -169,34 +172,30 @@ export default function CyclePage() {
                     return (
                         <div
                             key={card.id}
-                            className={`w-full mt-[10px] sm:w-[46%] lg:w-[23%] p-4 rounded-[10px] transform transition-transform duration-300 ${cardBackground}`}
+                            className={`w-full justify-between mt-[10px] sm:w-[46%] lg:w-[23%] p-4 rounded-[10px] transform transition-transform duration-300 ${cardBackground}`}
                         >
-                            <div className="flex justify-between items-center">
-                                <Image src={card.imgSrc} width={68} height={68} alt={card.name} />
-                                <div className="text-[22px] text-white">{card.name}</div>
-                            </div>
-                            <div className="text-white text-[16px] leading-[18px] mb-4 mt-[20px]">{card.short}</div>
-                            <div>
-                                {/* <p className="text-[#0079F2] text-[16px]">{card.participants} Participants</p> */}
-
-                                <div
-                                    onClick={() => (isConnected ? isDIDExistState ? navProjects(card.id) : alert("Please create did first!") : openConnectModal ? openConnectModal() : alert("Can not connect to chain"))}
-                                    className={`mt-3 mt-[40px] py-2 px-4 rounded-full text-[17.5px] font-bold transition-colors duration-300  cursor-pointer ${buttonClasses}`}
-                                >
-                                    {loading && cyIndex == card.id &&
-                                        <svg className="w-6 h-6 p-0 m-0 animate-spin text-blue-900" viewBox="0 0 50 50">
-                                            <circle className="opacity-25" cx="25" cy="25" r="20" stroke="currentColor" strokeWidth="4" fill="none" />
-                                            <circle className="opacity-75" cx="25" cy="25" r="20" stroke="currentColor" strokeWidth="4" fill="none" strokeDasharray="31.415, 31.415" strokeLinecap="round" />
-                                        </svg>
-                                    }
-                                    {isJoined ? (
-                                        <div className="flex justify-center items-center gap-2">
-                                            <div className="text-center text-white text-[16px]">Joined</div>
-                                            <div className='text-[#038C54] w-[20px] h-[20px] rounded-full bg-white text-center'>{count}</div>
-                                        </div>
-                                    ) : (
-                                        <div className="text-center text-white text-[16px]">Join</div>
-                                    )}
+                            <div className="flex flex-col justify-between h-full">
+                                <div>
+                                    <div className="flex justify-between items-center">
+                                        <Image src={card.imgSrc} width={68} height={68} alt={card.name} />
+                                        <div className="text-[22px] text-white">{card.name}</div>
+                                    </div>
+                                    <div className="text-white text-[16px] leading-[18px] mb-4 mt-[20px]">{card.short}</div>
+                                </div>
+                                <div>
+                                    <div
+                                        onClick={() => (isConnected ? isDIDExistState ? navProjects(card.id) : alert("Please create did first!") : openConnectModal ? openConnectModal() : alert("Can not connect to chain"))}
+                                        className={`mt-3 py-2 px-4 rounded-full text-[17.5px] font-bold transition-colors duration-300 cursor-pointer ${buttonClasses}`}
+                                    >
+                                        {isJoined ? (
+                                            <div className="flex justify-center items-center gap-2">
+                                                <div className="text-center text-white text-[16px]">Joined</div>
+                                                <div className='text-[#038C54] w-[20px] h-[20px] rounded-full bg-white text-center'>{count}</div>
+                                            </div>
+                                        ) : (
+                                            <div className="text-center text-white text-[16px]">Join</div>
+                                        )}
+                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -35,7 +35,6 @@ export default function Activity({ joinId }: { joinId: number }) {
     ];
 
     const urls = [
-        { id: 20, links: [{ url: "https://x.com/HashKeyHSK" }, { url: "https://t.me/HashKeyChainHSK" }, { url: "https://hsk.xyz/" },] },
         { id: 0, links: [{ url: "https://x.com/MetisL2" }, { url: "https://t.me/MetisL" }, { url: "https://www.metis.io/" },] },
         { id: 1, links: [{ url: "https://x.com/arkreen_network" }, { url: "https://t.me/arkreen_network" }, { url: "https://www.arkreen.com/" },] },
         { id: 2, links: [{ url: "https://x.com/zCloakNetwork" }, { url: "https://t.me/memolabsio" }, { url: "https://zcloak.network/" },] },
@@ -56,6 +55,8 @@ export default function Activity({ joinId }: { joinId: number }) {
         { id: 17, links: [{ url: "https://x.com/aidappcom" }, { url: "https://t.me/aidappcom" }, { url: "https://www.aidapp.com/" },] },
         { id: 18, links: [{ url: "https://x.com/SugreNetwork" }, { url: "https://t.me/SugreNetwork" }, { url: "https://www.sugre.xyz/" },] },
         { id: 19, links: [{ url: "https://x.com/ESCC_io" }, { url: "https://t.me/ESCCIO" }, { url: "https://www.escc.io/" },] },
+        { id: 20, links: [{ url: "https://x.com/HashKeyHSK" }, { url: "https://t.me/HashKeyChainHSK" }, { url: "https://hsk.xyz/" },] },
+        { id: 21, links: [{ url: "https://x.com/EdgexAI" }, { url: "https://t.me/EdgexAI" }, { url: "https://edgex.one/" },] },
     ];
 
     const selectedCard = cards.find(card => card.id === joinId);
@@ -146,7 +147,7 @@ export default function Activity({ joinId }: { joinId: number }) {
                             height={24}
                             className="cursor-pointer hover:scale-110 transition-transform"
                             onClick={() => {
-                                router.push('/');
+                                router.back();
                                 leaveProject();
                             }}
                         />
