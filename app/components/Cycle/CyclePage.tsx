@@ -48,7 +48,6 @@ export default function CyclePage() {
     const { isConnected, address } = useAccount();
     const { isDIDExistState } = useDIDInfo();
     const { openConnectModal } = useConnectModal();
-
     const targetDate = new Date('2025-04-07T23:59:59').getTime();
 
     const [countdown, setCountdown] = useState<{ days: number; hours: number; minutes: number; seconds: number }>({
@@ -60,14 +59,23 @@ export default function CyclePage() {
 
     let isJoined = false;
 
-    const projects = new Array<number>(cards.length).fill(0);
-    let completed = 0;
-    cycleAction.map((t) => {
-        projects[t.projectId] = projects[t.projectId] + 1;
-        if (projects[t.projectId] > 0) {
-            completed = completed + 1;
+    const uniqueProjectIds = new Set<number>();
+    let completed = 0
+    // 遍历 cycleAction，收集唯一的 projectId
+    cycleAction.forEach((t) => {
+        if (cards.some((card) => card.id === t.projectId)) {
+            completed += 1; // 如果 projectId 存在于 cards 中，计数加 1
         }
-    })
+        uniqueProjectIds.add(t.projectId);
+    });
+    let joined = 0;
+    uniqueProjectIds.forEach((projectId) => {
+        if (cards.some((card) => card.id === projectId)) {
+            joined += 1; // 如果 projectId 存在于 cards 中，计数加 1
+        }
+    });
+
+
     const navProjects = (index: number) => {
         setLoading(true);
         setCyIndex(index);
@@ -134,8 +142,8 @@ export default function CyclePage() {
             <div className="flex flex-col sm:flex-row justify-around items-center mt-[65px] gap-5 px-6 animate-fade-in bg-[#05F2920D] rounded-[10px] py-[20px] border border-[#0079F2]">
                 {[
                     { label: 'Rank', value: (userInfos.PointsRank === "1000") ? ('1000+') : userInfos.PointsRank },
-                    { label: 'Projects Joined', value: completed },
-                    { label: 'Tasks Accomplished', value: cycleAction.length },
+                    { label: 'Projects Joined', value: joined },
+                    { label: 'Tasks Accomplished', value: completed },
                     { label: 'Rewards Earned', value: userInfos.points },
                     { label: 'Friends Invited', value: userInfos.inviteCount },
                 ].map((stat, i) => (
