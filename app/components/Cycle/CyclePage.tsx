@@ -61,7 +61,7 @@ export default function CyclePage() {
     let completed = 0;
     cycleAction.map((t) => {
         projects[t.projectId] = projects[t.projectId] + 1;
-        if (projects[t.projectId] === 3) {
+        if (projects[t.projectId] > 0) {
             completed = completed + 1;
         }
     })
@@ -131,7 +131,7 @@ export default function CyclePage() {
             <div className="flex flex-col sm:flex-row justify-around items-center mt-[65px] gap-5 px-6 animate-fade-in bg-[#05F2920D] rounded-[10px] py-[20px] border border-[#0079F2]">
                 {[
                     { label: 'Rank', value: (userInfos.PointsRank === "1000") ? ('1000+') : userInfos.PointsRank },
-                    { label: 'Projects Completed', value: completed },
+                    { label: 'Projects Joined', value: completed },
                     { label: 'Tasks Accomplished', value: cycleAction.length },
                     { label: 'Rewards Earned', value: userInfos.points },
                     { label: 'Friends Invited', value: userInfos.inviteCount },
@@ -169,36 +169,32 @@ export default function CyclePage() {
                     return (
                         <div
                             key={card.id}
-                            className={`w-full mt-[10px] sm:w-[46%] lg:w-[23%] p-4 rounded-[10px] transform transition-transform duration-300 ${cardBackground}`}
+                            className={`w-full justify-between mt-[10px] sm:w-[46%] lg:w-[23%] p-4 rounded-[10px] transform transition-transform duration-300 ${cardBackground}`}
                         >
-                            <div className="flex justify-between items-center">
-                                <Image src={card.imgSrc} width={68} height={68} alt={card.name} />
-                                <div className="text-[22px] text-white">{card.name}</div>
-                            </div>
-                            <div className="text-white text-[16px] leading-[18px] mb-4 mt-[20px]">{card.short}</div>
-                            <div>
-                                {/* <p className="text-[#0079F2] text-[16px]">{card.participants} Participants</p> */}
-
-                                <div
-                                    onClick={() => (isConnected ? isDIDExistState ? navProjects(card.id) : alert("Please create did first!") : openConnectModal ? openConnectModal() : alert("Can not connect to chain"))}
-                                    className={`mt-3 mt-[40px] py-2 px-4 rounded-full text-[17.5px] font-bold transition-colors duration-300  cursor-pointer ${buttonClasses}`}
-                                >
-                                    {loading && cyIndex == card.id &&
-                                        <svg className="w-6 h-6 p-0 m-0 animate-spin text-blue-900" viewBox="0 0 50 50">
-                                            <circle className="opacity-25" cx="25" cy="25" r="20" stroke="currentColor" strokeWidth="4" fill="none" />
-                                            <circle className="opacity-75" cx="25" cy="25" r="20" stroke="currentColor" strokeWidth="4" fill="none" strokeDasharray="31.415, 31.415" strokeLinecap="round" />
-                                        </svg>
-                                    }
-                                    {isJoined ? (
-                                        <div className="flex justify-center items-center gap-2">
-                                            <div className="text-center text-white text-[16px]">Joined</div>
-                                            <div className='text-[#038C54] w-[20px] h-[20px] rounded-full bg-white text-center'>{count}</div>
-                                        </div>
-                                    ) : (
-                                        <div className="text-center text-white text-[16px]">Join</div>
-                                    )}
+                            <div className="flex flex-col justify-between h-full">
+                                <div>
+                                    <div className="flex justify-between items-center">
+                                        <Image src={card.imgSrc} width={68} height={68} alt={card.name} />
+                                        <div className="text-[22px] text-white">{card.name}</div>
+                                    </div>
+                                    <div className="text-white text-[16px] leading-[18px] mb-4 mt-[20px]">{card.short}</div>
                                 </div>
-                            </div>
+                                <div>
+                                    <div
+                                        onClick={() => (isConnected ? isDIDExistState ? navProjects(card.id) : alert("Please create did first!") : openConnectModal ? openConnectModal() : alert("Can not connect to chain"))}
+                                        className={`mt-3 py-2 px-4 rounded-full text-[17.5px] font-bold transition-colors duration-300 cursor-pointer ${buttonClasses}`}
+                                    >
+                                        {isJoined ? (
+                                            <div className="flex justify-center items-center gap-2">
+                                                <div className="text-center text-white text-[16px]">Joined</div>
+                                                <div className='text-[#038C54] w-[20px] h-[20px] rounded-full bg-white text-center'>{count}</div>
+                                            </div>
+                                        ) : (
+                                            <div className="text-center text-white text-[16px]">Join</div>
+                                        )}
+                                    </div>
+                                </div>
+                            </div> 
                         </div>
                     );
                 })}

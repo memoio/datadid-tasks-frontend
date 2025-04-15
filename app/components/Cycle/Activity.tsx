@@ -146,7 +146,7 @@ export default function Activity({ joinId }: { joinId: number }) {
                             height={24}
                             className="cursor-pointer hover:scale-110 transition-transform"
                             onClick={() => {
-                                router.push('/');
+                                router.back();
                                 leaveProject();
                             }}
                         />
