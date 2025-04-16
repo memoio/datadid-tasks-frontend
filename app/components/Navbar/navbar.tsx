@@ -152,7 +152,13 @@ export default function Navbar() {
               <div className='text-white mr-[20px]'>Docs</div>
             </a>
             <div className='text-white mr-[20px] cursor-pointer' onClick={() => window.open("https://docs.google.com/forms/d/e/1FAIpQLSfyrgViv6ABqLV_1pcGoqnQuF1dAQs8igIQWOunrCEFhg8RgQ/viewform")}>Join</div>
-            <div className='text-white mr-[20px] cursor-pointer' onClick={() => setIsShown(!isShown)}>Profile</div>
+            <div className='text-white mr-[20px] cursor-pointer' onClick={() => {
+              if (!isConnected) {
+                openConnectModal?.(); // open wallet connection
+              } else {
+                setIsShown(!isShown); // show info window
+              }
+            }}>Profile</div>
             <div className='text-white mr-[20px] cursor-pointer' onClick={() => handleFaucetClick()}>Faucet</div>
             {/* <NavItem>TotalPoints</NavItem> */}
           </div>
