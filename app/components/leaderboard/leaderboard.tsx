@@ -16,6 +16,9 @@ export default function LeaderboardPage() {
     const { isExist, setBindWallet } = useAuth();
     const [loading, setLoading] = useState(false);
 
+    const [list, setList] = useState<string[]>([]);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
     interface ElementData {
         id: number;
         address: string;
@@ -72,6 +75,57 @@ export default function LeaderboardPage() {
             getRank()
         }
     }, [isConnected, isWeekly, isExist])
+
+    // handle click on invite count
+    const handleClick = async (parent: string) => {
+        if (!parent) {
+          alert("Parent address is required");
+          return;
+        }
+    
+        setLoading(true);
+        try {
+            // test data
+            // const mockData = {
+            //     list: [
+            //       "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
+            //       "0x5fB3024FbB9Fd8B7A5c48dD3fE0a5fE87ED0B035",
+            //       "0xAb5801a7D398351b8bE11C439e05C5B3259aeC9B",
+            //     ],
+            // };
+            // const data = mockData
+
+            // make url to request
+            const url = new URL(API_URL.BACKEND_AIRDROP_INVITE_LIST);
+            url.searchParams.append('parent', parent);
+            
+            // fetch data
+            const res = await fetch(url.toString());
+            const data = await res.json();
+          
+            // show info
+            console.log("API Response:", {
+            status: res.status,
+            url: res.url,
+            data: data
+          });
+
+          setList(data.list || []);
+          
+          if (data.list && data.list.length > 0) {
+            alert(`Invited Addresses:\n${data.list.join("\n")}`);
+          } else {
+            alert("No invites found for this address.");
+          }
+
+          
+        } catch (err) {
+          console.error(err);
+          alert("Failed to load invites");
+        } finally {
+          setLoading(false);
+        }
+    };
 
     return (
         <div className="mt-[120px] px-4 sm:px-6 lg:px-12 flex flex-col items-center">
@@ -171,7 +225,14 @@ export default function LeaderboardPage() {
                             <div className="text-white text-[16px] sm:text-[20px] leading-[24px] sm:leading-[38px] text-center w-[40%]">
                                 {item.address}
                             </div>
-                            <div className="text-[#FFC917] text-[16px] sm:text-[20px] leading-[24px] sm:leading-[38px] text-center w-[20%]">
+                            <div className="text-[#FFC917] text-[16px] sm:text-[20px] leading-[24px] sm:leading-[38px] text-center w-[20%]"
+                                onClick={() => {
+                                    console.log(`${item.address}`)
+                                    console.log(`${item.score}`)
+                                    handleClick(`${item.address}`)
+                                    } 
+                                }
+                            >
                                 {item.score}
                             </div>
                             <div className="flex justify-center items-center w-[30%]">
