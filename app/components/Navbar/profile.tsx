@@ -40,7 +40,8 @@ export default function Profile() {
                             {didInfo.did.slice(0, 6) + "..." + didInfo.did.slice(-6)}
                         </div>
                         <Image
-                            src="/copy_symbol.png"
+                            //src="/copy_symbol.png"
+                            src="/checked.png"
                             width={18}
                             height={18}
                             className="w-[18px] h-[18px] cursor-pointer"
