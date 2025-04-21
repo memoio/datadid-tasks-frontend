@@ -77,7 +77,7 @@ export default function LeaderboardPage() {
     }, [isConnected, isWeekly, isExist])
 
     // handle click on invite count
-    const handleClick = async (parent: string) => {
+    const handleInviteClick = async (parent: string) => {
         if (!parent) {
           alert("Parent address is required");
           return;
@@ -122,6 +122,48 @@ export default function LeaderboardPage() {
         } catch (err) {
           console.error(err);
           alert("Failed to load invites");
+        } finally {
+          setLoading(false);
+        }
+    };
+
+    // handle click on points
+    const handlePointsClick = async (address: string) => {
+        if (!address) {
+          alert("address is required");
+          return;
+        }
+    
+        setLoading(true);
+        try {
+            // make url to request
+            const url = new URL(API_URL.BACKEND_AIRDROP_RECORD_LIST);
+            url.searchParams.append('ltype', "0");
+            url.searchParams.append('address', address);
+            
+            // fetch data
+            const res = await fetch(url.toString());
+            const data = await res.json();
+          
+            // show info
+            console.log("API Response:", {
+            status: res.status,
+            url: res.url,
+            data: data
+          });
+
+          setList(data.list || []);
+          
+          if (data.list && data.list.length > 0) {
+            alert(`Record List:\n${data.list.join("\n")}`);
+          } else {
+            alert("No record found for this address.");
+          }
+
+          
+        } catch (err) {
+          console.error(err);
+          alert("Failed to load points record");
         } finally {
           setLoading(false);
         }
@@ -229,7 +271,7 @@ export default function LeaderboardPage() {
                                 onClick={() => {
                                     console.log(`${item.address}`)
                                     console.log(`${item.score}`)
-                                    handleClick(`${item.address}`)
+                                    handleInviteClick(`${item.address}`)
                                     } 
                                 }
                             >
@@ -243,7 +285,13 @@ export default function LeaderboardPage() {
                                     height={14}
                                     className="sm:w-[18px] sm:h-[18px] mr-[5px] hidden md:block"
                                 />
-                                <div className="text-[16px] sm:text-[20px] text-white leading-[24px] sm:leading-[38px] text-center">
+                                <div className="text-[16px] sm:text-[20px] text-white leading-[24px] sm:leading-[38px] text-center"
+                                    onClick={() => {
+                                        console.log(`${item.soul}`)
+                                        handlePointsClick(`${item.address}`)
+                                        } 
+                                    }
+                                >
                                     {item.soul}
                                 </div>
                             </div>
