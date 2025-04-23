@@ -9,7 +9,7 @@ import { useState } from "react";
 import { useAccount } from "wagmi";
 
 export default function Profile() {
-    const { didInfo } = useDIDInfo();
+    const { didInfo, isDIDExistState } = useDIDInfo();
     const [showPopup, setShowPopup] = useState(false); // Popup visibility state
     const { address } = useAccount();
     const { invite } = useWallet();
@@ -21,7 +21,7 @@ export default function Profile() {
         navigator.clipboard.writeText(text).then(() => {
             setImageSrc("/checked.png");
             setShowPopup(true);
-            
+
             setTimeout(() => {
                 setImageSrc("/copy_symbol.png");
                 setShowPopup(false);
@@ -45,7 +45,7 @@ export default function Profile() {
                     </div>
                     <div className="flex items-center">
                         <div className={`${paytoneOne.className} text-white font-medium text-[14px] leading-[36px] mr-3`}>
-                            {didInfo.did.slice(0, 6) + "..." + didInfo.did.slice(-6)}
+                            {(isDIDExistState) ? didInfo.did.slice(0, 6) + "..." + didInfo.did.slice(-6) : "-"}
                         </div>
                         <Image
                             src={image1Src}
