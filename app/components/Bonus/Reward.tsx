@@ -52,7 +52,7 @@ export default function Reward() {
                             address: address
                         }
                     })
-                console.log("oatstatus", respond.data.data)
+                //console.log("oatstatus", respond.data.data)
                 if (respond.data.result === 1) {
                     setOATCount({
                         vcount: respond.data.data.vcount,

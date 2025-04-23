@@ -75,7 +75,7 @@ const setToLocalStorage = <T,>(key: string, value: T) => {
     try {
 
         if (value instanceof Set) {
-            console.log(key, JSON.stringify(Array.from(value)));
+            //console.log(key, JSON.stringify(Array.from(value)));
             localStorage.setItem(key, JSON.stringify(Array.from(value)));
         } else {
             localStorage.setItem(key, JSON.stringify(value));
@@ -145,7 +145,7 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
 
 
     const joinProject = (index: number) => {
-        console.log("joinId: ", joinId)
+        //console.log("joinId: ", joinId)
         setJoinId(index)
     };
     const leaveProject = () => setJoinId(-2);
@@ -167,7 +167,7 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
     }
 
     useEffect(() => {
-        console.log("isDisconnected: ", isDisconnected);
+        //console.log("isDisconnected: ", isDisconnected);
         if (isDisconnected) {
             clear();
             // setInviteCode('******');
@@ -344,9 +344,9 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
             HandleDailyAction();
         }
     }, [isExist]); // , isPointUpdate
-    console.log("daily: ", dailyAction);
-    console.log("quest: ", questAction);
-    console.log("cycle: ", cycleAction);
+    //console.log("daily: ", dailyAction);
+    //console.log("quest: ", questAction);
+    //console.log("cycle: ", cycleAction);
 
 
     useEffect(() => {

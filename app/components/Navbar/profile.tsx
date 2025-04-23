@@ -5,8 +5,12 @@ import { paytoneOne } from "@/app/ui/fonts";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from 'next/image'; // Import Image from Next.js
-import { useState } from "react";
+//import { useState } from "react";
+import { useState, useEffect } from 'react';
 import { useAccount } from "wagmi";
+
+import axios from 'axios';
+import { API_URL } from '@/app/components/config/config';
 
 export default function Profile() {
     const { didInfo } = useDIDInfo();
@@ -34,6 +38,67 @@ export default function Profile() {
     function toggleWallet() {
         throw new Error("Function not implemented.");
     }
+
+    // for invite code
+    const [inviteCode, setInviteCode] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchInviteCode = async () => {
+            try {
+              setLoading(true);
+              console.log("start")
+              console.log("address:", address);
+          
+              console.log("fetch parent")
+              console.log("url:", API_URL.BACKEND_AIRDROP_INFO);
+              // 第一个请求：获取 parent
+              const userResponse = await axios.get(API_URL.BACKEND_AIRDROP_INFO, {
+                params: { address }
+              });
+              
+              console.log("response:",userResponse)
+
+              if (!userResponse.data?.data?.parentAddress) {
+                throw new Error("Parent address not found in response");
+              }
+          
+              //const parent = userResponse.data.data.parentUid;
+              const parent = userResponse.data.data.parentAddress;
+              console.log("result:", userResponse.data.result);
+              console.log("parent:", parent);
+          
+              console.log("fetch invite code")
+              // 第二个请求：获取 invite code
+              const inviteResponse = await axios.get(API_URL.BACKEND_AIRDROP_INFO, {
+                params: { parent }
+              });
+          
+              console.log("result:", inviteResponse.data.result);
+          
+              if (inviteResponse.data.result === 1 && inviteResponse.data.data.inviteCode) {
+                setInviteCode(inviteResponse.data.data.inviteCode);
+                // 如果需要立即使用新值，可以这样：
+                const newInviteCode = inviteResponse.data.data.inviteCode;
+                console.log("invite code:", newInviteCode);
+              }
+            } catch (error) {
+              console.error('Fetch invite code failed:', error);
+              // 可以添加用户提示，比如：
+              // toast.error("Failed to fetch invite code");
+            } finally {
+              setLoading(false);
+            }
+          };
+    
+        fetchInviteCode();
+      }, [address]);
+
+      const handleInvite = () => {
+        // 原来的invite函数逻辑
+        invite();
+      };
+
 
     return (
         <div className="w-[400px]  px-4">
@@ -93,7 +158,21 @@ export default function Profile() {
                     <div className={`${paytoneOne.className} text-white font-semibold text-[16px] leading-[36px]`}>
                         Invite Code
                     </div>
-                    <FontAwesomeIcon icon={faPenToSquare} className="text-white cursor-pointer" onClick={() => { invite(); }} />
+                    <div className="flex items-center">
+                
+                    {inviteCode ? (
+                        <div className="text-white bg-gray-700 px-3 py-1 rounded-md">
+                        {inviteCode}
+                        </div>
+                    ) : (
+                        <FontAwesomeIcon 
+                        icon={faPenToSquare} 
+                        className="text-white cursor-pointer hover:text-gray-300 transition-colors" 
+                        onClick={handleInvite} 
+                        />
+                    )}
+                    </div>
+
                 </div>
 
                 {showPopup && (

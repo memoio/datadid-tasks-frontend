@@ -74,7 +74,7 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
   }, [isConnected, address]);
 
   useEffect(() => {
-    console.log("isDisconnected: ", isDisconnected);
+    //console.log("isDisconnected: ", isDisconnected);
     if (isDisconnected) {
       setIsExist(false);
       // setInviteCode('******');
