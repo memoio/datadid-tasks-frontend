@@ -3,7 +3,7 @@ import { ReactNode, useEffect, createContext, useContext, useState } from "react
 import { useAccount } from "wagmi";
 import axios from "axios";
 import { API_URL } from "@/app/components/config/config";
-
+import { useSearchParams } from "next/navigation";
 
 interface UidInfo {
   uid: string;
@@ -35,6 +35,10 @@ const getUserIP = async () => {
 export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
   const { isConnected, address, isDisconnected } = useAccount();
   const [isExist, setIsExist] = useState(false);
+  const searchParams = useSearchParams()
+
+  const source = searchParams.get('source')?.toString() || 'airdrop';
+
   const setBindWallet = () => {
     if (address && !isExist) {
       const bindWallet = async () => {
@@ -46,7 +50,7 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
             API_URL.BACKEND_AIRDROP_BIND,
             {
               address: address,
-              source: "airdrop",
+              source: source,
               useragent: navigator.userAgent,
               ip: ip
             },

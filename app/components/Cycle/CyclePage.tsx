@@ -70,6 +70,7 @@ export default function CyclePage() {
     });
     let joined = 0;
     uniqueProjectIds.forEach((projectId) => {
+        console.log("projectid", projectId)
         if (cards.some((card) => card.id === projectId)) {
             joined += 1; // 如果 projectId 存在于 cards 中，计数加 1
         }
