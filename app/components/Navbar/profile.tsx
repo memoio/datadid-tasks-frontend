@@ -45,7 +45,7 @@ export default function Profile() {
                     </div>
                     <div className="flex items-center">
                         <div className={`${paytoneOne.className} text-white font-medium text-[14px] leading-[36px] mr-3`}>
-                            {didInfo.did.slice(0, 6) + "..." + didInfo.did.slice(-6)}
+                            {didInfo.did.slice(0, 6) + "-" + didInfo.did.slice(-6)}
                         </div>
                         <Image
                             src={image1Src}
@@ -64,7 +64,7 @@ export default function Profile() {
                         DID Number
                     </div>
                     <div className={`${paytoneOne.className} text-white font-medium text-[14px] leading-[36px]`}>
-                        {didInfo.number}
+                        {didInfo.number === "000000" ? "-" : didInfo.number}
                     </div>
                 </div>
 
