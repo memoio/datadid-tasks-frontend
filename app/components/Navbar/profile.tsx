@@ -8,6 +8,8 @@ import Image from 'next/image'; // Import Image from Next.js
 import { useState } from "react";
 import { useAccount } from "wagmi";
 
+import { useEffect } from 'react';
+
 export default function Profile() {
     const { didInfo, isDIDExistState } = useDIDInfo();
     const [showPopup, setShowPopup] = useState(false); // Popup visibility state
@@ -34,6 +36,11 @@ export default function Profile() {
     function toggleWallet() {
         throw new Error("Function not implemented.");
     }
+
+    // show did info for debug
+    useEffect(() => {
+        console.log("======DID Info:", didInfo);
+    }, [didInfo]); // toggle when didInfo changes
 
     return (
         <div className="w-[400px]  px-4">
@@ -64,7 +71,7 @@ export default function Profile() {
                         DID Number
                     </div>
                     <div className={`${paytoneOne.className} text-white font-medium text-[14px] leading-[36px]`}>
-                        {didInfo.number}
+                        {(isDIDExistState) ? didInfo.number : "-"}
                     </div>
                 </div>
 
