@@ -8,6 +8,7 @@ import { useAccount } from 'wagmi';
 import { useConnectModal } from '@rainbow-me/rainbowkit';
 import { useDIDInfo } from '@/app/lib/context/DIDContext';
 
+import { useState } from 'react';
 
 
 export default function Home() {
@@ -41,6 +42,16 @@ export default function Home() {
         }
 
         setToggleDid(); // Toggle the DID state
+    };
+
+    const [buttonText, setButtonText] = useState("Create DID Free");
+
+    const handleClick = () => {
+        setButtonText("You have previously created DID!");
+        // last 3 seconds
+        setTimeout(() => {
+            setButtonText("Create DID Free");
+        }, 3000);
     };
 
     return (
@@ -82,9 +93,14 @@ export default function Home() {
                             }
                         }}
                     >
-                        <span className="font-bold text-[14px] sm:text-[16px] text-white">
-                            Create DID Free
+                        <span 
+                            className="font-bold text-[14px] sm:text-[16px] text-white"
+                            onClick={handleClick}
+                        >
+                            {buttonText}
                         </span>
+                        
+
                     </div>
                 </div>
 
