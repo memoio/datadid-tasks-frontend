@@ -9,15 +9,23 @@ import { useState } from "react";
 import { useAccount } from "wagmi";
 
 export default function Profile() {
-    const { didInfo } = useDIDInfo();
+    const { didInfo, isDIDExistState } = useDIDInfo();
     const [showPopup, setShowPopup] = useState(false); // Popup visibility state
     const { address } = useAccount();
     const { invite } = useWallet();
 
-    const copyToClipboard = (text: string) => {
+    const [image1Src, setImage1Src] = useState("/copy_symbol.png");
+    const [image2Src, setImage2Src] = useState("/copy_symbol.png");
+
+    const copyToClipboard = (text: string, setImageSrc: (src: string) => void) => {
         navigator.clipboard.writeText(text).then(() => {
-            setShowPopup(true);
-            setTimeout(() => setShowPopup(false), 2000); // Hide after 2s
+            setImageSrc("/checked.png");
+            //setShowPopup(true);
+
+            setTimeout(() => {
+                setImageSrc("/copy_symbol.png");
+                //setShowPopup(false);
+            }, 2000);
         }).catch(() => {
             alert('Failed to copy text.');
         });
@@ -37,15 +45,15 @@ export default function Profile() {
                     </div>
                     <div className="flex items-center">
                         <div className={`${paytoneOne.className} text-white font-medium text-[14px] leading-[36px] mr-3`}>
-                            {didInfo.did.slice(0, 6) + "..." + didInfo.did.slice(-6)}
+                            {(isDIDExistState) ? didInfo.did.slice(0, 15) + "..." + didInfo.did.slice(-6) : "-"}
                         </div>
                         <Image
-                            src="/copy_symbol.png"
+                            src={image1Src}
                             width={18}
                             height={18}
                             className="w-[18px] h-[18px] cursor-pointer"
                             alt="copy symbol"
-                            onClick={() => copyToClipboard(didInfo.did || '')}
+                            onClick={() => copyToClipboard(didInfo.did, setImage1Src)}
                         />
                     </div>
                 </div>
@@ -70,12 +78,12 @@ export default function Profile() {
                             {(address) ? (address.slice(0, 6) + "..." + address.slice(-4)) : ("")}
                         </div>
                         <Image
-                            src="/copy_symbol.png"
+                            src={image2Src}
                             width={18}
                             height={18}
                             className="w-[18px] h-[18px] cursor-pointer"
                             alt="copy symbol"
-                            onClick={() => copyToClipboard(address || '')}
+                            onClick={() => copyToClipboard(address || '', setImage2Src)}
                         />
                     </div>
                 </div>

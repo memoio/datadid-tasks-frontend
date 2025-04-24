@@ -50,7 +50,7 @@ export default function Daily() {
 
 🚀Currently all users can participate, and you can easily get points rewards by completing tasks, and you can also redeem more value!
 
-➡️Experience now https://data.memolabs.org/?referralCode=${userInfos.invideCode}
+➡️Experience now https://data.memolabs.org/?referralCode=${userInfos.invideCode}&source=tw
 `
                     const tgText = `🎉 Welcome to the MEMO data ecosystem, a platform where you can own, manage and monetize your data! 💰
 
@@ -61,7 +61,7 @@ export default function Daily() {
 ·Joint Activities🤝
 ·Invite friends👫
 
-🚀 Click https://data.memolabs.org/?referralCode=${userInfos.invideCode} to start your data value-added journey!
+🚀 Click https://data.memolabs.org/?referralCode=${userInfos.invideCode}&source=tg to start your data value-added journey!
 `
                     const urls = [
                         { url: "https://x.com/MemoLabsOrg" },

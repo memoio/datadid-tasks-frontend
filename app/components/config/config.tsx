@@ -27,6 +27,7 @@ export const API_URL = {
     "BACKEND_AIRDROP_INFO": BACKEND_URL + "/airdrop/info",
     "BACKEND_AIRDROP_RANK": BACKEND_URL + "/airdrop/rank",
     "BACKEND_AIRDROP_INVITE_BIND": BACKEND_URL + "/airdrop/invite/bind",
+    "BACKEND_AIRDROP_INVITE_LIST": BACKEND_URL + "/airdrop/invite/list",
     "BACKEND_AIRDROP_RECORD_LIST": BACKEND_URL + "/airdrop/record/list",
     "BACKEND_AIRDROP_RECORD_ADD": BACKEND_URL + "/airdrop/record/add",
 

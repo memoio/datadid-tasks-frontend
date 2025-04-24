@@ -43,8 +43,8 @@ export const DIDContextProvider = ({ children }: DIDContextProviderProps) => {
   const [isCreatingDidState, setIsCreatingDidState] = useState(false);
   const [isCreatedState, setIsCreatedState] = useState(false);
   const [didInfo, setDIDInfo] = useState({
-    did: "",
-    number: "000000",
+    did: "-",
+    number: "-",
   });
   const { isConnected, address } = useAccount();
   const [isDIDExistState, setIsDIDExistState] = useState(false);
