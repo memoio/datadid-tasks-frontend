@@ -2,7 +2,7 @@
 
 import "./globals.css";
 import '@rainbow-me/rainbowkit/styles.css';
-import { ReactNode } from "react"; // Import ReactNode from react
+import { ReactNode, Suspense } from "react"; // Import ReactNode from react
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { WagmiProvider } from 'wagmi';
 import { RainbowKitProvider } from '@rainbow-me/rainbowkit';
@@ -30,22 +30,24 @@ export default function RootLayout({ children }: RootLayoutProps) {
       <head />
       <body className={inter.className}>
         {/* Wrap your app in the AuthContextProvider to provide context globally */}
-        <WagmiProvider config={config}>
-          <QueryClientProvider client={queryClient}>
-            <RainbowKitProvider locale="en-US">
-              <AuthContextProvider>
-                <WalletContextProvider>
-                  <ActionProvider>
-                    <DIDContextProvider>
-                      {children}
-                      <GoogleAnalytics />
-                    </DIDContextProvider>
-                  </ActionProvider>
-                </WalletContextProvider>
-              </AuthContextProvider>
-            </RainbowKitProvider>
-          </QueryClientProvider>
-        </WagmiProvider>
+        <Suspense fallback={<div>Loading...</div>}>
+          <WagmiProvider config={config}>
+            <QueryClientProvider client={queryClient}>
+              <RainbowKitProvider locale="en-US">
+                <AuthContextProvider>
+                  <WalletContextProvider>
+                    <ActionProvider>
+                      <DIDContextProvider>
+                        {children}
+                        <GoogleAnalytics />
+                      </DIDContextProvider>
+                    </ActionProvider>
+                  </WalletContextProvider>
+                </AuthContextProvider>
+              </RainbowKitProvider>
+            </QueryClientProvider>
+          </WagmiProvider>
+        </Suspense>
       </body>
     </html >
   );
