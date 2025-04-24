@@ -20,11 +20,11 @@ export default function Profile() {
     const copyToClipboard = (text: string, setImageSrc: (src: string) => void) => {
         navigator.clipboard.writeText(text).then(() => {
             setImageSrc("/checked.png");
-            setShowPopup(true);
+            //setShowPopup(true);
 
             setTimeout(() => {
                 setImageSrc("/copy_symbol.png");
-                setShowPopup(false);
+                //setShowPopup(false);
             }, 2000);
         }).catch(() => {
             alert('Failed to copy text.');
@@ -45,7 +45,7 @@ export default function Profile() {
                     </div>
                     <div className="flex items-center">
                         <div className={`${paytoneOne.className} text-white font-medium text-[14px] leading-[36px] mr-3`}>
-                            {(isDIDExistState) ? didInfo.did.slice(0, 6) + "..." + didInfo.did.slice(-6) : "-"}
+                            {(isDIDExistState) ? didInfo.did.slice(0, 15) + "..." + didInfo.did.slice(-6) : "-"}
                         </div>
                         <Image
                             src={image1Src}

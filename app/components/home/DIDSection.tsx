@@ -52,6 +52,19 @@ export default function DidSection() {
 
     const closePopup = () => setShowPopup(false);
 
+    const [buttonText, setButtonText] = useState("Check DID");
+
+    const handleClick = () => {
+        if (isCheckDID) {
+          setButtonText("You Have Already Checked");
+          setTimeout(() => {
+            setButtonText("Check DID");
+          }, 3000);
+        } else {
+          openDid();
+        }
+      };
+
     return (
         <div className="relative">
             {/* Main content */}
@@ -82,16 +95,12 @@ export default function DidSection() {
                                 </div>
                                 <div className='flex flex-row gap-5'>
                                     <div
-                                        onClick={() => {
-                                            if (!isCheckDID) {
-                                                openDid();
-                                            }
-                                        }}
+                                        onClick={handleClick}
                                         className={`bg-[#13E292] flex justify-center items-center rounded-full px-4 py-2 mt-5 shadow-md transform hover:scale-110 transition-transform duration-300 cursor-pointer 
                                             ${isCheckDID ? 'opacity-50 cursor-not-allowed' : console.log("ischeck", isCheckDID)}`}
                                     >
                                         <span className="font-bold text-[14px] sm:text-[16px] text-white">
-                                            Check DID
+                                            {buttonText}
                                         </span>
                                     </div>
                                 </div>
