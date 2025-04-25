@@ -10,6 +10,8 @@ import { userInfo } from "os";
 import { useState } from "react";
 import { useAccount } from "wagmi";
 
+import { useEffect } from 'react';
+
 export default function Profile() {
     const { userInfos } = useAction();
     const { didInfo, isDIDExistState } = useDIDInfo();
@@ -23,11 +25,11 @@ export default function Profile() {
     const copyToClipboard = (text: string, setImageSrc: (src: string) => void) => {
         navigator.clipboard.writeText(text).then(() => {
             setImageSrc("/checked.png");
-            setShowPopup(true);
+            //setShowPopup(true);
 
             setTimeout(() => {
                 setImageSrc("/copy_symbol.png");
-                setShowPopup(false);
+                //setShowPopup(false);
             }, 2000);
         }).catch(() => {
             alert('Failed to copy text.');
@@ -37,6 +39,11 @@ export default function Profile() {
     function toggleWallet() {
         throw new Error("Function not implemented.");
     }
+
+    // show did info for debug
+    useEffect(() => {
+        console.log("======DID Info:", didInfo);
+    }, [didInfo]); // toggle when didInfo changes
 
     return (
         <div className="w-[400px]  px-4">
@@ -48,7 +55,7 @@ export default function Profile() {
                     </div>
                     <div className="flex items-center">
                         <div className={`${paytoneOne.className} text-white font-medium text-[14px] leading-[36px] mr-3`}>
-                            {(isDIDExistState) ? didInfo.did.slice(0, 6) + "..." + didInfo.did.slice(-6) : "-"}
+                            {(isDIDExistState) ? didInfo.did.slice(0, 15) + "..." + didInfo.did.slice(-6) : "-"}
                         </div>
                         <Image
                             src={image1Src}
@@ -67,7 +74,7 @@ export default function Profile() {
                         DID Number
                     </div>
                     <div className={`${paytoneOne.className} text-white font-medium text-[14px] leading-[36px]`}>
-                        {didInfo.number}
+                        {(isDIDExistState) ? didInfo.number : "-"}
                     </div>
                 </div>
 
