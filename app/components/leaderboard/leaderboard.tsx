@@ -117,10 +117,10 @@ export default function LeaderboardPage() {
                 data: data
             });
 
-            setList(data.list || []);
+            setList(data.data || []);
 
-            if (data.list && data.list.length > 0) {
-                alert(`Invited Addresses:\n${data.list.join("\n")}`);
+            if (data.data && data.data.length > 0) {
+                alert(`Invited Addresses:\n${data.data.join("\n")}`);
             } else {
                 alert("No invites found for this address.");
             }
