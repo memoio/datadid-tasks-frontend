@@ -18,7 +18,7 @@ interface UserInfos {
     invideCode: string;
     PointsRank: string;
     inviteCount: string;
-    parentUid: string;
+    parentCode: string;
 }
 
 interface ActionContextType {
@@ -98,7 +98,7 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
     const [dailyAction, setDailyAction] = useState(new Set<number>());
     const [questAction, setQuestAction] = useState(new Set<number>());
     const [cycleAction, setCycleAction] = useState<TaskData[]>([]);
-    const [userInfos, setUserInfos] = useState<UserInfos>({ points: 0, invideCode: '******', PointsRank: '-', inviteCount: '-', parentUid: '' })
+    const [userInfos, setUserInfos] = useState<UserInfos>({ points: 0, invideCode: '******', PointsRank: '-', inviteCount: '-', parentCode: '' })
     const { invite } = useWallet();
     /*
        const [dailyAction, setDailyAction] = useState<Set<number>>(() =>
@@ -120,7 +120,7 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
         setDailyAction(getFromLocalStorage<Set<number>>('dailyAction', new Set<number>(), true))
         setQuestAction(getFromLocalStorage<Set<number>>('questAction', new Set<number>(), true))
         setCycleAction(getFromLocalStorage<TaskData[]>('cycleAction', []))
-        setUserInfos(getFromLocalStorage<UserInfos>('userInfos', { points: 0, invideCode: '******', PointsRank: '-', inviteCount: '-', parentUid: '' }))
+        setUserInfos(getFromLocalStorage<UserInfos>('userInfos', { points: 0, invideCode: '******', PointsRank: '-', inviteCount: '-', parentCode: '' }))
     }, []);
 
 
@@ -159,7 +159,7 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
             invideCode: '******',
             PointsRank: '-',
             inviteCount: '-',
-            parentUid: ''
+            parentCode: ''
         });
         setCycleAction([]);
         setJoinId(-1);
@@ -192,7 +192,8 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
                     }
                 });
                 if (userresponse.data.result === 1) {
-                    if (userresponse.data.data.parentUid === null) {
+                    console.log("userinfo: ", userresponse.data.data)
+                    if (userresponse.data.data.parentCode === '') {
                         invite();
                     }
                 }
@@ -209,16 +210,13 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
                 }
             });
             if (userresponse.data.result === 1) {
-                // if (userresponse.data.data.parentUid === null) {
-                //     invite();
-                // }
 
                 setUserInfos({
                     points: userresponse.data.data.points,
                     invideCode: userresponse.data.data.inviteCode,
                     PointsRank: userresponse.data.data.pointsRank,
                     inviteCount: userresponse.data.data.inviteCount,
-                    parentUid: userresponse.data.data.parentUid,
+                    parentCode: userresponse.data.data.parentCode,
                 });
                 setPointUpdate(false);
             } else {

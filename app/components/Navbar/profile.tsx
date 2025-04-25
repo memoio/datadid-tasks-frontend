@@ -1,14 +1,17 @@
 'use client';
+import { useAction } from "@/app/lib/context/ActionContext";
 import { useDIDInfo } from "@/app/lib/context/DIDContext";
 import { useWallet } from "@/app/lib/context/WalletContext";
 import { paytoneOne } from "@/app/ui/fonts";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from 'next/image'; // Import Image from Next.js
+import { userInfo } from "os";
 import { useState } from "react";
 import { useAccount } from "wagmi";
 
 export default function Profile() {
+    const { userInfos } = useAction();
     const { didInfo, isDIDExistState } = useDIDInfo();
     const [showPopup, setShowPopup] = useState(false); // Popup visibility state
     const { address } = useAccount();
@@ -93,7 +96,10 @@ export default function Profile() {
                     <div className={`${paytoneOne.className} text-white font-semibold text-[16px] leading-[36px]`}>
                         Invite Code
                     </div>
-                    <FontAwesomeIcon icon={faPenToSquare} className="text-white cursor-pointer" onClick={() => { invite(); }} />
+                    {
+                        (userInfos.parentCode !== '') ? (<div className="text-white">{userInfos.parentCode}</div>) : (<FontAwesomeIcon icon={faPenToSquare} className="text-white cursor-pointer" onClick={() => { invite(); }} />)
+                    }
+
                 </div>
 
                 {showPopup && (
