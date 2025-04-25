@@ -52,7 +52,7 @@ export default function LeaderboardPage() {
                             address: any; inviteCount: any; points: any;
                         }, index: number) => ({
                             id: index + 1,
-                            address: (item.address ? item.address < 8 ? item.address : `${item.address.substring(0, 4)}...${item.address.substring(item.address.length - 4)}` : ''),
+                            address: item.address,
                             score: (item.inviteCount ? item.inviteCount : 0),
                             soul: item.points,
                             isFirst: index === 0,
@@ -79,10 +79,10 @@ export default function LeaderboardPage() {
     // handle click on invite count
     const handleInviteClick = async (parent: string) => {
         if (!parent) {
-          alert("Parent address is required");
-          return;
+            alert("Parent address is required");
+            return;
         }
-    
+
         setLoading(true);
         try {
             // test data
@@ -98,74 +98,74 @@ export default function LeaderboardPage() {
             // make url to request
             const url = new URL(API_URL.BACKEND_AIRDROP_INVITE_LIST);
             url.searchParams.append('parent', parent);
-            
+
             // fetch data
             const res = await fetch(url.toString());
             const data = await res.json();
-          
+
             // show info
             console.log("API Response:", {
-            status: res.status,
-            url: res.url,
-            data: data
-          });
+                status: res.status,
+                url: res.url,
+                data: data
+            });
 
-          setList(data.list || []);
-          
-          if (data.list && data.list.length > 0) {
-            alert(`Invited Addresses:\n${data.list.join("\n")}`);
-          } else {
-            alert("No invites found for this address.");
-          }
+            setList(data.list || []);
 
-          
+            if (data.list && data.list.length > 0) {
+                alert(`Invited Addresses:\n${data.list.join("\n")}`);
+            } else {
+                alert("No invites found for this address.");
+            }
+
+
         } catch (err) {
-          console.error(err);
-          alert("Failed to load invites");
+            console.error(err);
+            alert("Failed to load invites");
         } finally {
-          setLoading(false);
+            setLoading(false);
         }
     };
 
     // handle click on points
     const handlePointsClick = async (address: string) => {
         if (!address) {
-          alert("address is required");
-          return;
+            alert("address is required");
+            return;
         }
-    
+
         setLoading(true);
         try {
             // make url to request
             const url = new URL(API_URL.BACKEND_AIRDROP_RECORD_LIST);
             url.searchParams.append('ltype', "0");
             url.searchParams.append('address', address);
-            
+
             // fetch data
             const res = await fetch(url.toString());
             const data = await res.json();
-          
+
             // show info
             console.log("API Response:", {
-            status: res.status,
-            url: res.url,
-            data: data
-          });
+                status: res.status,
+                url: res.url,
+                data: data
+            });
 
-          setList(data.list || []);
-          
-          if (data.list && data.list.length > 0) {
-            alert(`Record List:\n${data.list.join("\n")}`);
-          } else {
-            alert("No record found for this address.");
-          }
+            setList(data.list || []);
 
-          
+            if (data.list && data.list.length > 0) {
+                alert(`Record List:\n${data.list.join("\n")}`);
+            } else {
+                alert("No record found for this address.");
+            }
+
+
         } catch (err) {
-          console.error(err);
-          alert("Failed to load points record");
+            console.error(err);
+            alert("Failed to load points record");
         } finally {
-          setLoading(false);
+            setLoading(false);
         }
     };
 
@@ -265,14 +265,14 @@ export default function LeaderboardPage() {
                                 )}
                             </div>
                             <div className="text-white text-[16px] sm:text-[20px] leading-[24px] sm:leading-[38px] text-center w-[40%]">
-                                {item.address}
+                                {(item.address ? item.address.length < 8 ? item.address : `${item.address.substring(0, 4)}...${item.address.substring(item.address.length - 4)}` : '')}
                             </div>
                             <div className="text-[#FFC917] text-[16px] sm:text-[20px] leading-[24px] sm:leading-[38px] text-center w-[20%]"
                                 onClick={() => {
                                     console.log(`${item.address}`)
                                     console.log(`${item.score}`)
                                     handleInviteClick(`${item.address}`)
-                                    } 
+                                }
                                 }
                             >
                                 {item.score}
@@ -289,7 +289,7 @@ export default function LeaderboardPage() {
                                     onClick={() => {
                                         console.log(`${item.soul}`)
                                         handlePointsClick(`${item.address}`)
-                                        } 
+                                    }
                                     }
                                 >
                                     {item.soul}
