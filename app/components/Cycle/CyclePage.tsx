@@ -50,7 +50,13 @@ export default function CyclePage() {
     const { openConnectModal } = useConnectModal();
     const targetDate = new Date('2025-04-07T23:59:59').getTime();
 
-    const [list, setList] = useState<string[]>([]);
+    // define
+    interface ListItem {
+        action: number;
+        points: number;
+        time: number; // timestamp
+    }
+    const [list, setList] = useState<ListItem[]>([]);
 
     const [countdown, setCountdown] = useState<{ days: number; hours: number; minutes: number; seconds: number }>({
         days: 0,
@@ -185,17 +191,24 @@ export default function CyclePage() {
             status: res.status,
             url: res.url,
             data: data
-          });
+            });
 
-          setList(data.list || []);
-          
-          if (data.list && data.list.length > 0) {
-            alert(`Record List:\n${data.list.join("\n")}`);
-          } else {
-            alert("No record found for this address.");
-          }
+            setList(data.data);
+            
+            // show record list
+            if (list.length === 0) {
+                alert("No data found");
+                return;
+            }
 
-          
+            const message = list.map((item, index) => (
+                `#${index + 1} - ${item.action}\n` +
+                `• Points: ${item.points}\n` +
+                `• Time: ${new Date(item.time).toLocaleString()}\n\n`
+            )).join("");
+            
+            alert(`📊 Data List (${list.length} items)\n\n${message}`);
+  
         } catch (err) {
           console.error(err);
           alert("Failed to load points record");
