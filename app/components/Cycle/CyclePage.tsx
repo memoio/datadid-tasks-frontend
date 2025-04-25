@@ -36,7 +36,7 @@ export const cards = [
 
     { id: 18, imgSrc: "/Cycle19.png", participants: 800, name: "Sugre", aliases: "sugre", short: "A decentralized mobile infrastructure network.", text: "Sugre Network is building a decentralized mobile infrastructure network, integrating advanced AI technology, DePIN, and the Web3 ecosystem. Through seamless integration of smartphones with decentralized networks, redefining the future of mobile technology. " },
     // { id: 19, imgSrc: "/Cycle20.png", participants: 800, name: "ESCC", aliases: "escc", short: "Stablecoin chain based on EOS technology.", text: "Eos Stable Coin Chain (ESCC) is a public blockchain based on EOS and EOS EVM architecture, designed to support stablecoin scenarios." },
-    { id: 20, imgSrc: "/Cycle20.png", participants: 800, name: "HashKey", aliases: "HSK", short: "A project focused on building a high-performance public blockchain.", text: "HashKey Chain is a public blockchain project that focuses on security, integrates high performance, low cost, community-driven, and innovative technology applications, and is committed to promoting large-scale application of blockchain. " },
+    { id: 20, imgSrc: "/Cycle24.png", participants: 800, name: "HashKey HSK", aliases: "HSK", short: "A project focused on building a high-performance public blockchain.", text: "HashKey Chain is a public blockchain project that focuses on security, integrates high performance, low cost, community-driven, and innovative technology applications, and is committed to promoting large-scale application of blockchain. " },
 ];
 
 export default function CyclePage() {
