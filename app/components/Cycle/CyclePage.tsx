@@ -107,6 +107,7 @@ export default function CyclePage() {
         return () => clearInterval(interval);
     }, [targetDate]);
 
+    const rank = (userInfos.PointsRank === "1000" || userInfos.PointsRank === "0") ? '1000+' : userInfos.PointsRank;
 
     return (
         <div className="mt-[120px]">
@@ -142,7 +143,7 @@ export default function CyclePage() {
             {/* Stats Section */}
             <div className="flex flex-col sm:flex-row justify-around items-center mt-[65px] gap-5 px-6 animate-fade-in bg-[#05F2920D] rounded-[10px] py-[20px] border border-[#0079F2]">
                 {[
-                    { label: 'Rank', value: (userInfos.PointsRank === "1000") ? ('1000+') : userInfos.PointsRank },
+                    { label: 'Rank', value: rank },
                     { label: 'Projects Joined', value: joined },
                     { label: 'Tasks Accomplished', value: completed },
                     { label: 'Rewards Earned', value: userInfos.points },
