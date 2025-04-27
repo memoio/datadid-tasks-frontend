@@ -117,8 +117,6 @@ export default function LeaderboardPage() {
                 data: data
             });
 
-            setList(data.data || []);
-
             if (data.data && data.data.length > 0) {
                 alert(`Invited Addresses:\n${data.data.join("\n")}`);
             } else {

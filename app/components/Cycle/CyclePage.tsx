@@ -51,12 +51,12 @@ export default function CyclePage() {
     const targetDate = new Date('2025-04-07T23:59:59').getTime();
 
     // define
-    interface ListItem {
+    interface RecordListItem {
         action: number;
         points: number;
         time: number; // timestamp
     }
-    const [list, setList] = useState<ListItem[]>([]);
+    const [list, setList] = useState<RecordListItem[]>([]);
 
     const [countdown, setCountdown] = useState<{ days: number; hours: number; minutes: number; seconds: number }>({
         days: 0,
@@ -149,9 +149,7 @@ export default function CyclePage() {
             data: data
           });
 
-          setList(data.list || []);
-          
-          if (data.list && data.list.length > 0) {
+          if (data.data && data.data.length > 0) {
             alert(`Invited Addresses:\n${data.list.join("\n")}`);
           } else {
             alert("No invites found for this address.");
@@ -192,7 +190,7 @@ export default function CyclePage() {
             });
 
             setList(data.data);
-            
+
             // show record list
             if (list.length === 0) {
                 alert("No data found");
