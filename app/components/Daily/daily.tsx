@@ -44,7 +44,7 @@ export default function Daily() {
                 if (!isExist) {
                     setBindWallet();
                 }
-                if (isDIDExistState && isExist) {
+                if (isDIDExistState && isExist && address) {
                     const currentUrl = `https://data.memolabs.org/?referralCode=${userInfos.invideCode}`;
                     const tweetText = `📈I found a platform that can own, manage and monetize your data @MemoLabsOrg!
 

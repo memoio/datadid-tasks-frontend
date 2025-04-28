@@ -22,7 +22,7 @@ export default function CreateDID() {
 
 
     const handleCreateDid = async () => {
-        if (isConnected) {
+        if (isConnected && address) {
             console.log("create")
             if (!isExist) {
                 setBindWallet();

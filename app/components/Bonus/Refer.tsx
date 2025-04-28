@@ -14,7 +14,7 @@ import { useAction } from '@/app/lib/context/ActionContext';
 import { useDIDInfo } from "@/app/lib/context/DIDContext";
 
 export default function Refer() {
-    const { isConnected, address } = useAccount();
+    const { isConnected } = useAccount();
 
     const [loading, setLoading] = useState(false);
     const [opIndex, setOpIndex] = useState(-1);
