@@ -11,7 +11,7 @@ import { useAccount } from 'wagmi';
 
 
 export default function LeaderboardPage() {
-    const { isConnected } = useAccount();
+    const { isConnected, address } = useAccount();
     const [isWeekly, setIsWeekly] = useState(true);
     const { isExist, setBindWallet } = useAuth();
     const [loading, setLoading] = useState(false);
@@ -23,7 +23,7 @@ export default function LeaderboardPage() {
         time: number; // timestamp
     }
     const [list, setList] = useState<ListItem[]>([]);
-    
+
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     interface ElementData {
@@ -43,7 +43,7 @@ export default function LeaderboardPage() {
         if (isConnected && isExist) {
             setBindWallet()
         }
-        if (isExist) {
+        if (isExist && address) {
             const getRank = async () => {
                 try {
                     setLoading(true)
@@ -84,7 +84,7 @@ export default function LeaderboardPage() {
 
     // handle click on invite count
     const handleInviteClick = async (parent: string) => {
-        console.log("parent: ",parent)
+        console.log("parent: ", parent)
         if (!parent) {
             alert("Parent address is required");
             return;
@@ -161,19 +161,19 @@ export default function LeaderboardPage() {
             });
 
             setList(data.data);
-            
+
             // show record list
             if (list.length === 0) {
                 alert("No data found");
                 return;
-              }
+            }
 
             const message = list.map((item, index) => (
                 `#${index + 1} - ${item.action}\n` +
                 `• Points: ${item.points}\n` +
                 `• Time: ${new Date(item.time).toLocaleString()}\n\n`
-              )).join("");
-              
+            )).join("");
+
             alert(`📊 Data List (${list.length} items)\n\n${message}`);
 
         } catch (err) {
@@ -303,7 +303,7 @@ export default function LeaderboardPage() {
                                 <div className="text-[16px] sm:text-[20px] text-white leading-[24px] sm:leading-[38px] text-center"
                                     onClick={() => {
                                         console.log(`${item.soul}`)
-                                        console.log("item.address: ",`${item.address}`)
+                                        console.log("item.address: ", `${item.address}`)
                                         handlePointsClick(`${item.address}`)
                                     }
                                     }

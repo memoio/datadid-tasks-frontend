@@ -64,7 +64,7 @@ export const DIDContextProvider = ({ children }: DIDContextProviderProps) => {
 
   useEffect(() => {
     console.log("didstate", isDIDExistState)
-    if (isConnected) {
+    if (isConnected && address) {
       const getDIDInfo = async () => {
 
         const response = await axios.get(

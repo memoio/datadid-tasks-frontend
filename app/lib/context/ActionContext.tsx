@@ -184,7 +184,7 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
     }, [joinId, router])
 
     useEffect(() => {
-        if (isConnected) {
+        if (isConnected && address) {
             const HandleUserInfo = async () => {
                 const userresponse = await axios.get(API_URL.BACKEND_AIRDROP_INFO, {
                     params: {
@@ -223,13 +223,13 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
                 alert("Error: " + userresponse.data.error);
             }
         }
-        if (isExist || isPointUpdate) HandleUserInfo();
+        if ((isExist || isPointUpdate) && address) HandleUserInfo();
     }, [isPointUpdate, isExist]);
 
 
 
     useEffect(() => {
-        if (isExist) {
+        if (isExist && address) {
             // 调用绑定钱包接口
             const HandleDailyAction = async () => {
                 try {

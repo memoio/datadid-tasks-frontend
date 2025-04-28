@@ -24,7 +24,7 @@ export default function Reward() {
 
     const handVerifyOAT = async () => {
         const verifyOAT = async () => {
-            if (isConnected) {
+            if (isConnected && address) {
                 const respond = await axios.post(API_URL.BACKEND_OAT_VERIFY,
                     {
                         address: address
@@ -45,7 +45,7 @@ export default function Reward() {
 
     useEffect(() => {
         const status = async () => {
-            if (isConnected) {
+            if (isConnected && address) {
                 const respond = await axios.get(API_URL.BACKEND_OAT_STATUS,
                     {
                         params: {

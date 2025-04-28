@@ -66,7 +66,7 @@ export default function Activity({ joinId }: { joinId: number }) {
         if (!isExist) {
             setBindWallet();
         }
-        if (isExist && joinId > -1 && !cycleAction.some((t) => t.projectId === joinId && t.taskId === taskId)) {
+        if (isExist && address && joinId > -1 && !cycleAction.some((t) => t.projectId === joinId && t.taskId === taskId)) {
             try {
                 console.log("ID", joinId, taskId);
                 const actionId = 1011 + 10 * joinId + taskId;

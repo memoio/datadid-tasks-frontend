@@ -64,7 +64,7 @@ export default function Invite() {
 
     const handleClick = async () => {
         try {
-            if (!isExist) {
+            if (!isExist && address) {
                 setBindWallet()
             }
             const inviteCode = values.join("");
