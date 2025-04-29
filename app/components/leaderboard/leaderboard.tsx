@@ -17,13 +17,13 @@ export default function LeaderboardPage() {
     const [loading, setLoading] = useState(false);
 
     // define
-    interface ListItem {
+    interface RecordListItem {
         action: number;
         points: number;
         time: number; // timestamp
     }
-    const [list, setList] = useState<ListItem[]>([]);
-
+    const [list, setList] = useState<RecordListItem[]>([]);
+    
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     interface ElementData {
@@ -161,18 +161,18 @@ export default function LeaderboardPage() {
             setList(data.data);
 
             // show record list
-            if (list.length === 0) {
+            if (data.data.length === 0) {
                 alert("No data found");
                 return;
             }
 
-            const message = list.map((item, index) => (
+            const message = data.data.map((item: RecordListItem, index: number) => (
                 `#${index + 1} - ${item.action}\n` +
                 `• Points: ${item.points}\n` +
                 `• Time: ${new Date(item.time).toLocaleString()}\n\n`
             )).join("");
-
-            alert(`📊 Data List (${list.length} items)\n\n${message}`);
+            
+            alert(`📊 Data List (${data.data.length} items)\n\n${message}`);
 
         } catch (err) {
             console.error(err);
