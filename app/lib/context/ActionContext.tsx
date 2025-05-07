@@ -224,6 +224,7 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
             }
         }
         if ((isExist || isPointUpdate) && address) HandleUserInfo();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isPointUpdate, isExist]);
 
 
@@ -341,6 +342,7 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
 
             HandleDailyAction();
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isExist]); // , isPointUpdate
     console.log("daily: ", dailyAction);
     console.log("quest: ", questAction);

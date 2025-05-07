@@ -28,6 +28,17 @@ export default function Activity({ joinId }: { joinId: number }) {
         { id: 'task5', label: 'Share the  task link to the TG group', reward: 20 },
     ];
 
+    const currentUrl = `https://data.memolabs.org/?referralCode=${userInfos.invideCode}`;
+    const tweetText = `Your data, your decision! You can earn points and exchange them for rewards by participating now. Come and start your data monetization journey!
+https://data.memolabs.org/projects/${joinId}
+    `
+
+
+    const dailyUrl = [
+        { url: 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(tweetText) },
+        { url: 'https://t.me/share/url?url=' + encodeURIComponent(currentUrl) + '&text=' + encodeURIComponent(tweetText) },
+    ]
+
     const onetimeTasks = [
         { id: "task1", label: "Follow Twitter", reward: 50 },
         { id: "task2", label: "Join Telegram", reward: 50 },
@@ -101,6 +112,10 @@ export default function Activity({ joinId }: { joinId: number }) {
             }
         }
     };
+
+    const navigateToLinkDayliy = (taskId: number) => {
+        window.open(dailyUrl[taskId].url, '_blank');
+    }
 
     const navigateToLink = (projectId: number, taskId: number) => {
         // router.push(tasks[index].url);
@@ -216,7 +231,7 @@ export default function Activity({ joinId }: { joinId: number }) {
                                                 setDailyOpIndex(-1);
                                                 setDailyLoading(true);
                                                 setDailyOpIndex(index + 3);
-                                                navigateToLink(joinId, index);
+                                                navigateToLinkDayliy(index);
                                                 await handleTaskClick(task, index + 3);
                                                 setDailyLoading(false);
                                                 setDailyOpIndex(-1);
