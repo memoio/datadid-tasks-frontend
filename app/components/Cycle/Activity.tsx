@@ -28,6 +28,17 @@ export default function Activity({ joinId }: { joinId: number }) {
         { id: 'task5', label: 'Share the  task link to the TG group', reward: 20 },
     ];
 
+    const currentUrl = `https://data.memolabs.org/?referralCode=${userInfos.invideCode}`;
+    const tweetText = `Your data, your decision! You can earn points and exchange them for rewards by participating now. Come and start your data monetization journey!
+https://data.memolabs.org/projects/${joinId}
+    `
+
+
+    const dailyUrl = [
+        { url: 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(tweetText) },
+        { url: 'https://t.me/share/url?url=' + encodeURIComponent(currentUrl) + '&text=' + encodeURIComponent(tweetText) },
+    ]
+
     const onetimeTasks = [
         { id: "task1", label: "Follow Twitter", reward: 50 },
         { id: "task2", label: "Join Telegram", reward: 50 },
@@ -44,10 +55,10 @@ export default function Activity({ joinId }: { joinId: number }) {
         { id: 6, links: [{ url: "https://x.com/ULTILAND" }, { url: "https://t.me/ULTILAND_RWA" }, { url: "https://www.ultiland.io/" },] },
         { id: 7, links: [{ url: "https://x.com/Donetwork_club" }, { url: "https://t.me/DoNetworkclub" }, { url: "https://www.donetwork.io/#/pc/Index" },] },
         { id: 8, links: [{ url: "https://x.com/flock_io" }, { url: "https://t.me/flock_io_community" }, { url: "https://www.flock.io/" },] },
-        { id: 9, links: [{ url: "https://x.com/DIDbased" }, { url: "https://t.me/memolabsio" }, { url: "https://d.id/" },] },
+        { id: 9, links: [{ url: "c" }, { url: "https://t.me/memolabsio" }, { url: "https://d.id/" },] },
         { id: 10, links: [{ url: "https://x.com/Meter_IO" }, { url: "https://t.me/Meter_IO" }, { url: "https://meter.io/" },] },
         // { id: 11, links: [{ url: "https://x.com/flapdotsh" }, { url: "https://t.me/FlapOfficial" }, { url: "https://flap.sh/" },] },
-        { id: 12, links: [{ url: "https://x.com/ccarbonWorld" }, { url: "https://ccarbon.world/" }, { url: "https://ccarbon.world/" },] },
+        { id: 12, links: [{ url: "c" }, { url: "https://ccarbon.world/" }, { url: "https://ccarbon.world/" },] },
         { id: 13, links: [{ url: "https://x.com/onlylayer" }, { url: "https://t.me/onlylayer" }, { url: "https://onlylayer.com/" },] },
         { id: 14, links: [{ url: "https://x.com/ClusterProtocol" }, { url: "https://t.me/clusterprotocolchat" }, { url: "https://www.clusterprotocol.ai/" },] },
         { id: 15, links: [{ url: "https://x.com/swan_chain" }, { url: "https://t.me/swan_chain/1" }, { url: "https://swanchain.io/" },] },
@@ -101,6 +112,10 @@ export default function Activity({ joinId }: { joinId: number }) {
             }
         }
     };
+
+    const navigateToLinkDayliy = (taskId: number) => {
+        window.open(dailyUrl[taskId].url, '_blank');
+    }
 
     const navigateToLink = (projectId: number, taskId: number) => {
         // router.push(tasks[index].url);
@@ -216,7 +231,7 @@ export default function Activity({ joinId }: { joinId: number }) {
                                                 setDailyOpIndex(-1);
                                                 setDailyLoading(true);
                                                 setDailyOpIndex(index + 3);
-                                                navigateToLink(joinId, index);
+                                                navigateToLinkDayliy(index);
                                                 await handleTaskClick(task, index + 3);
                                                 setDailyLoading(false);
                                                 setDailyOpIndex(-1);

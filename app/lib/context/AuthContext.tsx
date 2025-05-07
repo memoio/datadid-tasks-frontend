@@ -5,10 +5,6 @@ import axios from "axios";
 import { API_URL } from "@/app/components/config/config";
 import { useSearchParams } from "next/navigation";
 
-interface UidInfo {
-  uid: string;
-  token: string;
-}
 
 interface AuthContextType {
   isExist: boolean;
@@ -45,7 +41,7 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
         try {
 
           const ip = await getUserIP();
-
+          console.log(ip)
           const response = await axios.post(
             API_URL.BACKEND_AIRDROP_BIND,
             {
@@ -75,7 +71,8 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
     if (isConnected && address && !isExist) {
       setBindWallet()
     }
-  }, [isConnected, address]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isConnected]);
 
   useEffect(() => {
     console.log("isDisconnected: ", isDisconnected);
