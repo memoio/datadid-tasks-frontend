@@ -5,7 +5,6 @@ import { useAccount } from "wagmi";
 import axios from 'axios';
 import { API_URL } from '@/app/components/config/config';
 import { useRouter } from 'next/navigation';
-import { disconnect } from 'process';
 import { useAuth } from './AuthContext';
 import { useWallet } from './WalletContext';
 interface TaskData {
@@ -224,7 +223,7 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
             }
         }
         if ((isExist || isPointUpdate) && address) HandleUserInfo();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isPointUpdate, isExist]);
 
 
@@ -342,7 +341,7 @@ export const ActionProvider = ({ children }: ActionContextProviderProps) => {
 
             HandleDailyAction();
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isExist]); // , isPointUpdate
     console.log("daily: ", dailyAction);
     console.log("quest: ", questAction);
