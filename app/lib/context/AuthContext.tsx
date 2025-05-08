@@ -17,15 +17,6 @@ interface AuthContextProviderProps {
   children: ReactNode;
 }
 
-const getUserIP = async () => {
-  try {
-    const response = await axios.get('https://api.ipify.org?format=json');
-    return response.data.ip;
-  } catch (error) {
-    console.error('Failed to get IP address:', error);
-    return null;
-  }
-};
 
 // Create the provider component
 export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
@@ -40,15 +31,12 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
       const bindWallet = async () => {
         try {
 
-          const ip = await getUserIP();
-          console.log(ip)
           const response = await axios.post(
             API_URL.BACKEND_AIRDROP_BIND,
             {
               address: address,
               source: source,
               useragent: navigator.userAgent,
-              ip: ip
             },
           );
 
@@ -71,7 +59,7 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
     if (isConnected && address && !isExist) {
       setBindWallet()
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isConnected]);
 
   useEffect(() => {
