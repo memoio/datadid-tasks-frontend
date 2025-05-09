@@ -8,7 +8,7 @@ const nextConfig: NextConfig = {
        if (process.env.NODE_ENV === 'development') {
         return 'http://localhost:8080';
       } else {
-        return 'https://data-be.metamemo.one/v1';
+        return 'https://data-be.metamemo.one';
       }
     })()
   }
