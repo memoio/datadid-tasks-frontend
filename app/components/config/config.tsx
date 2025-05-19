@@ -33,4 +33,7 @@ export const API_URL = {
 
     "BACKEND_DID_CREATEADMIN": BACKEND_URL + "/did/createadmin",
     "BACKEND_DID_INFO": BACKEND_URL + "/did/info",
-}
+
+    "BACKEND_ACTIVITY_BIND_CHANNEL": BACKEND_URL + "/activity/bind/channel",
+    "BACKEND_ACTIVITY_BIND_ACTIVITY": BACKEND_URL + "/activity/bind/activity",
+} 
