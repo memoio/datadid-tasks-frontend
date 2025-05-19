@@ -25,6 +25,41 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
   const searchParams = useSearchParams()
 
   const source = searchParams.get('source')?.toString() || 'airdrop';
+  const channel = searchParams.get('channel')?.toString() || '';
+  const activity = searchParams.get('activity')?.toString() || '';
+
+  const bindChannel = async () => {
+    if (address && channel !== "") {
+      try {
+        const response = await axios.post(
+          API_URL.BACKEND_ACTIVITY_BIND_CHANNEL,
+          {
+            address: address,
+            channel: channel,
+          },
+        );
+      } catch (error) {
+        alert(`Error binding channel: ${error}`);
+      }
+    }
+  }
+
+  const bindActivity = async () => {
+    if (address && activity !== "") {
+      try {
+        const response = await axios.post(
+          API_URL.BACKEND_ACTIVITY_BIND_ACTIVITY,
+          {
+            address: address,
+            activity: activity,
+          },
+        );
+      } catch (error) {
+        alert(`Error binding activity: ${error}`);
+      }
+    }
+  }
+
 
   const setBindWallet = () => {
     if (address && !isExist) {
@@ -58,6 +93,8 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
   useEffect(() => {
     if (isConnected && address && !isExist) {
       setBindWallet()
+      bindActivity()
+      bindChannel() 
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isConnected]);
