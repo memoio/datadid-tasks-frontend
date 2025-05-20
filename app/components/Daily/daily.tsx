@@ -11,6 +11,13 @@ import React from 'react';
 import { useState } from 'react';
 import { API_URL } from '../config/config';
 
+// for ga4 event trace
+declare global {
+    interface Window {
+      gtag: (...args: any[]) => void;
+    }
+  }
+
 interface Item {
     src: string;
     alt: string;
@@ -70,6 +77,16 @@ export default function Daily() {
                         { url: 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(tweetText) },
                     ];
                     window.open(urls[index].url, '_blank');
+
+                    // send GA4 event
+                    if (typeof window !== 'undefined' && typeof window.gtag !== 'undefined') {
+                        window.gtag('event', 'daily_task_click', {
+                            task_name: items[index].title,
+                            task_index: index,
+                            address: address,
+                        });
+                    }
+
                     setOpIndex(index)
                     const actionId = 70 + index;
                     console.log(actionId);
