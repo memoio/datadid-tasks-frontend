@@ -5,10 +5,12 @@ const nextConfig: NextConfig = {
   /* config options here */
   env: {
     BACKEND_URL: (() => {
-       if (process.env.NODE_ENV === 'development') {
+      if (process.env.NODE_ENV === 'development') {
         return 'http://localhost:8080';
-      } else {
+      } else if (process.env.NODE_ENV === 'production') {
         return 'https://data-be.metamemo.one';
+      } else {
+        return 'https://test-data-be.memolabs.net/';
       }
     })()
   }
