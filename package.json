@@ -26,6 +26,7 @@
     "react-toastify": "^10.0.6",
     "styled-components": "^6.1.13",
     "toastify": "^2.0.1",
+    "ua-parser-js": "^2.0.3",
     "viem": "^2.21.54",
     "wagmi": "^2.13.5"
   },

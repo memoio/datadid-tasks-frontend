@@ -11,6 +11,9 @@ import React from 'react';
 import { useState } from 'react';
 import { API_URL } from '../config/config';
 
+// for device name parse
+import { UAParser } from 'ua-parser-js';
+
 // for ga4 event trace
 declare global {
     interface Window {
@@ -78,12 +81,22 @@ export default function Daily() {
                     ];
                     window.open(urls[index].url, '_blank');
 
-                    // send GA4 event
+                    // send GA4 event with device info
                     if (typeof window !== 'undefined' && typeof window.gtag !== 'undefined') {
+                        const parser = new UAParser();
+                        const device = parser.getDevice();
+                        const os = parser.getOS();
+                        const browser = parser.getBrowser();
+
+                        const deviceName = `${device.vendor || 'Unknown'} ${device.model || 'Device'}`.trim();
+
                         window.gtag('event', 'daily_task_click', {
                             task_name: items[index].title,
                             task_index: index,
                             address: address,
+                            device_name: deviceName,
+                            os_name: `${os.name || ''} ${os.version || ''}`.trim(),
+                            browser: `${browser.name || ''} ${browser.version || ''}`.trim(),
                         });
                     }
 
