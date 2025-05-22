@@ -1,8 +1,11 @@
 "use client";
 import Script from "next/script";
 
+// product
+//const ga_tracking_id = "G-RSXQBVJPBH";
 
-const ga_tracking_id = "G-RSXQBVJPBH";
+// test
+const ga_tracking_id = "G-MBDM567PKS";
 
 const GoogleAnalytics = () => {
     return (
