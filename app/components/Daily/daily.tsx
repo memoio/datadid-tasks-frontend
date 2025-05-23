@@ -11,6 +11,16 @@ import React from 'react';
 import { useState } from 'react';
 import { API_URL } from '../config/config';
 
+// for device name parse
+import { UAParser } from 'ua-parser-js';
+
+// for ga4 event trace
+declare global {
+    interface Window {
+      gtag: (...args: any[]) => void;
+    }
+  }
+
 interface Item {
     src: string;
     alt: string;
@@ -19,9 +29,9 @@ interface Item {
 }
 
 const items: Item[] = [
-    { src: "/x.png", alt: "SBT1", reward: "+20", title: "Check In" },
-    { src: "/tg.png", alt: "SBT2", reward: "+20", title: "Share to chat group" },
-    { src: "/discord.png", alt: "SBT3", reward: "+20", title: "Share to friends" },
+    { src: "/x.png", alt: "SBT1", reward: "+20", title: "Share to X" },
+    { src: "/tg.png", alt: "SBT2", reward: "+20", title: "Share to Telegram" },
+    { src: "/discord.png", alt: "SBT3", reward: "+20", title: "Share to Discord" },
     { src: "/retweet.png", alt: "SBT4", reward: "+20", title: "Share to Twitter" },
 ];
 
@@ -70,6 +80,26 @@ export default function Daily() {
                         { url: 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(tweetText) },
                     ];
                     window.open(urls[index].url, '_blank');
+
+                    // send GA4 event with device info
+                    if (typeof window !== 'undefined' && typeof window.gtag !== 'undefined') {
+                        const parser = new UAParser();
+                        const device = parser.getDevice();
+                        const os = parser.getOS();
+                        const browser = parser.getBrowser();
+
+                        const deviceName = `${device.vendor || 'Unknown'} ${device.model || 'Device'}`.trim();
+
+                        window.gtag('event', 'daily_task_click', {
+                            task_name: items[index].title,
+                            task_index: index,
+                            address: address,
+                            device_name: deviceName,
+                            os_name: `${os.name || ''} ${os.version || ''}`.trim(),
+                            browser: `${browser.name || ''} ${browser.version || ''}`.trim(),
+                        });
+                    }
+
                     setOpIndex(index)
                     const actionId = 70 + index;
                     console.log(actionId);

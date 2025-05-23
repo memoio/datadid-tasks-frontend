@@ -1,8 +1,11 @@
 "use client";
 import Script from "next/script";
 
-
+// product
 const ga_tracking_id = "G-RSXQBVJPBH";
+
+// test
+//const ga_tracking_id = "G-MBDM567PKS";
 
 const GoogleAnalytics = () => {
     return (
@@ -17,6 +20,7 @@ const GoogleAnalytics = () => {
             >
                 {`window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
+        window.gtag = gtag;
         gtag('js', new Date());
         gtag('config', '${ga_tracking_id}');`}
             </Script>
