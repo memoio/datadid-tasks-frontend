@@ -29,6 +29,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
     <html lang="en">
       <head />
       <body className={inter.className}>
+      <GoogleAnalytics />
         {/* Wrap your app in the AuthContextProvider to provide context globally */}
         <Suspense fallback={<div>Loading...</div>}>
           <WagmiProvider config={config}>
@@ -38,8 +39,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
                   <WalletContextProvider>
                     <ActionProvider>
                       <DIDContextProvider>
-                        {children}
-                        <GoogleAnalytics />
+                        {children}     
                       </DIDContextProvider>
                     </ActionProvider>
                   </WalletContextProvider>
