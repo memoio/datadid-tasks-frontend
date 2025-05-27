@@ -55,7 +55,7 @@ export default function LeaderboardPage() {
                         },
                     )
                     if (response.data.result === 1) {
-                        const ranklist = response.data.data.slice(0, 10).map((item: {
+                        const ranklist = response.data.data.top.slice(0, 10).map((item: {
                             address: any; inviteCount: any; points: any;
                         }, index: number) => ({
                             id: index + 1,

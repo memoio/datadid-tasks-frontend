@@ -10,7 +10,7 @@ const nextConfig: NextConfig = {
       } else if (process.env.NODE_ENV === 'production') {
         return 'https://data-be.metamemo.one';
       } else {
-        return 'https://test-data-be.memolabs.net/';
+        return 'https://data-be-v1.metamemo.one/';
       }
     })()
   }
