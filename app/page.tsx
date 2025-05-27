@@ -65,12 +65,14 @@ function sendDeviceModelToGA() {
   const modelName = deviceModelMap[code] || code;
 
   if (typeof window !== "undefined" && window.gtag) {
-    window.gtag("set", {
+    window.gtag("event", "page_view", {
+      debug_mode: true,
       user_properties: {
-        device_model: modelName
+        device_model: modelName,
       }
     });
-    console.log("send property to GA:", modelName);
+
+    console.log("Sent device_model to GA:", modelName);
   }
 }
 
