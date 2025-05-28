@@ -18,6 +18,8 @@ import { useWallet } from "@/app/lib/context/WalletContext";
 import { useAction } from "@/app/lib/context/ActionContext";
 import { useRouter } from 'next/navigation';
 
+import { UAParser } from 'ua-parser-js';
+
 // device model list
 const deviceModelMap: Record<string, string> = {
   // 苹果
@@ -50,19 +52,35 @@ const deviceModelMap: Record<string, string> = {
 };
 
 // get device model from map
-function getDeviceModelCode(): string {
+function getDeviceModelName(): string {
+  const parser = new UAParser();
+  const device = parser.getDevice();
   const ua = navigator.userAgent;
+
+  // 优先 device.model => map 到友好名称
+  if (device.model && deviceModelMap[device.model]) {
+    return deviceModelMap[device.model];
+  }
+
+  // UA 中 Build/... 也可以映射到 map
   const match = ua.match(/Build\/([^\s;]+)/i);
-  if (match && match[1]) return match[1];
+  if (match && match[1] && deviceModelMap[match[1]]) {
+    return deviceModelMap[match[1]];
+  }
+
+  // Fallback 识别
   if (/iPhone/i.test(ua)) return "iPhone";
   if (/iPad/i.test(ua)) return "iPad";
+  if (/Macintosh/i.test(ua)) return "Apple Mac";
+  if (/Windows/i.test(ua)) return "Windows PC";
+  if (/Linux/i.test(ua)) return "Linux PC";
+
   return "Unknown";
 }
 
 // send device model to ga
 function sendDeviceModelToGA() {
-  const code = getDeviceModelCode();
-  const modelName = deviceModelMap[code] || code;
+  const modelName = getDeviceModelName();
 
   if (typeof window !== "undefined" && window.gtag) {
     window.gtag("event", "page_view", {
