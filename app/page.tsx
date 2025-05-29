@@ -57,7 +57,7 @@ function getDeviceModelName(): string {
   const device = parser.getDevice();
   const ua = navigator.userAgent;
 
-  // 优先 device.model => map 到友好名称
+  // 优先 device.model => map 到友好名称+-
   if (device.model && deviceModelMap[device.model]) {
     return deviceModelMap[device.model];
   }
@@ -82,17 +82,19 @@ function getDeviceModelName(): string {
 function sendDeviceModelToGA() {
   const modelName = getDeviceModelName();
 
-  if (typeof window !== "undefined" && window.gtag) {
-    window.gtag("event", "page_view", {
-      debug_mode: true,
-      user_properties: {
-        device_model: modelName,
-      }
-    });
+  // 设置用户属性
+  window.gtag("set", "user_properties", {
+    model_name: modelName
+  });
 
-    console.log("Sent device_model to GA:", modelName);
-  }
+  // 发送事件（可选）
+  window.gtag("event", "page_view", {
+    debug_mode: true
+  });
+
+  console.log("Sent model name to GA:", modelName);
 }
+
 
 export default function Home() {
   const { isOpenDid } = useDIDInfo();
