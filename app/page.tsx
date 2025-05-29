@@ -57,6 +57,10 @@ function getDeviceModelName(): string {
   const device = parser.getDevice();
   const ua = navigator.userAgent;
 
+  if (device.model) {
+    return device.model;
+  }
+  
   // 优先 device.model => map 到友好名称+-
   if (device.model && deviceModelMap[device.model]) {
     return deviceModelMap[device.model];
