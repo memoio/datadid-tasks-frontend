@@ -92,7 +92,7 @@ function sendDeviceModelToGA() {
   });
 
   // 发送事件（可选）
-  window.gtag("event", "page_view", {
+  window.gtag("event", "debug_device_model", {
     debug_mode: true,
     model_name: modelName
   });
