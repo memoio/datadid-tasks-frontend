@@ -60,7 +60,7 @@ function getDeviceModelName(): string {
   if (device.model) {
     return device.model;
   }
-  
+
   // 优先 device.model => map 到友好名称+-
   if (device.model && deviceModelMap[device.model]) {
     return deviceModelMap[device.model];
@@ -93,7 +93,8 @@ function sendDeviceModelToGA() {
 
   // 发送事件（可选）
   window.gtag("event", "page_view", {
-    debug_mode: true
+    debug_mode: true,
+    model_name: modelName
   });
 
   console.log("Sent model name to GA:", modelName);
