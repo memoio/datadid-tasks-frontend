@@ -22,7 +22,7 @@ const GoogleAnalytics = () => {
         function gtag(){dataLayer.push(arguments);}
         window.gtag = gtag;
         gtag('js', new Date());
-        gtag('config', '${ga_tracking_id}');`}
+        gtag('config', '${ga_tracking_id}', { debug_mode: true });`}
             </Script>
         </>
     );
